@@ -1,24 +1,92 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-	<Product Id="42c0528b-4ad5-48c6-9ba4-28b2317c106d" Name="Setup" Language="1033" Version="1.0.0.0" Manufacturer="Setup" UpgradeCode="f9aadefb-a153-423c-ba07-8cf0bf0a7ca9">
+	<?define SourcePath = "$(var.SolutionDir)MSBuild.TeamCity.Tasks\bin\$(var.CONFIGURATION)" ?>
+	<Product
+		Id="42c0528b-4ad5-48c6-9ba4-28b2317c106d"
+		Name="MSBuild.TeamCity.Tasks"
+		Language="1033"
+		Version="1.0.0.0"
+		Manufacturer="Setup"
+		UpgradeCode="f9aadefb-a153-423c-ba07-8cf0bf0a7ca9"
+	>
 		<Package InstallerVersion="200" Compressed="yes" />
+		
+		<!-- Upgrade information -->
+		<Upgrade Id="f9aadefb-a153-423c-ba07-8cf0bf0a7ca9">
+			<!-- Checks for older versions -->
+			<UpgradeVersion Minimum="0.0.0.0"
+			                IncludeMinimum="yes"
+			                Maximum="1.0.0.0"
+			                IncludeMaximum="no"
+			                Property="PREVIOUSVERSIONSINSTALLED"/>
+			<!-- Checks for newer versions -->
+			<UpgradeVersion OnlyDetect="yes"
+			                Property="NEWERPRODUCTFOUND"
+			                Minimum="1.0.0.0"
+			                IncludeMinimum="no"/>
+		</Upgrade>
 
 		<Media Id="1" Cabinet="media1.cab" EmbedCab="yes" />
 
 		<Directory Id="TARGETDIR" Name="SourceDir">
 			<Directory Id="ProgramFilesFolder">
-				<Directory Id="INSTALLLOCATION" Name="Setup">
-					<!-- TODO: Remove the comments around this Component element and the ComponentRef below in order to add resources to this installer. -->
-					<!-- <Component Id="ProductComponent" Guid="65d8707c-aae9-4776-99a5-e93b4a821e5a"> -->
-						<!-- TODO: Insert files, registry keys, and other resources here. -->
-					<!-- </Component> -->
+				<Directory Id="MSBUILDDIR" Name="MSBuild">
+					<Directory Id="INSTALLLOCATION" Name="MSBuildTeamCityTasks">
+						<Component Id="MSBuildTeamCityTasksLib" Guid="65d8707c-aae9-4776-99a5-e93b4a821e5a">
+							<File
+								Id="MSBuild.TeamCity.Tasks.dll"
+								Name="MSBuild.TeamCity.Tasks.dll"
+								Source="$(var.SourcePath)\MSBuild.TeamCity.Tasks.dll"
+								DiskId="1"/>
+							<File
+								Id="MSBuild.TeamCity.Tasks.Targets"
+								Name="MSBuild.TeamCity.Tasks.Targets"
+								Source="$(var.SolutionDir)MSBuild.TeamCity.Tasks.Targets"
+								DiskId="1"/>
+						</Component>
+					</Directory>
 				</Directory>
 			</Directory>
 		</Directory>
 
-		<Feature Id="ProductFeature" Title="Setup" Level="1">
-			<!-- TODO: Remove the comments around this ComponentRef element and the Component above in order to add resources to this installer. -->
-			<!-- <ComponentRef Id="ProductComponent" /> -->
+		<Feature Id="Complete" Title="Complete Package" Level="1" AllowAdvertise="no" Absent="disallow">
+			<ComponentRef Id="MSBuildTeamCityTasksLib" />
 		</Feature>
+		
+		<!-- Upgrade -->
+		<CustomAction Id="NoDowngrade" Error="A later version of [ProductName] is already installed." />
+		
+		<InstallExecuteSequence>
+			<!--
+				Display an error message if a newer version found.
+				
+				Since the installer completely removes the existing MSBuild.TeamCity.Tasks
+				downgrades would work without any problems, but for now we 
+				inform the user that a newer version already exists.
+ 			-->
+			<Custom Action="NoDowngrade" After="FindRelatedProducts">NEWERPRODUCTFOUND</Custom>
+
+			<!--
+				Removes the older version of MSBuild.TeamCity.Tasks, if we are upgrading,
+				before installing the new version.
+
+				Unfortunately the user is not informed of this upgrade. I think
+				we need a custom dialog showing the old installation located and
+				the fact that it is going to be upgraded.
+
+				The best place to do this is after InstallFinalize however if we
+				do it then after we have removed a file from an addin, and changed
+				the Component Guid, the modified component is not installed. So
+				we make sure SharpDevelop is completely removed before installing
+				the newer version. This also covers us if we accidentally
+				modify a component but do not change its Guid.
+
+				http://msdn.microsoft.com/library/en-us/msi/setup/removeexistingproducts_action.asp
+			-->
+			<RemoveExistingProducts After="InstallInitialize"/>
+		</InstallExecuteSequence>
+		<InstallUISequence>
+			<Custom Action="NoDowngrade" After="FindRelatedProducts">NEWERPRODUCTFOUND</Custom>
+		</InstallUISequence>
 	</Product>
 </Wix>

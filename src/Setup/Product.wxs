@@ -2,7 +2,7 @@
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
 	<?define SourcePath = "$(var.SolutionDir)MSBuild.TeamCity.Tasks\bin\$(var.CONFIGURATION)" ?>
 	<Product
-		Id="42c0528b-4ad5-48c6-9ba4-28b2317c106d"
+		Id="*"
 		Name="MSBuild.TeamCity.Tasks"
 		Language="1033"
 		Version="1.0.0.0"
@@ -25,6 +25,25 @@
 			                Minimum="1.0.0.0"
 			                IncludeMinimum="no"/>
 		</Upgrade>
+		
+		<!--
+			Conditions to be satisfied before the installer begins.
+			note that we are using "Installed OR" in the conditions so
+			so they never block the user from repairing, patching, or 
+			uninstalling the package after it has been installed. 
+
+			For	example the user could do something odd like uninstall .NET 2.0
+ 			and then run the msi to uninstall MSBuild.TeamCity.Tasks. Without the 
+			"Installed OR" this would not be allowed.
+		-->
+		<!--
+			Check for .NET 2.0 
+			http://proactivedevelopment.net/blogs/kevin_faustino/archive/2007/09/20/windows-installer-xml-wix-launch-conditions.aspx
+		-->
+		<PropertyRef Id="NETFRAMEWORK20"/>
+		<Condition Message="This setup requires the .NET Framework 2.0 or higher.">
+			Installed OR NETFRAMEWORK20
+		</Condition>
 
 		<Media Id="1" Cabinet="media1.cab" EmbedCab="yes" />
 

@@ -53,6 +53,8 @@
 			<ComponentRef Id="MSBuildTeamCityTasksLib" />
 		</Feature>
 		
+		<UIRef Id="WixUI_Minimal"/>
+		
 		<!-- Upgrade -->
 		<CustomAction Id="NoDowngrade" Error="A later version of [ProductName] is already installed." />
 		

@@ -12,13 +12,13 @@ namespace MSBuild.TeamCity.Tasks
 	public class PublishArtifacts : Task
 	{
 		[Required]
-		public string[] Artifacts { get; set; }
+		public ITaskItem[] Artifacts { get; set; }
 
 		public override bool Execute()
 		{
-			foreach ( string artifact in Artifacts )
+			foreach ( ITaskItem item in Artifacts )
 			{
-				PublishArtifactTeamCityMessage message = new PublishArtifactTeamCityMessage(artifact);
+				PublishArtifactTeamCityMessage message = new PublishArtifactTeamCityMessage(item.ItemSpec);
 				Log.LogMessage(MessageImportance.High, message.ToString());
 			}
 			return true;

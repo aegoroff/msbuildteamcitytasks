@@ -28,21 +28,20 @@
 		
 		<!--
 			Conditions to be satisfied before the installer begins.
-			note that we are using "Installed OR" in the conditions so
+			Note that we are using "Installed OR" in the conditions so
 			so they never block the user from repairing, patching, or 
 			uninstalling the package after it has been installed. 
 
 			For	example the user could do something odd like uninstall .NET 2.0
- 			and then run the msi to uninstall MSBuild.TeamCity.Tasks. Without the 
+ 			and then run the msi to uninstall SharpDevelop. Without the 
 			"Installed OR" this would not be allowed.
 		-->
 		<!--
 			Check for .NET 2.0 
-			http://proactivedevelopment.net/blogs/kevin_faustino/archive/2007/09/20/windows-installer-xml-wix-launch-conditions.aspx
+			http://msdn.microsoft.com/library/default.asp?url=/library/en-us/msi/setup/msinetassemblysupport.asp
 		-->
-		<PropertyRef Id="NETFRAMEWORK20"/>
 		<Condition Message="This setup requires the .NET Framework 2.0 or higher.">
-			Installed OR NETFRAMEWORK20
+			Installed OR MsiNetAssemblySupport &gt;= "2.0.50727"
 		</Condition>
 
 		<Media Id="1" Cabinet="media1.cab" EmbedCab="yes" />

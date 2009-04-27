@@ -14,19 +14,27 @@
     <OutputPath>bin\$(Configuration)\</OutputPath>
     <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
     <DefineConstants>Debug;CONFIGURATION=Debug</DefineConstants>
+    <Cultures>en-US</Cultures>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <OutputPath>bin\$(Configuration)\</OutputPath>
     <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
-	<DefineConstants>CONFIGURATION=Release</DefineConstants>
+    <DefineConstants>CONFIGURATION=Release</DefineConstants>
+    <Cultures>en-US</Cultures>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Product.wxs" />
   </ItemGroup>
   <ItemGroup>
-    <WixExtension Include="$(WixTargetsPath)\WixUIExtension.dll" />
-    <WixExtension Include="$(WixTargetsPath)\WixUtilExtension.dll" />
-    <WixExtension Include="$(WixTargetsPath)\WixNetFxExtension.dll" />
+    <WixExtension Include="WixUtilExtension">
+      <HintPath>$(WixExtDir)\WixUtilExtension.dll</HintPath>
+    </WixExtension>
+    <WixExtension Include="WixUIExtension">
+      <HintPath>$(WixExtDir)\WixUIExtension.dll</HintPath>
+    </WixExtension>
+    <WixExtension Include="WixNetFxExtension">
+      <HintPath>$(WixExtDir)\WixNetFxExtension.dll</HintPath>
+    </WixExtension>
   </ItemGroup>
   <Import Project="$(WixTargetsPath)" />
   <!--

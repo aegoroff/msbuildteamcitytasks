@@ -5,7 +5,7 @@
     <ProductVersion>3.0</ProductVersion>
     <ProjectGuid>{a1d41f0c-465c-41ab-8573-d5f8599b1e86}</ProjectGuid>
     <SchemaVersion>2.0</SchemaVersion>
-    <OutputName>Setup</OutputName>
+    <OutputName>MSBuild.TeamCity.Tasks.Setup</OutputName>
     <OutputType>Package</OutputType>
     <WixTargetsPath Condition=" '$(WixTargetsPath)' == '' AND '$(MSBuildExtensionsPath32)' != '' ">$(MSBuildExtensionsPath32)\Microsoft\WiX\v3.0\Wix.targets</WixTargetsPath>
     <WixTargetsPath Condition=" '$(WixTargetsPath)' == '' ">$(MSBuildExtensionsPath)\Microsoft\WiX\v3.0\Wix.targets</WixTargetsPath>
@@ -15,12 +15,14 @@
     <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
     <DefineConstants>Debug;CONFIGURATION=Debug</DefineConstants>
     <Cultures>en-US</Cultures>
+    <WixVariables>WixUILicenseRtf=License.rtf</WixVariables>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <OutputPath>bin\$(Configuration)\</OutputPath>
     <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
     <DefineConstants>CONFIGURATION=Release</DefineConstants>
     <Cultures>en-US</Cultures>
+    <WixVariables>WixUILicenseRtf=License.rtf</WixVariables>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Product.wxs" />

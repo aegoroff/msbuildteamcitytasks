@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildTeamCityTasksPath Condition="'$(MSBuildTeamCityTasksPath)' == ''">$(MSBuildExtensionsPath)\MSBuildTeamCityTasks</MSBuildTeamCityTasksPath>
+    <MSBuildTeamCityTasksLib>$(MSBuildTeamCityTasksPath)\MSBuild.TeamCity.Tasks.dll</MSBuildTeamCityTasksLib>
+  </PropertyGroup>
+
+  <UsingTask AssemblyFile="$(MSBuildTeamCityTasksLib)" TaskName="MSBuild.TeamCity.Tasks.NCoverCoverage" />
+  <UsingTask AssemblyFile="$(MSBuildTeamCityTasksLib)" TaskName="MSBuild.TeamCity.Tasks.BuildNumber" />
+  <UsingTask AssemblyFile="$(MSBuildTeamCityTasksLib)" TaskName="MSBuild.TeamCity.Tasks.PublishArtifacts" />
+
+</Project>

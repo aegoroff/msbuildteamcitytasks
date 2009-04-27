@@ -23,6 +23,11 @@
   <ItemGroup>
     <Compile Include="Product.wxs" />
   </ItemGroup>
+  <ItemGroup>
+    <WixExtension Include="$(WixTargetsPath)\WixUIExtension.dll" />
+    <WixExtension Include="$(WixTargetsPath)\WixUtilExtension.dll" />
+    <WixExtension Include="$(WixTargetsPath)\WixNetFxExtension.dll" />
+  </ItemGroup>
   <Import Project="$(WixTargetsPath)" />
   <!--
 	To modify your build process, add your task inside one of the targets below and uncomment it.

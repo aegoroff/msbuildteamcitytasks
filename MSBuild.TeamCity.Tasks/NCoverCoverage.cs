@@ -23,11 +23,28 @@ namespace MSBuild.TeamCity.Tasks
 		internal const string NCoverFunctionCoverage = "NCoverCoverageF";
 	}
 	
+	/// <summary>
+	/// Represents NCoverExplorer statistic reporter into TeamCity
+	/// </summary>
+	/// <example>Reports statistic using NCoverExplorer summary report.
+	/// <code><![CDATA[
+	/// <NCoverCoverage NcoverReportPath="C:\SummaryReport.xml" />
+	/// ]]></code>
+	/// </example>
 	public class NCoverCoverage : Task
 	{
+		/// <summary>
+		/// Gets or sets full path to NCoverExplorer summmary report XML file
+		/// </summary>
 		[Required]
 		public string NcoverReportPath { get; set; }
 
+		/// <summary>
+		/// When overridden in a derived class, executes the task.
+		/// </summary>
+		/// <returns>
+		/// true if the task successfully executed; otherwise, false.
+		/// </returns>
 		public override bool Execute()
 		{
 			LogMessage("NCover xml report summary path \"" + NcoverReportPath + "\".");

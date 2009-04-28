@@ -8,8 +8,16 @@ using System.Globalization;
 
 namespace MSBuild.TeamCity.Tasks
 {
+	/// <summary>
+	/// Represents TC build statistic message
+	/// </summary>
 	public class BuildStatisticTeamCityMessage : TeamCityMessage
 	{
+		/// <summary>
+		/// Creates new message instance
+		/// </summary>
+		/// <param name="key">Parameter key</param>
+		/// <param name="value">Parameter value</param>
 		public BuildStatisticTeamCityMessage(string key, float value)
 		{
 			Key = key;
@@ -17,7 +25,14 @@ namespace MSBuild.TeamCity.Tasks
 			Message = string.Format(CultureInfo.InvariantCulture, "buildStatisticValue key='{0}' value='{1:F}'", Key, Value);
 		}
 		
+		/// <summary>
+		/// Gets parameter key
+		/// </summary>
 		public string Key { get; private set; }
+		
+		/// <summary>
+		/// Gets parameter value
+		/// </summary>
 		public float Value { get; private set; }
 	}
 }

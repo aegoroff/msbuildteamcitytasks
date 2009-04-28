@@ -9,11 +9,28 @@ using Microsoft.Build.Utilities;
 
 namespace MSBuild.TeamCity.Tasks
 {
+	/// <summary>
+	/// Sets desired build number of a build configuration
+	/// </summary>
+	/// <example>Sets current build number
+	/// <code><![CDATA[
+	/// <BuildNumber Number="20.3" />
+	/// ]]></code>
+	/// </example>
 	public class BuildNumber : Task
 	{
+		/// <summary>
+		/// Build number value
+		/// </summary>
 		[Required]
 		public string Number { get; set; }
 
+		/// <summary>
+		/// When overridden in a derived class, executes the task.
+		/// </summary>
+		/// <returns>
+		/// true if the task successfully executed; otherwise, false.
+		/// </returns>
 		public override bool Execute()
 		{
 			BuildNumberTeamCityMessage message = new BuildNumberTeamCityMessage(Number);

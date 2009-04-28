@@ -8,10 +8,20 @@ using System.Globalization;
 
 namespace MSBuild.TeamCity.Tasks
 {
+	/// <summary>
+	/// Represents TC message that publishes artifacts
+	/// </summary>
 	public class PublishArtifactTeamCityMessage : TeamCityMessage
 	{
-		public string Path { get; set; }
+		/// <summary>
+		/// Gets artifact path to publish
+		/// </summary>
+		public string Path { get; private set; }
 
+		/// <summary>
+		/// Creates new message instance using artifact path specified.
+		/// </summary>
+		/// <param name="path">Artifact path to publish</param>
 		public PublishArtifactTeamCityMessage(string path)
 		{
 			Path = path;

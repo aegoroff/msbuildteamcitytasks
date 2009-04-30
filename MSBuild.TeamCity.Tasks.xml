@@ -140,11 +140,11 @@
 	</ItemGroup>
 	<!-- Zipping build artefacts task -->
 	<Target Name="Zipping" DependsOnTargets="Coverage">
-		<CreateItem Include="**\*.exe;**\*.pdb;**\*.dll">
-			<Output
-				TaskParameter="Include"
-				ItemName="FileToZip"/>
-		</CreateItem>
+		<ItemGroup>
+			<FileToZip Include="**\*.exe" />
+			<FileToZip Include="**\*.pdb" />
+			<FileToZip Include="**\*.dll" />
+		</ItemGroup>
 		<!-- Zipping binaries -->
 		<Zip
 			Files="@(FileToZip)"

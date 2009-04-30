@@ -7,7 +7,7 @@
 		Name="MSBuild.TeamCity.Tasks $(var.Version)"
 		Language="1033"
 		Version="$(var.Version)"
-		Manufacturer="Setup"
+		Manufacturer="Alexander Egorov"
 		UpgradeCode="f9aadefb-a153-423c-ba07-8cf0bf0a7ca9"
 	>
 		<Package InstallerVersion="200" Compressed="yes" />

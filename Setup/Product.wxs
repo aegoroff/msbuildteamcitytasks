@@ -64,7 +64,7 @@
 							<File
 								Id="MSBuild.TeamCity.Tasks.chm"
 								Name="MSBuild.TeamCity.Tasks.chm"
-								Source="$(var.SolutionDir)\Help\MSBuild.TeamCity.Tasks.chm"
+								Source="$(var.SolutionDir)Help\MSBuild.TeamCity.Tasks.chm"
 								DiskId="1"/>
 						</Component>
 					</Directory>

@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
 	<?define SourcePath = "$(var.SolutionDir)MSBuild.TeamCity.Tasks\bin\$(var.CONFIGURATION)" ?>
+	<?define Version = "1.0.0.0" ?>
 	<Product
 		Id="*"
 		Name="MSBuild.TeamCity.Tasks"
 		Language="1033"
-		Version="1.0.0.0"
+		Version="$(var.Version)"
 		Manufacturer="Setup"
 		UpgradeCode="f9aadefb-a153-423c-ba07-8cf0bf0a7ca9"
 	>
@@ -16,13 +17,13 @@
 			<!-- Checks for older versions -->
 			<UpgradeVersion Minimum="0.0.0.0"
 			                IncludeMinimum="yes"
-			                Maximum="1.0.0.0"
+			                Maximum="$(var.Version)"
 			                IncludeMaximum="no"
 			                Property="PREVIOUSVERSIONSINSTALLED"/>
 			<!-- Checks for newer versions -->
 			<UpgradeVersion OnlyDetect="yes"
 			                Property="NEWERPRODUCTFOUND"
-			                Minimum="1.0.0.0"
+			                Minimum="$(var.Version)"
 			                IncludeMinimum="no"/>
 		</Upgrade>
 		

@@ -4,7 +4,7 @@
 	<?define Version = "1.0.0.0" ?>
 	<Product
 		Id="*"
-		Name="MSBuild.TeamCity.Tasks"
+		Name="MSBuild.TeamCity.Tasks $(var.Version)"
 		Language="1033"
 		Version="$(var.Version)"
 		Manufacturer="Setup"

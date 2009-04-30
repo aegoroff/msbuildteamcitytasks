@@ -1,0 +1,158 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<!-- Importing MSBuild Community Tasks -->
+	<Import Project="$(MSBuildExtensionsPath)\MSBuildCommunityTasks\MSBuild.Community.Tasks.Targets"/>
+	<!-- Importing NCover Tasks -->
+	<Import Project="$(MSBuildExtensionsPath)\NCoverTasks\NCover.Tasks.Targets"/>
+	<!-- Global properties definitions -->
+	<PropertyGroup>
+
+		<!-- Code configuration to build (Release or Debug) -->
+		<Configuration>Release</Configuration>
+		<!-- NUnit working path  -->
+		<NUnitPath>C:\Program Files\NUnit 2.4.7\bin</NUnitPath>
+		<!-- FXCop working path  -->
+		<FxCopPath>C:\Program Files\Microsoft FxCop 1.36</FxCopPath>
+		<!-- SandCastle help file builder working path  -->
+		<SHFBPath>C:\Program Files\EWSoftware\Sandcastle Help File Builder</SHFBPath>
+		<!-- FxCop full report file name  -->
+		<FxCopFullReportFile>FxCopFull.html</FxCopFullReportFile>
+		<!-- FxCop summary report file name  -->
+		<FxCopSummaryReportFile>FxCopSummary.html</FxCopSummaryReportFile>
+		
+		<!-- Enables updating version mechanism -->
+		<IsUpdateVersion>false</IsUpdateVersion>
+		
+		<!-- Version components  -->
+		<Major>1</Major>
+		<Minor>0</Minor>
+		<Build>0</Build>
+		<Revision>0</Revision>
+	</PropertyGroup>
+	<!-- Coverage report output file-->
+	<ItemGroup>
+		<CoverageFile Include="$(MSBuildProjectDirectory)\$(CoverageOutFile)" />
+	</ItemGroup>
+	<!-- Assemblies list that contain unit tests -->
+	<ItemGroup>
+		<Assembly Include="Tests\bin\$(Configuration)\Tests.dll" />
+	</ItemGroup>
+	<!-- AssemblyInfo.cs file definitions where to set version -->
+	<ItemGroup>
+		<AssemblyInfoFile Include="$(MSBuildProjectDirectory)\**\AssemblyInfo.cs" />
+	</ItemGroup>
+	<!-- Updating version and product code task -->
+	<Target Name="VersionUpdater" Condition=" '$(IsUpdateVersion)'=='true' ">
+		<!-- Updating AssemblyInfo.cs files -->
+		<FileUpdate
+			Files="@(AssemblyInfoFile)"
+			Regex='\[assembly(\s*):(\s*)(AssemblyVersion|AssemblyFileVersion|AssemblyInformationalVersionAttribute)\((\s*)"(\d+)\.(\d+)\.(\d+)\.(\d+)"(\s*)\)\]'
+			ReplacementText='[assembly : $3("$(Major).$(Minor).$(Build).$(Revision)")]' />
+		<!-- Updating WiX files -->
+		<FileUpdate
+			Files="$(MSBuildProjectDirectory)\Setup\Product.wxs"
+			Regex='define Version = "(\d+)\.(\d+)\.(\d+).(\d+)"'
+			ReplacementText='define Version = "$(Major).$(Minor).$(Build).$(Revision)"' />
+
+	</Target>
+	<!-- Main build step where solution file are built -->
+	<Target Name="Compile" DependsOnTargets="VersionUpdater">
+		<!-- Start building solution file -->
+		<MSBuild
+			StopOnFirstFailure="true"
+			Projects="MSBuild.TeamCity.Tasks.sln"
+			Properties="Configuration=$(Configuration)" 
+		/>
+		<!-- Updating WiX files -->
+		<FileUpdate
+			Files="$(MSBuildProjectDirectory)\Setup\Product.wxs"
+			Regex='\$\(var\.SolutionDir\)'
+			ReplacementText='$(MSBuildProjectDirectory)\' />
+		<Exec
+			WorkingDirectory="$(MSBuildProjectDirectory)"
+			Command='"$(SHFBPath)\SandcastleBuilderConsole.exe" MSBuildTeamCityTasks.shfb'
+		/>
+		<MSBuild
+			StopOnFirstFailure="true"
+			Projects="Setup\Setup.wixproj"
+			Properties="Configuration=$(Configuration)" 
+		/>
+	</Target>
+	<!-- Running server's and GUI's unit tests task -->
+	<Target Name="UnitTesting" DependsOnTargets="Compile">
+		<NUnit ToolPath="$(NUnitPath)" Assemblies="@(Assembly)"/>
+	</Target>
+	<!-- FxCop assemblies ty analyse -->
+	<ItemGroup>
+		<FxCopTargetAssembly Include="$(MSBuildProjectDirectory)\MSBuild.TeamCity.Tasks\bin\$(Configuration)\MSBuild.TeamCity.Tasks.dll" />
+	</ItemGroup>
+	<!-- FxCop exclude rules -->
+	<ItemGroup>
+		<FxCopExcludeRule Include="-Microsoft.Design#CA2210" />
+		<FxCopExcludeRule Include="-Microsoft.Design#CA1028" />
+		<FxCopExcludeRule Include="-Microsoft.Design#CA1031" />
+		<FxCopExcludeRule Include="-Microsoft.Design#CA1043" />
+		<FxCopExcludeRule Include="-Microsoft.Design#CA1000" />
+		<FxCopExcludeRule Include="-Microsoft.Performance#CA1824" />
+	</ItemGroup>
+	<!-- Running managed code coverage task -->
+	<Target Name="Coverage" DependsOnTargets="UnitTesting">
+		<FxCop 
+			TargetAssemblies="@(FxCopTargetAssembly)"
+			RuleLibraries="@(FxCopRuleAssemblies)" 
+			AnalysisReportFileName="$(FxCopFullReportFile)"
+			DependencyDirectories="$(MSBuildCommunityTasksPath)"
+			FailOnError="False"
+			ApplyOutXsl="True"
+			OutputXslFileName="$(FxCopPath)\Xml\FxCopReport.xsl"
+			ToolPath="$(FxCopPath)"
+			ContinueOnError="true"
+			Rules="@(FxCopExcludeRule)"
+		/>
+		<FxCop 
+			TargetAssemblies="@(FxCopTargetAssembly)"
+			RuleLibraries="@(FxCopRuleAssemblies)" 
+			AnalysisReportFileName="$(FxCopSummaryReportFile)"
+			DependencyDirectories="$(MSBuildCommunityTasksPath)"
+			FailOnError="False"
+			ApplyOutXsl="True"
+			OutputXslFileName="Lib\FxCopGraph.xsl"
+			ToolPath="$(FxCopPath)"
+			ContinueOnError="true"
+			Rules="@(FxCopExcludeRule)"
+		/>
+	</Target>
+	<!-- Report files' definition-->
+	<ItemGroup>
+		<ReportFile Include="TestResult.xml" />
+		<ReportFile Include="$(FxCopFullReportFile)" />
+	</ItemGroup>
+	<!-- Zipping build artefacts task -->
+	<Target Name="Zipping" DependsOnTargets="Coverage">
+		<CreateItem Include="**\*.exe;**\*.pdb;**\*.dll">
+			<Output
+				TaskParameter="Include"
+				ItemName="FileToZip"/>
+		</CreateItem>
+		<!-- Zipping binaries -->
+		<Zip
+			Files="@(FileToZip)"
+			ZipFileName="Binaries.zip"
+			Flatten="true"
+			ZipLevel="9"
+			WorkingDirectory="$(MSBuildProjectDirectory)" 
+		/>
+		<!-- Zipping reports -->
+		<Zip
+			Files="@(ReportFile)"
+			ZipFileName="Reports.zip"
+			Flatten="true"
+			ZipLevel="9"
+			WorkingDirectory="$(MSBuildProjectDirectory)" 
+		/>
+	</Target>
+	<!-- Setting next build version and finish build process -->
+	<Target Name="Build" DependsOnTargets="Zipping">
+		<Message Text="Build $(Major).$(Minor).$(Build).$(Revision) Complete"/>
+	</Target>
+</Project>

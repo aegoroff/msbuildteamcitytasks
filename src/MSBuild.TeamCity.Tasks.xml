@@ -55,6 +55,12 @@
 			ReplacementText='define Version = "$(Major).$(Minor).$(Build).$(Revision)"' />
 
 	</Target>
+	<ItemGroup>
+		<SetupFile Include="$(MSBuildProjectDirectory)\Setup\bin\$(Configuration)\MSBuild.TeamCity.Tasks.Setup.msi" />
+	</ItemGroup>
+	<ItemGroup>
+		<SetupDestinationFile Include="MSBuild.TeamCity.Tasks.$(Major).$(Minor).$(Build).$(Revision).msi" />
+	</ItemGroup>
 	<!-- Main build step where solution file are built -->
 	<Target Name="Compile" DependsOnTargets="VersionUpdater">
 		<!-- Start building solution file -->
@@ -77,6 +83,12 @@
 			Projects="Setup\Setup.wixproj"
 			Properties="Configuration=$(Configuration)" 
 		/>
+		<Copy
+			SourceFiles="@(SetupFile)"
+			DestinationFiles="@(SetupDestinationFile)"
+			DestinationFolder="$(MSBuildProjectDirectory)"
+		/>
+		<Delete Files="@(SetupFile)" />
 	</Target>
 	<!-- Running server's and GUI's unit tests task -->
 	<Target Name="UnitTesting" DependsOnTargets="Compile">

@@ -59,7 +59,7 @@
 		<SetupFile Include="$(MSBuildProjectDirectory)\Setup\bin\$(Configuration)\MSBuild.TeamCity.Tasks.Setup.msi" />
 	</ItemGroup>
 	<ItemGroup>
-		<SetupDestinationFile Include="MSBuild.TeamCity.Tasks.$(Major).$(Minor).$(Build).$(Revision).msi" />
+		<SetupDestinationFile Include="$(MSBuildProjectDirectory)\MSBuild.TeamCity.Tasks.$(Major).$(Minor).$(Build).$(Revision).msi" />
 	</ItemGroup>
 	<!-- Main build step where solution file are built -->
 	<Target Name="Compile" DependsOnTargets="VersionUpdater">
@@ -86,7 +86,6 @@
 		<Copy
 			SourceFiles="@(SetupFile)"
 			DestinationFiles="@(SetupDestinationFile)"
-			DestinationFolder="$(MSBuildProjectDirectory)"
 		/>
 		<Delete Files="@(SetupFile)" />
 	</Target>

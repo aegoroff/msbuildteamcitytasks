@@ -4,8 +4,6 @@
  * © 2007-2009 Alexander Egorov
  */
 
-using System.Globalization;
-
 namespace MSBuild.TeamCity.Tasks
 {
 	/// <summary>
@@ -25,7 +23,15 @@ namespace MSBuild.TeamCity.Tasks
 		public BuildNumberTeamCityMessage(string buildNumber)
 		{
 			BuildNumber = buildNumber;
-			Message = string.Format(CultureInfo.InvariantCulture, "buildNumber '{0}'", Escape(BuildNumber));
+			Attributes.Add(new MessageAttribute(buildNumber));
+		}
+
+		/// <summary>
+		/// Gets message name
+		/// </summary>
+		protected override string Message
+		{
+			get { return "buildNumber"; }
 		}
 	}
 }

@@ -4,6 +4,7 @@
  * © 2007-2009 Alexander Egorov
  */
 
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
@@ -32,6 +33,11 @@ namespace MSBuild.TeamCity.Tasks
 			get { return _attributes; }
 		}
 
+		///<summary>
+		/// Whether to add timestamt to the message. False by default
+		///</summary>
+		public bool IsAddTimeStamp { get; set; }
+
 		/// <summary>
 		/// Returns a <see cref="T:System.String"/> that represents the current <see cref="T:System.Object"/>.
 		/// </summary>
@@ -41,6 +47,10 @@ namespace MSBuild.TeamCity.Tasks
 		/// <filterpriority>2</filterpriority>
 		public override string ToString()
 		{
+			if ( IsAddTimeStamp )
+			{
+				_attributes.Add(new MessageAttribute("timestamp", DateTime.Now.ToString("o")));
+			}
 			StringBuilder sb = new StringBuilder();
 			foreach ( MessageAttribute attribute in _attributes )
 			{

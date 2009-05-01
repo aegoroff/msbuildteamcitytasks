@@ -22,7 +22,7 @@ namespace MSBuild.TeamCity.Tasks
 		{
 			Key = key;
 			Value = value;
-			Message = string.Format(CultureInfo.InvariantCulture, "buildStatisticValue key='{0}' value='{1:F}'", Key, Value);
+			Message = string.Format(CultureInfo.InvariantCulture, "buildStatisticValue key='{0}' value='{1:F}'", Escape(Key), Value);
 		}
 		
 		/// <summary>

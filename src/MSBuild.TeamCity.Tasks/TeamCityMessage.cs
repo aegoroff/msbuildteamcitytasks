@@ -43,5 +43,15 @@ namespace MSBuild.TeamCity.Tasks
 		{
 			return string.Format("##teamcity[{0}]", Message);
 		}
+
+		/// <summary>
+		/// Escapes input string by replacing special symbols that cannot be unescaped in attribute value
+		/// </summary>
+		/// <param name="input">Input string to escape</param>
+		/// <returns>Properly escaped string</returns>
+		protected string Escape(string input)
+		{
+			return input.Replace("|", "||").Replace("'", "|'").Replace("]", "|]").Replace("\n", "|n").Replace("\r", "|r");
+		}
 	}
 }

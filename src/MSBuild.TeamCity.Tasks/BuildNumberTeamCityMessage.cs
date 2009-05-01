@@ -25,7 +25,7 @@ namespace MSBuild.TeamCity.Tasks
 		public BuildNumberTeamCityMessage(string buildNumber)
 		{
 			BuildNumber = buildNumber;
-			Message = string.Format(CultureInfo.InvariantCulture, "buildNumber '{0}'", BuildNumber);
+			Message = string.Format(CultureInfo.InvariantCulture, "buildNumber '{0}'", Escape(BuildNumber));
 		}
 	}
 }

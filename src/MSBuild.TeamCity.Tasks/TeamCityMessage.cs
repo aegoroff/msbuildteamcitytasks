@@ -39,6 +39,11 @@ namespace MSBuild.TeamCity.Tasks
 		public bool IsAddTimeStamp { get; set; }
 
 		/// <summary>
+		/// Gets or sets message's flowId
+		/// </summary>
+		public string FlowId { get; set; }
+
+		/// <summary>
 		/// Returns a <see cref="T:System.String"/> that represents the current <see cref="T:System.Object"/>.
 		/// </summary>
 		/// <returns>
@@ -50,6 +55,10 @@ namespace MSBuild.TeamCity.Tasks
 			if ( IsAddTimeStamp )
 			{
 				_attributes.Add(new MessageAttribute("timestamp", DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss.fffzzz")));
+			}
+			if ( !string.IsNullOrEmpty(FlowId) )
+			{
+				_attributes.Add(new MessageAttribute("flowId", FlowId));
 			}
 			StringBuilder sb = new StringBuilder();
 			foreach ( MessageAttribute attribute in _attributes )

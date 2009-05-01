@@ -4,35 +4,32 @@
  * © 2007-2009 Alexander Egorov
  */
 
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Globalization;
+using System.Text;
+
 namespace MSBuild.TeamCity.Tasks
 {
 	/// <summary>
 	/// Base class of all TC messages.
 	/// </summary>
-	public class TeamCityMessage
+	public abstract class TeamCityMessage
 	{
-		/// <summary>
-		/// Gets or sets message to output
-		/// </summary>
-		protected string Message { get; set; }
-
-		/// <summary>
-		/// Creates new message instance
-		/// </summary>
-		public TeamCityMessage()
-		{
-		}
+		private readonly IList<MessageAttribute> _attributes = new List<MessageAttribute>();
 		
 		/// <summary>
-		/// Creates new message instance using message specified.
+		/// Gets message name
 		/// </summary>
-		/// <param name="message">Raw message that isn't escaped.</param>
-		/// <remarks>
-		/// For more info about escaping see http://www.jetbrains.net/confluence/display/TCD4/Build+Script+Interaction+with+TeamCity
-		/// </remarks>
-		public TeamCityMessage(string message)
+		protected abstract string Message { get; }
+
+		/// <summary>
+		/// Gets message attributes list
+		/// </summary>
+		protected IList<MessageAttribute> Attributes
 		{
-			Message = message;
+			[DebuggerStepThrough]
+			get { return _attributes; }
 		}
 
 		/// <summary>
@@ -44,17 +41,17 @@ namespace MSBuild.TeamCity.Tasks
 		/// <filterpriority>2</filterpriority>
 		public override string ToString()
 		{
-			return string.Format("##teamcity[{0}]", Message);
-		}
-
-		/// <summary>
-		/// Escapes input string by replacing special symbols that cannot be unescaped in attribute value
-		/// </summary>
-		/// <param name="input">Input string to escape</param>
-		/// <returns>Properly escaped string</returns>
-		protected string Escape(string input)
-		{
-			return input.Replace("|", "||").Replace("'", "|'").Replace("]", "|]").Replace("\n", "|n").Replace("\r", "|r");
+			StringBuilder sb = new StringBuilder();
+			foreach ( MessageAttribute attribute in _attributes )
+			{
+				sb.Append(attribute.ToString());
+				sb.Append(' ');
+			}
+			if ( sb.Length > 0 )
+			{
+				sb.Remove(sb.Length - 1, 1);
+			}
+			return string.Format(CultureInfo.CurrentCulture, "##teamcity[{0} {1}]", Message, sb);
 		}
 	}
 }

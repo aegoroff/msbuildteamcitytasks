@@ -4,8 +4,6 @@
  * © 2007-2009 Alexander Egorov
  */
 
-using System.Globalization;
-
 namespace MSBuild.TeamCity.Tasks
 {
 	/// <summary>
@@ -25,7 +23,15 @@ namespace MSBuild.TeamCity.Tasks
 		public PublishArtifactTeamCityMessage(string path)
 		{
 			Path = path;
-			Message = string.Format(CultureInfo.InvariantCulture, "publishArtifacts '{0}'", Escape(Path));
+			Attributes.Add(new MessageAttribute(path));
+		}
+
+		/// <summary>
+		/// Gets message name
+		/// </summary>
+		protected override string Message
+		{
+			get { return "publishArtifacts"; }
 		}
 	}
 }

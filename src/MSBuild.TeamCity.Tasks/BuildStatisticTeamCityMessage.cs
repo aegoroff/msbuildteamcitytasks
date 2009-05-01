@@ -22,7 +22,8 @@ namespace MSBuild.TeamCity.Tasks
 		{
 			Key = key;
 			Value = value;
-			Message = string.Format(CultureInfo.InvariantCulture, "buildStatisticValue key='{0}' value='{1:F}'", Escape(Key), Value);
+			Attributes.Add(new MessageAttribute("key", Key));
+			Attributes.Add(new MessageAttribute("value", string.Format(CultureInfo.InvariantCulture, "{0:F}", Value)));
 		}
 		
 		/// <summary>
@@ -34,5 +35,13 @@ namespace MSBuild.TeamCity.Tasks
 		/// Gets parameter value
 		/// </summary>
 		public float Value { get; private set; }
+
+		/// <summary>
+		/// Gets message name
+		/// </summary>
+		protected override string Message
+		{
+			get { return "buildStatisticValue"; }
+		}
 	}
 }

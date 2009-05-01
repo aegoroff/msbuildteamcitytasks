@@ -25,7 +25,7 @@ namespace MSBuild.TeamCity.Tasks
 		public PublishArtifactTeamCityMessage(string path)
 		{
 			Path = path;
-			Message = string.Format(CultureInfo.InvariantCulture, "publishArtifacts '{0}'", Path);
+			Message = string.Format(CultureInfo.InvariantCulture, "publishArtifacts '{0}'", Escape(Path));
 		}
 	}
 }

@@ -49,7 +49,7 @@ namespace MSBuild.TeamCity.Tasks
 		{
 			if ( IsAddTimeStamp )
 			{
-				_attributes.Add(new MessageAttribute("timestamp", DateTime.Now.ToString("o")));
+				_attributes.Add(new MessageAttribute("timestamp", DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss.fffzzz")));
 			}
 			StringBuilder sb = new StringBuilder();
 			foreach ( MessageAttribute attribute in _attributes )

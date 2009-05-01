@@ -4,6 +4,7 @@
  * © 2007-2009 Alexander Egorov
  */
 
+using System;
 using MSBuild.TeamCity.Tasks;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
@@ -35,6 +36,15 @@ namespace Tests
 			const string path = "1.msi";
 			PublishArtifactTeamCityMessage message = new PublishArtifactTeamCityMessage(path);
 			Assert.That(message.ToString(), Is.EqualTo("##teamcity[publishArtifacts '1.msi']"));
+		}
+
+		[Test]
+		public void BuildNumberAddTimeStamp()
+		{
+			const string number = "1.0";
+			BuildNumberTeamCityMessage message = new BuildNumberTeamCityMessage(number) { IsAddTimeStamp = true };
+			string expected = string.Format("##teamcity[buildNumber '1.0' timestamp='{0}']", DateTime.Now.ToString("o"));
+			Assert.That(message.ToString(), Is.EqualTo(expected));
 		}
 	}
 }

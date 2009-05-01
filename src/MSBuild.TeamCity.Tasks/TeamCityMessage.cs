@@ -26,7 +26,10 @@ namespace MSBuild.TeamCity.Tasks
 		/// <summary>
 		/// Creates new message instance using message specified.
 		/// </summary>
-		/// <param name="message"></param>
+		/// <param name="message">Raw message that isn't escaped.</param>
+		/// <remarks>
+		/// For more info about escaping see http://www.jetbrains.net/confluence/display/TCD4/Build+Script+Interaction+with+TeamCity
+		/// </remarks>
 		public TeamCityMessage(string message)
 		{
 			Message = message;

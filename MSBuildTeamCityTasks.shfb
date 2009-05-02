@@ -11,6 +11,9 @@
     </componentConfigurations>
     <apiFilter>
         <filter entryType="Namespace" fullName="MSBuild.TeamCity.Tasks" isExposed="False">
+            <filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.BlockClose" filterName="BlockClose" isExposed="True" />
+            <filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.BlockOpen" filterName="BlockOpen" isExposed="True" />
+            <filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.BlockTask" filterName="BlockTask" isExposed="True" />
             <filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.BuildNumber" filterName="BuildNumber" isExposed="True" />
             <filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.NCoverCoverage" filterName="NCoverCoverage" isExposed="True" />
             <filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.PublishArtifacts" filterName="PublishArtifacts" isExposed="True" />

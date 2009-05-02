@@ -15,6 +15,14 @@ namespace MSBuild.TeamCity.Tasks
 	/// <code><![CDATA[
 	/// <BuildNumber Number="20.3" />
 	/// ]]></code>
+	/// Sets current build number full example (with all optional attributes)
+	/// <code><![CDATA[
+	/// <BuildNumber
+	///		IsAddTimestamp="true"
+	///		FlowId="1"
+	///		Number="20.3"
+	/// />
+	/// ]]></code>
 	/// </example>
 	public class BuildNumber : TeamCityTask
 	{

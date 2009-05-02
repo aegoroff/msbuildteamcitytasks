@@ -9,7 +9,7 @@ using Microsoft.Build.Utilities;
 namespace MSBuild.TeamCity.Tasks
 {
 	/// <summary>
-	/// Represent abstract TeamCity task
+	/// Represent abstract TeamCity task. Cannot be used directly (because it's abstract) in MSBuild script
 	/// </summary>
 	public abstract class TeamCityTask : Task
 	{

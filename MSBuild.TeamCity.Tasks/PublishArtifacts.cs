@@ -13,7 +13,17 @@ namespace MSBuild.TeamCity.Tasks
 	/// </summary>
 	/// <example>Publish several artifacts.
 	/// <code><![CDATA[
-	/// <PublishArtifacts Artifacts="File1.zip;File2.zip" />
+	/// <PublishArtifacts
+	///		Artifacts="File1.zip;File2.zip"
+	/// />
+	/// ]]></code>
+	/// Publish several artifacts full example (with all optional attributes)
+	/// <code><![CDATA[
+	/// <PublishArtifacts
+	///		IsAddTimestamp="true"
+	///		FlowId="1"
+	///		Artifacts="File1.zip;File2.zip"
+	/// />
 	/// ]]></code>
 	/// </example>
 	public class PublishArtifacts : TeamCityTask

@@ -65,5 +65,21 @@ namespace Tests
 			Assert.That(message.ToString(), Is.EqualTo(expected));
 			Assert.That(message.ToString(), Is.EqualTo(expected));
 		}
+
+		[Test]
+		public void BlockOpen()
+		{
+			const string name = "b1";
+			BlockOpenTeamCityMessage message = new BlockOpenTeamCityMessage(name);
+			Assert.That(message.ToString(), Is.EqualTo("##teamcity[blockOpened name='b1']"));
+		}
+		
+		[Test]
+		public void BlockClose()
+		{
+			const string name = "b1";
+			BlockCloseTeamCityMessage message = new BlockCloseTeamCityMessage(name);
+			Assert.That(message.ToString(), Is.EqualTo("##teamcity[blockClosed name='b1']"));
+		}
 	}
 }

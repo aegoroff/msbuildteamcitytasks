@@ -47,7 +47,7 @@ namespace MSBuild.TeamCity.Tasks
 		/// Returns a <see cref="String"/> that represents the current <see cref="MessageAttribute"/>.
 		/// </summary>
 		/// <returns>
-		/// A <see cref="T:System.String"/> that represents the current <see cref="MessageAttribute"/>.
+		/// A <see cref="System.String"/> that represents the current <see cref="MessageAttribute"/>.
 		/// </returns>
 		/// <filterpriority>2</filterpriority>
 		public override string ToString()

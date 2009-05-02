@@ -92,5 +92,152 @@ namespace Tests
 			MessageAttribute attribute = new MessageAttribute(Value + "\r\n|']");
 			Assert.That(attribute.ToString(), Is.EqualTo("'v|r|n|||'|]'"));
 		}
+
+		[Test]
+		public void EqOperator()
+		{
+			MessageAttribute a1 = new MessageAttribute(Name, Value + 1);
+			MessageAttribute a2 = new MessageAttribute(Name, Value + 2);
+			Assert.That(a1 == a2);
+		}
+		
+		[Test]
+		public void EqOperatorEmptyObjects()
+		{
+			MessageAttribute a1 = new MessageAttribute();
+			MessageAttribute a2 = new MessageAttribute();
+			Assert.That(a1 == a2);
+		}
+
+		[Test]
+		public void EqOperatorSameObject()
+		{
+			MessageAttribute a1 = new MessageAttribute(Name, Value);
+			MessageAttribute a2 = a1;
+			Assert.That(a1 == a2);
+		}
+		
+		[Test]
+		public void EqOperatorNullFirst()
+		{
+			MessageAttribute a1 = new MessageAttribute(Name, Value);
+			Assert.That(null == a1, Is.False);
+		}
+		
+		[Test]
+		public void EqOperatorNullSecond()
+		{
+			MessageAttribute a1 = new MessageAttribute(Name, Value);
+			Assert.That(a1 == null, Is.False);
+		}
+
+		[Test]
+		public void NeOperator()
+		{
+			MessageAttribute a1 = new MessageAttribute(Name + 1, Value);
+			MessageAttribute a2 = new MessageAttribute(Name + 2, Value);
+			Assert.That(a1 != a2);
+		}
+		
+		[Test]
+		public void NeOperatorFalse()
+		{
+			MessageAttribute a1 = new MessageAttribute(Name + 1, Value);
+			MessageAttribute a2 = a1;
+			Assert.That(a1 != a2, Is.False);
+		}
+
+		[Test]
+		public void EqualsMethod()
+		{
+			MessageAttribute a1 = new MessageAttribute(Name, Value + 1);
+			MessageAttribute a2 = new MessageAttribute(Name, Value + 2);
+			Assert.That(a1.Equals(a2));
+		}
+
+		[Test]
+		public void EqualsMethodFalse()
+		{
+			MessageAttribute a1 = new MessageAttribute(Name + 1, Value);
+			MessageAttribute a2 = new MessageAttribute(Name + 2, Value);
+			Assert.That(a1.Equals(a2), Is.False);
+		}
+		
+		[Test]
+		public void EqualsMethodSameObject()
+		{
+			MessageAttribute a1 = new MessageAttribute(Name, Value);
+			MessageAttribute a2 = a1;
+			Assert.That(a1.Equals(a2));
+		}
+		
+		[Test]
+		public void EqualsMethodEmptyObjects()
+		{
+			MessageAttribute a1 = new MessageAttribute();
+			MessageAttribute a2 = new MessageAttribute();
+			Assert.That(a1.Equals(a2));
+		}
+
+		[Test]
+		public void EqualsMethodNullOther()
+		{
+			MessageAttribute a1 = new MessageAttribute(Name, Value);
+			const MessageAttribute a2 = null;
+			Assert.That(a1.Equals(a2), Is.False);
+		}
+
+		[Test]
+		public void EqualsObjMethod()
+		{
+			MessageAttribute a1 = new MessageAttribute(Name, Value + 1);
+			object a2 = new MessageAttribute(Name, Value + 2);
+			Assert.That(a1.Equals(a2));
+		}
+		
+		[Test]
+		public void EqualsObjMethodSameObject()
+		{
+			MessageAttribute a1 = new MessageAttribute(Name, Value + 1);
+			object a2 = a1;
+			Assert.That(a1.Equals(a2));
+		}
+
+		[Test]
+		public void EqualsObjMethodFalse()
+		{
+			MessageAttribute a1 = new MessageAttribute(Name + 1, Value);
+			object a2 = new MessageAttribute(Name + 2, Value);
+			Assert.That(a1.Equals(a2), Is.False);
+		}
+
+		[Test]
+		public void EqualsObjMethodNullOther()
+		{
+			MessageAttribute a1 = new MessageAttribute(Name, Value);
+			const object a2 = null;
+			Assert.That(a1.Equals(a2), Is.False);
+		}
+		
+		[Test]
+		public void EqualsObjMethodDifferentType()
+		{
+			MessageAttribute a1 = new MessageAttribute(Name, Value);
+			Assert.That(a1.Equals(Name), Is.False);
+		}
+		
+		[Test]
+		public void GetHashCodeT()
+		{
+			MessageAttribute a1 = new MessageAttribute(Name, Value);
+			Assert.That(a1.GetHashCode(), Is.EqualTo(Name.GetHashCode()));
+		}
+		
+		[Test]
+		public void GetHashCodeEmptyObject()
+		{
+			MessageAttribute a1 = new MessageAttribute();
+			Assert.That(a1.GetHashCode(), Is.EqualTo(0));
+		}
 	}
 }

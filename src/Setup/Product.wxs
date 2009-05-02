@@ -73,7 +73,7 @@
 			</Directory>
 			<!-- MSBuildTeamCityTasks Start menu folder -->
 			<Directory Id="ProgramMenuFolder" Name="Programs">
-				<Directory Id="MSBuildTeamCityTasksProgramMenuFolder" Name="MSBuild TeamCity Tasks $(var.Version)">
+				<Directory Id="MSBuildTeamCityTasksProgramMenuFolder" Name="MSBuild TeamCity Tasks">
 					<Component Id="MSBuildTeamCityTasksProgramMenuItems" Guid="F9279723-F032-4b73-BE23-D1ECB2A4A236">
 						<!-- 
 							Fix ICE 38 by adding a dummy registry key that is the key for this shortcut.

@@ -54,6 +54,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PublishArtifacts.cs" />
     <Compile Include="PublishArtifactTeamCityMessage.cs" />
+    <Compile Include="ReportMessage.cs" />
+    <Compile Include="ReportMessageTeamCityMessage.cs" />
     <Compile Include="TeamCityMessage.cs" />
     <Compile Include="TeamCityTask.cs" />
   </ItemGroup>

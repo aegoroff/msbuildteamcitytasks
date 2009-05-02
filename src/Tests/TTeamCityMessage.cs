@@ -81,5 +81,32 @@ namespace Tests
 			BlockCloseTeamCityMessage message = new BlockCloseTeamCityMessage(name);
 			Assert.That(message.ToString(), Is.EqualTo("##teamcity[blockClosed name='b1']"));
 		}
+		
+		[Test]
+		public void ReportMessageFull()
+		{
+			const string text = "t";
+			const string error = "e";
+			const string status = "ERROR";
+			ReportMessageTeamCityMessage message = new ReportMessageTeamCityMessage(text, status, error);
+			Assert.That(message.ToString(), Is.EqualTo("##teamcity[message text='t' status='ERROR' errorDetails='e']"));
+		}
+		
+		[Test]
+		public void ReportMessageStatusAndText()
+		{
+			const string text = "t";
+			const string status = "WARNING";
+			ReportMessageTeamCityMessage message = new ReportMessageTeamCityMessage(text, status);
+			Assert.That(message.ToString(), Is.EqualTo("##teamcity[message text='t' status='WARNING']"));
+		}
+		
+		[Test]
+		public void ReportMessageText()
+		{
+			const string text = "t";
+			ReportMessageTeamCityMessage message = new ReportMessageTeamCityMessage(text);
+			Assert.That(message.ToString(), Is.EqualTo("##teamcity[message text='t']"));
+		}
 	}
 }

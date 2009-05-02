@@ -7,7 +7,6 @@
 using System;
 using System.Xml;
 using Microsoft.Build.Framework;
-using Microsoft.Build.Utilities;
 
 namespace MSBuild.TeamCity.Tasks
 {
@@ -16,13 +15,13 @@ namespace MSBuild.TeamCity.Tasks
 		internal const string Coverage = "coverage";
 		internal const string FunctionCoverage = "functionCoverage";
 	}
-	
+
 	internal struct TeamCityStatisticKey
 	{
 		internal const string NCoverCoverage = "NCoverCoverage";
 		internal const string NCoverFunctionCoverage = "NCoverCoverageF";
 	}
-	
+
 	/// <summary>
 	/// Represents NCoverExplorer statistic reporter into TeamCity
 	/// </summary>
@@ -31,7 +30,7 @@ namespace MSBuild.TeamCity.Tasks
 	/// <NCoverCoverage NcoverReportPath="C:\SummaryReport.xml" />
 	/// ]]></code>
 	/// </example>
-	public class NCoverCoverage : Task
+	public class NCoverCoverage : TeamCityTask
 	{
 		/// <summary>
 		/// Gets or sets full path to NCoverExplorer summmary report XML file
@@ -83,7 +82,8 @@ namespace MSBuild.TeamCity.Tasks
 		{
 			reader.MoveToAttribute(attribute);
 			float coverage = reader.ReadContentAsFloat();
-			BuildStatisticTeamCityMessage message = new BuildStatisticTeamCityMessage(property, coverage);
+			BuildStatisticTeamCityMessage message = new BuildStatisticTeamCityMessage(property, coverage)
+			                                        	{ IsAddTimeStamp = IsAddTimestamp, FlowId = FlowId };
 			LogMessage(message.ToString());
 		}
 	}

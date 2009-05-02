@@ -5,7 +5,6 @@
  */
 
 using Microsoft.Build.Framework;
-using Microsoft.Build.Utilities;
 
 namespace MSBuild.TeamCity.Tasks
 {
@@ -17,7 +16,7 @@ namespace MSBuild.TeamCity.Tasks
 	/// <PublishArtifacts Artifacts="File1.zip;File2.zip" />
 	/// ]]></code>
 	/// </example>
-	public class PublishArtifacts : Task
+	public class PublishArtifacts : TeamCityTask
 	{
 		/// <summary>
 		/// Gets or sets the artifacts to publish.
@@ -36,7 +35,8 @@ namespace MSBuild.TeamCity.Tasks
 		{
 			foreach ( ITaskItem item in Artifacts )
 			{
-				PublishArtifactTeamCityMessage message = new PublishArtifactTeamCityMessage(item.ItemSpec);
+				PublishArtifactTeamCityMessage message = new PublishArtifactTeamCityMessage(item.ItemSpec)
+				                                         	{ IsAddTimeStamp = IsAddTimestamp, FlowId = FlowId };
 				Log.LogMessage(MessageImportance.High, message.ToString());
 			}
 			return true;

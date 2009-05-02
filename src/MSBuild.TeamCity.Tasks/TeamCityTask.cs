@@ -1,0 +1,28 @@
+/*
+ * Created by: egr
+ * Created at: 01.05.2009
+ * © 2007-2009 Alexander Egorov
+ */
+
+using Microsoft.Build.Utilities;
+
+namespace MSBuild.TeamCity.Tasks
+{
+	/// <summary>
+	/// Represent abstract TeamCity task
+	/// </summary>
+	public abstract class TeamCityTask : Task
+	{
+		/// <summary>
+		/// Gets or sets message's timestamp attribute. False by default
+		/// </summary>
+		public bool IsAddTimestamp { get; set; }
+
+		/// <summary>
+		/// Gets or sets message flowId. The flowId is a unique identifier of the messages flow in a build. 
+		/// Flow tracking is necessary for example to distinguish separate processes running in parallel. 
+		/// The identifier is a string that should be unique in the scope of individual build.
+		/// </summary>
+		public string FlowId { get; set; }
+	}
+}

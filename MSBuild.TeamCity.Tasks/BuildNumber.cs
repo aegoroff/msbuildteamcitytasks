@@ -5,7 +5,6 @@
  */
 
 using Microsoft.Build.Framework;
-using Microsoft.Build.Utilities;
 
 namespace MSBuild.TeamCity.Tasks
 {
@@ -17,7 +16,7 @@ namespace MSBuild.TeamCity.Tasks
 	/// <BuildNumber Number="20.3" />
 	/// ]]></code>
 	/// </example>
-	public class BuildNumber : Task
+	public class BuildNumber : TeamCityTask
 	{
 		/// <summary>
 		/// Build number value
@@ -33,7 +32,11 @@ namespace MSBuild.TeamCity.Tasks
 		/// </returns>
 		public override bool Execute()
 		{
-			BuildNumberTeamCityMessage message = new BuildNumberTeamCityMessage(Number);
+			BuildNumberTeamCityMessage message = new BuildNumberTeamCityMessage(Number)
+			                                     	{
+			                                     		IsAddTimeStamp = IsAddTimestamp,
+			                                     		FlowId = FlowId
+			                                     	};
 			Log.LogMessage(MessageImportance.High, message.ToString());
 			return true;
 		}

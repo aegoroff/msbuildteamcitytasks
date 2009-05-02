@@ -76,25 +76,12 @@ namespace MSBuild.TeamCity.Tasks
 			return !Log.HasLoggedErrors;
 		}
 
-		private void LogMessage( string message )
-		{
-			try
-			{
-				Log.LogMessage(MessageImportance.High, message);
-			}
-			catch ( Exception e )
-			{
-				Console.WriteLine(e);
-			}
-		}
-
 		private void WriteCoverageStatistic( XmlReader reader, string attribute, string property )
 		{
 			reader.MoveToAttribute(attribute);
 			float coverage = reader.ReadContentAsFloat();
-			BuildStatisticTeamCityMessage message = new BuildStatisticTeamCityMessage(property, coverage)
-			                                        	{ IsAddTimeStamp = IsAddTimestamp, FlowId = FlowId };
-			LogMessage(message.ToString());
+			BuildStatisticTeamCityMessage message = new BuildStatisticTeamCityMessage(property, coverage);
+			Write(message);
 		}
 	}
 }

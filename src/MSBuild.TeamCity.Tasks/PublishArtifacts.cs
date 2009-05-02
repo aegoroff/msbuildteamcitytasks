@@ -45,9 +45,8 @@ namespace MSBuild.TeamCity.Tasks
 		{
 			foreach ( ITaskItem item in Artifacts )
 			{
-				PublishArtifactTeamCityMessage message = new PublishArtifactTeamCityMessage(item.ItemSpec)
-				                                         	{ IsAddTimeStamp = IsAddTimestamp, FlowId = FlowId };
-				Log.LogMessage(MessageImportance.High, message.ToString());
+				PublishArtifactTeamCityMessage message = new PublishArtifactTeamCityMessage(item.ItemSpec);
+				Write(message);
 			}
 			return true;
 		}

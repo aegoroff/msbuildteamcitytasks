@@ -69,25 +69,6 @@
 			Projects="MSBuild.TeamCity.Tasks.sln"
 			Properties="Configuration=$(Configuration)" 
 		/>
-		<!-- Updating WiX files -->
-		<FileUpdate
-			Files="$(MSBuildProjectDirectory)\Setup\Product.wxs"
-			Regex='\$\(var\.SolutionDir\)'
-			ReplacementText='$(MSBuildProjectDirectory)\' />
-		<Exec
-			WorkingDirectory="$(MSBuildProjectDirectory)"
-			Command='"$(SHFBPath)\SandcastleBuilderConsole.exe" MSBuildTeamCityTasks.shfb'
-		/>
-		<MSBuild
-			StopOnFirstFailure="true"
-			Projects="Setup\Setup.wixproj"
-			Properties="Configuration=$(Configuration)" 
-		/>
-		<Copy
-			SourceFiles="@(SetupFile)"
-			DestinationFiles="@(SetupDestinationFile)"
-		/>
-		<Delete Files="@(SetupFile)" />
 	</Target>
 	<!-- Running server's and GUI's unit tests task -->
 	<Target Name="UnitTesting" DependsOnTargets="Compile">
@@ -164,6 +145,25 @@
 	</Target>
 	<!-- Setting next build version and finish build process -->
 	<Target Name="Build" DependsOnTargets="Zipping">
+		<!-- Updating WiX files -->
+		<FileUpdate
+			Files="$(MSBuildProjectDirectory)\Setup\Product.wxs"
+			Regex='\$\(var\.SolutionDir\)'
+			ReplacementText='$(MSBuildProjectDirectory)\' />
+		<Exec
+			WorkingDirectory="$(MSBuildProjectDirectory)"
+			Command='"$(SHFBPath)\SandcastleBuilderConsole.exe" MSBuildTeamCityTasks.shfb'
+		/>
+		<MSBuild
+			StopOnFirstFailure="true"
+			Projects="Setup\Setup.wixproj"
+			Properties="Configuration=$(Configuration)" 
+		/>
+		<Copy
+			SourceFiles="@(SetupFile)"
+			DestinationFiles="@(SetupDestinationFile)"
+		/>
+		<Delete Files="@(SetupFile)" />
 		<Message Text="Build $(Major).$(Minor).$(Build).$(Revision) Complete"/>
 	</Target>
 </Project>

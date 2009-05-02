@@ -18,7 +18,7 @@ namespace MSBuild.TeamCity.Tasks
 	public abstract class TeamCityMessage
 	{
 		private readonly IList<MessageAttribute> _attributes = new List<MessageAttribute>();
-		
+
 		/// <summary>
 		/// Gets message name
 		/// </summary>
@@ -44,21 +44,23 @@ namespace MSBuild.TeamCity.Tasks
 		public string FlowId { get; set; }
 
 		/// <summary>
-		/// Returns a <see cref="T:System.String"/> that represents the current <see cref="T:System.Object"/>.
+		/// Returns a <see cref="String"/> that represents the current <see cref="MessageAttribute"/>.
 		/// </summary>
 		/// <returns>
-		/// A <see cref="T:System.String"/> that represents the current <see cref="T:System.Object"/>.
+		/// A <see cref="T:System.String"/> that represents the current <see cref="MessageAttribute"/>.
 		/// </returns>
 		/// <filterpriority>2</filterpriority>
 		public override string ToString()
 		{
-			if ( IsAddTimeStamp )
+			MessageAttribute timestamp = new MessageAttribute("timestamp", DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss.fffzzz"));
+			MessageAttribute flowId = new MessageAttribute("flowId", FlowId);
+			if ( IsAddTimeStamp && !_attributes.Contains(timestamp) )
 			{
-				_attributes.Add(new MessageAttribute("timestamp", DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss.fffzzz")));
+				_attributes.Add(timestamp);
 			}
-			if ( !string.IsNullOrEmpty(FlowId) )
+			if ( !string.IsNullOrEmpty(FlowId) && !_attributes.Contains(flowId) )
 			{
-				_attributes.Add(new MessageAttribute("flowId", FlowId));
+				_attributes.Add(flowId);
 			}
 			StringBuilder sb = new StringBuilder();
 			foreach ( MessageAttribute attribute in _attributes )

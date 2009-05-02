@@ -55,5 +55,15 @@ namespace Tests
 			string expected = string.Format("##teamcity[buildNumber '1.0' timestamp='{0}' flowId='1']", DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss.fffzzz"));
 			Assert.That(message.ToString(), Is.EqualTo(expected));
 		}
+		
+		[Test]
+		public void BuildNumberFlowIdToStringTwice()
+		{
+			const string number = "1.0";
+			BuildNumberTeamCityMessage message = new BuildNumberTeamCityMessage(number) { IsAddTimeStamp = true, FlowId = "1"};
+			string expected = string.Format("##teamcity[buildNumber '1.0' timestamp='{0}' flowId='1']", DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss.fffzzz"));
+			Assert.That(message.ToString(), Is.EqualTo(expected));
+			Assert.That(message.ToString(), Is.EqualTo(expected));
+		}
 	}
 }

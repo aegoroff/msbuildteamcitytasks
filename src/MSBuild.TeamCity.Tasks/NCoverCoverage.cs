@@ -27,7 +27,17 @@ namespace MSBuild.TeamCity.Tasks
 	/// </summary>
 	/// <example>Reports statistic using NCoverExplorer summary report.
 	/// <code><![CDATA[
-	/// <NCoverCoverage NcoverReportPath="C:\SummaryReport.xml" />
+	/// <NCoverCoverage
+	///		NcoverReportPath="C:\SummaryReport.xml"
+	/// />
+	/// ]]></code>
+	/// Reports statistic using NCoverExplorer summary report full example (with all optional attributes).
+	/// <code><![CDATA[
+	/// <NCoverCoverage
+	///		IsAddTimestamp="true"
+	///		FlowId="1"
+	///		NcoverReportPath="C:\SummaryReport.xml"
+	/// />
 	/// ]]></code>
 	/// </example>
 	public class NCoverCoverage : TeamCityTask

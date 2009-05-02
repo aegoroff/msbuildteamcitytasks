@@ -82,9 +82,7 @@ namespace MSBuild.TeamCity.Tasks
 				message = new ReportMessageTeamCityMessage(Text);
 			}
 
-			message.IsAddTimeStamp = IsAddTimestamp;
-			message.FlowId = FlowId;
-			Log.LogMessage(MessageImportance.High, message.ToString());
+			Write(message);
 			return true;
 		}
 	}

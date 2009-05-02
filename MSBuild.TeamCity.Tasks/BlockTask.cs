@@ -33,10 +33,7 @@ namespace MSBuild.TeamCity.Tasks
 		/// </returns>
 		public override bool Execute()
 		{
-			BlockTeamCityMessage message = CreateMessage();
-			message.IsAddTimeStamp = IsAddTimestamp;
-			message.FlowId = FlowId;
-			Log.LogMessage(MessageImportance.High, message.ToString());
+			Write(CreateMessage());
 			return true;
 		}
 	}

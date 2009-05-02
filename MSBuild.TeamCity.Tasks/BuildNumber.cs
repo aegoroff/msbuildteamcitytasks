@@ -40,12 +40,8 @@ namespace MSBuild.TeamCity.Tasks
 		/// </returns>
 		public override bool Execute()
 		{
-			BuildNumberTeamCityMessage message = new BuildNumberTeamCityMessage(Number)
-			                                     	{
-			                                     		IsAddTimeStamp = IsAddTimestamp,
-			                                     		FlowId = FlowId
-			                                     	};
-			Log.LogMessage(MessageImportance.High, message.ToString());
+			BuildNumberTeamCityMessage message = new BuildNumberTeamCityMessage(Number);
+			Write(message);
 			return true;
 		}
 	}

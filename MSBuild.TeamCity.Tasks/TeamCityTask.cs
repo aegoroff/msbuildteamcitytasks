@@ -4,6 +4,8 @@
  * © 2007-2009 Alexander Egorov
  */
 
+using System;
+using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
 
 namespace MSBuild.TeamCity.Tasks
@@ -24,5 +26,32 @@ namespace MSBuild.TeamCity.Tasks
 		/// The identifier is a string that should be unique in the scope of individual build.
 		/// </summary>
 		public string FlowId { get; set; }
+
+		/// <summary>
+		/// Writes <see cref="TeamCityMessage"/> into MSBuild log using MessageImportance.High level
+		/// </summary>
+		/// <param name="message">Message to write</param>
+		protected void Write( TeamCityMessage message )
+		{
+			message.IsAddTimeStamp = IsAddTimestamp;
+			message.FlowId = FlowId;
+			LogMessage(message.ToString());
+		}
+
+		/// <summary>
+		/// Writes message into MSBuild log using MessageImportance.High level
+		/// </summary>
+		/// <param name="message">Message to write</param>
+		protected void LogMessage( string message )
+		{
+			try
+			{
+				Log.LogMessage(MessageImportance.High, message);
+			}
+			catch ( Exception e )
+			{
+				Console.WriteLine(e);
+			}
+		}
 	}
 }

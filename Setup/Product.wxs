@@ -73,14 +73,14 @@
 			</Directory>
 			<!-- MSBuildTeamCityTasks Start menu folder -->
 			<Directory Id="ProgramMenuFolder" Name="Programs">
-				<Directory Id="MSBuildTeamCityTasksProgramMenuFolder" Name="[ProductName]">
+				<Directory Id="MSBuildTeamCityTasksProgramMenuFolder" Name="MSBuild TeamCity Tasks $(var.Version)">
 					<Component Id="MSBuildTeamCityTasksProgramMenuItems" Guid="F9279723-F032-4b73-BE23-D1ECB2A4A236">
 						<!-- 
 							Fix ICE 38 by adding a dummy registry key that is the key for this shortcut.
 							http://msdn.microsoft.com/library/en-us/msi/setup/ice38.asp
 						-->
 						<Registry Id="MSBuildTeamCityTasksStartMenuShortcutRegistryKey" Root="HKCU" KeyPath="yes" Key="Software\MSBuildTeamCityTasks" />
-						<Shortcut Name="[ProductName]" Target="[!MSBuild.TeamCity.Tasks.chm]" Id="MSBuildTeamCityTasksStartMenuShortcut" WorkingDirectory="MSBuildTeamCityTasks" Directory="MSBuildTeamCityTasksProgramMenuFolder" />
+						<Shortcut Name="MSBuild TeamCity Tasks $(var.Version) Documentation" Target="[!MSBuild.TeamCity.Tasks.chm]" Id="MSBuildTeamCityTasksStartMenuShortcut" WorkingDirectory="MSBuildTeamCityTasks" Directory="MSBuildTeamCityTasksProgramMenuFolder" />
 						<!--
 							Fix ICE64 by adding a remove folder element 
 							http://windowssdk.msdn.microsoft.com/en-us/library/ms704358.aspx

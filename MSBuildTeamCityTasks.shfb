@@ -17,6 +17,7 @@
             <filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.BuildNumber" filterName="BuildNumber" isExposed="True" />
             <filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.NCoverCoverage" filterName="NCoverCoverage" isExposed="True" />
             <filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.PublishArtifacts" filterName="PublishArtifacts" isExposed="True" />
+            <filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.ReportMessage" filterName="ReportMessage" isExposed="True" />
             <filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.TeamCityTask" filterName="TeamCityTask" isExposed="True" />
         </filter>
     </apiFilter>

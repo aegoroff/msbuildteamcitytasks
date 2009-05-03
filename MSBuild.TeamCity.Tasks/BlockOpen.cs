@@ -25,12 +25,15 @@ namespace MSBuild.TeamCity.Tasks
 	public class BlockOpen : BlockTask
 	{
 		/// <summary>
-		/// Creates concrete message class
+		/// When overridden in a derived class, executes the task.
 		/// </summary>
-		/// <returns></returns>
-		protected override BlockTeamCityMessage CreateMessage()
+		/// <returns>
+		/// true if the task successfully executed; otherwise, false.
+		/// </returns>
+		public override bool Execute()
 		{
-			return new BlockOpenTeamCityMessage(Name);
+			Write(new BlockOpenTeamCityMessage(Name));
+			return true;
 		}
 	}
 }

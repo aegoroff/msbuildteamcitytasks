@@ -45,8 +45,7 @@ namespace MSBuild.TeamCity.Tasks
 		{
 			foreach ( ITaskItem item in Artifacts )
 			{
-				SimpleTeamCityMessage message = new SimpleTeamCityMessage("publishArtifacts", item.ItemSpec);
-				Write(message);
+				Write(new SimpleTeamCityMessage("publishArtifacts", item.ItemSpec));
 			}
 			return true;
 		}

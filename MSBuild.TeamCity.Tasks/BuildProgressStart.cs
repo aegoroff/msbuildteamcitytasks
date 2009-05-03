@@ -25,12 +25,15 @@ namespace MSBuild.TeamCity.Tasks
 	public class BuildProgressStart : BuildProgressTask
 	{
 		/// <summary>
-		/// Creates concrete message class
+		/// When overridden in a derived class, executes the task.
 		/// </summary>
-		/// <returns></returns>
-		protected override SimpleTeamCityMessage CreateMessage()
+		/// <returns>
+		/// true if the task successfully executed; otherwise, false.
+		/// </returns>
+		public override bool Execute()
 		{
-			return new SimpleTeamCityMessage("progressStart", Message);
+			Write(new SimpleTeamCityMessage("progressStart", Message));
+			return true;
 		}
 	}
 }

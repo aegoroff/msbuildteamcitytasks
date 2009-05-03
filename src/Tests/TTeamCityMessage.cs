@@ -102,5 +102,14 @@ namespace Tests
 			ReportMessageTeamCityMessage message = new ReportMessageTeamCityMessage(text);
 			Assert.That(message.ToString(), Is.EqualTo("##teamcity[message text='t']"));
 		}
+
+		[Test]
+		public void BuildStatus()
+		{
+			const string text = "t";
+			const string status = "SUCCESS";
+			BuildStatusTeamCityMessage message = new BuildStatusTeamCityMessage(status, text);
+			Assert.That(message.ToString(), Is.EqualTo("##teamcity[buildStatus status='SUCCESS' text='t']"));
+		}
 	}
 }

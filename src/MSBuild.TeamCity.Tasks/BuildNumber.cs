@@ -40,7 +40,7 @@ namespace MSBuild.TeamCity.Tasks
 		/// </returns>
 		public override bool Execute()
 		{
-			BuildNumberTeamCityMessage message = new BuildNumberTeamCityMessage(Number);
+			SimpleTeamCityMessage message = new SimpleTeamCityMessage("buildNumber", Number);
 			Write(message);
 			return true;
 		}

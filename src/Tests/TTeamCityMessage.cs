@@ -14,6 +14,8 @@ namespace Tests
 	[TestFixture]
 	public class TTeamCityMessage
 	{
+		private const string BuildNumber = "buildNumber";
+
 		[Test]
 		public void BuildStat()
 		{
@@ -23,44 +25,36 @@ namespace Tests
 		}
 	
 		[Test]
-		public void BuildNumber()
+		public void SimpleMessage()
 		{
 			const string number = "1.0";
-			BuildNumberTeamCityMessage message = new BuildNumberTeamCityMessage(number);
+			SimpleTeamCityMessage message = new SimpleTeamCityMessage(BuildNumber, number);
 			Assert.That(message.ToString(), Is.EqualTo("##teamcity[buildNumber '1.0']"));
-		}
-		
-		[Test]
-		public void PublishArtifacts()
-		{
-			const string path = "1.msi";
-			PublishArtifactTeamCityMessage message = new PublishArtifactTeamCityMessage(path);
-			Assert.That(message.ToString(), Is.EqualTo("##teamcity[publishArtifacts '1.msi']"));
 		}
 
 		[Test]
-		public void BuildNumberAddTimeStamp()
+		public void SimpleMessageAddTimeStamp()
 		{
 			const string number = "1.0";
-			BuildNumberTeamCityMessage message = new BuildNumberTeamCityMessage(number) { IsAddTimeStamp = true };
+			SimpleTeamCityMessage message = new SimpleTeamCityMessage(BuildNumber, number) { IsAddTimeStamp = true };
 			string expected = string.Format("##teamcity[buildNumber '1.0' timestamp='{0}']", DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss.fffzzz"));
 			Assert.That(message.ToString(), Is.EqualTo(expected));
 		}
 		
 		[Test]
-		public void BuildNumberFlowId()
+		public void SimpleMessageFlowId()
 		{
 			const string number = "1.0";
-			BuildNumberTeamCityMessage message = new BuildNumberTeamCityMessage(number) { IsAddTimeStamp = true, FlowId = "1"};
+			SimpleTeamCityMessage message = new SimpleTeamCityMessage(BuildNumber, number) { IsAddTimeStamp = true, FlowId = "1" };
 			string expected = string.Format("##teamcity[buildNumber '1.0' timestamp='{0}' flowId='1']", DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss.fffzzz"));
 			Assert.That(message.ToString(), Is.EqualTo(expected));
 		}
 		
 		[Test]
-		public void BuildNumberFlowIdToStringTwice()
+		public void SimpleMessageFlowIdToStringTwice()
 		{
 			const string number = "1.0";
-			BuildNumberTeamCityMessage message = new BuildNumberTeamCityMessage(number) { IsAddTimeStamp = true, FlowId = "1"};
+			SimpleTeamCityMessage message = new SimpleTeamCityMessage(BuildNumber, number) { IsAddTimeStamp = true, FlowId = "1" };
 			string expected = string.Format("##teamcity[buildNumber '1.0' timestamp='{0}' flowId='1']", DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss.fffzzz"));
 			Assert.That(message.ToString(), Is.EqualTo(expected));
 			Assert.That(message.ToString(), Is.EqualTo(expected));

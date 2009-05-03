@@ -4,8 +4,6 @@
  * © 2007-2009 Alexander Egorov
  */
 
-using Microsoft.Build.Framework;
-
 namespace MSBuild.TeamCity.Tasks
 {
 	/// <summary>
@@ -24,24 +22,15 @@ namespace MSBuild.TeamCity.Tasks
 	/// />
 	/// ]]></code>
 	/// </example>
-	public class BuildProgressMessage : TeamCityTask
+	public class BuildProgressMessage : BuildProgressTask
 	{
 		/// <summary>
-		/// Gets o sets progress message text
+		/// Creates concrete message class
 		/// </summary>
-		[Required]
-		public string Message { get; set; }
-		
-		/// <summary>
-		/// When overridden in a derived class, executes the task.
-		/// </summary>
-		/// <returns>
-		/// true if the task successfully executed; otherwise, false.
-		/// </returns>
-		public override bool Execute()
+		/// <returns></returns>
+		protected override SimpleTeamCityMessage CreateMessage()
 		{
-			Write(new SimpleTeamCityMessage("progressMessage", Message));
-			return true;
+			return new SimpleTeamCityMessage("progressMessage", Message);
 		}
 	}
 }

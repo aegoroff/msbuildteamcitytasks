@@ -25,15 +25,12 @@ namespace MSBuild.TeamCity.Tasks
 	public class BlockClose : BlockTask
 	{
 		/// <summary>
-		/// When overridden in a derived class, executes the task.
+		/// Creates concrete message class
 		/// </summary>
-		/// <returns>
-		/// true if the task successfully executed; otherwise, false.
-		/// </returns>
-		public override bool Execute()
+		/// <returns></returns>
+		protected override BlockTeamCityMessage CreateMessage()
 		{
-			Write(new BlockCloseTeamCityMessage(Name));
-			return true;
+			return new BlockCloseTeamCityMessage(Name);
 		}
 	}
 }

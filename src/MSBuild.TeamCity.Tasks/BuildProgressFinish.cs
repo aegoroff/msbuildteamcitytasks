@@ -4,6 +4,8 @@
  * © 2007-2009 Alexander Egorov
  */
 
+using Microsoft.Build.Framework;
+
 namespace MSBuild.TeamCity.Tasks
 {
 	/// <summary>
@@ -22,8 +24,14 @@ namespace MSBuild.TeamCity.Tasks
 	/// />
 	/// ]]></code>
 	/// </example>
-	public class BuildProgressFinish : BuildProgressTask
+	public class BuildProgressFinish : TeamCityTask
 	{
+		/// <summary>
+		/// Gets o sets progress message text
+		/// </summary>
+		[Required]
+		public string Message { get; set; }
+		
 		/// <summary>
 		/// When overridden in a derived class, executes the task.
 		/// </summary>

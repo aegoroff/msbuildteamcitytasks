@@ -50,8 +50,7 @@ namespace MSBuild.TeamCity.Tasks
 		/// </returns>
 		public override bool Execute()
 		{
-			var message = new BuildStatisticTeamCityMessage(Key, Value);
-			Write(message);
+			Write(new BuildStatisticTeamCityMessage(Key, Value));
 			return true;
 		}
 	}

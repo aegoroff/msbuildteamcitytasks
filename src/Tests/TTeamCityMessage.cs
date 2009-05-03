@@ -111,5 +111,14 @@ namespace Tests
 			BuildStatusTeamCityMessage message = new BuildStatusTeamCityMessage(status, text);
 			Assert.That(message.ToString(), Is.EqualTo("##teamcity[buildStatus status='SUCCESS' text='t']"));
 		}
+		
+		[Test]
+		public void ImportData()
+		{
+			const string type = "FxCop";
+			const string path = "p";
+			ImportDataTeamCityMessage message = new ImportDataTeamCityMessage(type, path);
+			Assert.That(message.ToString(), Is.EqualTo("##teamcity[importData type='FxCop' path='p']"));
+		}
 	}
 }

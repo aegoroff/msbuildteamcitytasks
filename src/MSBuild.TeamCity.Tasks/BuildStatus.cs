@@ -47,8 +47,7 @@ namespace MSBuild.TeamCity.Tasks
 		/// </returns>
 		public override bool Execute()
 		{
-			var message = new BuildStatusTeamCityMessage(Status, Text);
-			Write(message);
+			Write(new BuildStatusTeamCityMessage(Status, Text));
 			return true;
 		}
 	}

@@ -18,23 +18,5 @@ namespace MSBuild.TeamCity.Tasks
 		/// </summary>
 		[Required]
 		public string Name { get; set; }
-
-		/// <summary>
-		/// Creates concrete message class
-		/// </summary>
-		/// <returns></returns>
-		protected abstract BlockTeamCityMessage CreateMessage();
-
-		/// <summary>
-		/// When overridden in a derived class, executes the task.
-		/// </summary>
-		/// <returns>
-		/// true if the task successfully executed; otherwise, false.
-		/// </returns>
-		public override bool Execute()
-		{
-			Write(CreateMessage());
-			return true;
-		}
 	}
 }

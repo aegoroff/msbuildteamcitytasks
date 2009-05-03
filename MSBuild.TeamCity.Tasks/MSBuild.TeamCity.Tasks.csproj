@@ -53,6 +53,8 @@
     <Compile Include="BuildProgressTask.cs" />
     <Compile Include="BuildStatus.cs" />
     <Compile Include="BuildStatusTeamCityMessage.cs" />
+    <Compile Include="ImportData.cs" />
+    <Compile Include="ImportDataTeamCityMessage.cs" />
     <Compile Include="ReportBuildStatistic.cs" />
     <Compile Include="SimpleTeamCityMessage.cs" />
     <Compile Include="BuildStatisticTeamCityMessage.cs" />

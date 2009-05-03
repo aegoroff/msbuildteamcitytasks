@@ -14,7 +14,6 @@
             <filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.BlockCloseTeamCityMessage" filterName="BlockCloseTeamCityMessage" isExposed="False" />
             <filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.BlockOpenTeamCityMessage" filterName="BlockOpenTeamCityMessage" isExposed="False" />
             <filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.BlockTeamCityMessage" filterName="BlockTeamCityMessage" isExposed="False" />
-            <filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.BuildProgressTask" filterName="BuildProgressTask" isExposed="False" />
             <filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.BuildStatisticTeamCityMessage" filterName="BuildStatisticTeamCityMessage" isExposed="False" />
             <filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.BuildStatusTeamCityMessage" filterName="BuildStatusTeamCityMessage" isExposed="False" />
             <filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.MessageAttribute" filterName="MessageAttribute" isExposed="False" />

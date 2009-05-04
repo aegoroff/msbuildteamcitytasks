@@ -5,7 +5,6 @@
     <MSBuildTeamCityTasksLib>$(MSBuildTeamCityTasksPath)\MSBuild.TeamCity.Tasks.dll</MSBuildTeamCityTasksLib>
   </PropertyGroup>
 
-  <UsingTask AssemblyFile="$(MSBuildTeamCityTasksLib)" TaskName="MSBuild.TeamCity.Tasks.NCoverCoverage" />
   <UsingTask AssemblyFile="$(MSBuildTeamCityTasksLib)" TaskName="MSBuild.TeamCity.Tasks.BuildNumber" />
   <UsingTask AssemblyFile="$(MSBuildTeamCityTasksLib)" TaskName="MSBuild.TeamCity.Tasks.PublishArtifacts" />
   <UsingTask AssemblyFile="$(MSBuildTeamCityTasksLib)" TaskName="MSBuild.TeamCity.Tasks.BlockOpen" />

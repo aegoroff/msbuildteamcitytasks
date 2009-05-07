@@ -4,6 +4,8 @@
 	<Import Project="$(MSBuildExtensionsPath)\MSBuildCommunityTasks\MSBuild.Community.Tasks.Targets"/>
 	<!-- Importing NCover Tasks -->
 	<Import Project="$(MSBuildExtensionsPath)\NCoverTasks\NCover.Tasks.Targets"/>
+	<!-- Importing MSBuild TeamCity Tasks -->
+	<Import Project="$(MSBuildExtensionsPath)\MSBuildTeamCityTasks\MSBuild.TeamCity.Tasks.Targets"/>
 	<!-- Global properties definitions -->
 	<PropertyGroup>
 

@@ -20,6 +20,12 @@
 		<!-- FxCop summary report file name  -->
 		<FxCopSummaryReportFile>FxCopSummary.html</FxCopSummaryReportFile>
 		
+		<!-- Binaries zip  -->
+		<BinariesFile>Binaries.zip</BinariesFile>
+		
+		<!-- Reports zip  -->
+		<ReportsFile>Reports.zip</ReportsFile>
+		
 		<!-- Enables updating version mechanism -->
 		<IsUpdateVersion>false</IsUpdateVersion>
 		
@@ -129,7 +135,7 @@
 		<!-- Zipping binaries -->
 		<Zip
 			Files="@(FileToZip)"
-			ZipFileName="Binaries.zip"
+			ZipFileName="$(BinariesFile)"
 			Flatten="true"
 			ZipLevel="9"
 			WorkingDirectory="$(MSBuildProjectDirectory)" 
@@ -137,12 +143,17 @@
 		<!-- Zipping reports -->
 		<Zip
 			Files="@(ReportFile)"
-			ZipFileName="Reports.zip"
+			ZipFileName="$(ReportsFile)"
 			Flatten="true"
 			ZipLevel="9"
 			WorkingDirectory="$(MSBuildProjectDirectory)" 
 		/>
 	</Target>
+	<ItemGroup>
+		<Artifact Include="$(BinariesFile)" />
+		<Artifact Include="$(ReportsFile)" />
+		<Artifact Include="MSBuild.TeamCity.Tasks.$(Major).$(Minor).$(Build).$(Revision).msi" />
+	</ItemGroup>
 	<!-- Setting next build version and finish build process -->
 	<Target Name="Build" DependsOnTargets="Zipping">
 		<!-- Updating WiX files -->
@@ -164,6 +175,7 @@
 			DestinationFiles="@(SetupDestinationFile)"
 		/>
 		<Delete Files="@(SetupFile)" />
+		<PublishArtifacts Artifacts="@(Artifact)"/>
 		<Message Text="Build $(Major).$(Minor).$(Build).$(Revision) Complete"/>
 	</Target>
 </Project>

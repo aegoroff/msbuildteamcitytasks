@@ -23,7 +23,7 @@ namespace MSBuild.TeamCity.Tasks
 		/// Creates concrete message class
 		/// </summary>
 		/// <returns></returns>
-		protected abstract BlockTeamCityMessage CreateMessage();
+		protected abstract NamedTeamCityMessage CreateMessage();
 
 		/// <summary>
 		/// When overridden in a derived class, executes the task.

@@ -12,7 +12,7 @@
 		<!-- Code configuration to build (Release or Debug) -->
 		<Configuration>Release</Configuration>
 		<!-- NUnit working path  -->
-		<NUnitPath>C:\Program Files\NUnit 2.4.7\bin</NUnitPath>
+		<NUnitPath>C:\Program Files\NUnit 2.5\bin\net-2.0</NUnitPath>
 		<!-- FXCop working path  -->
 		<FxCopPath>C:\Program Files\Microsoft FxCop 1.36</FxCopPath>
 		<!-- SandCastle help file builder working path  -->

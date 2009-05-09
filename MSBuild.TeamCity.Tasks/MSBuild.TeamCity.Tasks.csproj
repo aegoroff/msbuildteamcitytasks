@@ -53,8 +53,11 @@
     <Compile Include="BuildProgressTask.cs" />
     <Compile Include="BuildStatus.cs" />
     <Compile Include="BuildStatusTeamCityMessage.cs" />
+    <Compile Include="GoogleTestXmlReader.cs" />
     <Compile Include="ImportData.cs" />
     <Compile Include="ImportDataTeamCityMessage.cs" />
+    <Compile Include="ImportGoogleTestResults.cs" />
+    <Compile Include="NamedTeamCityMessage.cs" />
     <Compile Include="ReportBuildStatistic.cs" />
     <Compile Include="SimpleTeamCityMessage.cs" />
     <Compile Include="BuildStatisticTeamCityMessage.cs" />
@@ -65,6 +68,11 @@
     <Compile Include="ReportMessageTeamCityMessage.cs" />
     <Compile Include="TeamCityMessage.cs" />
     <Compile Include="TeamCityTask.cs" />
+    <Compile Include="TestFailedTeamCityMessage.cs" />
+    <Compile Include="TestFinishTeamCityMessage.cs" />
+    <Compile Include="TestStartTeamCityMessage.cs" />
+    <Compile Include="TestSuiteFinishTeamCityMessage.cs" />
+    <Compile Include="TestSuiteStartTeamCityMessage.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="MSBuildTeamCityTasks.snk" />

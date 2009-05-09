@@ -1,0 +1,23 @@
+/*
+ * Created by: egr
+ * Created at: 09.05.2009
+ * © 2007-2009 Alexander Egorov
+ */
+
+namespace MSBuild.TeamCity.Tasks
+{
+	/// <summary>
+	/// Represenst base class of all TeamCity messages that have name attribute.
+	/// </summary>
+	public abstract class NamedTeamCityMessage : TeamCityMessage
+	{
+		///<summary>
+		/// Creates new message instance
+		///</summary>
+		///<param name="name">Name attribute value</param>
+		protected NamedTeamCityMessage( string name )
+		{
+			Attributes.Add(new MessageAttribute("name", name));
+		}
+	}
+}

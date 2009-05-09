@@ -6,7 +6,6 @@
 
 using MSBuild.TeamCity.Tasks;
 using NUnit.Framework;
-using NUnit.Framework.SyntaxHelpers;
 
 namespace Tests
 {

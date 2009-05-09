@@ -28,7 +28,7 @@ namespace MSBuild.TeamCity.Tasks
 		/// Creates concrete message class
 		/// </summary>
 		/// <returns></returns>
-		protected override BlockTeamCityMessage CreateMessage()
+		protected override NamedTeamCityMessage CreateMessage()
 		{
 			return new BlockOpenTeamCityMessage(Name);
 		}

@@ -7,7 +7,6 @@
 using System;
 using MSBuild.TeamCity.Tasks;
 using NUnit.Framework;
-using NUnit.Framework.SyntaxHelpers;
 
 namespace Tests
 {
@@ -119,6 +118,49 @@ namespace Tests
 			const string path = "p";
 			ImportDataTeamCityMessage message = new ImportDataTeamCityMessage(type, path);
 			Assert.That(message.ToString(), Is.EqualTo("##teamcity[importData type='FxCop' path='p']"));
+		}
+
+		[Test]
+		public void TestSuiteStart()
+		{
+			const string name = "s1";
+			TestSuiteStartTeamCityMessage message = new TestSuiteStartTeamCityMessage(name);
+			Assert.That(message.ToString(), Is.EqualTo("##teamcity[testSuiteStarted name='s1']"));
+		}
+		
+		[Test]
+		public void TestSuiteFinish()
+		{
+			const string name = "s1";
+			TestSuiteFinishTeamCityMessage message = new TestSuiteFinishTeamCityMessage(name);
+			Assert.That(message.ToString(), Is.EqualTo("##teamcity[testSuiteFinished name='s1']"));
+		}
+
+		[Test]
+		public void TestStart()
+		{
+			const string name = "t1";
+			TestStartTeamCityMessage message = new TestStartTeamCityMessage(name);
+			Assert.That(message.ToString(), Is.EqualTo("##teamcity[testStarted name='t1']"));
+		}
+		
+		[Test]
+		public void TestFinish()
+		{
+			const double duration = 0.016;
+			const string name = "t1";
+			TestFinishTeamCityMessage message = new TestFinishTeamCityMessage(name, duration);
+			Assert.That(message.ToString(), Is.EqualTo("##teamcity[testFinished name='t1' duration='16']"));
+		}
+		
+		[Test]
+		public void TestFailed()
+		{
+			const string name = "t1";
+			const string msg = "m1";
+			const string details = "d1";
+			TestFailedTeamCityMessage message = new TestFailedTeamCityMessage(name, msg, details);
+			Assert.That(message.ToString(), Is.EqualTo("##teamcity[testFailed name='t1' message='m1' details='d1']"));
 		}
 	}
 }

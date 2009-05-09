@@ -10,17 +10,22 @@
         <component id="Code Block Component" enabled="True" configuration="&lt;component id=&quot;Code Block Component&quot; type=&quot;SandcastleBuilder.Components.CodeBlockComponent&quot; assembly=&quot;{@SHFBFolder}SandcastleBuilder.Components.dll&quot;&gt;&lt;!-- Base path for relative filenames in source attributes&#xD;&#xA;                 (optional) --&gt;&lt;basePath value=&quot;{@ProjectFolder}&quot; /&gt;&lt;!-- Connect to language filter (optional).  If omitted,&#xD;&#xA;                 language filtering is enabled by default. --&gt;&lt;languageFilter value=&quot;true&quot; /&gt;&lt;!-- Code colorizer options (required).&#xD;&#xA;                 Attributes:&#xD;&#xA;                    Language syntax configuration file (required)&#xD;&#xA;                    XSLT style file (required)&#xD;&#xA;                    &quot;Copy&quot; image file URL (required)&#xD;&#xA;                    Default language (optional)&#xD;&#xA;                    Enable line numbering (optional)&#xD;&#xA;                    Enable outlining (optional)&#xD;&#xA;                    Keep XML comment &quot;see&quot; tags within the code (optional)&#xD;&#xA;                    Tab size override (optional, 0 = Use syntax file setting)&#xD;&#xA;                    Use language name as default title (optional) --&gt;&lt;colorizer syntaxFile=&quot;{@SHFBFolder}Colorizer\highlight.xml&quot; styleFile=&quot;{@SHFBFolder}Colorizer\highlight.xsl&quot; copyImageUrl=&quot;../icons/CopyCode.gif&quot; language=&quot;cs&quot; numberLines=&quot;false&quot; outlining=&quot;false&quot; keepSeeTags=&quot;false&quot; tabSize=&quot;0&quot; defaultTitle=&quot;true&quot; /&gt;&lt;/component&gt;" />
     </componentConfigurations>
     <apiFilter>
-        <filter entryType="Namespace" fullName="MSBuild.TeamCity.Tasks" isExposed="True">
-            <filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.BlockCloseTeamCityMessage" filterName="BlockCloseTeamCityMessage" isExposed="False" />
-            <filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.BlockOpenTeamCityMessage" filterName="BlockOpenTeamCityMessage" isExposed="False" />
-            <filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.BlockTeamCityMessage" filterName="BlockTeamCityMessage" isExposed="False" />
-            <filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.BuildStatisticTeamCityMessage" filterName="BuildStatisticTeamCityMessage" isExposed="False" />
-            <filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.BuildStatusTeamCityMessage" filterName="BuildStatusTeamCityMessage" isExposed="False" />
-            <filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.ImportDataTeamCityMessage" filterName="ImportDataTeamCityMessage" isExposed="False" />
-            <filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.MessageAttribute" filterName="MessageAttribute" isExposed="False" />
-            <filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.ReportMessageTeamCityMessage" filterName="ReportMessageTeamCityMessage" isExposed="False" />
-            <filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.SimpleTeamCityMessage" filterName="SimpleTeamCityMessage" isExposed="False" />
-            <filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.TeamCityMessage" filterName="TeamCityMessage" isExposed="False" />
+        <filter entryType="Namespace" fullName="MSBuild.TeamCity.Tasks" isExposed="False">
+            <filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.BlockClose" filterName="BlockClose" isExposed="True" />
+            <filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.BlockOpen" filterName="BlockOpen" isExposed="True" />
+            <filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.BlockTask" filterName="BlockTask" isExposed="True" />
+            <filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.BuildNumber" filterName="BuildNumber" isExposed="True" />
+            <filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.BuildProgressFinish" filterName="BuildProgressFinish" isExposed="True" />
+            <filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.BuildProgressMessage" filterName="BuildProgressMessage" isExposed="True" />
+            <filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.BuildProgressStart" filterName="BuildProgressStart" isExposed="True" />
+            <filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.BuildProgressTask" filterName="BuildProgressTask" isExposed="True" />
+            <filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.BuildStatus" filterName="BuildStatus" isExposed="True" />
+            <filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.ImportData" filterName="ImportData" isExposed="True" />
+            <filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.ImportGoogleTestResults" filterName="ImportGoogleTestResults" isExposed="True" />
+            <filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.PublishArtifacts" filterName="PublishArtifacts" isExposed="True" />
+            <filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.ReportBuildStatistic" filterName="ReportBuildStatistic" isExposed="True" />
+            <filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.ReportMessage" filterName="ReportMessage" isExposed="True" />
+            <filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.TeamCityTask" filterName="TeamCityTask" isExposed="True" />
         </filter>
     </apiFilter>
     <ProjectSummary />

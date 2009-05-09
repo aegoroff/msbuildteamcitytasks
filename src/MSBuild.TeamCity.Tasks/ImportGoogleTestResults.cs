@@ -14,10 +14,15 @@ namespace MSBuild.TeamCity.Tasks
 	/// Helps to integrate Google test (http://code.google.com/p/googletest/) results in xml format
 	/// into TeamCity
 	///</summary>
-	/// <example>Imports google test results into TC
+	/// <example>Runs tests and imports test results into TC
 	/// <code><![CDATA[
+	/// <Exec
+	///		Command="TestExecutable.exe --gtest_output=xml:"
+	///		Timeout="30000"
+	///		IgnoreExitCode="true"
+	/// />
 	/// <ImportGoogleTestResults
-	///		TestResultsPath="C:\Tests.xml"
+	///		TestResultsPath="$(MSBuildProjectDirectory)\TestExecutable.xml"
 	/// />
 	/// ]]></code>
 	/// </example>

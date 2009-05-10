@@ -35,6 +35,11 @@ namespace MSBuild.TeamCity.Tasks
 		}
 
 		///<summary>
+		/// Gets failed tests count
+		///</summary>
+		public int FailuresCount { get; private set; }
+
+		///<summary>
 		/// Reads Google test xml report and returns suites and tests as TC messages.
 		///</summary>
 		///<returns></returns>
@@ -84,6 +89,7 @@ namespace MSBuild.TeamCity.Tasks
 					string message = rdr.GetAttribute(Message);
 					string details = rdr.ReadElementContentAsString();
 					result.Add(new TestFailedTeamCityMessage(test, message, details).ToString());
+					FailuresCount++;
 				}
 			}
 		}

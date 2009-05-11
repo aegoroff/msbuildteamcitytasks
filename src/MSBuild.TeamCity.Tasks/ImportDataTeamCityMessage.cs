@@ -18,8 +18,8 @@ namespace MSBuild.TeamCity.Tasks
 		///<param name="path">Full path to file</param>
 		public ImportDataTeamCityMessage( string type, string path )
 		{
-			Attributes.Add(new MessageAttribute("type", type));
-			Attributes.Add(new MessageAttribute("path", path));
+			Attributes.Add(new MessageAttributeItem("type", type));
+			Attributes.Add(new MessageAttributeItem("path", path));
 		}
 
 		/// <summary>

@@ -33,7 +33,7 @@ namespace MSBuild.TeamCity.Tasks
 		/// <param name="message">Message to write</param>
 		protected void Write( TeamCityMessage message )
 		{
-			message.IsAddTimeStamp = IsAddTimestamp;
+			message.IsAddTimestamp = IsAddTimestamp;
 			message.FlowId = FlowId;
 			LogMessage(message.ToString());
 		}

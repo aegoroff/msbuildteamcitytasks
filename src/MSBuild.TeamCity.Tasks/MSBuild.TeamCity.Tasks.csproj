@@ -61,7 +61,7 @@
     <Compile Include="ReportBuildStatistic.cs" />
     <Compile Include="SimpleTeamCityMessage.cs" />
     <Compile Include="BuildStatisticTeamCityMessage.cs" />
-    <Compile Include="MessageAttribute.cs" />
+    <Compile Include="MessageAttributeItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PublishArtifacts.cs" />
     <Compile Include="ReportMessage.cs" />

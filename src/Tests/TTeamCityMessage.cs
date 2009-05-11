@@ -35,7 +35,7 @@ namespace Tests
 		public void SimpleMessageAddTimeStamp()
 		{
 			const string number = "1.0";
-			SimpleTeamCityMessage message = new SimpleTeamCityMessage(BuildNumber, number) { IsAddTimeStamp = true };
+			SimpleTeamCityMessage message = new SimpleTeamCityMessage(BuildNumber, number) { IsAddTimestamp = true };
 			string expected = string.Format("##teamcity[buildNumber '1.0' timestamp='{0}']", DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss.fffzzz"));
 			Assert.That(message.ToString(), Is.EqualTo(expected));
 		}
@@ -44,7 +44,7 @@ namespace Tests
 		public void SimpleMessageFlowId()
 		{
 			const string number = "1.0";
-			SimpleTeamCityMessage message = new SimpleTeamCityMessage(BuildNumber, number) { IsAddTimeStamp = true, FlowId = "1" };
+			SimpleTeamCityMessage message = new SimpleTeamCityMessage(BuildNumber, number) { IsAddTimestamp = true, FlowId = "1" };
 			string expected = string.Format("##teamcity[buildNumber '1.0' timestamp='{0}' flowId='1']", DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss.fffzzz"));
 			Assert.That(message.ToString(), Is.EqualTo(expected));
 		}
@@ -53,7 +53,7 @@ namespace Tests
 		public void SimpleMessageFlowIdToStringTwice()
 		{
 			const string number = "1.0";
-			SimpleTeamCityMessage message = new SimpleTeamCityMessage(BuildNumber, number) { IsAddTimeStamp = true, FlowId = "1" };
+			SimpleTeamCityMessage message = new SimpleTeamCityMessage(BuildNumber, number) { IsAddTimestamp = true, FlowId = "1" };
 			string expected = string.Format("##teamcity[buildNumber '1.0' timestamp='{0}' flowId='1']", DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss.fffzzz"));
 			Assert.That(message.ToString(), Is.EqualTo(expected));
 			Assert.That(message.ToString(), Is.EqualTo(expected));

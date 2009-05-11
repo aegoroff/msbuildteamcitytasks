@@ -18,8 +18,8 @@ namespace MSBuild.TeamCity.Tasks
 		///<param name="text">Some useful status text</param>
 		public BuildStatusTeamCityMessage( string status, string text )
 		{
-			Attributes.Add(new MessageAttribute("status", status));
-			Attributes.Add(new MessageAttribute("text", text));
+			Attributes.Add(new MessageAttributeItem("status", status));
+			Attributes.Add(new MessageAttributeItem("text", text));
 		}
 
 		/// <summary>

@@ -22,7 +22,7 @@ namespace MSBuild.TeamCity.Tasks
 		{
 			_message = message;
 			MessageText = messageText;
-			Attributes.Add(new MessageAttribute(messageText));
+			Attributes.Add(new MessageAttributeItem(messageText));
 		}
 		
 		/// <summary>

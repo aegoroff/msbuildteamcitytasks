@@ -17,7 +17,7 @@ namespace MSBuild.TeamCity.Tasks
 	/// </summary>
 	public abstract class TeamCityMessage
 	{
-		private readonly IList<MessageAttribute> _attributes = new List<MessageAttribute>();
+		private readonly IList<MessageAttributeItem> _attributes = new List<MessageAttributeItem>();
 
 		/// <summary>
 		/// Gets message name
@@ -27,7 +27,7 @@ namespace MSBuild.TeamCity.Tasks
 		/// <summary>
 		/// Gets message attributes list
 		/// </summary>
-		protected IList<MessageAttribute> Attributes
+		protected IList<MessageAttributeItem> Attributes
 		{
 			[DebuggerStepThrough]
 			get { return _attributes; }
@@ -36,7 +36,7 @@ namespace MSBuild.TeamCity.Tasks
 		///<summary>
 		/// Whether to add timestamt to the message. False by default
 		///</summary>
-		public bool IsAddTimeStamp { get; set; }
+		public bool IsAddTimestamp { get; set; }
 
 		/// <summary>
 		/// Gets or sets message's flowId
@@ -44,17 +44,17 @@ namespace MSBuild.TeamCity.Tasks
 		public string FlowId { get; set; }
 
 		/// <summary>
-		/// Returns a <see cref="String"/> that represents the current <see cref="MessageAttribute"/>.
+		/// Returns a <see cref="String"/> that represents the current <see cref="MessageAttributeItem"/>.
 		/// </summary>
 		/// <returns>
-		/// A <see cref="System.String"/> that represents the current <see cref="MessageAttribute"/>.
+		/// A <see cref="System.String"/> that represents the current <see cref="MessageAttributeItem"/>.
 		/// </returns>
 		/// <filterpriority>2</filterpriority>
 		public override string ToString()
 		{
-			MessageAttribute timestamp = new MessageAttribute("timestamp", DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss.fffzzz", CultureInfo.InvariantCulture));
-			MessageAttribute flowId = new MessageAttribute("flowId", FlowId);
-			if ( IsAddTimeStamp && !_attributes.Contains(timestamp) )
+			MessageAttributeItem timestamp = new MessageAttributeItem("timestamp", DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss.fffzzz", CultureInfo.InvariantCulture));
+			MessageAttributeItem flowId = new MessageAttributeItem("flowId", FlowId);
+			if ( IsAddTimestamp && !_attributes.Contains(timestamp) )
 			{
 				_attributes.Add(timestamp);
 			}
@@ -63,7 +63,7 @@ namespace MSBuild.TeamCity.Tasks
 				_attributes.Add(flowId);
 			}
 			StringBuilder sb = new StringBuilder();
-			foreach ( MessageAttribute attribute in _attributes )
+			foreach ( MessageAttributeItem attribute in _attributes )
 			{
 				sb.Append(attribute.ToString());
 				sb.Append(' ');

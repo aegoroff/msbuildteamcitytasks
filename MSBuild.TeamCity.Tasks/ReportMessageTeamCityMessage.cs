@@ -17,7 +17,7 @@ namespace MSBuild.TeamCity.Tasks
 		///<param name="text">Message text</param>
 		public ReportMessageTeamCityMessage( string text )
 		{
-			Attributes.Add(new MessageAttribute("text", text));
+			Attributes.Add(new MessageAttributeItem("text", text));
 		}
 
 		///<summary>
@@ -27,7 +27,7 @@ namespace MSBuild.TeamCity.Tasks
 		///<param name="status">The status attribute may take following values: NORMAL, WARNING, FAILURE, ERROR. The default value is NORMAL.</param>
 		public ReportMessageTeamCityMessage( string text, string status ) : this(text)
 		{
-			Attributes.Add(new MessageAttribute("status", status));
+			Attributes.Add(new MessageAttributeItem("status", status));
 		}
 
 		///<summary>
@@ -38,7 +38,7 @@ namespace MSBuild.TeamCity.Tasks
 		///<param name="status">The status attribute may take following values: NORMAL, WARNING, FAILURE, ERROR. The default value is NORMAL.</param>
 		public ReportMessageTeamCityMessage( string text, string status, string errorDetails ) : this(text, status)
 		{
-			Attributes.Add(new MessageAttribute("errorDetails", errorDetails));
+			Attributes.Add(new MessageAttributeItem("errorDetails", errorDetails));
 		}
 
 		/// <summary>

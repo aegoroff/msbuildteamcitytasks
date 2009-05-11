@@ -21,7 +21,7 @@ namespace MSBuild.TeamCity.Tasks
 		public TestFinishTeamCityMessage( string name, double durationSeconds ) : base(name)
 		{
 			double duration = durationSeconds * 1000;
-			Attributes.Add(new MessageAttribute("duration", duration.ToString(CultureInfo.InvariantCulture)));
+			Attributes.Add(new MessageAttributeItem("duration", duration.ToString(CultureInfo.InvariantCulture)));
 		}
 
 		/// <summary>

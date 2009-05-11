@@ -11,12 +11,12 @@ namespace MSBuild.TeamCity.Tasks
 	/// <summary>
 	/// Represents TeamCity message attribute
 	/// </summary>
-	public class MessageAttribute
+	public class MessageAttributeItem
 	{
 		///<summary>
 		/// Creates empty attribute instance
 		///</summary>
-		public MessageAttribute()
+		public MessageAttributeItem()
 		{
 		}
 
@@ -24,7 +24,7 @@ namespace MSBuild.TeamCity.Tasks
 		/// Creates new nameless attribute instance using value specified
 		///</summary>
 		/// <param name="value">Attribute value</param>
-		public MessageAttribute( string value ) : this(null, value)
+		public MessageAttributeItem( string value ) : this(null, value)
 		{
 		}
 
@@ -33,7 +33,7 @@ namespace MSBuild.TeamCity.Tasks
 		///</summary>
 		/// <param name="name">Attribute name</param>
 		/// <param name="value">Attribute value</param>
-		public MessageAttribute( string name, string value )
+		public MessageAttributeItem( string name, string value )
 		{
 			Name = name;
 			Value = value;
@@ -62,10 +62,10 @@ namespace MSBuild.TeamCity.Tasks
 		}
 
 		/// <summary>
-		/// Returns a <see cref="string"/> that represents the current <see cref="MessageAttribute"/>.
+		/// Returns a <see cref="string"/> that represents the current <see cref="MessageAttributeItem"/>.
 		/// </summary>
 		/// <returns>
-		/// A <see cref="System.String"/> that represents the current <see cref="MessageAttribute"/>.
+		/// A <see cref="System.String"/> that represents the current <see cref="MessageAttributeItem"/>.
 		/// </returns>
 		/// <filterpriority>2</filterpriority>
 		public override string ToString()
@@ -88,51 +88,51 @@ namespace MSBuild.TeamCity.Tasks
 		}
 
 		///<summary>
-		/// Overriden. Compares two instances of <see cref="MessageAttribute"/> class.
+		/// Overriden. Compares two instances of <see cref="MessageAttributeItem"/> class.
 		///</summary>
-		///<param name="a1">The first attribute to compare</param>
-		///<param name="a2">The second attribute to compare</param>
+		///<param name="item1">The first attribute to compare</param>
+		///<param name="item2">The second attribute to compare</param>
 		///<returns>
-		/// true if a1 is the same instance as a2 or if a1.Equals(a2) returns true; otherwise, false.
+		/// true if item1 is the same instance as item2 or if item1.Equals(item2) returns true; otherwise, false.
 		/// </returns>
-		public static bool operator ==( MessageAttribute a1, MessageAttribute a2 )
+		public static bool operator ==( MessageAttributeItem item1, MessageAttributeItem item2 )
 		{
-			if ( ReferenceEquals(a1, a2) )
+			if ( ReferenceEquals(item1, item2) )
 			{
 				return true;
 			}
-			if ( ReferenceEquals(a1, null) )
+			if ( ReferenceEquals(item1, null) )
 			{
 				return false;
 			}
-			if ( ReferenceEquals(a2, null) )
+			if ( ReferenceEquals(item2, null) )
 			{
 				return false;
 			}
-			return a1.Name == a2.Name;
+			return item1.Name == item2.Name;
 		}
 
 		///<summary>
-		/// Overriden. Compares two instances of <see cref="MessageAttribute"/> class.
+		/// Overriden. Compares two instances of <see cref="MessageAttributeItem"/> class.
 		///</summary>
-		///<param name="a1">The first attribute to compare</param>
-		///<param name="a2">The second attribute to compare</param>
+		///<param name="item1">The first attribute to compare</param>
+		///<param name="item2">The second attribute to compare</param>
 		///<returns>
-		/// true if a1 is not the same instance as a2 or if a1.Equals(a2) returns false; otherwise, true.
+		/// true if item1 is not the same instance as item2 or if item1.Equals(item2) returns false; otherwise, true.
 		/// </returns>
-		public static bool operator !=( MessageAttribute a1, MessageAttribute a2 )
+		public static bool operator !=( MessageAttributeItem item1, MessageAttributeItem item2 )
 		{
-			return !( a1 == a2 );
+			return !( item1 == item2 );
 		}
 
 		///<summary>
-		/// Determines whether the specified <see cref="MessageAttribute"/> is equal to the current <see cref="MessageAttribute"/>.
+		/// Determines whether the specified <see cref="MessageAttributeItem"/> is equal to the current <see cref="MessageAttributeItem"/>.
 		///</summary>
-		///<param name="other">The <see cref="MessageAttribute"/> to compare with the current <see cref="MessageAttribute"/>.</param>
+		///<param name="other">The <see cref="MessageAttributeItem"/> to compare with the current <see cref="MessageAttributeItem"/>.</param>
 		///<returns>
-		/// true if the specified <see cref="MessageAttribute"/> is equal to the current <see cref="MessageAttribute"/>; otherwise, false.
+		/// true if the specified <see cref="MessageAttributeItem"/> is equal to the current <see cref="MessageAttributeItem"/>; otherwise, false.
 		/// </returns>
-		public bool Equals( MessageAttribute other )
+		public bool Equals( MessageAttributeItem other )
 		{
 			if ( ReferenceEquals(null, other) )
 			{
@@ -146,12 +146,12 @@ namespace MSBuild.TeamCity.Tasks
 		}
 
 		/// <summary>
-		/// Determines whether the specified <see cref="System.Object"/> is equal to the current <see cref="MessageAttribute"/>.
+		/// Determines whether the specified <see cref="System.Object"/> is equal to the current <see cref="MessageAttributeItem"/>.
 		/// </summary>
 		/// <returns>
-		/// true if the specified <see cref="System.Object"/> is equal to the current <see cref="MessageAttribute"/>; otherwise, false.
+		/// true if the specified <see cref="System.Object"/> is equal to the current <see cref="MessageAttributeItem"/>; otherwise, false.
 		/// </returns>
-		/// <param name="obj">The <see cref="System.Object"/> to compare with the current <see cref="MessageAttribute"/>. 
+		/// <param name="obj">The <see cref="System.Object"/> to compare with the current <see cref="MessageAttributeItem"/>. 
 		///                 </param>
 		/// <filterpriority>2</filterpriority>
 		public override bool Equals( object obj )
@@ -164,18 +164,18 @@ namespace MSBuild.TeamCity.Tasks
 			{
 				return true;
 			}
-			if ( obj.GetType() != typeof (MessageAttribute) )
+			if ( obj.GetType() != typeof (MessageAttributeItem) )
 			{
 				return false;
 			}
-			return Equals((MessageAttribute) obj);
+			return Equals((MessageAttributeItem) obj);
 		}
 
 		/// <summary>
 		/// Serves as a hash function for a particular type. 
 		/// </summary>
 		/// <returns>
-		/// A hash code for the current <see cref="MessageAttribute"/>.
+		/// A hash code for the current <see cref="MessageAttributeItem"/>.
 		/// </returns>
 		/// <filterpriority>2</filterpriority>
 		public override int GetHashCode()

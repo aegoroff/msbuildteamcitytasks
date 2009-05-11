@@ -108,7 +108,7 @@ namespace MSBuild.TeamCity.Tasks
 		/// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
 		/// </summary>
 		/// <param name="disposing"></param>
-		protected void Dispose( bool disposing )
+		protected virtual void Dispose( bool disposing )
 		{
 			if ( disposing )
 			{

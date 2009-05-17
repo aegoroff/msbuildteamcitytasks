@@ -7,7 +7,6 @@
 using System;
 using System.IO;
 using Microsoft.Build.Framework;
-using Microsoft.Build.Utilities;
 
 namespace MSBuild.TeamCity.Tasks
 {
@@ -39,7 +38,7 @@ namespace MSBuild.TeamCity.Tasks
 	/// />
 	/// ]]></code>
 	/// </example>
-	public class ImportGoogleTests : Task
+	public class ImportGoogleTests : TeamCityTask
 	{
 		/// <summary>
 		/// Full path to Google test xml output file
@@ -62,31 +61,35 @@ namespace MSBuild.TeamCity.Tasks
 		public override bool Execute()
 		{
 			GoogleTestXmlReader reader = null;
-			using ( reader )
+			try
 			{
-				try
+				string results = File.ReadAllText(TestResultsPath);
+				reader = new GoogleTestXmlReader(results);
+				foreach ( string result in reader.Read() )
 				{
-					string results = File.ReadAllText(TestResultsPath);
-					reader = new GoogleTestXmlReader(results);
-					foreach ( string result in reader.Read() )
-					{
-						Log.LogMessage(MessageImportance.High, result);
-					}
+					LogMessage(result);
 				}
-				catch ( Exception e )
-				{
-					Log.LogError(e.ToString());
-				}
-				if ( ContinueOnFailures )
-				{
-					return !Log.HasLoggedErrors;
-				}
-				if ( reader == null )
-				{
-					return false;
-				}
-				return reader.FailuresCount == 0 && !Log.HasLoggedErrors;
 			}
+			catch ( Exception e )
+			{
+				Log.LogError(e.ToString());
+			}
+			finally
+			{
+				if ( reader != null )
+				{
+					reader.Dispose();
+				}
+			}
+			if ( ContinueOnFailures )
+			{
+				return !Log.HasLoggedErrors;
+			}
+			if ( reader == null )
+			{
+				return false;
+			}
+			return reader.FailuresCount == 0 && !Log.HasLoggedErrors;
 		}
 	}
 }

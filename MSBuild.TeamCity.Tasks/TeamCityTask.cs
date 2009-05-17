@@ -46,7 +46,10 @@ namespace MSBuild.TeamCity.Tasks
 		{
 			try
 			{
-				Log.LogMessage(MessageImportance.High, message);
+				if ( !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("TEAMCITY_PROJECT_NAME")) )
+				{
+					Log.LogMessage(MessageImportance.High, message);
+				}
 			}
 			catch ( Exception e )
 			{

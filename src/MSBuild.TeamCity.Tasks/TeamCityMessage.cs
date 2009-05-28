@@ -52,7 +52,9 @@ namespace MSBuild.TeamCity.Tasks
 		/// <filterpriority>2</filterpriority>
 		public override string ToString()
 		{
-			MessageAttributeItem timestamp = new MessageAttributeItem("timestamp", DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss.fffzzz", CultureInfo.InvariantCulture));
+			MessageAttributeItem timestamp = new MessageAttributeItem("timestamp",
+			                                                          DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss.fffzzz",
+			                                                                                CultureInfo.InvariantCulture));
 			MessageAttributeItem flowId = new MessageAttributeItem("flowId", FlowId);
 			if ( IsAddTimestamp && !_attributes.Contains(timestamp) )
 			{

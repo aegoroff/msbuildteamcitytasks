@@ -22,11 +22,11 @@ namespace MSBuild.TeamCity.Tasks
 		/// Creates new reader instance using whole XML text read into string specified.
 		///</summary>
 		///<param name="xmlTextReader"></param>
-		public GoogleTestXmlReader(TextReader xmlTextReader)
+		public GoogleTestXmlReader( TextReader xmlTextReader )
 		{
 			_reader = XmlReader.Create(xmlTextReader);
 		}
-		
+
 		///<summary>
 		/// Creates new reader instance using full path to xml report file specified.
 		///</summary>

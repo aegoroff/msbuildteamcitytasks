@@ -18,19 +18,19 @@ namespace MSBuild.TeamCity.Tasks
 		/// </summary>
 		/// <param name="key">Parameter key</param>
 		/// <param name="value">Parameter value</param>
-		public BuildStatisticTeamCityMessage(string key, float value)
+		public BuildStatisticTeamCityMessage( string key, float value )
 		{
 			Key = key;
 			Value = value;
 			Attributes.Add(new MessageAttributeItem("key", Key));
 			Attributes.Add(new MessageAttributeItem("value", string.Format(CultureInfo.InvariantCulture, "{0:F}", Value)));
 		}
-		
+
 		/// <summary>
 		/// Gets parameter key
 		/// </summary>
 		public string Key { get; private set; }
-		
+
 		/// <summary>
 		/// Gets parameter value
 		/// </summary>

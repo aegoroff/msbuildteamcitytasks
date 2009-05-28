@@ -5,7 +5,6 @@
  */
 
 using System;
-using System.IO;
 using Microsoft.Build.Framework;
 
 namespace MSBuild.TeamCity.Tasks
@@ -63,12 +62,9 @@ namespace MSBuild.TeamCity.Tasks
 			GoogleTestXmlReader reader = null;
 			try
 			{
-				string results = File.ReadAllText(TestResultsPath);
-				reader = new GoogleTestXmlReader(results);
-				foreach ( string result in reader.Read() )
-				{
-					LogMessage(result);
-				}
+				reader = new GoogleTestXmlReader(TestResultsPath);
+				reader.Read();
+				Write(new ImportDataTeamCityMessage("junut", TestResultsPath));
 			}
 			catch ( Exception e )
 			{

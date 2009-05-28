@@ -24,7 +24,7 @@ namespace MSBuild.TeamCity.Tasks
 		/// </summary>
 		/// <returns></returns>
 		protected abstract SimpleTeamCityMessage CreateMessage();
-		
+
 		/// <summary>
 		/// When overridden in a derived class, executes the task.
 		/// </summary>

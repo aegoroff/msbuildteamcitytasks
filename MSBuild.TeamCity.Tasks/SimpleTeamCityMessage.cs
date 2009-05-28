@@ -12,19 +12,19 @@ namespace MSBuild.TeamCity.Tasks
 	public class SimpleTeamCityMessage : TeamCityMessage
 	{
 		private readonly string _message;
-		
+
 		///<summary>
 		/// Creates new message instance using message name and text specified
 		///</summary>
 		///<param name="message">TeamCity message name</param>
 		///<param name="messageText">Build progress start message text</param>
-		public SimpleTeamCityMessage(string message, string messageText)
+		public SimpleTeamCityMessage( string message, string messageText )
 		{
 			_message = message;
 			MessageText = messageText;
 			Attributes.Add(new MessageAttributeItem(messageText));
 		}
-		
+
 		/// <summary>
 		/// Message text
 		/// </summary>

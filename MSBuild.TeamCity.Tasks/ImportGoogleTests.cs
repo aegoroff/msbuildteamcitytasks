@@ -64,7 +64,7 @@ namespace MSBuild.TeamCity.Tasks
 			{
 				reader = new GoogleTestXmlReader(TestResultsPath);
 				reader.Read();
-				Write(new ImportDataTeamCityMessage("junut", TestResultsPath));
+				Write(new ImportDataTeamCityMessage("junit", TestResultsPath));
 			}
 			catch ( Exception e )
 			{

@@ -74,13 +74,5 @@ namespace MSBuild.TeamCity.Tasks
 				_reader.Close();
 			}
 		}
-
-		/// <summary>
-		/// Finalizes an instance of the GoogleTestXmlReader class
-		/// </summary>
-		~GoogleTestXmlReader()
-		{
-			Dispose(false);
-		}
 	}
 }

@@ -19,18 +19,18 @@ namespace MSBuild.TeamCity.Tasks
 		private readonly XmlReader _reader;
 
 		///<summary>
-		/// Creates new reader instance using whole XML text read into string specified.
+		/// Initializes a new instance of the <see cref="GoogleTestXmlReader"/> class using whole XML text read into string specified.
 		///</summary>
-		///<param name="xmlTextReader"></param>
+		///<param name="xmlTextReader">The <see cref="TextReader"/> from which to read the XML data.</param>
 		public GoogleTestXmlReader( TextReader xmlTextReader )
 		{
 			_reader = XmlReader.Create(xmlTextReader);
 		}
 
 		///<summary>
-		/// Creates new reader instance using full path to xml report file specified.
+		/// Initializes a new instance of the <see cref="GoogleTestXmlReader"/> class using full path to xml report file specified.
 		///</summary>
-		///<param name="path"></param>
+		///<param name="path">The URI for the file containing the XML data.</param>
 		public GoogleTestXmlReader( string path )
 		{
 			_reader = XmlReader.Create(path);
@@ -44,7 +44,6 @@ namespace MSBuild.TeamCity.Tasks
 		///<summary>
 		/// Reads Google test xml report and returns suites and tests as TC messages.
 		///</summary>
-		///<returns></returns>
 		public void Read()
 		{
 			_reader.MoveToContent();
@@ -67,7 +66,7 @@ namespace MSBuild.TeamCity.Tasks
 		/// <summary>
 		/// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
 		/// </summary>
-		/// <param name="disposing"></param>
+		/// <param name="disposing">Whether to perform application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</param>
 		protected virtual void Dispose( bool disposing )
 		{
 			if ( disposing )
@@ -77,7 +76,7 @@ namespace MSBuild.TeamCity.Tasks
 		}
 
 		/// <summary>
-		/// Finalizes object
+		/// Finalizes an instance of the GoogleTestXmlReader class
 		/// </summary>
 		~GoogleTestXmlReader()
 		{

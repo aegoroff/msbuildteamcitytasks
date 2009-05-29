@@ -12,9 +12,9 @@ namespace MSBuild.TeamCity.Tasks
 	public class TestFailedTeamCityMessage : NamedTeamCityMessage
 	{
 		///<summary>
-		/// Creates new class instance
+		/// Initializes a new instance of the <see cref="TestFailedTeamCityMessage"/> class
 		///</summary>
-		///<param name="name">Test name</param>
+		///<param name="name">Test's name</param>
 		///<param name="message">Failure message</param>
 		///<param name="details">Failure details like stack trace</param>
 		public TestFailedTeamCityMessage( string name, string message, string details ) : base(name)

@@ -27,7 +27,7 @@ namespace MSBuild.TeamCity.Tasks
 	public class BuildNumber : TeamCityTask
 	{
 		/// <summary>
-		/// Build number value
+		/// Gets or sets build number value
 		/// </summary>
 		[Required]
 		public string Number { get; set; }

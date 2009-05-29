@@ -14,16 +14,10 @@ namespace MSBuild.TeamCity.Tasks
 	public abstract class BlockTask : TeamCityTask
 	{
 		/// <summary>
-		/// Block name
+		/// Gets or sets block name
 		/// </summary>
 		[Required]
 		public string Name { get; set; }
-
-		/// <summary>
-		/// Creates concrete message class
-		/// </summary>
-		/// <returns></returns>
-		protected abstract NamedTeamCityMessage CreateMessage();
 
 		/// <summary>
 		/// When overridden in a derived class, executes the task.
@@ -36,5 +30,11 @@ namespace MSBuild.TeamCity.Tasks
 			Write(CreateMessage());
 			return true;
 		}
+
+		/// <summary>
+		/// Creates concrete message class
+		/// </summary>
+		/// <returns>New message instance</returns>
+		protected abstract NamedTeamCityMessage CreateMessage();
 	}
 }

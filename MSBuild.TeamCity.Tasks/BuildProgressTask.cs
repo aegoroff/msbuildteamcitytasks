@@ -14,16 +14,10 @@ namespace MSBuild.TeamCity.Tasks
 	public abstract class BuildProgressTask : TeamCityTask
 	{
 		/// <summary>
-		/// Gets o sets progress message text
+		/// Gets or sets progress message text
 		/// </summary>
 		[Required]
 		public string Message { get; set; }
-
-		/// <summary>
-		/// Creates concrete message class
-		/// </summary>
-		/// <returns></returns>
-		protected abstract SimpleTeamCityMessage CreateMessage();
 
 		/// <summary>
 		/// When overridden in a derived class, executes the task.
@@ -36,5 +30,11 @@ namespace MSBuild.TeamCity.Tasks
 			Write(CreateMessage());
 			return true;
 		}
+
+		/// <summary>
+		/// Creates concrete message class
+		/// </summary>
+		/// <returns>New message instance</returns>
+		protected abstract SimpleTeamCityMessage CreateMessage();
 	}
 }

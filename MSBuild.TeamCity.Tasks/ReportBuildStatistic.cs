@@ -31,13 +31,13 @@ namespace MSBuild.TeamCity.Tasks
 	public class ReportBuildStatistic : TeamCityTask
 	{
 		/// <summary>
-		/// Gets or set statistic parameter name
+		/// Gets or sets statistic parameter name
 		/// </summary>
 		[Required]
 		public string Key { get; set; }
 
 		/// <summary>
-		/// Gets or set statistic parameter value
+		/// Gets or sets statistic parameter value
 		/// </summary>
 		[Required]
 		public float Value { get; set; }

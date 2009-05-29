@@ -12,7 +12,7 @@ namespace MSBuild.TeamCity.Tasks
 	public abstract class NamedTeamCityMessage : TeamCityMessage
 	{
 		///<summary>
-		/// Creates new message instance
+		/// Initializes a new instance of the <see cref="NamedTeamCityMessage"/> class
 		///</summary>
 		///<param name="name">Name attribute value</param>
 		protected NamedTeamCityMessage( string name )

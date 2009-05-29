@@ -12,7 +12,7 @@ namespace MSBuild.TeamCity.Tasks
 	public class ImportDataTeamCityMessage : TeamCityMessage
 	{
 		///<summary>
-		/// Creates new message instance using type and path specified
+		/// Initializes a new instance of the <see cref="ImportDataTeamCityMessage"/> class using type and path specified
 		///</summary>
 		///<param name="type">Data type. FxCop for example</param>
 		///<param name="path">Full path to file</param>

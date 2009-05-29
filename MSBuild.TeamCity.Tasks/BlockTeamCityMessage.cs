@@ -12,7 +12,7 @@ namespace MSBuild.TeamCity.Tasks
 	public class BlockOpenTeamCityMessage : NamedTeamCityMessage
 	{
 		///<summary>
-		/// Creates new message instance
+		/// Initializes a new instance of the <see cref="BlockOpenTeamCityMessage"/> class
 		///</summary>
 		///<param name="name">Block name</param>
 		public BlockOpenTeamCityMessage( string name ) : base(name)
@@ -34,7 +34,7 @@ namespace MSBuild.TeamCity.Tasks
 	public class BlockCloseTeamCityMessage : NamedTeamCityMessage
 	{
 		///<summary>
-		/// Creates new message instance
+		/// Initializes a new instance of the <see cref="BlockCloseTeamCityMessage"/> class
 		///</summary>
 		///<param name="name">Block name</param>
 		public BlockCloseTeamCityMessage( string name )

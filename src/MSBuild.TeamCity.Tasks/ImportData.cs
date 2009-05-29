@@ -35,7 +35,7 @@ namespace MSBuild.TeamCity.Tasks
 	public class ImportData : TeamCityTask
 	{
 		/// <summary>
-		/// Get or sets imported data type.<p/>
+		/// Gets or sets imported data type.<p/>
 		/// <b>junit</b> for JUnit Ant task XML reports<br/>
 		/// <b>surefire</b> for Maven Surefire XML reports<br/>
 		/// <b>nunit</b> for NUnit-Console XML reports<br/>

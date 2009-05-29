@@ -44,18 +44,19 @@ namespace MSBuild.TeamCity.Tasks
 	public class ReportMessage : TeamCityTask
 	{
 		/// <summary>
-		/// Message text
+		/// Gets or sets message text
 		/// </summary>
 		[Required]
 		public string Text { get; set; }
 
 		/// <summary>
-		/// Message status. The status attribute may take following values: NORMAL, WARNING, FAILURE, ERROR. The default value is NORMAL.
+		/// Gets or sets message status. 
+		/// The status attribute may take following values: NORMAL, WARNING, FAILURE, ERROR. The default value is NORMAL.
 		/// </summary>
 		public string Status { get; set; }
 
 		///<summary>
-		/// ErrorDetails is used only if status is ERROR, in other cases it is ignored.
+		/// Gets or sets error details text that is used only if status is ERROR, in other cases it is ignored.
 		///</summary>
 		public string ErrorDetails { get; set; }
 

@@ -12,7 +12,7 @@ namespace MSBuild.TeamCity.Tasks
 	public class BuildStatusTeamCityMessage : TeamCityMessage
 	{
 		///<summary>
-		/// Creates new message instance using status and text specified.
+		/// Initializes a new instance of the <see cref="BuildStatusTeamCityMessage"/> class using status and text specified.
 		///</summary>
 		///<param name="status">The status attribute may take following values: FAILURE, SUCCESS.</param>
 		///<param name="text">Some useful status text</param>

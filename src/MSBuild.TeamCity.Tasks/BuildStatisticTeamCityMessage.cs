@@ -14,7 +14,7 @@ namespace MSBuild.TeamCity.Tasks
 	public class BuildStatisticTeamCityMessage : TeamCityMessage
 	{
 		/// <summary>
-		/// Creates new message instance
+		/// Initializes a new instance of the <see cref="BuildStatisticTeamCityMessage"/> class
 		/// </summary>
 		/// <param name="key">Parameter key</param>
 		/// <param name="value">Parameter value</param>

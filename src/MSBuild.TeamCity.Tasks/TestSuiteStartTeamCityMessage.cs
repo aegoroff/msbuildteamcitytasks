@@ -12,7 +12,7 @@ namespace MSBuild.TeamCity.Tasks
 	public class TestSuiteStartTeamCityMessage : NamedTeamCityMessage
 	{
 		///<summary>
-		/// Creates new class instance using name specified
+		/// Initializes a new instance of the <see cref="TestSuiteStartTeamCityMessage"/> class using name specified
 		///</summary>
 		///<param name="name">Name attribute value</param>
 		public TestSuiteStartTeamCityMessage( string name ) : base(name)

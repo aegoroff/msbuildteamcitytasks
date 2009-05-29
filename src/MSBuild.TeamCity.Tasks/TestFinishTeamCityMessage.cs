@@ -14,7 +14,7 @@ namespace MSBuild.TeamCity.Tasks
 	public class TestFinishTeamCityMessage : NamedTeamCityMessage
 	{
 		///<summary>
-		/// Creates new class instance using name and duration in seconds specified
+		/// Initializes a new instance of the <see cref="TestFinishTeamCityMessage"/> class using name and duration in seconds specified
 		///</summary>
 		///<param name="name">Name attribute value</param>
 		///<param name="durationSeconds">Test duration in seconds</param>

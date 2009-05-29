@@ -14,14 +14,14 @@ namespace MSBuild.TeamCity.Tasks
 	public class MessageAttributeItem
 	{
 		///<summary>
-		/// Creates empty attribute instance
+		/// Initializes a new instance of the <see cref="MessageAttributeItem"/> class
 		///</summary>
 		public MessageAttributeItem()
 		{
 		}
 
 		///<summary>
-		/// Creates new nameless attribute instance using value specified
+		/// Initializes a new instance of the <see cref="MessageAttributeItem"/> class using value specified
 		///</summary>
 		/// <param name="value">Attribute value</param>
 		public MessageAttributeItem( string value ) : this(null, value)
@@ -29,7 +29,7 @@ namespace MSBuild.TeamCity.Tasks
 		}
 
 		///<summary>
-		/// Creates new attribute instance using name and value specified.
+		/// Initializes a new instance of the <see cref="MessageAttributeItem"/> class using name and value specified.
 		///</summary>
 		/// <param name="name">Attribute name</param>
 		/// <param name="value">Attribute value</param>
@@ -50,18 +50,6 @@ namespace MSBuild.TeamCity.Tasks
 		public string Value { get; set; }
 
 		/// <summary>
-		/// Escapes input string by replacing special symbols that cannot be unescaped in attribute value
-		/// </summary>
-		/// <returns>Properly escaped string</returns>
-		/// <remarks>
-		/// For more info about escaping see http://www.jetbrains.net/confluence/display/TCD4/Build+Script+Interaction+with+TeamCity
-		/// </remarks>
-		private string EscapeValue()
-		{
-			return Value.Replace("|", "||").Replace("'", "|'").Replace("]", "|]").Replace("\n", "|n").Replace("\r", "|r");
-		}
-
-		/// <summary>
 		/// Returns a <see cref="string"/> that represents the current <see cref="MessageAttributeItem"/>.
 		/// </summary>
 		/// <returns>
@@ -74,6 +62,7 @@ namespace MSBuild.TeamCity.Tasks
 			{
 				return null;
 			}
+
 			const char valueSeparator = '\'';
 			StringBuilder sb = new StringBuilder();
 			if ( !string.IsNullOrEmpty(Name) )
@@ -81,6 +70,7 @@ namespace MSBuild.TeamCity.Tasks
 				sb.Append(Name);
 				sb.Append("=");
 			}
+
 			sb.Append(valueSeparator);
 			sb.Append(EscapeValue());
 			sb.Append(valueSeparator);
@@ -164,7 +154,7 @@ namespace MSBuild.TeamCity.Tasks
 			{
 				return true;
 			}
-			if ( obj.GetType() != typeof (MessageAttributeItem) )
+			if ( obj.GetType() != typeof(MessageAttributeItem) )
 			{
 				return false;
 			}
@@ -180,7 +170,19 @@ namespace MSBuild.TeamCity.Tasks
 		/// <filterpriority>2</filterpriority>
 		public override int GetHashCode()
 		{
-			return ( Name != null ? Name.GetHashCode() : 0 );
+			return Name != null ? Name.GetHashCode() : 0;
+		}
+
+		/// <summary>
+		/// Escapes input string by replacing special symbols that cannot be unescaped in attribute value
+		/// </summary>
+		/// <returns>Properly escaped string</returns>
+		/// <remarks>
+		/// For more info about escaping see http://www.jetbrains.net/confluence/display/TCD4/Build+Script+Interaction+with+TeamCity
+		/// </remarks>
+		private string EscapeValue()
+		{
+			return Value.Replace("|", "||").Replace("'", "|'").Replace("]", "|]").Replace("\n", "|n").Replace("\r", "|r");
 		}
 	}
 }

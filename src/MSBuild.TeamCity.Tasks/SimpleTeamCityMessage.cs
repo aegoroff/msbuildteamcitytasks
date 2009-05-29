@@ -14,7 +14,7 @@ namespace MSBuild.TeamCity.Tasks
 		private readonly string _message;
 
 		///<summary>
-		/// Creates new message instance using message name and text specified
+		/// Initializes a new instance of the <see cref="SimpleTeamCityMessage"/> class using message name and text specified
 		///</summary>
 		///<param name="message">TeamCity message name</param>
 		///<param name="messageText">Build progress start message text</param>
@@ -26,7 +26,7 @@ namespace MSBuild.TeamCity.Tasks
 		}
 
 		/// <summary>
-		/// Message text
+		/// Gets message text
 		/// </summary>
 		public string MessageText { get; private set; }
 

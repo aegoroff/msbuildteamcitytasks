@@ -19,6 +19,16 @@ namespace MSBuild.TeamCity.Tasks
 	{
 		private readonly IList<MessageAttributeItem> _attributes = new List<MessageAttributeItem>();
 
+		///<summary>
+		/// Gets or sets a value indicating whether to add timestamt to the message. False by default
+		///</summary>
+		public bool IsAddTimestamp { get; set; }
+
+		/// <summary>
+		/// Gets or sets message's flowId
+		/// </summary>
+		public string FlowId { get; set; }
+
 		/// <summary>
 		/// Gets message name
 		/// </summary>
@@ -32,16 +42,6 @@ namespace MSBuild.TeamCity.Tasks
 			[DebuggerStepThrough]
 			get { return _attributes; }
 		}
-
-		///<summary>
-		/// Whether to add timestamt to the message. False by default
-		///</summary>
-		public bool IsAddTimestamp { get; set; }
-
-		/// <summary>
-		/// Gets or sets message's flowId
-		/// </summary>
-		public string FlowId { get; set; }
 
 		/// <summary>
 		/// Returns a <see cref="String"/> that represents the current <see cref="MessageAttributeItem"/>.
@@ -60,20 +60,25 @@ namespace MSBuild.TeamCity.Tasks
 			{
 				_attributes.Add(timestamp);
 			}
+
 			if ( !string.IsNullOrEmpty(FlowId) && !_attributes.Contains(flowId) )
 			{
 				_attributes.Add(flowId);
 			}
+
 			StringBuilder sb = new StringBuilder();
+
 			foreach ( MessageAttributeItem attribute in _attributes )
 			{
 				sb.Append(attribute.ToString());
 				sb.Append(' ');
 			}
+
 			if ( sb.Length > 0 )
 			{
 				sb.Remove(sb.Length - 1, 1);
 			}
+
 			return string.Format(CultureInfo.CurrentCulture, "##teamcity[{0} {1}]", Message, sb);
 		}
 	}

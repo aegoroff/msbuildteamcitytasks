@@ -12,7 +12,7 @@ namespace MSBuild.TeamCity.Tasks
 	public class ReportMessageTeamCityMessage : TeamCityMessage
 	{
 		///<summary>
-		/// Creates new <see cref="ReportMessageTeamCityMessage"/> instance which status is NORMAL
+		/// Initializes a new instance of the <see cref="ReportMessageTeamCityMessage"/> class which status is NORMAL
 		///</summary>
 		///<param name="text">Message text</param>
 		public ReportMessageTeamCityMessage( string text )
@@ -21,7 +21,7 @@ namespace MSBuild.TeamCity.Tasks
 		}
 
 		///<summary>
-		/// Creates new <see cref="ReportMessageTeamCityMessage"/> instance
+		/// Initializes a new instance of the <see cref="ReportMessageTeamCityMessage"/> class
 		///</summary>
 		///<param name="text">Message text</param>
 		///<param name="status">The status attribute may take following values: NORMAL, WARNING, FAILURE, ERROR. The default value is NORMAL.</param>
@@ -31,11 +31,11 @@ namespace MSBuild.TeamCity.Tasks
 		}
 
 		///<summary>
-		/// Creates new <see cref="ReportMessageTeamCityMessage"/> instance
+		/// Initializes a new instance of the <see cref="ReportMessageTeamCityMessage"/> class
 		///</summary>
 		///<param name="text">Message text</param>
-		///<param name="errorDetails">errorDetails attribute is used only if status is ERROR, in other cases it is ignored.</param>
 		///<param name="status">The status attribute may take following values: NORMAL, WARNING, FAILURE, ERROR. The default value is NORMAL.</param>
+		///<param name="errorDetails">errorDetails attribute is used only if status is ERROR, in other cases it is ignored.</param>
 		public ReportMessageTeamCityMessage( string text, string status, string errorDetails ) : this(text, status)
 		{
 			Attributes.Add(new MessageAttributeItem("errorDetails", errorDetails));

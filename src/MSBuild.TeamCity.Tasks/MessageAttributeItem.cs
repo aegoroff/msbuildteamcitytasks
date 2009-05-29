@@ -13,6 +13,8 @@ namespace MSBuild.TeamCity.Tasks
 	/// </summary>
 	public class MessageAttributeItem
 	{
+		private const char ValueSeparator = '\'';
+
 		///<summary>
 		/// Initializes a new instance of the <see cref="MessageAttributeItem"/> class
 		///</summary>
@@ -63,7 +65,6 @@ namespace MSBuild.TeamCity.Tasks
 				return null;
 			}
 
-			const char valueSeparator = '\'';
 			StringBuilder sb = new StringBuilder();
 			if ( !string.IsNullOrEmpty(Name) )
 			{
@@ -71,9 +72,9 @@ namespace MSBuild.TeamCity.Tasks
 				sb.Append("=");
 			}
 
-			sb.Append(valueSeparator);
+			sb.Append(ValueSeparator);
 			sb.Append(EscapeValue());
-			sb.Append(valueSeparator);
+			sb.Append(ValueSeparator);
 			return sb.ToString();
 		}
 

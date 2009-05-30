@@ -4,19 +4,16 @@
  * © 2007-2009 Alexander Egorov
  */
 
-using System;
 using System.Globalization;
 using System.Xml;
 
 namespace Tests.Utils
 {
-	public class SuiteWriter : IDisposable
+	public class SuiteWriter : BaseWriter
 	{
-		private readonly XmlWriter _xw;
-
-		public SuiteWriter(XmlWriter xw, int testCount, int failCount, double time, string name)
+		public SuiteWriter(XmlWriter xw, int testCount, int failCount, double time, string name) : base(xw)
 		{
-			_xw = xw;
+			
 			xw.WriteStartElement("testsuite");
 			xw.WriteAttributeString("tests", testCount.ToString());
 			xw.WriteAttributeString("failures", failCount.ToString());
@@ -24,12 +21,6 @@ namespace Tests.Utils
 			xw.WriteAttributeString("errors", "0");
 			xw.WriteAttributeString("time", time.ToString(CultureInfo.InvariantCulture));
 			xw.WriteAttributeString("name", name);
-		}
-
-		public void Dispose()
-		{
-			_xw.WriteEndElement();
-			_xw.Flush();
 		}
 	}
 }

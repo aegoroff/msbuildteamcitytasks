@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Utils\BaseWriter.cs" />
     <Compile Include="Utils\CaseWriter.cs" />
     <Compile Include="Utils\FailWriter.cs" />
     <Compile Include="Utils\SuiteWriter.cs" />

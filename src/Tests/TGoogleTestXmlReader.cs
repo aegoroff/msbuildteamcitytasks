@@ -5,33 +5,46 @@
  */
 
 using System.IO;
+using System.Text;
+using System.Xml;
 using MSBuild.TeamCity.Tasks;
 using NUnit.Framework;
+using Tests.Utils;
 
 namespace Tests
 {
 	[TestFixture]
 	public class TGoogleTestXmlReader
 	{
-		private const string SimpleTestResult =
-			"<?xml version=\"1.0\" encoding=\"UTF-8\"?><testsuite tests=\"26\" failures=\"0\" disabled=\"0\" errors=\"0\" time=\"0.016\" name=\"AllTests\"></testsuite>";
+		private const string AllTests = "AllTests";
+		private const string Suite1 = "suite1";
+		private const string Suite2 = "suite2";
+		private const string Test1 = "test1";
+		private const string Test2 = "test2";
 
-		private const string OneSuiteAndTestTestResult =
-			"<?xml version=\"1.0\" encoding=\"UTF-8\"?><testsuite tests=\"1\" failures=\"0\" disabled=\"0\" errors=\"0\" time=\"0.016\" name=\"AllTests\"><testsuite name=\"suite1\" tests=\"1\" failures=\"0\" disabled=\"0\" errors=\"0\" time=\"0\"><testcase name=\"test1\" status=\"run\" time=\"0.016\" classname=\"suite1\" /></testsuite></testsuite>";
-
-		private const string TwoSuiteAndTwoTestTestResult =
-			"<?xml version=\"1.0\" encoding=\"UTF-8\"?><testsuite tests=\"4\" failures=\"0\" disabled=\"0\" errors=\"0\" time=\"0.016\" name=\"AllTests\"><testsuite name=\"suite1\" tests=\"2\" failures=\"0\" disabled=\"0\" errors=\"0\" time=\"0\"><testcase name=\"test1\" status=\"run\" time=\"0.016\" classname=\"suite1\" /><testcase name=\"test2\" status=\"run\" time=\"0.016\" classname=\"suite1\" /></testsuite><testsuite name=\"suite2\" tests=\"2\" failures=\"0\" disabled=\"0\" errors=\"0\" time=\"0\"><testcase name=\"test1\" status=\"run\" time=\"0.016\" classname=\"suite2\" /><testcase name=\"test2\" status=\"run\" time=\"0.016\" classname=\"suite2\" /></testsuite></testsuite>";
-
-		private const string TwoSuiteAndTwoTestTestOneFailedResult =
-			"<?xml version=\"1.0\" encoding=\"UTF-8\"?><testsuite tests=\"4\" failures=\"0\" disabled=\"0\" errors=\"0\" time=\"0.016\" name=\"AllTests\"><testsuite name=\"suite1\" tests=\"2\" failures=\"1\" disabled=\"0\" errors=\"0\" time=\"0\"><testcase name=\"test1\" status=\"run\" time=\"0.016\" classname=\"suite1\" ><failure message=\"m2\" type=\"\">d2</failure></testcase><testcase name=\"test2\" status=\"run\" time=\"0.016\" classname=\"suite1\" /></testsuite><testsuite name=\"suite2\" tests=\"2\" failures=\"0\" disabled=\"0\" errors=\"0\" time=\"0\"><testcase name=\"test1\" status=\"run\" time=\"0.016\" classname=\"suite2\" /><testcase name=\"test2\" status=\"run\" time=\"0.016\" classname=\"suite2\" /></testsuite></testsuite>";
+		private StringBuilder _sb;
+		private XmlWriter _xw;
 		
-		private const string TwoSuiteAndTwoTestTestTwoFailedResult =
-			"<?xml version=\"1.0\" encoding=\"UTF-8\"?><testsuite tests=\"4\" failures=\"0\" disabled=\"0\" errors=\"0\" time=\"0.016\" name=\"AllTests\"><testsuite name=\"suite1\" tests=\"2\" failures=\"2\" disabled=\"0\" errors=\"0\" time=\"0\"><testcase name=\"test1\" status=\"run\" time=\"0.016\" classname=\"suite1\" ><failure message=\"m2\" type=\"\">d2</failure><failure message=\"m3\" type=\"\">d3</failure></testcase><testcase name=\"test2\" status=\"run\" time=\"0.016\" classname=\"suite1\" /></testsuite><testsuite name=\"suite2\" tests=\"2\" failures=\"0\" disabled=\"0\" errors=\"0\" time=\"0\"><testcase name=\"test1\" status=\"run\" time=\"0.016\" classname=\"suite2\" /><testcase name=\"test2\" status=\"run\" time=\"0.016\" classname=\"suite2\" /></testsuite></testsuite>";
-
+		[SetUp]
+		public void Setup()
+		{
+			_sb = new StringBuilder();
+			_xw = XmlWriter.Create(_sb);
+		}
+		
+		[TearDown]
+		public void Teardown()
+		{
+			_xw.Close();
+		}
+		
 		[Test]
 		public void ReadEmpty()
 		{
-			GoogleTestXmlReader reader = new GoogleTestXmlReader(new StringReader(SimpleTestResult));
+			using (new SuiteWriter(_xw, 0, 0, 0.016, AllTests))
+			{
+			}
+			GoogleTestXmlReader reader = new GoogleTestXmlReader(new StringReader(_sb.ToString()));
 			reader.Read();
 			Assert.That(reader.FailuresCount, Is.EqualTo(0));
 		}
@@ -39,7 +52,16 @@ namespace Tests
 		[Test]
 		public void ReadOneSuiteAndTest()
 		{
-			GoogleTestXmlReader reader = new GoogleTestXmlReader(new StringReader(OneSuiteAndTestTestResult));
+			using (new SuiteWriter(_xw, 1, 0, 0.016, AllTests))
+			{
+				using (new SuiteWriter(_xw, 1, 0, 0.016, Suite1))
+				{
+					using (new CaseWriter(_xw, Test1, 0.016, Suite1))
+					{
+					}
+				}
+			}
+			GoogleTestXmlReader reader = new GoogleTestXmlReader(new StringReader(_sb.ToString()));
 			reader.Read();
 			Assert.That(reader.FailuresCount, Is.EqualTo(0));
 		}
@@ -47,7 +69,28 @@ namespace Tests
 		[Test]
 		public void ReadTwoSuiteAndTwoTest()
 		{
-			GoogleTestXmlReader reader = new GoogleTestXmlReader(new StringReader(TwoSuiteAndTwoTestTestResult));
+			using (new SuiteWriter(_xw, 4, 0, 0.032, AllTests))
+			{
+				using (new SuiteWriter(_xw, 1, 0, 0.016, Suite1))
+				{
+					using (new CaseWriter(_xw, Test1, 0.016, Suite1))
+					{
+					}
+					using (new CaseWriter(_xw, Test2, 0, Suite1))
+					{
+					}
+				}
+				using (new SuiteWriter(_xw, 1, 0, 0.016, Suite2))
+				{
+					using (new CaseWriter(_xw, Test1, 0.016, Suite2))
+					{
+					}
+					using (new CaseWriter(_xw, Test2, 0, Suite2))
+					{
+					}
+				}
+			}
+			GoogleTestXmlReader reader = new GoogleTestXmlReader(new StringReader(_sb.ToString()));
 			reader.Read();
 			Assert.That(reader.FailuresCount, Is.EqualTo(0));
 		}
@@ -55,17 +98,106 @@ namespace Tests
 		[Test]
 		public void ReadTwoSuiteAndTwoTestOneFailed()
 		{
-			GoogleTestXmlReader reader = new GoogleTestXmlReader(new StringReader(TwoSuiteAndTwoTestTestOneFailedResult));
+			using (new SuiteWriter(_xw, 4, 1, 0.032, AllTests))
+			{
+				using (new SuiteWriter(_xw, 1, 1, 0.016, Suite1))
+				{
+					using (new CaseWriter(_xw, Test1, 0.016, Suite1))
+					{
+						using (new FailWriter(_xw, "m1", "d1"))
+						{
+						}
+					}
+					using (new CaseWriter(_xw, Test2, 0, Suite1))
+					{
+					}
+				}
+				using (new SuiteWriter(_xw, 1, 0, 0.016, Suite2))
+				{
+					using (new CaseWriter(_xw, Test1, 0.016, Suite2))
+					{
+					}
+					using (new CaseWriter(_xw, Test2, 0, Suite2))
+					{
+					}
+				}
+			}
+			GoogleTestXmlReader reader = new GoogleTestXmlReader(new StringReader(_sb.ToString()));
 			reader.Read();
 			Assert.That(reader.FailuresCount, Is.EqualTo(1));
 		}
 		
 		[Test]
-		public void ReadTwoSuiteAndTwoTestTwoFailures()
+		public void ReadTwoSuiteAndTwoTestOneWithTwoFailures()
 		{
-			GoogleTestXmlReader reader = new GoogleTestXmlReader(new StringReader(TwoSuiteAndTwoTestTestTwoFailedResult));
+			using (new SuiteWriter(_xw, 4, 2, 0.032, AllTests))
+			{
+				using (new SuiteWriter(_xw, 1, 2, 0.016, Suite1))
+				{
+					using (new CaseWriter(_xw, Test1, 0.016, Suite1))
+					{
+						using (new FailWriter(_xw, "m1", "d1"))
+						{
+						}
+						using (new FailWriter(_xw, "m2", "d2"))
+						{
+						}
+					}
+					using (new CaseWriter(_xw, Test2, 0, Suite1))
+					{
+					}
+				}
+				using (new SuiteWriter(_xw, 1, 0, 0.016, Suite2))
+				{
+					using (new CaseWriter(_xw, Test1, 0.016, Suite2))
+					{
+					}
+					using (new CaseWriter(_xw, Test2, 0, Suite2))
+					{
+					}
+				}
+			}
+			GoogleTestXmlReader reader = new GoogleTestXmlReader(new StringReader(_sb.ToString()));
 			reader.Read();
 			Assert.That(reader.FailuresCount, Is.EqualTo(2));
+		}
+		
+		[Test]
+		public void ReadTwoSuiteAndTwoTestOnWithOneFailureOtherWithTwoFailures()
+		{
+			using (new SuiteWriter(_xw, 4, 3, 0.032, AllTests))
+			{
+				using (new SuiteWriter(_xw, 1, 3, 0.016, Suite1))
+				{
+					using (new CaseWriter(_xw, Test1, 0.016, Suite1))
+					{
+						using (new FailWriter(_xw, "m1", "d1"))
+						{
+						}
+						using (new FailWriter(_xw, "m2", "d2"))
+						{
+						}
+					}
+					using (new CaseWriter(_xw, Test2, 0, Suite1))
+					{
+						using (new FailWriter(_xw, "m3", "d3"))
+						{
+						}
+					}
+				}
+				using (new SuiteWriter(_xw, 1, 0, 0.016, Suite2))
+				{
+					using (new CaseWriter(_xw, Test1, 0.016, Suite2))
+					{
+					}
+					using (new CaseWriter(_xw, Test2, 0, Suite2))
+					{
+					}
+				}
+			}
+			GoogleTestXmlReader reader = new GoogleTestXmlReader(new StringReader(_sb.ToString()));
+			reader.Read();
+			Assert.That(reader.FailuresCount, Is.EqualTo(3));
 		}
 	}
 }

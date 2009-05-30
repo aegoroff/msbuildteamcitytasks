@@ -39,6 +39,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Utils\CaseWriter.cs" />
+    <Compile Include="Utils\FailWriter.cs" />
+    <Compile Include="Utils\SuiteWriter.cs" />
     <Compile Include="TGoogleTestXmlReader.cs" />
     <Compile Include="TMessageAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -4,28 +4,18 @@
  * © 2007-2009 Alexander Egorov
  */
 
-using System;
 using System.Xml;
 
 namespace Tests.Utils
 {
-	public class FailWriter : IDisposable
+	public class FailWriter : BaseWriter
 	{
-		private readonly XmlWriter _xw;
-
-		public FailWriter(XmlWriter xw, string message, string content)
+		public FailWriter(XmlWriter xw, string message, string content) : base(xw)
 		{
-			_xw = xw;
 			xw.WriteStartElement("failure");
 			xw.WriteAttributeString("message", message);
 			xw.WriteAttributeString("type", string.Empty);
 			xw.WriteRaw(content);
-		}
-
-		public void Dispose()
-		{
-			_xw.WriteEndElement();
-			_xw.Flush();
 		}
 	}
 }

@@ -57,6 +57,7 @@
     <Compile Include="ImportData.cs" />
     <Compile Include="ImportDataTeamCityMessage.cs" />
     <Compile Include="ImportGoogleTests.cs" />
+    <Compile Include="ImportType.cs" />
     <Compile Include="NamedTeamCityMessage.cs" />
     <Compile Include="ReportBuildStatistic.cs" />
     <Compile Include="SimpleTeamCityMessage.cs" />

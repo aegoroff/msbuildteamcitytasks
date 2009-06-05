@@ -63,7 +63,7 @@ namespace MSBuild.TeamCity.Tasks
 			{
 				reader = new GoogleTestXmlReader(TestResultsPath);
 				reader.Read();
-				Write(new ImportDataTeamCityMessage("junit", TestResultsPath));
+				Write(new ImportDataTeamCityMessage(ImportType.Junit, TestResultsPath));
 			}
 			catch ( Exception e )
 			{

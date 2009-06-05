@@ -121,6 +121,54 @@ namespace Tests
 		}
 
 		[Test]
+		public void ImportDataFxCop()
+		{
+			const string path = "p";
+			ImportDataTeamCityMessage message = new ImportDataTeamCityMessage(ImportType.FxCop, path);
+			Assert.That(message.ToString(), Is.EqualTo("##teamcity[importData type='FxCop' path='p']"));
+		}
+		
+		[Test]
+		public void ImportDataJunit()
+		{
+			const string path = "p";
+			ImportDataTeamCityMessage message = new ImportDataTeamCityMessage(ImportType.Junit, path);
+			Assert.That(message.ToString(), Is.EqualTo("##teamcity[importData type='junit' path='p']"));
+		}
+		
+		[Test]
+		public void ImportDataNunit()
+		{
+			const string path = "p";
+			ImportDataTeamCityMessage message = new ImportDataTeamCityMessage(ImportType.Nunit, path);
+			Assert.That(message.ToString(), Is.EqualTo("##teamcity[importData type='nunit' path='p']"));
+		}
+		
+		[Test]
+		public void ImportDataSurefire()
+		{
+			const string path = "p";
+			ImportDataTeamCityMessage message = new ImportDataTeamCityMessage(ImportType.Surefire, path);
+			Assert.That(message.ToString(), Is.EqualTo("##teamcity[importData type='surefire' path='p']"));
+		}
+		
+		[Test]
+		public void ImportDataPmd()
+		{
+			const string path = "p";
+			ImportDataTeamCityMessage message = new ImportDataTeamCityMessage(ImportType.Pmd, path);
+			Assert.That(message.ToString(), Is.EqualTo("##teamcity[importData type='pmd' path='p']"));
+		}
+		
+		[Test]
+		public void ImportDataFindBugs()
+		{
+			const string path = "p";
+			ImportDataTeamCityMessage message = new ImportDataTeamCityMessage(ImportType.FindBugs, path);
+			Assert.That(message.ToString(), Is.EqualTo("##teamcity[importData type='findBugs' path='p']"));
+		}
+
+		[Test]
 		public void TestSuiteStart()
 		{
 			const string name = "s1";

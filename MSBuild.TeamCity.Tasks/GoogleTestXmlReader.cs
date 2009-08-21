@@ -49,7 +49,7 @@ namespace MSBuild.TeamCity.Tasks
 			_reader.MoveToContent();
 			while ( _reader.ReadToFollowing(Failure) )
 			{
-				FailuresCount++;
+				++FailuresCount;
 			}
 		}
 

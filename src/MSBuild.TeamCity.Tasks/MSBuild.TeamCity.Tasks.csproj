@@ -53,6 +53,7 @@
     <Compile Include="BuildProgressTask.cs" />
     <Compile Include="BuildStatus.cs" />
     <Compile Include="BuildStatusTeamCityMessage.cs" />
+    <Compile Include="DotNetCoverateTool.cs" />
     <Compile Include="GoogleTestXmlReader.cs" />
     <Compile Include="ImportData.cs" />
     <Compile Include="ImportDataTeamCityMessage.cs" />

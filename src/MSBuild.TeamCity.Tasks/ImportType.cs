@@ -40,5 +40,10 @@ namespace MSBuild.TeamCity.Tasks
 		/// Represents FxCop report "FxCop"
 		/// </summary>
 		FxCop,
+		
+		/// <summary>
+		/// Represents .NET coverage report "dotNetCoverage"
+		/// </summary>
+		DotNetCoverage,
 	}
 }

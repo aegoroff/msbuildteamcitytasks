@@ -13,6 +13,10 @@ namespace MSBuild.TeamCity.Tasks
 	///</summary>
 	public class ImportDataTeamCityMessage : TeamCityMessage
 	{
+		private const string PartCover = "partcover";
+		private const string Ncover = "ncover";
+		private const string Ncover3 = "ncover3";
+
 		///<summary>
 		/// Initializes a new instance of the <see cref="ImportDataTeamCityMessage"/> class using <see cref="ImportType"/> value and path specified
 		///</summary>
@@ -31,6 +35,21 @@ namespace MSBuild.TeamCity.Tasks
 		{
 			Attributes.Add(new MessageAttributeItem("type", type));
 			Attributes.Add(new MessageAttributeItem("path", path));
+		}
+
+		///<summary>
+		/// Initializes a new instance of the <see cref="ImportDataTeamCityMessage"/> class using type and path specified
+		///</summary>
+		///<param name="type">Data type. FxCop for example</param>
+		///<param name="path">Full path to file</param>
+		///<param name="tool">Here the tool name value can be partcover, ncover, or ncover3, depending on selected coverage tool in the coverage settings.</param>
+		public ImportDataTeamCityMessage( ImportType type, string path, DotNetCoverateTool tool ) : this(type, path)
+		{
+			if ( type != ImportType.DotNetCoverage )
+			{
+				throw new NotSupportedException();
+			}
+			Attributes.Add(new MessageAttributeItem("tool", ToString(tool)));
 		}
 
 		/// <summary>
@@ -57,6 +76,38 @@ namespace MSBuild.TeamCity.Tasks
 					return "pmd";
 				case ImportType.FxCop:
 					return "FxCop";
+				case ImportType.DotNetCoverage:
+					return "dotNetCoverage";
+				default:
+					throw new NotSupportedException();
+			}
+		}
+
+		private static string ToString( DotNetCoverateTool type )
+		{
+			switch ( type )
+			{
+				case DotNetCoverateTool.PartCover:
+					return PartCover;
+				case DotNetCoverateTool.Ncover:
+					return Ncover;
+				case DotNetCoverateTool.Ncover3:
+					return Ncover3;
+				default:
+					throw new NotSupportedException();
+			}
+		}
+
+		internal static DotNetCoverateTool ToDotNetCoverateTool( string type )
+		{
+			switch ( type )
+			{
+				case PartCover:
+					return DotNetCoverateTool.PartCover;
+				case Ncover:
+					return DotNetCoverateTool.Ncover;
+				case Ncover3:
+					return DotNetCoverateTool.Ncover3;
 				default:
 					throw new NotSupportedException();
 			}

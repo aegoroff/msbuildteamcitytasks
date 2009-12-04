@@ -31,6 +31,14 @@ namespace MSBuild.TeamCity.Tasks
 	///		Path="C:\FxCop.xml" 
 	/// />
 	/// ]]></code>
+	/// Imports data from NCover generated file
+	/// <code><![CDATA[
+	/// <ImportData
+	///		Type="dotNetCoverage"
+	///		Path="C:\Ncover.xml" 
+	///		Tool="ncover" 
+	/// />
+	/// ]]></code>
 	/// </example>
 	public class ImportData : TeamCityTask
 	{
@@ -42,6 +50,7 @@ namespace MSBuild.TeamCity.Tasks
 		/// <b>findBugs</b> for FindBugs inspections XML reports<br/>
 		/// <b>pmd</b> for PMD inspections XML reports<br/>
 		/// <b>FxCop</b> for FxCop inspections XML reports<br/>
+		/// <b>dotNetCoverage</b> Starting with TeamCity 5.0, NUnit Test Launcher bundles support for .NET code coverage using NCover and PartCover coverage engines.<br/>
 		/// </summary>
 		[Required]
 		public string Type { get; set; }
@@ -53,6 +62,11 @@ namespace MSBuild.TeamCity.Tasks
 		public string Path { get; set; }
 
 		/// <summary>
+		/// Gets or sets the tool name value can be partcover, ncover, or ncover3, depending on selected coverage tool in the coverage settings.
+		/// </summary>
+		public string Tool { get; set; }
+
+		/// <summary>
 		/// When overridden in a derived class, executes the task.
 		/// </summary>
 		/// <returns>
@@ -60,7 +74,16 @@ namespace MSBuild.TeamCity.Tasks
 		/// </returns>
 		public override bool Execute()
 		{
-			Write(new ImportDataTeamCityMessage(Type, Path));
+			if ( string.IsNullOrEmpty(Tool) )
+			{
+				Write(new ImportDataTeamCityMessage(Type, Path));
+			}
+			else
+			{
+				Write(new ImportDataTeamCityMessage(ImportType.DotNetCoverage, Path,
+				                                    ImportDataTeamCityMessage.ToDotNetCoverateTool(Tool)));
+			}
+
 			return true;
 		}
 	}

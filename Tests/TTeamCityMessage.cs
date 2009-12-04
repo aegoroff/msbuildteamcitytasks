@@ -167,6 +167,38 @@ namespace Tests
 			ImportDataTeamCityMessage message = new ImportDataTeamCityMessage(ImportType.FindBugs, path);
 			Assert.That(message.ToString(), Is.EqualTo("##teamcity[importData type='findBugs' path='p']"));
 		}
+		
+		[Test]
+		public void ImportDataDotNetCoveragePartCover()
+		{
+			const string path = "p";
+			ImportDataTeamCityMessage message = new ImportDataTeamCityMessage(ImportType.DotNetCoverage, path, DotNetCoverateTool.PartCover);
+			Assert.That(message.ToString(), Is.EqualTo("##teamcity[importData type='dotNetCoverage' path='p' tool='partcover']"));
+		}
+		
+		[Test]
+		public void ImportDataDotNetCoverageNCover()
+		{
+			const string path = "p";
+			ImportDataTeamCityMessage message = new ImportDataTeamCityMessage(ImportType.DotNetCoverage, path, DotNetCoverateTool.Ncover);
+			Assert.That(message.ToString(), Is.EqualTo("##teamcity[importData type='dotNetCoverage' path='p' tool='ncover']"));
+		}
+		
+		[Test]
+		public void ImportDataDotNetCoverageNCover3()
+		{
+			const string path = "p";
+			ImportDataTeamCityMessage message = new ImportDataTeamCityMessage(ImportType.DotNetCoverage, path, DotNetCoverateTool.Ncover3);
+			Assert.That(message.ToString(), Is.EqualTo("##teamcity[importData type='dotNetCoverage' path='p' tool='ncover3']"));
+		}
+		
+		[Test]
+		[ExpectedException(typeof(NotSupportedException))]
+		public void ImportDataDotNetCoverageNotSupported()
+		{
+			const string path = "p";
+			new ImportDataTeamCityMessage(ImportType.Nunit, path, DotNetCoverateTool.Ncover3);
+		}
 
 		[Test]
 		public void TestSuiteStart()

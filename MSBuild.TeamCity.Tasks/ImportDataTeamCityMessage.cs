@@ -60,6 +60,21 @@ namespace MSBuild.TeamCity.Tasks
 			get { return "importData"; }
 		}
 
+		internal static DotNetCoverateTool ToDotNetCoverateTool(string type)
+		{
+			switch (type)
+			{
+				case PartCover:
+					return DotNetCoverateTool.PartCover;
+				case Ncover:
+					return DotNetCoverateTool.Ncover;
+				case Ncover3:
+					return DotNetCoverateTool.Ncover3;
+				default:
+					throw new NotSupportedException();
+			}
+		}
+
 		private static string ToString( ImportType type )
 		{
 			switch ( type )
@@ -93,21 +108,6 @@ namespace MSBuild.TeamCity.Tasks
 					return Ncover;
 				case DotNetCoverateTool.Ncover3:
 					return Ncover3;
-				default:
-					throw new NotSupportedException();
-			}
-		}
-
-		internal static DotNetCoverateTool ToDotNetCoverateTool( string type )
-		{
-			switch ( type )
-			{
-				case PartCover:
-					return DotNetCoverateTool.PartCover;
-				case Ncover:
-					return DotNetCoverateTool.Ncover;
-				case Ncover3:
-					return DotNetCoverateTool.Ncover3;
 				default:
 					throw new NotSupportedException();
 			}

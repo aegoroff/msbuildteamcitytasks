@@ -183,7 +183,7 @@
 		<Exec
 			Command='python.exe $(MSBuildProjectDirectory)\googlecode_upload.py -p msbuildteamcitytasks -u $(GoogleLogin) -w $(GooglePassword) -s "Release $(Major).$(Minor) Build $(Build)" -l Featured,Type-Installer,OpSys-Windows @(SetupDestinationFile)'
 			Timeout="90000"
-			Condition=" '$(IsUpload)'=='true' 
+			Condition=" '$(IsUpload)'=='true' "
 		/>
 		<PublishArtifacts Artifacts="@(Artifact)"/>
 		<Message Text="Build $(Major).$(Minor).$(Build).$(Revision) Complete"/>

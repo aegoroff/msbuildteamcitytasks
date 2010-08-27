@@ -53,6 +53,14 @@ namespace MSBuild.TeamCity.Tasks
 		public bool RunDisabledTests { get; set; }
 
 		/// <summary>
+		/// Gets or sets full tests fiter. 
+		/// Run only the tests whose name matches one of the positive patterns but 
+		/// none of the negative patterns. '?' matches any single character; '*' 
+		/// matches any substring; ':' separates two patterns.
+		/// </summary>
+		public string TestFilter { get; set; }
+
+		/// <summary>
 		/// When overridden in a derived class, executes the task.
 		/// </summary>
 		/// <returns>
@@ -66,13 +74,15 @@ namespace MSBuild.TeamCity.Tasks
 				string file = Path.GetFileNameWithoutExtension(TestExePath);
 				string dir = Path.GetDirectoryName(Path.GetFullPath(TestExePath));
 				string xmlPath = dir + @"\" + file + ".xml";
-				
+
+				GoogleTestArgumentsBuilder commandLine =
+					new GoogleTestArgumentsBuilder(CatchGtestExceptions, RunDisabledTests, TestFilter);
 				Process gtestApp = new Process
 				                   	{
 				                   		StartInfo =
 				                   			{
 				                   				FileName = TestExePath,
-				                   				Arguments = "--gtest_output=xml:",
+												Arguments = commandLine.CreateCommandLine(),
 				                   				UseShellExecute = false,
 				                   				RedirectStandardOutput = true,
 												WorkingDirectory = dir,

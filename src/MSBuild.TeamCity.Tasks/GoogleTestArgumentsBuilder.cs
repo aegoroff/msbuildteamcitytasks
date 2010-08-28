@@ -4,6 +4,7 @@
  * © 2007-2010 Alexander Egorov
  */
 
+using System.Globalization;
 using System.Text;
 
 namespace MSBuild.TeamCity.Tasks
@@ -11,7 +12,7 @@ namespace MSBuild.TeamCity.Tasks
 	///<summary>
 	/// Helps to build command line arguments string to pass Google test executable
 	///</summary>
-	public class GoogleTestArgumentsBuilder
+	public sealed class GoogleTestArgumentsBuilder
 	{
 		private readonly bool _catchExceptions;
 		private readonly bool _runDisabledTests;
@@ -59,7 +60,7 @@ namespace MSBuild.TeamCity.Tasks
 			if ( !string.IsNullOrEmpty(_filter) )
 			{
 				sb.Append(Space);
-				sb.Append(string.Format(FilterCommand, _filter));
+				sb.Append(string.Format(CultureInfo.CurrentCulture, FilterCommand, _filter));
 			}
 			return sb.ToString();
 		}

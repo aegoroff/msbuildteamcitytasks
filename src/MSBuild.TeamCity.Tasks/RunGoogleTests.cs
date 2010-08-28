@@ -109,6 +109,11 @@ namespace MSBuild.TeamCity.Tasks
 				string dir = Path.GetDirectoryName(Path.GetFullPath(TestExePath));
 				string xmlPath = dir + @"\" + file + ".xml";
 
+				if ( File.Exists(xmlPath) ) // to fix IssueID 3 (delete file from previous tests run)
+				{
+					File.Delete(xmlPath);
+				}
+				
 				GoogleTestArgumentsBuilder commandLine =
 					new GoogleTestArgumentsBuilder(CatchGtestExceptions, RunDisabledTests, TestFilter);
 				Process gtestApp = new Process

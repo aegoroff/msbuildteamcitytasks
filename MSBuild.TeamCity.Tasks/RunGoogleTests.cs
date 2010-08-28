@@ -123,7 +123,7 @@ namespace MSBuild.TeamCity.Tasks
 				                   				FileName = TestExePath,
 												Arguments = commandLine.CreateCommandLine(),
 				                   				UseShellExecute = false,
-				                   				RedirectStandardOutput = true,
+				                   				RedirectStandardOutput = false,
 												WorkingDirectory = dir,
 				                   				CreateNoWindow = true
 				                   			}

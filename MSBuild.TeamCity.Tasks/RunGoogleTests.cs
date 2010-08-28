@@ -21,10 +21,38 @@ namespace MSBuild.TeamCity.Tasks
 	///		TestExePath="TestExecutable.exe"
 	/// />
 	/// ]]></code>
-	/// Runs tests and imports test results into TC continues script excecution in case of failed tests
+	/// Runs tests and waits 30 seconds the tests to complete
+	/// <code><![CDATA[
+	/// <RunGoogleTests
+	///		ExecutionTimeoutMilliseconds="30000"
+	///		TestExePath="TestExecutable.exe"
+	/// />
+	/// ]]></code>
+	/// Runs tests and continues script excecution in case of failed tests
 	/// <code><![CDATA[
 	/// <RunGoogleTests
 	///		ContinueOnFailures="true"
+	///		TestExePath="TestExecutable.exe"
+	/// />
+	/// ]]></code>
+	/// Runs tests and suppress pop-ups caused by exceptions
+	/// <code><![CDATA[
+	/// <RunGoogleTests
+	///		CatchGtestExceptions="true"
+	///		TestExePath="TestExecutable.exe"
+	/// />
+	/// ]]></code>
+	/// Runs tests including all disabled tests too
+	/// <code><![CDATA[
+	/// <RunGoogleTests
+	///		RunDisabledTests="true"
+	///		TestExePath="TestExecutable.exe"
+	/// />
+	/// ]]></code>
+	/// Runs only tests which named are matched to the filter specified.
+	/// <code><![CDATA[
+	/// <RunGoogleTests
+	///		TestFilter="SpecialTest*"
 	///		TestExePath="TestExecutable.exe"
 	/// />
 	/// ]]></code>
@@ -59,6 +87,12 @@ namespace MSBuild.TeamCity.Tasks
 		/// matches any substring; ':' separates two patterns.
 		/// </summary>
 		public string TestFilter { get; set; }
+		
+		/// <summary>
+		/// Gets or sets the time to wait the specified number of milliseconds for the test process to finish.
+		/// By default waiting indefinitely.
+		/// </summary>
+		public int ExecutionTimeoutMilliseconds { get; set; }
 
 		/// <summary>
 		/// When overridden in a derived class, executes the task.
@@ -93,7 +127,14 @@ namespace MSBuild.TeamCity.Tasks
 				using ( gtestApp )
 				{
 					gtestApp.Start();
-					gtestApp.WaitForExit();
+					if (ExecutionTimeoutMilliseconds > 0)
+					{
+						gtestApp.WaitForExit(ExecutionTimeoutMilliseconds);
+					}
+					else
+					{
+						gtestApp.WaitForExit();
+					}
 				}
 
 				reader = new GoogleTestXmlReader(xmlPath);

@@ -48,7 +48,7 @@
     <HtmlHelpName>MSBuild.TeamCity.Tasks</HtmlHelpName>
     <Language>en-US</Language>
     <CopyrightHref>http://code.google.com/p/msbuildteamcitytasks/</CopyrightHref>
-    <CopyrightText>Alexander Egorov (c) 2009</CopyrightText>
+    <CopyrightText>Alexander Egorov (c) 2009-2010</CopyrightText>
     <FeedbackEMailAddress>egoroff@gmail.com</FeedbackEMailAddress>
     <FeedbackEMailLinkText />
     <HeaderText>MSBuild TeamCity Tasks</HeaderText>

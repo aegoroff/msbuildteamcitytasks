@@ -4,9 +4,6 @@
  * © 2007-2010 Alexander Egorov
  */
 
-using System;
-using System.Diagnostics;
-using System.IO;
 using Microsoft.Build.Framework;
 
 namespace MSBuild.TeamCity.Tasks
@@ -95,77 +92,22 @@ namespace MSBuild.TeamCity.Tasks
 		public int ExecutionTimeoutMilliseconds { get; set; }
 
 		/// <summary>
-		/// When overridden in a derived class, executes the task.
+		/// Gets task execution result
 		/// </summary>
-		/// <returns>
-		/// true if the task successfully executed; otherwise, false.
-		/// </returns>
-		public override bool Execute()
+		protected override ExecutionResult ExecutionResult
 		{
-			GoogleTestXmlReader reader = null;
-			try
+			get
 			{
-				string file = Path.GetFileNameWithoutExtension(TestExePath);
-				string dir = Path.GetDirectoryName(Path.GetFullPath(TestExePath));
-				string xmlPath = dir + @"\" + file + ".xml";
+				GoogleTestsRunner runner = new GoogleTestsRunner(Logger, ContinueOnFailures, TestExePath)
+				{
+					CatchGtestExceptions = CatchGtestExceptions,
+					ExecutionTimeoutMilliseconds = ExecutionTimeoutMilliseconds,
+					RunDisabledTests = RunDisabledTests,
+					TestFilter = TestFilter
+				};
 
-				if ( File.Exists(xmlPath) ) // to fix IssueID 3 (delete file from previous tests run)
-				{
-					File.Delete(xmlPath);
-				}
-				
-				GoogleTestArgumentsBuilder commandLine =
-					new GoogleTestArgumentsBuilder(CatchGtestExceptions, RunDisabledTests, TestFilter);
-				Process gtestApp = new Process
-				                   	{
-				                   		StartInfo =
-				                   			{
-				                   				FileName = TestExePath,
-												Arguments = commandLine.CreateCommandLine(),
-				                   				UseShellExecute = false,
-				                   				RedirectStandardOutput = false,
-												WorkingDirectory = dir,
-				                   				CreateNoWindow = true
-				                   			}
-				                   	};
-				
-				using ( gtestApp )
-				{
-					gtestApp.Start();
-					if (ExecutionTimeoutMilliseconds > 0)
-					{
-						gtestApp.WaitForExit(ExecutionTimeoutMilliseconds);
-					}
-					else
-					{
-						gtestApp.WaitForExit();
-					}
-				}
-
-				reader = new GoogleTestXmlReader(xmlPath);
-				reader.Read();
-				Write(new ImportDataTeamCityMessage(ImportType.Junit, xmlPath));
+				return runner.Import();
 			}
-			catch (Exception e)
-			{
-				Log.LogError(e.ToString());
-			}
-			finally
-			{
-				if (reader != null)
-				{
-					reader.Dispose();
-				}
-			}
-			if (ContinueOnFailures)
-			{
-				return !Log.HasLoggedErrors;
-			}
-			if (reader == null)
-			{
-				return false;
-			}
-			return reader.FailuresCount == 0 && !Log.HasLoggedErrors;
 		}
 	}
 }

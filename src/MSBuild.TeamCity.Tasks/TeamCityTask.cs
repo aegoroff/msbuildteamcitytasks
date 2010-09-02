@@ -5,7 +5,6 @@
  */
 
 using System;
-using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
 
 namespace MSBuild.TeamCity.Tasks
@@ -15,6 +14,19 @@ namespace MSBuild.TeamCity.Tasks
 	/// </summary>
 	public abstract class TeamCityTask : Task
 	{
+		private readonly ILogger _logger;
+		private readonly TeamCityTaskImplementation _implementation;
+		
+		/// <summary>
+		/// Initializes a new instance of the <see cref="TeamCityTask"/> class
+		/// </summary>
+		protected TeamCityTask()
+		{
+			_logger = new Logger(Log);
+			_implementation = new TeamCityTaskImplementation(_logger);
+
+		}
+		
 		/// <summary>
 		/// Gets or sets a value indicating whether to add message's timestamp attribute. False by default
 		/// </summary>
@@ -28,6 +40,14 @@ namespace MSBuild.TeamCity.Tasks
 		public string FlowId { get; set; }
 
 		/// <summary>
+		/// Gets logging object
+		/// </summary>
+		protected ILogger Logger
+		{
+			get { return _logger; }
+		}
+
+		/// <summary>
 		/// Writes <see cref="TeamCityMessage"/> into MSBuild log using MessageImportance.High level
 		/// </summary>
 		/// <param name="message">Message to write</param>
@@ -35,26 +55,34 @@ namespace MSBuild.TeamCity.Tasks
 		{
 			message.IsAddTimestamp = IsAddTimestamp;
 			message.FlowId = FlowId;
-			LogMessage(message.ToString());
+			_implementation.Write(message);
 		}
 
 		/// <summary>
-		/// Writes message into MSBuild log using MessageImportance.High level
+		/// When overridden in a derived class, executes the task.
 		/// </summary>
-		/// <param name="message">Message to write</param>
-		protected void LogMessage( string message )
+		/// <returns>
+		/// true if the task successfully executed; otherwise, false.
+		/// </returns>
+		public override bool Execute()
 		{
 			try
 			{
-				if ( !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("TEAMCITY_PROJECT_NAME")) )
-				{
-					Log.LogMessage(MessageImportance.High, message);
-				}
+				return _implementation.Execute(ExecutionResult);
 			}
 			catch ( Exception e )
 			{
 				Console.WriteLine(e);
 			}
+			return false;
+		}
+
+		/// <summary>
+		/// Gets task execution result
+		/// </summary>
+		protected virtual ExecutionResult ExecutionResult
+		{
+			get { return new ExecutionResult { Status = true }; }
 		}
 	}
 }

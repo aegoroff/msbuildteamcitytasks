@@ -4,7 +4,6 @@
  * © 2007-2009 Alexander Egorov
  */
 
-using System;
 using Microsoft.Build.Framework;
 
 namespace MSBuild.TeamCity.Tasks
@@ -51,40 +50,15 @@ namespace MSBuild.TeamCity.Tasks
 		public bool ContinueOnFailures { get; set; }
 
 		/// <summary>
-		/// When overridden in a derived class, executes the task.
+		/// Gets task execution result
 		/// </summary>
-		/// <returns>
-		/// true if the task successfully executed; otherwise, false.
-		/// </returns>
-		public override bool Execute()
+		protected override ExecutionResult ExecutionResult
 		{
-			GoogleTestXmlReader reader = null;
-			try
+			get
 			{
-				reader = new GoogleTestXmlReader(TestResultsPath);
-				reader.Read();
-				Write(new ImportDataTeamCityMessage(ImportType.Junit, TestResultsPath));
+				GoogleTestsPlainImporter runner = new GoogleTestsPlainImporter(Logger, ContinueOnFailures, TestResultsPath);
+				return runner.Import();
 			}
-			catch ( Exception e )
-			{
-				Log.LogError(e.ToString());
-			}
-			finally
-			{
-				if ( reader != null )
-				{
-					reader.Dispose();
-				}
-			}
-			if ( ContinueOnFailures )
-			{
-				return !Log.HasLoggedErrors;
-			}
-			if ( reader == null )
-			{
-				return false;
-			}
-			return reader.FailuresCount == 0 && !Log.HasLoggedErrors;
 		}
 	}
 }

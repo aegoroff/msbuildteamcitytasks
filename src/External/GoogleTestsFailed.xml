@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite tests="26" failures="1" disabled="0" errors="0" time="0.016" name="AllTests">
+  <testsuite name="ConnectionStringTest" tests="5" failures="1" disabled="0" errors="0" time="0">
+    <testcase name="Constructor" status="run" time="0" classname="ConnectionStringTest" />
+    <testcase name="ParseWithCharset" status="run" time="0" classname="ConnectionStringTest" />
+    <testcase name="ParseWithCharsetLowerCase" status="run" time="0" classname="ConnectionStringTest" />
+    <testcase name="ParseWithoutCharset" status="run" time="0" classname="ConnectionStringTest" />
+    <testcase name="CopyCharset" status="run" time="0" classname="ConnectionStringTest">
+      <failure message="Value of: str.ContainsCharset()&#x0A;  Actual: true&#x0A;Expected: false" type=""><![CDATA[d:\parser3project\sql\mssql\tests\connectionstringtest.cpp:47
+Value of: str.ContainsCharset()
+  Actual: true
+Expected: false]]></failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="QueryDecoratorTest" tests="16" failures="0" disabled="0" errors="0" time="0.016">
+    <testcase name="SelectWithoutLimit" status="run" time="0" classname="QueryDecoratorTest" />
+    <testcase name="SelectWithoutLimitWithLeadingSpaces" status="run" time="0" classname="QueryDecoratorTest" />
+    <testcase name="IsSelect" status="run" time="0" classname="QueryDecoratorTest" />
+    <testcase name="IsSelectWithLeadingSpaces" status="run" time="0" classname="QueryDecoratorTest" />
+    <testcase name="SelectWithLimit" status="run" time="0" classname="QueryDecoratorTest" />
+    <testcase name="SelectWithLimitAndOffset" status="run" time="0" classname="QueryDecoratorTest" />
+    <testcase name="SelectWithLimitAndLeadingSpaces" status="run" time="0" classname="QueryDecoratorTest" />
+    <testcase name="SelectWithZeroLimitAndNonZeroOffset" status="run" time="0" classname="QueryDecoratorTest" />
+    <testcase name="ExecWithoutLimit" status="run" time="0" classname="QueryDecoratorTest" />
+    <testcase name="ExecWithoutLimitWithLeadingSpaces" status="run" time="0" classname="QueryDecoratorTest" />
+    <testcase name="IsExec" status="run" time="0" classname="QueryDecoratorTest" />
+    <testcase name="IsExecWithLeadingSpaces" status="run" time="0" classname="QueryDecoratorTest" />
+    <testcase name="ExecWithLimitAndOffset" status="run" time="0" classname="QueryDecoratorTest" />
+    <testcase name="Delete" status="run" time="0" classname="QueryDecoratorTest" />
+    <testcase name="IsNotExecAndNotSelect" status="run" time="0" classname="QueryDecoratorTest" />
+    <testcase name="DeleteWithLimitAndOffset" status="run" time="0" classname="QueryDecoratorTest" />
+  </testsuite>
+  <testsuite name="WExceptionTest" tests="5" failures="0" disabled="0" errors="0" time="0">
+    <testcase name="DefaultConstructor" status="run" time="0" classname="WExceptionTest" />
+    <testcase name="StringConstructor" status="run" time="0" classname="WExceptionTest" />
+    <testcase name="StreamConstructor" status="run" time="0" classname="WExceptionTest" />
+    <testcase name="CopyConstructor" status="run" time="0" classname="WExceptionTest" />
+    <testcase name="AssignOperator" status="run" time="0" classname="WExceptionTest" />
+  </testsuite>
+</testsuite>

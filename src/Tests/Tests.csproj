@@ -33,6 +33,10 @@
   <ItemGroup>
     <Reference Include="Microsoft.Build.Framework" />
     <Reference Include="Microsoft.Build.Utilities" />
+    <Reference Include="NMock2, Version=2.1.3641.27570, Culture=neutral, PublicKeyToken=cf53a760d95f4c33, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\External\NMock2.dll</HintPath>
+    </Reference>
     <Reference Include="nunit.framework, Version=2.5.2.9222, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -40,6 +44,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="TGoogleTestArgumentsBuilder.cs" />
+    <Compile Include="TGoogleTestsPlainImporter.cs" />
+    <Compile Include="TGoogleTestsRunner.cs" />
+    <Compile Include="TTeamCityTaskImplementation.cs" />
     <Compile Include="Utils\BaseWriter.cs" />
     <Compile Include="Utils\CaseWriter.cs" />
     <Compile Include="Utils\FailWriter.cs" />

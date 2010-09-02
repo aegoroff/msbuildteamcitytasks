@@ -46,6 +46,7 @@
     <Compile Include="TGoogleTestArgumentsBuilder.cs" />
     <Compile Include="TGoogleTestsPlainImporter.cs" />
     <Compile Include="TGoogleTestsRunner.cs" />
+    <Compile Include="TReportMessageBuilder.cs" />
     <Compile Include="TTeamCityTaskImplementation.cs" />
     <Compile Include="Utils\BaseWriter.cs" />
     <Compile Include="Utils\CaseWriter.cs" />

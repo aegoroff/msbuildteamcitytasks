@@ -4,7 +4,6 @@
  * © 2007-2009 Alexander Egorov
  */
 
-using System;
 using Microsoft.Build.Framework;
 
 namespace MSBuild.TeamCity.Tasks
@@ -69,26 +68,19 @@ namespace MSBuild.TeamCity.Tasks
 		public string Tool { get; set; }
 
 		/// <summary>
-		/// When overridden in a derived class, executes the task.
+		/// Gets task execution result
 		/// </summary>
-		/// <exception cref="NotSupportedException">
-		/// Occurs in case of improper Tool or Type properties setting
-		/// </exception>
-		/// <returns>
-		/// true if the task successfully executed; otherwise, false.
-		/// </returns>
-		public override bool Execute()
+		protected override ExecutionResult ExecutionResult
 		{
-			if ( string.IsNullOrEmpty(Tool) )
+			get
 			{
-				Write(new ImportDataTeamCityMessage(Type, Path));
+				ExecutionResult result = new ExecutionResult
+				{
+					Status = true,
+					Message = new ImportDataBuilder(Tool, Path, Type).BuildMessage()
+				};
+				return result;
 			}
-			else
-			{
-				Write(new ImportDataTeamCityMessage(ImportType.DotNetCoverage, Path, ImportDataTeamCityMessage.ToDotNetCoverateTool(Tool)));
-			}
-
-			return true;
 		}
 	}
 }

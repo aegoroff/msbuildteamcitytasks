@@ -55,11 +55,17 @@
     <Compile Include="BuildStatusTeamCityMessage.cs" />
     <Compile Include="DotNetCoverateTool.cs" />
     <Compile Include="GoogleTestArgumentsBuilder.cs" />
+    <Compile Include="GoogleTestsImporter.cs" />
+    <Compile Include="ExecutionResult.cs" />
+    <Compile Include="GoogleTestsPlainImporter.cs" />
+    <Compile Include="GoogleTestsRunner.cs" />
     <Compile Include="GoogleTestXmlReader.cs" />
+    <Compile Include="ILogger.cs" />
     <Compile Include="ImportData.cs" />
     <Compile Include="ImportDataTeamCityMessage.cs" />
     <Compile Include="ImportGoogleTests.cs" />
     <Compile Include="ImportType.cs" />
+    <Compile Include="Logger.cs" />
     <Compile Include="NamedTeamCityMessage.cs" />
     <Compile Include="ReportBuildStatistic.cs" />
     <Compile Include="RunGoogleTests.cs" />
@@ -72,6 +78,7 @@
     <Compile Include="ReportMessageTeamCityMessage.cs" />
     <Compile Include="TeamCityMessage.cs" />
     <Compile Include="TeamCityTask.cs" />
+    <Compile Include="TeamCityTaskImplementation.cs" />
     <Compile Include="TestFailedTeamCityMessage.cs" />
     <Compile Include="TestFinishTeamCityMessage.cs" />
     <Compile Include="TestStartTeamCityMessage.cs" />

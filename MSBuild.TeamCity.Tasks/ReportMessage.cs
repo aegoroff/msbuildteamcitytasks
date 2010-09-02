@@ -61,30 +61,28 @@ namespace MSBuild.TeamCity.Tasks
 		public string ErrorDetails { get; set; }
 
 		/// <summary>
-		/// When overridden in a derived class, executes the task.
+		/// Gets task execution result
 		/// </summary>
-		/// <returns>
-		/// true if the task successfully executed; otherwise, false.
-		/// </returns>
-		public override bool Execute()
+		protected override ExecutionResult ExecutionResult
 		{
-			ReportMessageTeamCityMessage message;
+			get
+			{
+				ExecutionResult result = new ExecutionResult { Status = true };
 
-			if ( !string.IsNullOrEmpty(Status) && !string.IsNullOrEmpty(ErrorDetails) )
-			{
-				message = new ReportMessageTeamCityMessage(Text, Status, ErrorDetails);
+				if (!string.IsNullOrEmpty(Status) && !string.IsNullOrEmpty(ErrorDetails))
+				{
+					result.Message = new ReportMessageTeamCityMessage(Text, Status, ErrorDetails);
+				}
+				else if (!string.IsNullOrEmpty(Status))
+				{
+					result.Message = new ReportMessageTeamCityMessage(Text, Status);
+				}
+				else
+				{
+					result.Message = new ReportMessageTeamCityMessage(Text);
+				}
+				return result;
 			}
-			else if ( !string.IsNullOrEmpty(Status) )
-			{
-				message = new ReportMessageTeamCityMessage(Text, Status);
-			}
-			else
-			{
-				message = new ReportMessageTeamCityMessage(Text);
-			}
-
-			Write(message);
-			return true;
 		}
 	}
 }

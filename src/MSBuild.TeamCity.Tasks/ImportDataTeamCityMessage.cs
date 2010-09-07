@@ -43,7 +43,7 @@ namespace MSBuild.TeamCity.Tasks
 		///<param name="type">Data type. FxCop for example</param>
 		///<param name="path">Full path to file</param>
 		///<param name="tool">Here the tool name value can be partcover, ncover, or ncover3, depending on selected coverage tool in the coverage settings.</param>
-		public ImportDataTeamCityMessage( ImportType type, string path, DotNetCoverateTool tool ) : this(type, path)
+		public ImportDataTeamCityMessage( ImportType type, string path, DotNetCoverageTool tool ) : this(type, path)
 		{
 			if ( type != ImportType.DotNetCoverage )
 			{
@@ -60,16 +60,16 @@ namespace MSBuild.TeamCity.Tasks
 			get { return "importData"; }
 		}
 
-		internal static DotNetCoverateTool ToDotNetCoverateTool( string type )
+		internal static DotNetCoverageTool ToDotNetCoverateTool( string type )
 		{
 			switch ( type )
 			{
 				case PartCover:
-					return DotNetCoverateTool.PartCover;
+					return DotNetCoverageTool.PartCover;
 				case Ncover:
-					return DotNetCoverateTool.Ncover;
+					return DotNetCoverageTool.Ncover;
 				case Ncover3:
-					return DotNetCoverateTool.Ncover3;
+					return DotNetCoverageTool.Ncover3;
 				default:
 					throw new NotSupportedException();
 			}
@@ -100,15 +100,15 @@ namespace MSBuild.TeamCity.Tasks
 			}
 		}
 
-		private static string ToString( DotNetCoverateTool type )
+		private static string ToString( DotNetCoverageTool type )
 		{
 			switch ( type )
 			{
-				case DotNetCoverateTool.PartCover:
+				case DotNetCoverageTool.PartCover:
 					return PartCover;
-				case DotNetCoverateTool.Ncover:
+				case DotNetCoverageTool.Ncover:
 					return Ncover;
-				case DotNetCoverateTool.Ncover3:
+				case DotNetCoverageTool.Ncover3:
 					return Ncover3;
 				default:
 					throw new NotSupportedException();

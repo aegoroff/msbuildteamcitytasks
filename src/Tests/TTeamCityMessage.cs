@@ -180,7 +180,7 @@ namespace Tests
 		public void ImportDataDotNetCoveragePartCover()
 		{
 			const string path = "p";
-			ImportDataTeamCityMessage message = new ImportDataTeamCityMessage(ImportType.DotNetCoverage, path, DotNetCoverateTool.PartCover);
+			ImportDataTeamCityMessage message = new ImportDataTeamCityMessage(ImportType.DotNetCoverage, path, DotNetCoverageTool.PartCover);
 			Assert.That(message.ToString(), Is.EqualTo("##teamcity[importData type='dotNetCoverage' path='p' tool='partcover']"));
 		}
 		
@@ -188,7 +188,7 @@ namespace Tests
 		public void ImportDataDotNetCoverageNCover()
 		{
 			const string path = "p";
-			ImportDataTeamCityMessage message = new ImportDataTeamCityMessage(ImportType.DotNetCoverage, path, DotNetCoverateTool.Ncover);
+			ImportDataTeamCityMessage message = new ImportDataTeamCityMessage(ImportType.DotNetCoverage, path, DotNetCoverageTool.Ncover);
 			Assert.That(message.ToString(), Is.EqualTo("##teamcity[importData type='dotNetCoverage' path='p' tool='ncover']"));
 		}
 		
@@ -196,7 +196,7 @@ namespace Tests
 		public void ImportDataDotNetCoverageNCover3()
 		{
 			const string path = "p";
-			ImportDataTeamCityMessage message = new ImportDataTeamCityMessage(ImportType.DotNetCoverage, path, DotNetCoverateTool.Ncover3);
+			ImportDataTeamCityMessage message = new ImportDataTeamCityMessage(ImportType.DotNetCoverage, path, DotNetCoverageTool.Ncover3);
 			Assert.That(message.ToString(), Is.EqualTo("##teamcity[importData type='dotNetCoverage' path='p' tool='ncover3']"));
 		}
 		
@@ -205,7 +205,7 @@ namespace Tests
 		public void ImportDataDotNetCoverageNotSupported()
 		{
 			const string path = "p";
-			new ImportDataTeamCityMessage(ImportType.Nunit, path, DotNetCoverateTool.Ncover3);
+			new ImportDataTeamCityMessage(ImportType.Nunit, path, DotNetCoverageTool.Ncover3);
 		}
 
 		[Test]
@@ -252,11 +252,19 @@ namespace Tests
 		}
 
 		[Test]
-		public void DotNetCoverage()
+		[ExpectedException(typeof(ArgumentException))]
+		public void DotNetCoverageInvalidKey()
 		{
+			new DotNetCoverMessage("i", "v");
+		}
+		
+		[Test]
+		public void DotNetCoverageNcover3Home()
+		{
+			const string key = "ncover3_home";
 			const string value = "v";
-			DotNetCoverMessage message = new DotNetCoverMessage(value);
-			Assert.That(message.ToString(), Is.EqualTo("##teamcity[dotNetCoverage key='v']"));
+			DotNetCoverMessage message = new DotNetCoverMessage(key, value);
+			Assert.That(message.ToString(), Is.EqualTo("##teamcity[dotNetCoverage ncover3_home='v']"));
 		}
 	}
 }

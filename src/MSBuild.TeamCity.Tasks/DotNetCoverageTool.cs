@@ -9,7 +9,7 @@ namespace MSBuild.TeamCity.Tasks
 	/// <summary>
 	/// Represents all possible dot net coverage tools
 	/// </summary>
-	public enum DotNetCoverateTool
+	public enum DotNetCoverageTool
 	{
 		/// <summary>
 		/// PartCover tool

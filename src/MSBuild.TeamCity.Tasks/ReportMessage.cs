@@ -67,12 +67,11 @@ namespace MSBuild.TeamCity.Tasks
 		{
 			get
 			{
-				ExecutionResult result = new ExecutionResult
-				                         	{
-				                         		Status = true,
-				                         		Message = new ReportMessageBuilder(Text, Status, ErrorDetails).BuildMessage()
-				                         	};
-				return result;
+				return new ExecutionResult
+				       	{
+				       		Status = true,
+				       		Message = new ReportMessageBuilder(Text, Status, ErrorDetails).BuildMessage()
+				       	};
 			}
 		}
 	}

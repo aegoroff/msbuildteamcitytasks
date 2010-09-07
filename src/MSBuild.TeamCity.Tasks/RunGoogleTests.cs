@@ -66,12 +66,12 @@ namespace MSBuild.TeamCity.Tasks
 		/// Gets or sets a value indicating whether to continue in case of failed tests. False by default
 		///</summary>
 		public bool ContinueOnFailures { get; set; }
-		
+
 		///<summary>
 		/// Gets or sets a value indicating whether to suppress pop-ups caused by exceptions. False by default
 		///</summary>
 		public bool CatchGtestExceptions { get; set; }
-		
+
 		/// <summary>
 		/// Gets or sets a value indicating whether to run all disabled tests too. False by default
 		/// </summary>
@@ -84,7 +84,7 @@ namespace MSBuild.TeamCity.Tasks
 		/// matches any substring; ':' separates two patterns.
 		/// </summary>
 		public string TestFilter { get; set; }
-		
+
 		/// <summary>
 		/// Gets or sets the time to wait the specified number of milliseconds for the test process to finish.
 		/// By default waiting indefinitely.
@@ -99,12 +99,12 @@ namespace MSBuild.TeamCity.Tasks
 			get
 			{
 				GoogleTestsRunner runner = new GoogleTestsRunner(Logger, ContinueOnFailures, TestExePath)
-				{
-					CatchGtestExceptions = CatchGtestExceptions,
-					ExecutionTimeoutMilliseconds = ExecutionTimeoutMilliseconds,
-					RunDisabledTests = RunDisabledTests,
-					TestFilter = TestFilter
-				};
+				                           	{
+				                           		CatchGtestExceptions = CatchGtestExceptions,
+				                           		ExecutionTimeoutMilliseconds = ExecutionTimeoutMilliseconds,
+				                           		RunDisabledTests = RunDisabledTests,
+				                           		TestFilter = TestFilter
+				                           	};
 
 				return runner.Import();
 			}

@@ -15,12 +15,12 @@ namespace MSBuild.TeamCity.Tasks
 		/// PartCover tool
 		/// </summary>
 		PartCover,
-		
+
 		/// <summary>
 		/// NCover 1.5.x tool
 		/// </summary>
 		Ncover,
-		
+
 		/// <summary>
 		/// NCover 3.x tool
 		/// </summary>

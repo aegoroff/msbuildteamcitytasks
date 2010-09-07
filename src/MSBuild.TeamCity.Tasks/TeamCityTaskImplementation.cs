@@ -14,6 +14,7 @@ namespace MSBuild.TeamCity.Tasks
 	///</summary>
 	public class TeamCityTaskImplementation
 	{
+		private const string TeamcityDiscoveryEnvVariable = "TEAMCITY_PROJECT_NAME";
 		private readonly ILogger _logger;
 
 		///<summary>
@@ -21,7 +22,7 @@ namespace MSBuild.TeamCity.Tasks
 		/// logger specified
 		///</summary>
 		///<param name="logger"><see cref="ILogger"/> implementation</param>
-		public TeamCityTaskImplementation(ILogger logger)
+		public TeamCityTaskImplementation( ILogger logger )
 		{
 			_logger = logger;
 		}
@@ -30,7 +31,7 @@ namespace MSBuild.TeamCity.Tasks
 		/// Writes <see cref="TeamCityMessage"/> into MSBuild log using MessageImportance.High level
 		/// </summary>
 		/// <param name="message">Message to write</param>
-		public void Write(TeamCityMessage message)
+		public void Write( TeamCityMessage message )
 		{
 			LogMessage(message.ToString());
 		}
@@ -39,9 +40,9 @@ namespace MSBuild.TeamCity.Tasks
 		/// Writes message into MSBuild log using MessageImportance.High level
 		/// </summary>
 		/// <param name="message">Message to write</param>
-		private void LogMessage(string message)
+		private void LogMessage( string message )
 		{
-			if (!string.IsNullOrEmpty(Environment.GetEnvironmentVariable("TEAMCITY_PROJECT_NAME")))
+			if ( !string.IsNullOrEmpty(Environment.GetEnvironmentVariable(TeamcityDiscoveryEnvVariable)) )
 			{
 				_logger.LogMessage(MessageImportance.High, message);
 			}
@@ -53,9 +54,9 @@ namespace MSBuild.TeamCity.Tasks
 		/// <returns>
 		/// true if the task successfully executed; otherwise, false.
 		/// </returns>
-		public bool Execute(ExecutionResult result)
+		public bool Execute( ExecutionResult result )
 		{
-			if (result.Message != null)
+			if ( result.Message != null )
 			{
 				Write(result.Message);
 			}

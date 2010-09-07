@@ -24,7 +24,7 @@ namespace MSBuild.TeamCity.Tasks
 		private const string FilterCommand = "--gtest_filter=\"{0}\"";
 
 		///<summary>
-		/// Creates new builder instance
+		/// Initializes a new instance of the <see cref="GoogleTestArgumentsBuilder"/> class.
 		///</summary>
 		///<param name="catchExceptions">suppress pop-ups caused by exceptions</param>
 		///<param name="runDisabledTests">run all disabled tests too</param>

@@ -17,7 +17,8 @@ namespace MSBuild.TeamCity.Tasks
 		public TeamCityMessage Message { get; set; }
 
 		///<summary>
-		/// Gets or sets import status. True if the operation was successful and there are no failing tests 
+		/// Gets or sets a value indicating whether the import was successful.
+		/// True if the operation was successful and there are no failing tests 
 		/// otherwise false
 		///</summary>
 		public bool Status { get; set; }

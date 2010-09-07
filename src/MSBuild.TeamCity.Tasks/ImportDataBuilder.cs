@@ -29,13 +29,15 @@ namespace MSBuild.TeamCity.Tasks
 		}
 
 		/// <summary>
-		/// Builds 
+		/// Builds message
 		/// </summary>
+		/// <returns>The new instance of <see cref="TeamCityMessage"/> class</returns>
 		public TeamCityMessage BuildMessage()
 		{
 			return string.IsNullOrEmpty(_tool)
 			       	? new ImportDataTeamCityMessage(_type, _path)
-			       	: new ImportDataTeamCityMessage(ImportType.DotNetCoverage, _path,
+			       	: new ImportDataTeamCityMessage(ImportType.DotNetCoverage,
+			       	                                _path,
 			       	                                ImportDataTeamCityMessage.ToDotNetCoverateTool(_tool));
 		}
 	}

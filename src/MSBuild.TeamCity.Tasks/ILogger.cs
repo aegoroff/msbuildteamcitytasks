@@ -14,7 +14,7 @@ namespace MSBuild.TeamCity.Tasks
 	public interface ILogger
 	{
 		/// <summary>
-		/// Gets a value that indicates whether the task has logged any errors through this logging helper object.
+		/// Gets a value indicating whether the task has logged any errors through this logging helper object.
 		/// </summary>
 		bool HasLoggedErrors { get; }
 

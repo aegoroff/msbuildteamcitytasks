@@ -45,5 +45,10 @@ namespace MSBuild.TeamCity.Tasks
 		/// Represents .NET coverage report "dotNetCoverage"
 		/// </summary>
 		DotNetCoverage,
+		
+		/// <summary>
+		/// Represents MS test report "mstest"
+		/// </summary>
+		Mstest,
 	}
 }

@@ -37,20 +37,9 @@ namespace MSBuild.TeamCity.Tasks
 		}
 
 		/// <summary>
-		/// Writes message into MSBuild log using MessageImportance.High level
-		/// </summary>
-		/// <param name="message">Message to write</param>
-		private void LogMessage( string message )
-		{
-			if ( !string.IsNullOrEmpty(Environment.GetEnvironmentVariable(TeamcityDiscoveryEnvVariable)) )
-			{
-				_logger.LogMessage(MessageImportance.High, message);
-			}
-		}
-
-		/// <summary>
 		/// Executes the task.
 		/// </summary>
+		/// <param name="result">A task execution result</param>
 		/// <returns>
 		/// true if the task successfully executed; otherwise, false.
 		/// </returns>
@@ -61,6 +50,18 @@ namespace MSBuild.TeamCity.Tasks
 				Write(result.Message);
 			}
 			return result.Status;
+		}
+
+		/// <summary>
+		/// Writes message into MSBuild log using MessageImportance.High level
+		/// </summary>
+		/// <param name="message">Message to write</param>
+		private void LogMessage( string message )
+		{
+			if ( !string.IsNullOrEmpty(Environment.GetEnvironmentVariable(TeamcityDiscoveryEnvVariable)) )
+			{
+				_logger.LogMessage(MessageImportance.High, message);
+			}
 		}
 	}
 }

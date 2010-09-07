@@ -62,7 +62,8 @@ namespace MSBuild.TeamCity.Tasks
 			string dir = Path.GetDirectoryName(Path.GetFullPath(_testExePath));
 			string xmlPath = dir + @"\" + file + ".xml";
 
-			if ( File.Exists(xmlPath) ) // to fix IssueID 3 (delete file from previous tests run)
+			// to fix IssueID 3 (delete file from previous tests run)
+			if ( File.Exists(xmlPath) )
 			{
 				File.Delete(xmlPath);
 			}

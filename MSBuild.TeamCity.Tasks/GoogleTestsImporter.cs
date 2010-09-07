@@ -28,16 +28,10 @@ namespace MSBuild.TeamCity.Tasks
 		}
 
 		/// <summary>
-		/// Creates XML import file
-		/// </summary>
-		/// <returns>Path to xml file to import</returns>
-		protected abstract string CreateXmlImport();
-
-		/// <summary>
 		/// Runs import
 		/// </summary>
 		/// <returns>
-		/// <see cref="ExecutionResult"/>
+		/// The new instance of <see cref="ExecutionResult"/> structure.
 		/// </returns>
 		public ExecutionResult Import()
 		{
@@ -76,5 +70,11 @@ namespace MSBuild.TeamCity.Tasks
 			}
 			return result;
 		}
+
+		/// <summary>
+		/// Creates XML import file
+		/// </summary>
+		/// <returns>Path to xml file to import</returns>
+		protected abstract string CreateXmlImport();
 	}
 }

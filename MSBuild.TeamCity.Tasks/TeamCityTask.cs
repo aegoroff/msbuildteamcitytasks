@@ -47,14 +47,11 @@ namespace MSBuild.TeamCity.Tasks
 		}
 
 		/// <summary>
-		/// Writes <see cref="TeamCityMessage"/> into MSBuild log using MessageImportance.High level
+		/// Gets task execution result
 		/// </summary>
-		/// <param name="message">Message to write</param>
-		protected void Write( TeamCityMessage message )
+		protected virtual ExecutionResult ExecutionResult
 		{
-			message.IsAddTimestamp = IsAddTimestamp;
-			message.FlowId = FlowId;
-			_implementation.Write(message);
+			get { return new ExecutionResult { Status = true }; }
 		}
 
 		/// <summary>
@@ -77,11 +74,14 @@ namespace MSBuild.TeamCity.Tasks
 		}
 
 		/// <summary>
-		/// Gets task execution result
+		/// Writes <see cref="TeamCityMessage"/> into MSBuild log using MessageImportance.High level
 		/// </summary>
-		protected virtual ExecutionResult ExecutionResult
+		/// <param name="message">Message to write</param>
+		protected void Write( TeamCityMessage message )
 		{
-			get { return new ExecutionResult { Status = true }; }
+			message.IsAddTimestamp = IsAddTimestamp;
+			message.FlowId = FlowId;
+			_implementation.Write(message);
 		}
 	}
 }

@@ -29,8 +29,9 @@ namespace MSBuild.TeamCity.Tasks
 		}
 
 		/// <summary>
-		/// Builds 
+		/// Builds message
 		/// </summary>
+		/// <returns>The new instance of <see cref="TeamCityMessage"/> class</returns>
 		public TeamCityMessage BuildMessage()
 		{
 			if ( !string.IsNullOrEmpty(_status) && !string.IsNullOrEmpty(_details) )

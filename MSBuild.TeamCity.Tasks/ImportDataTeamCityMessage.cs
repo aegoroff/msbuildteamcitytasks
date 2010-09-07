@@ -93,6 +93,8 @@ namespace MSBuild.TeamCity.Tasks
 					return "FxCop";
 				case ImportType.DotNetCoverage:
 					return "dotNetCoverage";
+				case ImportType.Mstest:
+					return "mstest";
 				default:
 					throw new NotSupportedException();
 			}

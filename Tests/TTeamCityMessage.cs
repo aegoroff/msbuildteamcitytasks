@@ -169,6 +169,14 @@ namespace Tests
 		}
 		
 		[Test]
+		public void ImportDataMstest()
+		{
+			const string path = "p";
+			ImportDataTeamCityMessage message = new ImportDataTeamCityMessage(ImportType.Mstest, path);
+			Assert.That(message.ToString(), Is.EqualTo("##teamcity[importData type='mstest' path='p']"));
+		}
+		
+		[Test]
 		public void ImportDataDotNetCoveragePartCover()
 		{
 			const string path = "p";

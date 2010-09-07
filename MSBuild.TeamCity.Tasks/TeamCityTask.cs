@@ -16,7 +16,7 @@ namespace MSBuild.TeamCity.Tasks
 	{
 		private readonly ILogger _logger;
 		private readonly TeamCityTaskImplementation _implementation;
-		
+
 		/// <summary>
 		/// Initializes a new instance of the <see cref="TeamCityTask"/> class
 		/// </summary>
@@ -24,9 +24,8 @@ namespace MSBuild.TeamCity.Tasks
 		{
 			_logger = new Logger(Log);
 			_implementation = new TeamCityTaskImplementation(_logger);
-
 		}
-		
+
 		/// <summary>
 		/// Gets or sets a value indicating whether to add message's timestamp attribute. False by default
 		/// </summary>

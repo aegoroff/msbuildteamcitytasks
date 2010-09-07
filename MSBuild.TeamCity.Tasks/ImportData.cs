@@ -74,12 +74,11 @@ namespace MSBuild.TeamCity.Tasks
 		{
 			get
 			{
-				ExecutionResult result = new ExecutionResult
-				{
-					Status = true,
-					Message = new ImportDataBuilder(Tool, Path, Type).BuildMessage()
-				};
-				return result;
+				return new ExecutionResult
+				       	{
+				       		Status = true,
+				       		Message = new ImportDataBuilder(Tool, Path, Type).BuildMessage()
+				       	};
 			}
 		}
 	}

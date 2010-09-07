@@ -31,6 +31,6 @@ namespace MSBuild.TeamCity.Tasks
 		/// <param name="importance">One of the enumeration values that specifies the importance of the message.</param>
 		/// <param name="message">The message.</param>
 		/// <param name="messageArgs">The arguments for formatting the message.</param>
-		void LogMessage(MessageImportance importance, string message, params object[] messageArgs);
+		void LogMessage( MessageImportance importance, string message, params object[] messageArgs );
 	}
 }

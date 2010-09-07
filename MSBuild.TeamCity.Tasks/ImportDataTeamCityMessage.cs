@@ -60,9 +60,9 @@ namespace MSBuild.TeamCity.Tasks
 			get { return "importData"; }
 		}
 
-		internal static DotNetCoverateTool ToDotNetCoverateTool(string type)
+		internal static DotNetCoverateTool ToDotNetCoverateTool( string type )
 		{
-			switch (type)
+			switch ( type )
 			{
 				case PartCover:
 					return DotNetCoverateTool.PartCover;

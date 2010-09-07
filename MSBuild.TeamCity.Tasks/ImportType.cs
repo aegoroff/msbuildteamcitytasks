@@ -15,32 +15,32 @@ namespace MSBuild.TeamCity.Tasks
 		/// Represents JUnit report "junit"
 		/// </summary>
 		Junit,
-		
+
 		/// <summary>
 		/// Represents Surefire report "surefire"
 		/// </summary>
 		Surefire,
-		
+
 		/// <summary>
 		/// Represents NUnit report "nunit"
 		/// </summary>
 		Nunit,
-		
+
 		/// <summary>
 		/// Represents FindBugs report "findBugs"
 		/// </summary>
 		FindBugs,
-		
+
 		/// <summary>
 		/// Represents PMD report "pmd"
 		/// </summary>
 		Pmd,
-		
+
 		/// <summary>
 		/// Represents FxCop report "FxCop"
 		/// </summary>
 		FxCop,
-		
+
 		/// <summary>
 		/// Represents .NET coverage report "dotNetCoverage"
 		/// </summary>

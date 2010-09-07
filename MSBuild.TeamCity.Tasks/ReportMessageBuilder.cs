@@ -21,7 +21,7 @@ namespace MSBuild.TeamCity.Tasks
 		///<param name="text">Message text</param>
 		///<param name="status">The status attribute may take following values: NORMAL, WARNING, FAILURE, ERROR. The default value is NORMAL.</param>
 		///<param name="details">error details text that is used only if status is ERROR</param>
-		public ReportMessageBuilder(string text, string status, string details)
+		public ReportMessageBuilder( string text, string status, string details )
 		{
 			_text = text;
 			_status = status;

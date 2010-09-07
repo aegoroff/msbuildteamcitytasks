@@ -54,11 +54,7 @@ namespace MSBuild.TeamCity.Tasks
 		/// </summary>
 		protected override ExecutionResult ExecutionResult
 		{
-			get
-			{
-				GoogleTestsPlainImporter runner = new GoogleTestsPlainImporter(Logger, ContinueOnFailures, TestResultsPath);
-				return runner.Import();
-			}
+			get { return new GoogleTestsPlainImporter(Logger, ContinueOnFailures, TestResultsPath).Import(); }
 		}
 	}
 }

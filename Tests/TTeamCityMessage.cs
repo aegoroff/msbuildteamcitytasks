@@ -242,5 +242,13 @@ namespace Tests
 			TestFailedTeamCityMessage message = new TestFailedTeamCityMessage(name, msg, details);
 			Assert.That(message.ToString(), Is.EqualTo("##teamcity[testFailed name='t1' message='m1' details='d1']"));
 		}
+
+		[Test]
+		public void DotNetCoverage()
+		{
+			const string value = "v";
+			DotNetCoverMessage message = new DotNetCoverMessage(value);
+			Assert.That(message.ToString(), Is.EqualTo("##teamcity[dotNetCoverage key='v']"));
+		}
 	}
 }

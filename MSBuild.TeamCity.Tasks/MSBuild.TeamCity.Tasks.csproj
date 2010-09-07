@@ -54,6 +54,7 @@
     <Compile Include="BuildStatus.cs" />
     <Compile Include="BuildStatusTeamCityMessage.cs" />
     <Compile Include="DotNetCoverateTool.cs" />
+    <Compile Include="DotNetCoverMessage.cs" />
     <Compile Include="GoogleTestArgumentsBuilder.cs" />
     <Compile Include="GoogleTestsImporter.cs" />
     <Compile Include="ExecutionResult.cs" />

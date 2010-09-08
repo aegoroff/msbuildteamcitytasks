@@ -14,14 +14,14 @@ namespace MSBuild.TeamCity.Tasks
 	///</summary>
 	/// <example>Configures .NET coverage processing using NCover 1.x tool
 	/// <code><![CDATA[
-	/// <NCoverReportTask
+	/// <NCoverReport
 	///		NCoverExplorerPath="C:\Program Files\NCoverExplorer"
 	///		XmlReportPath="D:\project\ncover.xml"
 	/// />
 	/// ]]></code>
 	/// Configures .NET coverage processing using NCover 1.x tool full example
 	/// <code><![CDATA[
-	/// <NCoverReportTask
+	/// <NCoverReport
 	///		NCoverExplorerPath="C:\Program Files\NCoverExplorer"
 	///		XmlReportPath="D:\project\ncover.xml"
 	///		Arguments="arguments"
@@ -30,7 +30,7 @@ namespace MSBuild.TeamCity.Tasks
 	/// />
 	/// ]]></code>
 	/// </example>	
-	public class NCoverReportTask : TeamCityTask
+	public class NCoverReport : TeamCityTask
 	{
 		/// <summary>
 		/// Gets or sets full path to NCover Explorer toot installation folder

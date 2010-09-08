@@ -15,19 +15,19 @@ namespace MSBuild.TeamCity.Tasks
 	/// </summary>
 	/// <example>Configures .NET coverage processing using PartCover tool
 	/// <code><![CDATA[
-	/// <PartCoverReportTask
+	/// <PartCoverReport
 	///		XmlReportPath="D:\project\partcover.xml"
 	/// />
 	/// ]]></code>
 	/// Configures .NET coverage processing using PartCover tool and xslt transformation rules
 	/// <code><![CDATA[
-	/// <PartCoverReportTask
+	/// <PartCoverReport
 	///		ReportXslts="file.xslt=>generatedFileName.html;file1.xslt=>generatedFileName1.html"
 	///		XmlReportPath="D:\project\partcover.xml"
 	/// />
 	/// ]]></code>
 	/// </example>	
-	public class PartCoverReportTask : TeamCityTask
+	public class PartCoverReport : TeamCityTask
 	{
 		/// <summary>
 		/// Gets or sets full path to xml report file that was created by PartCover

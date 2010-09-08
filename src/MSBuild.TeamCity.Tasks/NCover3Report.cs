@@ -14,21 +14,21 @@ namespace MSBuild.TeamCity.Tasks
 	///</summary>
 	/// <example>Configures .NET coverage processing using NCover3 tool
 	/// <code><![CDATA[
-	/// <NCover3ReportTask
+	/// <NCover3Report
 	///		ToolPath="C:\Program Files\NCover3"
 	///		XmlReportPath="D:\project\ncover3.xml"
 	/// />
 	/// ]]></code>
 	/// Configures .NET coverage processing using NCover3 tool and specifying arguments for NCover report generator
 	/// <code><![CDATA[
-	/// <NCover3ReportTask
+	/// <NCover3Report
 	///		ToolPath="C:\Program Files\NCover3"
 	///		XmlReportPath="D:\project\ncover3.xml"
 	///		Arguments="FullCoverageReport:Html:{teamcity.report.path}"
 	/// />
 	/// ]]></code>
 	/// </example>	
-	public class NCover3ReportTask : TeamCityTask
+	public class NCover3Report : TeamCityTask
 	{
 		/// <summary>
 		/// Gets or sets full path to NCover 3 installation folder

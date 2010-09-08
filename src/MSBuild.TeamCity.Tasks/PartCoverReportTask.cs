@@ -10,7 +10,8 @@ using Microsoft.Build.Framework;
 namespace MSBuild.TeamCity.Tasks
 {
 	/// <summary>
-	/// Manually configures .NET coverage processing using PartCover tool
+	/// Manually configures .NET coverage processing using PartCover tool.
+	/// See http://confluence.jetbrains.net/display/TCD5/Manually+Configuring+Reporting+Coverage
 	/// </summary>
 	/// <example>Configures .NET coverage processing using PartCover tool
 	/// <code><![CDATA[

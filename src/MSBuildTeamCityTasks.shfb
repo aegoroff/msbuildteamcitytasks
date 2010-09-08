@@ -20,6 +20,7 @@
             <filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.ImportData" filterName="ImportData" isExposed="True" />
             <filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.ImportGoogleTests" filterName="ImportGoogleTests" isExposed="True" />
             <filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.NCover3ReportTask" filterName="NCover3ReportTask" isExposed="True" />
+            <filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.NCoverReportTask" filterName="NCoverReportTask" isExposed="True" />
             <filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.PartCoverReportTask" filterName="PartCoverReportTask" isExposed="True" />
             <filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.PublishArtifacts" filterName="PublishArtifacts" isExposed="True" />
             <filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.ReportBuildStatistic" filterName="ReportBuildStatistic" isExposed="True" />

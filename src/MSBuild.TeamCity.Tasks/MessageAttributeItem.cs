@@ -62,7 +62,7 @@ namespace MSBuild.TeamCity.Tasks
 		{
 			if ( string.IsNullOrEmpty(Value) )
 			{
-				return null;
+				return string.Empty;
 			}
 
 			StringBuilder sb = new StringBuilder();

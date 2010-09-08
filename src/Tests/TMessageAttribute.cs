@@ -19,7 +19,7 @@ namespace Tests
 		public void NoNameAndValueDefined()
 		{
 			MessageAttributeItem attributeItem = new MessageAttributeItem();
-			Assert.That(attributeItem.ToString(), Is.Null);
+			Assert.That(attributeItem.ToString(), Is.Empty);
 		}
 
 		[Test]

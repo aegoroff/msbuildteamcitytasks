@@ -5,6 +5,7 @@
  */
 
 using System;
+using System.Collections.Generic;
 
 namespace MSBuild.TeamCity.Tasks
 {
@@ -43,7 +44,10 @@ namespace MSBuild.TeamCity.Tasks
 
 				reader = new GoogleTestXmlReader(xmlPath);
 				reader.Read();
-				result.Message = new ImportDataTeamCityMessage(ImportType.Junit, xmlPath);
+				result.Messages = new List<TeamCityMessage>
+				                  	{
+				                  		new ImportDataTeamCityMessage(ImportType.Junit, xmlPath)
+				                  	};
 			}
 			catch ( Exception e )
 			{

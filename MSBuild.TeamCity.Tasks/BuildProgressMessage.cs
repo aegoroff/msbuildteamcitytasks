@@ -25,12 +25,11 @@ namespace MSBuild.TeamCity.Tasks
 	public class BuildProgressMessage : BuildProgressTask
 	{
 		/// <summary>
-		/// Creates concrete message class
+		/// Gets message name
 		/// </summary>
-		/// <returns>New message instance</returns>
-		protected override SimpleTeamCityMessage CreateMessage()
+		protected override string MessageName
 		{
-			return new SimpleTeamCityMessage("progressMessage", Message);
+			get { return "progressMessage"; }
 		}
 	}
 }

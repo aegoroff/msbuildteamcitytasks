@@ -4,6 +4,7 @@
  * © 2007-2009 Alexander Egorov
  */
 
+using System.Collections.Generic;
 using Microsoft.Build.Framework;
 
 namespace MSBuild.TeamCity.Tasks
@@ -33,15 +34,12 @@ namespace MSBuild.TeamCity.Tasks
 		public string Number { get; set; }
 
 		/// <summary>
-		/// When overridden in a derived class, executes the task.
+		/// Reads TeamCity messages
 		/// </summary>
-		/// <returns>
-		/// true if the task successfully executed; otherwise, false.
-		/// </returns>
-		public override bool Execute()
+		/// <returns>TeamCity messages list</returns>
+		protected override IEnumerable<TeamCityMessage> ReadMessages()
 		{
-			Write(new SimpleTeamCityMessage("buildNumber", Number));
-			return true;
+			yield return new SimpleTeamCityMessage("buildNumber", Number);
 		}
 	}
 }

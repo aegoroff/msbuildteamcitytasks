@@ -4,6 +4,8 @@
  * © 2007-2009 Alexander Egorov
  */
 
+using System.Collections.Generic;
+
 namespace MSBuild.TeamCity.Tasks
 {
 	///<summary>
@@ -25,12 +27,12 @@ namespace MSBuild.TeamCity.Tasks
 	public class BlockClose : BlockTask
 	{
 		/// <summary>
-		/// Creates concrete message class
+		/// Reads TeamCity messages
 		/// </summary>
-		/// <returns>New message instance</returns>
-		protected override NamedTeamCityMessage CreateMessage()
+		/// <returns>TeamCity messages list</returns>
+		protected override IEnumerable<TeamCityMessage> ReadMessages()
 		{
-			return new BlockCloseTeamCityMessage(Name);
+			yield return new BlockCloseTeamCityMessage(Name);
 		}
 	}
 }

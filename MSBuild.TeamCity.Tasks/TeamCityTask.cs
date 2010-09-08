@@ -5,6 +5,7 @@
  */
 
 using System;
+using System.Collections.Generic;
 using Microsoft.Build.Utilities;
 
 namespace MSBuild.TeamCity.Tasks
@@ -51,7 +52,19 @@ namespace MSBuild.TeamCity.Tasks
 		/// </summary>
 		protected virtual ExecutionResult ExecutionResult
 		{
-			get { return new ExecutionResult { Status = true }; }
+			get
+			{
+				ExecutionResult result = new ExecutionResult
+				{
+					Status = true,
+					Messages = new List<TeamCityMessage>()
+				};
+				foreach ( TeamCityMessage message in ReadMessages() )
+				{
+					result.Messages.Add(message);
+				}
+				return result;
+			}
 		}
 
 		/// <summary>
@@ -64,7 +77,7 @@ namespace MSBuild.TeamCity.Tasks
 		{
 			try
 			{
-				return _implementation.Execute(ExecutionResult);
+				return _implementation.Execute(ExecutionResult, IsAddTimestamp, FlowId);
 			}
 			catch ( Exception e )
 			{
@@ -74,14 +87,12 @@ namespace MSBuild.TeamCity.Tasks
 		}
 
 		/// <summary>
-		/// Writes <see cref="TeamCityMessage"/> into MSBuild log using MessageImportance.High level
+		/// Reads TeamCity messages
 		/// </summary>
-		/// <param name="message">Message to write</param>
-		protected void Write( TeamCityMessage message )
+		/// <returns>TeamCity messages list</returns>
+		protected virtual IEnumerable<TeamCityMessage> ReadMessages()
 		{
-			message.IsAddTimestamp = IsAddTimestamp;
-			message.FlowId = FlowId;
-			_implementation.Write(message);
+			return new List<TeamCityMessage>();
 		}
 	}
 }

@@ -4,6 +4,7 @@
  * © 2007-2009 Alexander Egorov
  */
 
+using System.Collections.Generic;
 using Microsoft.Build.Framework;
 
 namespace MSBuild.TeamCity.Tasks
@@ -18,23 +19,19 @@ namespace MSBuild.TeamCity.Tasks
 		/// </summary>
 		[Required]
 		public string Message { get; set; }
+		
+		/// <summary>
+		/// Gets message name
+		/// </summary>
+		protected abstract string MessageName { get; }
 
 		/// <summary>
-		/// When overridden in a derived class, executes the task.
+		/// Reads TeamCity messages
 		/// </summary>
-		/// <returns>
-		/// true if the task successfully executed; otherwise, false.
-		/// </returns>
-		public override bool Execute()
+		/// <returns>TeamCity messages list</returns>
+		protected override IEnumerable<TeamCityMessage> ReadMessages()
 		{
-			Write(CreateMessage());
-			return true;
+			yield return new SimpleTeamCityMessage(MessageName, Message);
 		}
-
-		/// <summary>
-		/// Creates concrete message class
-		/// </summary>
-		/// <returns>New message instance</returns>
-		protected abstract SimpleTeamCityMessage CreateMessage();
 	}
 }

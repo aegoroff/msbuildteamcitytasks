@@ -4,6 +4,7 @@
  * © 2007-2010 Alexander Egorov
  */
 
+using System.Collections.Generic;
 using Microsoft.Build.Framework;
 
 namespace MSBuild.TeamCity.Tasks
@@ -60,28 +61,30 @@ namespace MSBuild.TeamCity.Tasks
 		public string ReportOrder { get; set; }
 
 		/// <summary>
-		/// When overridden in a derived class, executes the task.
+		/// Reads TeamCity messages
 		/// </summary>
-		/// <returns>
-		/// true if the task successfully executed; otherwise, false.
-		/// </returns>
-		public override bool Execute()
+		/// <returns>TeamCity messages list</returns>
+		protected override IEnumerable<TeamCityMessage> ReadMessages()
 		{
-			Write(new DotNetCoverMessage(DotNetCoverMessage.NCoverExplorerToolKey, NCoverExplorerPath));
+			yield return new DotNetCoverMessage(DotNetCoverMessage.NCoverExplorerToolKey, NCoverExplorerPath);
+
 			if ( !string.IsNullOrEmpty(Arguments) )
 			{
-				Write(new DotNetCoverMessage(DotNetCoverMessage.NCoverExplorerToolArgsKey, Arguments));
+				yield return new DotNetCoverMessage(DotNetCoverMessage.NCoverExplorerToolArgsKey, Arguments);
 			}
+
 			if ( !string.IsNullOrEmpty(ReportType) )
 			{
-				Write(new DotNetCoverMessage(DotNetCoverMessage.NCoverExplorerReportTypeKey, ReportType));
+				yield return new DotNetCoverMessage(DotNetCoverMessage.NCoverExplorerReportTypeKey, ReportType);
 			}
+
 			if ( !string.IsNullOrEmpty(ReportOrder) )
 			{
-				Write(new DotNetCoverMessage(DotNetCoverMessage.NCoverExplorerReportOrderKey, ReportOrder));
+				yield return new DotNetCoverMessage(DotNetCoverMessage.NCoverExplorerReportOrderKey, ReportOrder);
 			}
-			Write(new ImportDataTeamCityMessage(ImportType.DotNetCoverage, XmlReportPath, DotNetCoverageTool.Ncover));
-			return true;
+			yield return new ImportDataTeamCityMessage(ImportType.DotNetCoverage,
+			                                           XmlReportPath,
+			                                           DotNetCoverageTool.Ncover);
 		}
 	}
 }

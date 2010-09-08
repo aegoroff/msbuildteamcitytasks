@@ -75,6 +75,7 @@
     <Compile Include="ReportBuildStatistic.cs" />
     <Compile Include="ReportMessageBuilder.cs" />
     <Compile Include="RunGoogleTests.cs" />
+    <Compile Include="RunPartCoverage.cs" />
     <Compile Include="SequenceBuilder.cs" />
     <Compile Include="SimpleTeamCityMessage.cs" />
     <Compile Include="BuildStatisticTeamCityMessage.cs" />

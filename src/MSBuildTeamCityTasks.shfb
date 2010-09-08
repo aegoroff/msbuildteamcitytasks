@@ -26,6 +26,7 @@
             <filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.ReportBuildStatistic" filterName="ReportBuildStatistic" isExposed="True" />
             <filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.ReportMessage" filterName="ReportMessage" isExposed="True" />
             <filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.RunGoogleTests" filterName="RunGoogleTests" isExposed="True" />
+            <filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.RunPartCoverage" filterName="RunPartCoverage" isExposed="True" />
             <filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.TeamCityTask" filterName="TeamCityTask" isExposed="True" />
         </filter>
     </apiFilter>

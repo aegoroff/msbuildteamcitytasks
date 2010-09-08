@@ -21,5 +21,6 @@
   <UsingTask AssemblyFile="$(MSBuildTeamCityTasksLib)" TaskName="MSBuild.TeamCity.Tasks.NCoverReport" />
   <UsingTask AssemblyFile="$(MSBuildTeamCityTasksLib)" TaskName="MSBuild.TeamCity.Tasks.NCover3Report" />
   <UsingTask AssemblyFile="$(MSBuildTeamCityTasksLib)" TaskName="MSBuild.TeamCity.Tasks.PartCoverReport" />
+  <UsingTask AssemblyFile="$(MSBuildTeamCityTasksLib)" TaskName="MSBuild.TeamCity.Tasks.RunPartCoverage" />
 
   </Project>

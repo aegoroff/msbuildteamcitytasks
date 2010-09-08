@@ -19,12 +19,14 @@ namespace MSBuild.TeamCity.Tasks
 	///		XmlReportPath="D:\project\ncover.xml"
 	/// />
 	/// ]]></code>
-	/// Configures .NET coverage processing using 1.x tool and specifying arguments for NCover report generator
+	/// Configures .NET coverage processing using NCover 1.x tool full example
 	/// <code><![CDATA[
 	/// <NCoverReportTask
 	///		NCoverExplorerPath="C:\Program Files\NCoverExplorer"
 	///		XmlReportPath="D:\project\ncover.xml"
 	///		Arguments="arguments"
+	///		ReportType="1"
+	///		ReportOrder="1"
 	/// />
 	/// ]]></code>
 	/// </example>	

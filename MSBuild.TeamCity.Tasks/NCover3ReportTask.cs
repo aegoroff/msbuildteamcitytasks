@@ -9,18 +9,20 @@ using Microsoft.Build.Framework;
 namespace MSBuild.TeamCity.Tasks
 {
 	///<summary>
-	/// Manually configures .NET coverage processing
+	/// Manually configures .NET coverage processing using NCover3 tool
 	///</summary>
-	/// <example>Configures .NET coverage processing using NCover3 tool using full path to NCover3 installation folder
+	/// <example>Configures .NET coverage processing using NCover3 tool
 	/// <code><![CDATA[
 	/// <NCover3ReportTask
 	///		ToolPath="C:\Program Files\NCover3"
+	///		XmlReportPath="D:\project\ncover3.xml"
 	/// />
 	/// ]]></code>
-	/// Configures .NET coverage processing using NCover3 tool using full path to NCover3 installation folder and arguments for NCover report generator
+	/// Configures .NET coverage processing using NCover3 tool and specifying arguments for NCover report generator
 	/// <code><![CDATA[
 	/// <NCover3ReportTask
 	///		ToolPath="C:\Program Files\NCover3"
+	///		XmlReportPath="D:\project\ncover3.xml"
 	///		Arguments="FullCoverageReport:Html:{teamcity.report.path}"
 	/// />
 	/// ]]></code>
@@ -28,10 +30,16 @@ namespace MSBuild.TeamCity.Tasks
 	public class NCover3ReportTask : TeamCityTask
 	{
 		/// <summary>
-		/// Gets or sets full path to full path to NCover 3 installation folder
+		/// Gets or sets full path to NCover 3 installation folder
 		/// </summary>
 		[Required]
 		public string ToolPath { get; set; }
+		
+		/// <summary>
+		/// Gets or sets full path to xml report file that was created by NCover3
+		/// </summary>
+		[Required]
+		public string XmlReportPath { get; set; }
 
 		///<summary>
 		/// Gets or sets arguments for NCover report generator. //or FullCoverageReport:Html:{teamcity.report.path}
@@ -51,6 +59,7 @@ namespace MSBuild.TeamCity.Tasks
 			{
 				Write(new DotNetCoverMessage(DotNetCoverMessage.NCover3ReporterArgsKey, Arguments));
 			}
+			Write(new ImportDataTeamCityMessage(ImportType.DotNetCoverage, XmlReportPath, DotNetCoverageTool.Ncover3));
 			return true;
 		}
 	}

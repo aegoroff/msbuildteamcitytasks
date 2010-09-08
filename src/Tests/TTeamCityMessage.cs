@@ -29,6 +29,7 @@ namespace Tests
 			const string number = "1.0";
 			SimpleTeamCityMessage message = new SimpleTeamCityMessage(BuildNumber, number);
 			Assert.That(message.ToString(), Is.EqualTo("##teamcity[buildNumber '1.0']"));
+			Assert.That(message.MessageText, Is.EqualTo(number));
 		}
 
 		[Test]

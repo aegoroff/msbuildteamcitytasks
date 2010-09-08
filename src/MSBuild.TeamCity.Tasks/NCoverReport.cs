@@ -33,7 +33,7 @@ namespace MSBuild.TeamCity.Tasks
 	public class NCoverReport : TeamCityTask
 	{
 		/// <summary>
-		/// Gets or sets full path to NCover Explorer toot installation folder
+		/// Gets or sets full path to NCover Explorer tool installation folder
 		/// </summary>
 		[Required]
 		public string NCoverExplorerPath { get; set; }

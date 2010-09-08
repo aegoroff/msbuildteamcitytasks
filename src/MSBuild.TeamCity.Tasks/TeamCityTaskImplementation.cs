@@ -33,7 +33,10 @@ namespace MSBuild.TeamCity.Tasks
 		/// <param name="message">Message to write</param>
 		public void Write( TeamCityMessage message )
 		{
-			LogMessage(message.ToString());
+			if ( !string.IsNullOrEmpty(Environment.GetEnvironmentVariable(TeamcityDiscoveryEnvVariable)) )
+			{
+				_logger.LogMessage(MessageImportance.High, message.ToString());
+			}
 		}
 
 		/// <summary>
@@ -45,23 +48,30 @@ namespace MSBuild.TeamCity.Tasks
 		/// </returns>
 		public bool Execute( ExecutionResult result )
 		{
-			if ( result.Message != null )
-			{
-				Write(result.Message);
-			}
-			return result.Status;
+			return Execute(result, false, null);
 		}
 
 		/// <summary>
-		/// Writes message into MSBuild log using MessageImportance.High level
+		/// Executes the task.
 		/// </summary>
-		/// <param name="message">Message to write</param>
-		private void LogMessage( string message )
+		/// <param name="result">A task execution result</param>
+		/// <param name="isAddTimestamp">a value indicating whether to add timestamt to the message</param>
+		/// <param name="flowId">The flowId is a unique identifier of the messages flow in a build</param>
+		/// <returns>
+		/// true if the task successfully executed; otherwise, false.
+		/// </returns>
+		public bool Execute( ExecutionResult result, bool isAddTimestamp, string flowId )
 		{
-			if ( !string.IsNullOrEmpty(Environment.GetEnvironmentVariable(TeamcityDiscoveryEnvVariable)) )
+			if ( result.Messages != null )
 			{
-				_logger.LogMessage(MessageImportance.High, message);
+				foreach ( TeamCityMessage message in result.Messages )
+				{
+					message.FlowId = flowId;
+					message.IsAddTimestamp = isAddTimestamp;
+					Write(message);
+				}
 			}
+			return result.Status;
 		}
 	}
 }

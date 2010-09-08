@@ -4,6 +4,7 @@
  * © 2007-2009 Alexander Egorov
  */
 
+using System.Collections.Generic;
 using Microsoft.Build.Framework;
 
 namespace MSBuild.TeamCity.Tasks
@@ -61,18 +62,12 @@ namespace MSBuild.TeamCity.Tasks
 		public string ErrorDetails { get; set; }
 
 		/// <summary>
-		/// Gets task execution result
+		/// Reads TeamCity messages
 		/// </summary>
-		protected override ExecutionResult ExecutionResult
+		/// <returns>TeamCity messages list</returns>
+		protected override IEnumerable<TeamCityMessage> ReadMessages()
 		{
-			get
-			{
-				return new ExecutionResult
-				       	{
-				       		Status = true,
-				       		Message = new ReportMessageBuilder(Text, Status, ErrorDetails).BuildMessage()
-				       	};
-			}
+			yield return new ReportMessageBuilder(Text, Status, ErrorDetails).BuildMessage();
 		}
 	}
 }

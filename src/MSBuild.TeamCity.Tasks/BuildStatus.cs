@@ -4,6 +4,8 @@
  * © 2007-2009 Alexander Egorov
  */
 
+using System.Collections.Generic;
+
 namespace MSBuild.TeamCity.Tasks
 {
 	/// <summary>
@@ -40,15 +42,12 @@ namespace MSBuild.TeamCity.Tasks
 		public string Text { get; set; }
 
 		/// <summary>
-		/// When overridden in a derived class, executes the task.
+		/// Reads TeamCity messages
 		/// </summary>
-		/// <returns>
-		/// true if the task successfully executed; otherwise, false.
-		/// </returns>
-		public override bool Execute()
+		/// <returns>TeamCity messages list</returns>
+		protected override IEnumerable<TeamCityMessage> ReadMessages()
 		{
-			Write(new BuildStatusTeamCityMessage(Status, Text));
-			return true;
+			yield return new BuildStatusTeamCityMessage(Status, Text);
 		}
 	}
 }

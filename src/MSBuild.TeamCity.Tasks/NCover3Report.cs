@@ -4,6 +4,7 @@
  * © 2007-2010 Alexander Egorov
  */
 
+using System.Collections.Generic;
 using Microsoft.Build.Framework;
 
 namespace MSBuild.TeamCity.Tasks
@@ -35,7 +36,7 @@ namespace MSBuild.TeamCity.Tasks
 		/// </summary>
 		[Required]
 		public string ToolPath { get; set; }
-		
+
 		/// <summary>
 		/// Gets or sets full path to xml report file that was created by NCover3
 		/// </summary>
@@ -48,20 +49,19 @@ namespace MSBuild.TeamCity.Tasks
 		public string Arguments { get; set; }
 
 		/// <summary>
-		/// When overridden in a derived class, executes the task.
+		/// Reads TeamCity messages
 		/// </summary>
-		/// <returns>
-		/// true if the task successfully executed; otherwise, false.
-		/// </returns>
-		public override bool Execute()
+		/// <returns>TeamCity messages list</returns>
+		protected override IEnumerable<TeamCityMessage> ReadMessages()
 		{
-			Write(new DotNetCoverMessage(DotNetCoverMessage.NCover3HomeKey, ToolPath));
+			yield return new DotNetCoverMessage(DotNetCoverMessage.NCover3HomeKey, ToolPath);
 			if ( !string.IsNullOrEmpty(Arguments) )
 			{
-				Write(new DotNetCoverMessage(DotNetCoverMessage.NCover3ReporterArgsKey, Arguments));
+				yield return new DotNetCoverMessage(DotNetCoverMessage.NCover3ReporterArgsKey, Arguments);
 			}
-			Write(new ImportDataTeamCityMessage(ImportType.DotNetCoverage, XmlReportPath, DotNetCoverageTool.Ncover3));
-			return true;
+			yield return new ImportDataTeamCityMessage(ImportType.DotNetCoverage,
+			                                           XmlReportPath,
+			                                           DotNetCoverageTool.Ncover3);
 		}
 	}
 }

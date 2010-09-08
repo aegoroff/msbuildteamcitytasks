@@ -4,6 +4,8 @@
  * © 2007-2010 Alexander Egorov
  */
 
+using System.Collections.Generic;
+
 namespace MSBuild.TeamCity.Tasks
 {
 	///<summary>
@@ -14,7 +16,7 @@ namespace MSBuild.TeamCity.Tasks
 		///<summary>
 		/// Gets or sets <see cref="TeamCityMessage"/> to output
 		///</summary>
-		public TeamCityMessage Message { get; set; }
+		public IList<TeamCityMessage> Messages { get; set; }
 
 		///<summary>
 		/// Gets or sets a value indicating whether the import was successful.

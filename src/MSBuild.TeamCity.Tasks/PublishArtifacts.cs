@@ -4,6 +4,7 @@
  * © 2007-2009 Alexander Egorov
  */
 
+using System.Collections.Generic;
 using Microsoft.Build.Framework;
 
 namespace MSBuild.TeamCity.Tasks
@@ -36,18 +37,15 @@ namespace MSBuild.TeamCity.Tasks
 		public ITaskItem[] Artifacts { get; set; }
 
 		/// <summary>
-		/// When overridden in a derived class, executes the task.
+		/// Reads TeamCity messages
 		/// </summary>
-		/// <returns>
-		/// true if the task successfully executed; otherwise, false.
-		/// </returns>
-		public override bool Execute()
+		/// <returns>TeamCity messages list</returns>
+		protected override IEnumerable<TeamCityMessage> ReadMessages()
 		{
-			foreach ( ITaskItem item in Artifacts )
+			foreach (ITaskItem item in Artifacts)
 			{
-				Write(new SimpleTeamCityMessage("publishArtifacts", item.ItemSpec));
+				yield return new SimpleTeamCityMessage("publishArtifacts", item.ItemSpec);
 			}
-			return true;
 		}
 	}
 }

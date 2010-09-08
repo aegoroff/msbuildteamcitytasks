@@ -5,6 +5,7 @@
  */
 
 using System;
+using System.Collections.Generic;
 using MSBuild.TeamCity.Tasks;
 using NMock2;
 using NUnit.Framework;
@@ -83,8 +84,9 @@ namespace Tests
 		public void ExecuteTrue()
 		{
 			Expect.Once.On(_logger).Method(LogMessage).WithAnyArguments();
-			
-			ExecutionResult result = new ExecutionResult { Message = _message, Status = true };
+
+			ExecutionResult result = new ExecutionResult { Messages = new List<TeamCityMessage>(), Status = true };
+			result.Messages.Add(_message);
 			Assert.That(_implementation.Execute(result));
 		}
 		
@@ -93,7 +95,8 @@ namespace Tests
 		{
 			Expect.Once.On(_logger).Method(LogMessage).WithAnyArguments();
 			
-			ExecutionResult result = new ExecutionResult { Message = _message, Status = false };
+			ExecutionResult result = new ExecutionResult { Messages = new List<TeamCityMessage>(), Status = false };
+			result.Messages.Add(_message);
 			Assert.That(_implementation.Execute(result), Is.False);
 		}
 		
@@ -104,6 +107,20 @@ namespace Tests
 			
 			ExecutionResult result = new ExecutionResult { Status = true };
 			Assert.That(_implementation.Execute(result), Is.True);
+		}
+
+		[Test]
+		public void ExecuteFull()
+		{
+			const string flowId = "1";
+			Expect.Once.On(_logger).Method(LogMessage).WithAnyArguments();
+
+			ExecutionResult result = new ExecutionResult { Messages = new List<TeamCityMessage>(), Status = true };
+			result.Messages.Add(_message);
+			
+			Assert.That(_implementation.Execute(result, true, flowId));
+			Assert.That(_message.IsAddTimestamp);
+			Assert.That(_message.FlowId, Is.EqualTo(flowId));
 		}
 	}
 }

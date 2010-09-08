@@ -61,7 +61,7 @@ namespace Tests
 			ExecutionResult result = runner.Import();
 
 			Assert.That(result.Status);
-			Assert.That(result.Message, Is.Not.Null);
+			Assert.That(result.Messages.Count, Is.EqualTo(1));
 		}
 
 		[Test]
@@ -77,7 +77,7 @@ namespace Tests
 			ExecutionResult result = runner.Import();
 
 			Assert.That(result.Status);
-			Assert.That(result.Message, Is.Not.Null);
+			Assert.That(result.Messages.Count, Is.EqualTo(1));
 		}
 
 		[Test]
@@ -90,7 +90,7 @@ namespace Tests
 			ExecutionResult result = runner.Import();
 
 			Assert.That(result.Status);
-			Assert.That(result.Message, Is.Not.Null);
+			Assert.That(result.Messages.Count, Is.EqualTo(1));
 		}
 
 		[Test]
@@ -103,7 +103,7 @@ namespace Tests
 			ExecutionResult result = runner.Import();
 
 			Assert.That(result.Status, Is.False);
-			Assert.That(result.Message, Is.Null);
+			Assert.That(result.Messages, Is.Null);
 		}
 	}
 }

@@ -38,7 +38,7 @@ namespace Tests
 			ExecutionResult result = importer.Import();
 
 			Assert.That(result.Status);
-			Assert.That(result.Message, Is.Not.Null);
+			Assert.That(result.Messages.Count, Is.EqualTo(1));
 		}
 		
 		[Test]
@@ -51,7 +51,7 @@ namespace Tests
 			ExecutionResult result = importer.Import();
 
 			Assert.That(result.Status, Is.False);
-			Assert.That(result.Message, Is.Not.Null);
+			Assert.That(result.Messages.Count, Is.EqualTo(1));
 		}
 		
 		[Test]
@@ -64,7 +64,7 @@ namespace Tests
 			ExecutionResult result = importer.Import();
 
 			Assert.That(result.Status);
-			Assert.That(result.Message, Is.Not.Null);
+			Assert.That(result.Messages.Count, Is.EqualTo(1));
 		}
 	}
 }

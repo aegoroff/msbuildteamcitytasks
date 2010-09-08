@@ -41,25 +41,22 @@ namespace MSBuild.TeamCity.Tasks
 		public ITaskItem[] ReportXslts { get; set; }
 
 		/// <summary>
-		/// When overridden in a derived class, executes the task.
+		/// Reads TeamCity messages
 		/// </summary>
-		/// <returns>
-		/// true if the task successfully executed; otherwise, false.
-		/// </returns>
-		public override bool Execute()
+		/// <returns>TeamCity messages list</returns>
+		protected override IEnumerable<TeamCityMessage> ReadMessages()
 		{
 			if ( ReportXslts != null )
 			{
 				SequenceBuilder<string> builder = new SequenceBuilder<string>(EnumerateReports(), "\n");
-				Write(new DotNetCoverMessage(DotNetCoverMessage.PartcoverReportXsltsKey, builder.ToString()));
+				yield return new DotNetCoverMessage(DotNetCoverMessage.PartcoverReportXsltsKey, builder.ToString());
 			}
-			Write(new ImportDataTeamCityMessage(ImportType.DotNetCoverage, XmlReportPath, DotNetCoverageTool.PartCover));
-			return true;
+			yield return new ImportDataTeamCityMessage(ImportType.DotNetCoverage, XmlReportPath, DotNetCoverageTool.PartCover);
 		}
 
 		private IEnumerable<string> EnumerateReports()
 		{
-			foreach (ITaskItem report in ReportXslts)
+			foreach ( ITaskItem report in ReportXslts )
 			{
 				yield return report.ItemSpec;
 			}

@@ -22,10 +22,10 @@ namespace Tests
 		private TeamCityMessage _message;
 		private TeamCityTaskImplementation _implementation;
 
-		private const string LogMessage = "LogMessage";
+		internal const string LogMessage = "LogMessage";
 		private const string BuildNumber = "buildNumber";
-		private const string TeamCityEnvVar = "TEAMCITY_PROJECT_NAME";
-		private const string TeamCityProject = "prj";
+		internal const string TeamCityEnvVar = "TEAMCITY_PROJECT_NAME";
+		internal const string TeamCityProject = "prj";
 
 		[SetUp]
 		public void Setup()

@@ -33,6 +33,23 @@ namespace MSBuild.TeamCity.Tasks
 	/// </example>	
 	public class NCoverReport : TeamCityTask
 	{
+		///<summary>
+		/// Initializes a new instance of the <see cref="NCoverReport"/> class
+		///</summary>
+		public NCoverReport()
+		{
+		}
+
+		///<summary>
+		/// Initializes a new instance of the <see cref="NCoverReport"/> class using 
+		/// logger specified
+		///</summary>
+		///<param name="logger"><see cref="ILogger"/> implementation</param>
+		public NCoverReport( ILogger logger )
+			: base(logger)
+		{
+		}
+
 		/// <summary>
 		/// Gets or sets full path to NCover Explorer tool installation folder
 		/// </summary>

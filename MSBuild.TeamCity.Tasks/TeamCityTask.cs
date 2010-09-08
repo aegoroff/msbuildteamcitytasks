@@ -15,16 +15,25 @@ namespace MSBuild.TeamCity.Tasks
 	/// </summary>
 	public abstract class TeamCityTask : Task
 	{
-		private readonly ILogger _logger;
-		private readonly TeamCityTaskImplementation _implementation;
+		private TeamCityTaskImplementation _implementation;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="TeamCityTask"/> class
 		/// </summary>
 		protected TeamCityTask()
 		{
-			_logger = new Logger(Log);
-			_implementation = new TeamCityTaskImplementation(_logger);
+			Initialize(new Logger(Log));
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="TeamCityTask"/> class using logger implementation specified
+		/// </summary>
+		/// <param name="logger">
+		/// Logger implementation
+		/// </param>
+		protected TeamCityTask( ILogger logger )
+		{
+			Initialize(logger);
 		}
 
 		/// <summary>
@@ -42,10 +51,7 @@ namespace MSBuild.TeamCity.Tasks
 		/// <summary>
 		/// Gets logging object
 		/// </summary>
-		protected ILogger Logger
-		{
-			get { return _logger; }
-		}
+		protected ILogger Logger { get; private set; }
 
 		/// <summary>
 		/// Gets task execution result
@@ -55,10 +61,10 @@ namespace MSBuild.TeamCity.Tasks
 			get
 			{
 				ExecutionResult result = new ExecutionResult
-				{
-					Status = true,
-					Messages = new List<TeamCityMessage>()
-				};
+				                         	{
+				                         		Status = true,
+				                         		Messages = new List<TeamCityMessage>()
+				                         	};
 				foreach ( TeamCityMessage message in ReadMessages() )
 				{
 					result.Messages.Add(message);
@@ -93,6 +99,12 @@ namespace MSBuild.TeamCity.Tasks
 		protected virtual IEnumerable<TeamCityMessage> ReadMessages()
 		{
 			return new List<TeamCityMessage>();
+		}
+
+		private void Initialize( ILogger logger )
+		{
+			Logger = logger;
+			_implementation = new TeamCityTaskImplementation(logger);
 		}
 	}
 }

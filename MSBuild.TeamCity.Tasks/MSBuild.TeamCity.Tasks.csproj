@@ -69,9 +69,9 @@
     <Compile Include="ImportType.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="NamedTeamCityMessage.cs" />
-    <Compile Include="NCover3ReportTask.cs" />
-    <Compile Include="NCoverReportTask.cs" />
-    <Compile Include="PartCoverReportTask.cs" />
+    <Compile Include="NCover3Report.cs" />
+    <Compile Include="NCoverReport.cs" />
+    <Compile Include="PartCoverReport.cs" />
     <Compile Include="ReportBuildStatistic.cs" />
     <Compile Include="ReportMessageBuilder.cs" />
     <Compile Include="RunGoogleTests.cs" />

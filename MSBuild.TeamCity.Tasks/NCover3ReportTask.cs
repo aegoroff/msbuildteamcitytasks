@@ -9,7 +9,8 @@ using Microsoft.Build.Framework;
 namespace MSBuild.TeamCity.Tasks
 {
 	///<summary>
-	/// Manually configures .NET coverage processing using NCover3 tool
+	/// Manually configures .NET coverage processing using NCover3 tool.
+	/// See http://confluence.jetbrains.net/display/TCD5/Manually+Configuring+Reporting+Coverage
 	///</summary>
 	/// <example>Configures .NET coverage processing using NCover3 tool
 	/// <code><![CDATA[

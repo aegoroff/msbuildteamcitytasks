@@ -5,6 +5,7 @@
  */
 
 using System.Collections.Generic;
+using System.IO;
 using Microsoft.Build.Framework;
 
 namespace MSBuild.TeamCity.Tasks
@@ -14,6 +15,26 @@ namespace MSBuild.TeamCity.Tasks
 	/// </summary>
 	public class RunPartCoverage : TeamCityTask
 	{
+		private const string PartCoverOutputXml = "partcover.xml";
+		private const string PartCoverExe = "PartCover.exe";
+
+		///<summary>
+		/// Initializes a new instance of the <see cref="RunPartCoverage"/> class
+		///</summary>
+		public RunPartCoverage()
+		{
+		}
+
+		///<summary>
+		/// Initializes a new instance of the <see cref="RunPartCoverage"/> class using 
+		/// logger specified
+		///</summary>
+		///<param name="logger"><see cref="ILogger"/> implementation</param>
+		public RunPartCoverage( ILogger logger )
+			: base(logger)
+		{
+		}
+
 		/// <summary>
 		/// Gets or sets full path to PartCover installation folder
 		/// </summary>
@@ -31,6 +52,11 @@ namespace MSBuild.TeamCity.Tasks
 		/// </summary>
 		[Required]
 		public string TargetArguments { get; set; }
+
+		/// <summary>
+		/// Gets or sets path to working directory to target process
+		/// </summary>
+		public string TargetWorkDir { get; set; }
 
 		/// <summary>
 		/// Gets or sets xslt transformation rules one per line (use ; as separator) in the following format: file.xslt=>generatedFileName.html
@@ -53,22 +79,28 @@ namespace MSBuild.TeamCity.Tasks
 		/// <returns>TeamCity messages list</returns>
 		protected override IEnumerable<TeamCityMessage> ReadMessages()
 		{
+			PartCoverCommandLine commandLine = new PartCoverCommandLine
+			                                   	{
+			                                   		Target = TargetPath,
+			                                   		TargetWorkDir = TargetWorkDir,
+			                                   		TargetArguments = TargetArguments,
+			                                   		Output = PartCoverOutputXml,
+			                                   	};
+			( (List<string>) commandLine.Includes ).AddRange(Enumerate(Includes));
+			( (List<string>) commandLine.Excludes ).AddRange(Enumerate(Excludes));
+
+			string partCoverExePath = Path.Combine(ToolPath, PartCoverExe);
+			ProcessRunner runner = new ProcessRunner(partCoverExePath);
+			runner.Run(commandLine.ToString());
+
 			if ( ReportXslts != null )
 			{
-				SequenceBuilder<string> builder = new SequenceBuilder<string>(EnumerateReports(), "\n");
+				SequenceBuilder<string> builder = new SequenceBuilder<string>(Enumerate(ReportXslts), "\n");
 				yield return new DotNetCoverMessage(DotNetCoverMessage.PartcoverReportXsltsKey, builder.ToString());
 			}
 			yield return new ImportDataTeamCityMessage(ImportType.DotNetCoverage,
-			                                           string.Empty, // TODO: Pass real path
+			                                           PartCoverOutputXml,
 			                                           DotNetCoverageTool.PartCover);
-		}
-
-		private IEnumerable<string> EnumerateReports()
-		{
-			foreach ( ITaskItem report in ReportXslts )
-			{
-				yield return report.ItemSpec;
-			}
 		}
 	}
 }

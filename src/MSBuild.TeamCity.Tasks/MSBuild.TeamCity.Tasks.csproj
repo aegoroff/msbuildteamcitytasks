@@ -71,7 +71,9 @@
     <Compile Include="NamedTeamCityMessage.cs" />
     <Compile Include="NCover3Report.cs" />
     <Compile Include="NCoverReport.cs" />
+    <Compile Include="PartCoverCommandLine.cs" />
     <Compile Include="PartCoverReport.cs" />
+    <Compile Include="ProcessRunner.cs" />
     <Compile Include="ReportBuildStatistic.cs" />
     <Compile Include="ReportMessageBuilder.cs" />
     <Compile Include="RunGoogleTests.cs" />

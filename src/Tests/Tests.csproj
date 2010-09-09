@@ -52,6 +52,7 @@
     <Compile Include="TImportDataBuilder.cs" />
     <Compile Include="TNCover3Report.cs" />
     <Compile Include="TNCoverReport.cs" />
+    <Compile Include="TPartCoverCommandLine.cs" />
     <Compile Include="TPublishArtifacts.cs" />
     <Compile Include="TReportMessageBuilder.cs" />
     <Compile Include="TRunGoogleTests.cs" />

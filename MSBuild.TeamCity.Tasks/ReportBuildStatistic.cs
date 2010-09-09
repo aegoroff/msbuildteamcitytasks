@@ -31,6 +31,23 @@ namespace MSBuild.TeamCity.Tasks
 	/// </example>
 	public class ReportBuildStatistic : TeamCityTask
 	{
+		///<summary>
+		/// Initializes a new instance of the <see cref="ReportBuildStatistic"/> class
+		///</summary>
+		public ReportBuildStatistic()
+		{
+		}
+
+		///<summary>
+		/// Initializes a new instance of the <see cref="ReportBuildStatistic"/> class using 
+		/// logger specified
+		///</summary>
+		///<param name="logger"><see cref="ILogger"/> implementation</param>
+		public ReportBuildStatistic( ILogger logger )
+			: base(logger)
+		{
+		}
+
 		/// <summary>
 		/// Gets or sets statistic parameter name
 		/// </summary>

@@ -16,25 +16,25 @@ namespace Tests
 		private PartCoverCommandLine _commandLine;
 
 		private const string Target = "t";
-		private const string TargetResult = "--target=t";
+		private const string TargetResult = "--target t";
 		
 		private const string TargetWithSpaces = "t s";
-		private const string TargetWithSpacesResult = "--target=\"t s\"";
+		private const string TargetWithSpacesResult = "--target \"t s\"";
 		
 		private const string TargetWorkDir = "d";
-		private const string TargetWorkDirResult = "--target-work-dir=d";
+		private const string TargetWorkDirResult = "--target-work-dir d";
 
 		private const string TargetArguments = "a";
-		private const string TargetArgumentsResult = "--target-args=a";
+		private const string TargetArgumentsResult = "--target-args a";
 		
 		private const string Output = "o";
-		private const string OutputResult = "--output=o";
+		private const string OutputResult = "--output o";
 		
 		private const string Include = "i";
-		private const string IncludeResult = "--include=i";
+		private const string IncludeResult = "--include i";
 		
 		private const string Exclude = "e";
-		private const string ExcludeResult = "--exclude=e";
+		private const string ExcludeResult = "--exclude e";
 		private const string Space = " ";
 
 		[SetUp]

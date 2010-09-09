@@ -15,7 +15,6 @@ namespace MSBuild.TeamCity.Tasks
 	/// </summary>
 	public class RunPartCoverage : TeamCityTask
 	{
-		private const string PartCoverOutputXml = "partcover.xml";
 		private const string PartCoverExe = "PartCover.exe";
 
 		///<summary>
@@ -52,6 +51,12 @@ namespace MSBuild.TeamCity.Tasks
 		/// </summary>
 		[Required]
 		public string TargetArguments { get; set; }
+		
+		/// <summary>
+		/// Gets or sets path to output file for writing result xml
+		/// </summary>
+		[Required]
+		public string Output { get; set; }
 
 		/// <summary>
 		/// Gets or sets path to working directory to target process
@@ -84,7 +89,7 @@ namespace MSBuild.TeamCity.Tasks
 			                                   		Target = TargetPath,
 			                                   		TargetWorkDir = TargetWorkDir,
 			                                   		TargetArguments = TargetArguments,
-			                                   		Output = PartCoverOutputXml,
+													Output = Output,
 			                                   	};
 			if ( Includes != null )
 			{
@@ -105,7 +110,7 @@ namespace MSBuild.TeamCity.Tasks
 				yield return new DotNetCoverMessage(DotNetCoverMessage.PartcoverReportXsltsKey, builder.ToString());
 			}
 			yield return new ImportDataTeamCityMessage(ImportType.DotNetCoverage,
-			                                           PartCoverOutputXml,
+													   Output,
 			                                           DotNetCoverageTool.PartCover);
 		}
 	}

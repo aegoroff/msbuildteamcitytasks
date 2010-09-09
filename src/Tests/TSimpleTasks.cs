@@ -111,5 +111,18 @@ namespace Tests
 			                     	};
 			Assert.That(task.Execute());
 		}
+		
+		[Test]
+		public void ReportBuildStatistic()
+		{
+			Expect.Once.On(Logger).Method(TTeamCityTaskImplementation.LogMessage).WithAnyArguments();
+
+			ReportBuildStatistic task = new ReportBuildStatistic(Logger)
+			                     	{
+			                     		Key = "k",
+										Value = 1
+			                     	};
+			Assert.That(task.Execute());
+		}
 	}
 }

@@ -45,6 +45,23 @@ namespace MSBuild.TeamCity.Tasks
 	/// </example>
 	public class ImportData : TeamCityTask
 	{
+		///<summary>
+		/// Initializes a new instance of the <see cref="ImportData"/> class
+		///</summary>
+		public ImportData()
+		{
+		}
+
+		///<summary>
+		/// Initializes a new instance of the <see cref="ImportData"/> class using 
+		/// logger specified
+		///</summary>
+		///<param name="logger"><see cref="ILogger"/> implementation</param>
+		public ImportData( ILogger logger )
+			: base(logger)
+		{
+		}
+
 		/// <summary>
 		/// Gets or sets imported data type.<p/>
 		/// <b>junit</b> for JUnit Ant task XML reports<br/>

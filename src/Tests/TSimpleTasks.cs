@@ -124,5 +124,33 @@ namespace Tests
 			                     	};
 			Assert.That(task.Execute());
 		}
+		
+		[Test]
+		public void ImportData()
+		{
+			Expect.Once.On(Logger).Method(TTeamCityTaskImplementation.LogMessage).WithAnyArguments();
+			
+			ImportData task = new ImportData(Logger)
+			                     	{
+			                     		Path = "p",
+			                     		Type = "dotNetCoverage",
+			                     		Tool = "ncover",
+			                     	};
+			Assert.That(task.Execute());
+		}
+		
+		[Test]
+		public void ImportGoogleTests()
+		{
+			Expect.Once.On(Logger).Method(TTeamCityTaskImplementation.LogMessage).WithAnyArguments();
+			Expect.Once.On(Logger).GetProperty(TGoogleTestsRunner.HasLoggedErrors).Will(Return.Value(false));
+
+			ImportGoogleTests task = new ImportGoogleTests(Logger)
+			                     	{
+			                     		ContinueOnFailures = true,
+										TestResultsPath = TGoogleTestsPlainImporter.SuccessTestsPath,
+			                     	};
+			Assert.That(task.Execute());
+		}
 	}
 }

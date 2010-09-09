@@ -15,7 +15,7 @@ namespace Tests
 	[TestFixture]
 	public class TGoogleTestsPlainImporter
 	{
-		private static readonly string SuccessTestsPath = Environment.CurrentDirectory + @"\..\..\..\External\GoogleTestsSuccess.xml";
+		internal static readonly string SuccessTestsPath = Environment.CurrentDirectory + @"\..\..\..\External\GoogleTestsSuccess.xml";
 		private static readonly string FailTestsPath = Environment.CurrentDirectory + @"\..\..\..\External\GoogleTestsFailed.xml";
 
 		private Mockery _mockery;

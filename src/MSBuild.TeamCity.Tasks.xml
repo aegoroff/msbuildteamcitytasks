@@ -124,6 +124,13 @@
 			ContinueOnError="true"
 			Rules="@(FxCopExcludeRule)"
 		/>
+		<RunPartCoverage
+			ToolPath='C:\Program Files\Gubka Bob\PartCover .NET 2.3'
+			TargetPath='$(NUnitPath)\nunit-console.exe'
+			TargetArguments="@(Assembly)"
+			TargetWorkDir="$(MSBuildProjectDirectory)"
+			Includes='[MSBuild.TeamCity.Tasks]*'
+		/>
 	</Target>
 	<!-- Report files' definition-->
 	<ItemGroup>

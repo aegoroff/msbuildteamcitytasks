@@ -29,6 +29,23 @@ namespace MSBuild.TeamCity.Tasks
 	/// </example>
 	public class PublishArtifacts : TeamCityTask
 	{
+		///<summary>
+		/// Initializes a new instance of the <see cref="PublishArtifacts"/> class
+		///</summary>
+		public PublishArtifacts()
+		{
+		}
+
+		///<summary>
+		/// Initializes a new instance of the <see cref="PublishArtifacts"/> class using 
+		/// logger specified
+		///</summary>
+		///<param name="logger"><see cref="ILogger"/> implementation</param>
+		public PublishArtifacts( ILogger logger )
+			: base(logger)
+		{
+		}
+
 		/// <summary>
 		/// Gets or sets the artifacts to publish.
 		/// </summary>
@@ -42,7 +59,7 @@ namespace MSBuild.TeamCity.Tasks
 		/// <returns>TeamCity messages list</returns>
 		protected override IEnumerable<TeamCityMessage> ReadMessages()
 		{
-			foreach (ITaskItem item in Artifacts)
+			foreach ( ITaskItem item in Artifacts )
 			{
 				yield return new SimpleTeamCityMessage("publishArtifacts", item.ItemSpec);
 			}

@@ -116,7 +116,7 @@ namespace MSBuild.TeamCity.Tasks
 		private static string CreateOption( string option, string value )
 		{
 			string v = value.Contains(Space) ? EscapeSymbol + value + EscapeSymbol : value;
-			return string.Format(CultureInfo.InvariantCulture, "--{0}={1}", option, v);
+			return string.Format(CultureInfo.InvariantCulture, "--{0} {1}", option, v);
 		}
 	}
 }

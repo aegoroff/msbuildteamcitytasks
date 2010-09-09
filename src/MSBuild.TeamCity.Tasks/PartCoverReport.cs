@@ -29,6 +29,23 @@ namespace MSBuild.TeamCity.Tasks
 	/// </example>	
 	public class PartCoverReport : TeamCityTask
 	{
+		///<summary>
+		/// Initializes a new instance of the <see cref="PartCoverReport"/> class
+		///</summary>
+		public PartCoverReport()
+		{
+		}
+
+		///<summary>
+		/// Initializes a new instance of the <see cref="PartCoverReport"/> class using 
+		/// logger specified
+		///</summary>
+		///<param name="logger"><see cref="ILogger"/> implementation</param>
+		public PartCoverReport( ILogger logger )
+			: base(logger)
+		{
+		}
+
 		/// <summary>
 		/// Gets or sets full path to xml report file that was created by PartCover
 		/// </summary>

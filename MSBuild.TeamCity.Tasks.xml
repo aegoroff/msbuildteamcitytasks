@@ -131,7 +131,7 @@
 			Output='$(MSBuildProjectDirectory)\partcover.xml'
 			TargetArguments="$(MSBuildProjectDirectory)\Tests\bin\$(Configuration)\Tests.dll"
 			Includes='[MSBuild.TeamCity.Tasks]*'
-			ReportXslts='$(PartCoverPath)\xlst\Report By Class.xslt=>CoverageSummary.html'
+			ReportXslts='$(PartCoverPath)\xslt\Report By Class.xslt=>CoverageSummary.html'
 		/>
 	</Target>
 	<!-- Report files' definition-->

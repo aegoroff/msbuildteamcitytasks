@@ -27,6 +27,23 @@ namespace MSBuild.TeamCity.Tasks
 	/// </example>
 	public class BuildNumber : TeamCityTask
 	{
+		///<summary>
+		/// Initializes a new instance of the <see cref="BuildNumber"/> class
+		///</summary>
+		public BuildNumber()
+		{
+		}
+
+		///<summary>
+		/// Initializes a new instance of the <see cref="BuildNumber"/> class using 
+		/// logger specified
+		///</summary>
+		///<param name="logger"><see cref="ILogger"/> implementation</param>
+		public BuildNumber( ILogger logger )
+			: base(logger)
+		{
+		}
+
 		/// <summary>
 		/// Gets or sets build number value
 		/// </summary>

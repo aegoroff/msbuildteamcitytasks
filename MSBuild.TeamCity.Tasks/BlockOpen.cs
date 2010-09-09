@@ -26,6 +26,23 @@ namespace MSBuild.TeamCity.Tasks
 	/// </example>
 	public class BlockOpen : BlockTask
 	{
+		///<summary>
+		/// Initializes a new instance of the <see cref="BlockOpen"/> class
+		///</summary>
+		public BlockOpen()
+		{
+		}
+
+		///<summary>
+		/// Initializes a new instance of the <see cref="BlockOpen"/> class using 
+		/// logger specified
+		///</summary>
+		///<param name="logger"><see cref="ILogger"/> implementation</param>
+		public BlockOpen( ILogger logger )
+			: base(logger)
+		{
+		}
+
 		/// <summary>
 		/// Reads TeamCity messages
 		/// </summary>

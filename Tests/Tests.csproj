@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="TSimpleTasks.cs" />
     <Compile Include="TGoogleTestArgumentsBuilder.cs" />
     <Compile Include="TGoogleTestsPlainImporter.cs" />
     <Compile Include="TGoogleTestsRunner.cs" />

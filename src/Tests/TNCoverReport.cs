@@ -13,33 +13,14 @@ using Is = NUnit.Framework.Is;
 namespace Tests
 {
 	[TestFixture]
-	public class TNCoverReport
+	public class TNCoverReport : TTask
 	{
-		private Mockery _mockery;
-		private ILogger _logger;
-
-		[SetUp]
-		public void Setup()
-		{
-			_mockery = new Mockery();
-			_logger = _mockery.NewMock<ILogger>();
-			Environment.SetEnvironmentVariable(TTeamCityTaskImplementation.TeamCityEnvVar,
-			                                   TTeamCityTaskImplementation.TeamCityProject, EnvironmentVariableTarget.Process);
-		}
-
-		[TearDown]
-		public void Teardown()
-		{
-			Environment.SetEnvironmentVariable(TTeamCityTaskImplementation.TeamCityEnvVar, null,
-			                                   EnvironmentVariableTarget.Process);
-		}
-
 		[Test]
 		public void OnlyRequired()
 		{
-			Expect.Exactly(2).On(_logger).Method(TTeamCityTaskImplementation.LogMessage).WithAnyArguments();
+			Expect.Exactly(2).On(Logger).Method(TTeamCityTaskImplementation.LogMessage).WithAnyArguments();
 
-			NCoverReport task = new NCoverReport(_logger)
+			NCoverReport task = new NCoverReport(Logger)
 			                    	{
 			                    		NCoverExplorerPath = "p",
 			                    		XmlReportPath = "path"
@@ -50,9 +31,9 @@ namespace Tests
 		[Test]
 		public void OnlyRequiredAndArguments()
 		{
-			Expect.Exactly(3).On(_logger).Method(TTeamCityTaskImplementation.LogMessage).WithAnyArguments();
+			Expect.Exactly(3).On(Logger).Method(TTeamCityTaskImplementation.LogMessage).WithAnyArguments();
 
-			NCoverReport task = new NCoverReport(_logger)
+			NCoverReport task = new NCoverReport(Logger)
 			                    	{
 			                    		NCoverExplorerPath = "p",
 			                    		XmlReportPath = "path",
@@ -64,9 +45,9 @@ namespace Tests
 		[Test]
 		public void OnlyRequiredAndArgumentsAndReportType()
 		{
-			Expect.Exactly(4).On(_logger).Method(TTeamCityTaskImplementation.LogMessage).WithAnyArguments();
+			Expect.Exactly(4).On(Logger).Method(TTeamCityTaskImplementation.LogMessage).WithAnyArguments();
 
-			NCoverReport task = new NCoverReport(_logger)
+			NCoverReport task = new NCoverReport(Logger)
 			                    	{
 			                    		NCoverExplorerPath = "p",
 			                    		XmlReportPath = "path",
@@ -79,9 +60,9 @@ namespace Tests
 		[Test]
 		public void Full()
 		{
-			Expect.Exactly(5).On(_logger).Method(TTeamCityTaskImplementation.LogMessage).WithAnyArguments();
+			Expect.Exactly(5).On(Logger).Method(TTeamCityTaskImplementation.LogMessage).WithAnyArguments();
 
-			NCoverReport task = new NCoverReport(_logger)
+			NCoverReport task = new NCoverReport(Logger)
 			                    	{
 			                    		NCoverExplorerPath = "p",
 			                    		XmlReportPath = "path",
@@ -95,9 +76,9 @@ namespace Tests
 		[Test]
 		public void WithException()
 		{
-			Expect.Once.On(_logger).Method(TTeamCityTaskImplementation.LogMessage).Will(Throw.Exception(new Exception()));
+			Expect.Once.On(Logger).Method(TTeamCityTaskImplementation.LogMessage).Will(Throw.Exception(new Exception()));
 
-			NCoverReport task = new NCoverReport(_logger)
+			NCoverReport task = new NCoverReport(Logger)
 			                    	{
 			                    		NCoverExplorerPath = "p",
 			                    		XmlReportPath = "path",

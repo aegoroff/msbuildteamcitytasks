@@ -13,6 +13,7 @@
 		<Configuration>Release</Configuration>
 		<!-- NUnit working path  -->
 		<NUnitPath>C:\Program Files\NUnit 2.5.2\bin\net-2.0</NUnitPath>
+		<PartCoverPath>C:\Program Files\Gubka Bob\PartCover .NET 2.3</PartCoverPath>
 		<!-- FXCop working path  -->
 		<FxCopPath>C:\Program Files\Microsoft FxCop 1.36</FxCopPath>
 		<!-- SandCastle help file builder working path  -->
@@ -125,11 +126,12 @@
 			Rules="@(FxCopExcludeRule)"
 		/>
 		<RunPartCoverage
-			ToolPath='C:\Program Files\Gubka Bob\PartCover .NET 2.3'
+			ToolPath='$(PartCoverPath)'
 			TargetPath='$(NUnitPath)\nunit-console.exe'
 			Output='$(MSBuildProjectDirectory)\partcover.xml'
 			TargetArguments="$(MSBuildProjectDirectory)\Tests\bin\$(Configuration)\Tests.dll"
 			Includes='[MSBuild.TeamCity.Tasks]*'
+			ReportXslts='$(PartCoverPath)\xlst\Report By Class.xslt=>CoverageSummary.html'
 		/>
 	</Target>
 	<!-- Report files' definition-->

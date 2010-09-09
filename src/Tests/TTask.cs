@@ -13,15 +13,15 @@ namespace Tests
 {
 	public class TTask
 	{
-		private Mockery _mockery;
-
 		protected ILogger Logger { get; private set; }
+
+		protected Mockery Mockery { get; private set; }
 
 		[SetUp]
 		public void Setup()
 		{
-			_mockery = new Mockery();
-			Logger = _mockery.NewMock<ILogger>();
+			Mockery = new Mockery();
+			Logger = Mockery.NewMock<ILogger>();
 			Environment.SetEnvironmentVariable(TTeamCityTaskImplementation.TeamCityEnvVar,
 			                                   TTeamCityTaskImplementation.TeamCityProject, EnvironmentVariableTarget.Process);
 		}

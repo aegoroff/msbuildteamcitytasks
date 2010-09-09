@@ -127,6 +127,7 @@
 		<RunPartCoverage
 			ToolPath='C:\Program Files\Gubka Bob\PartCover .NET 2.3'
 			TargetPath='$(NUnitPath)\nunit-console.exe'
+			Output='$(MSBuildProjectDirectory)\partcover.xml'
 			TargetArguments="$(MSBuildProjectDirectory)\Tests\bin\$(Configuration)\Tests.dll"
 			Includes='[MSBuild.TeamCity.Tasks]*'
 		/>

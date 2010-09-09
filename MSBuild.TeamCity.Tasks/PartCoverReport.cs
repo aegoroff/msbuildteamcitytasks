@@ -48,18 +48,10 @@ namespace MSBuild.TeamCity.Tasks
 		{
 			if ( ReportXslts != null )
 			{
-				SequenceBuilder<string> builder = new SequenceBuilder<string>(EnumerateReports(), "\n");
+				SequenceBuilder<string> builder = new SequenceBuilder<string>(Enumerate(ReportXslts), "\n");
 				yield return new DotNetCoverMessage(DotNetCoverMessage.PartcoverReportXsltsKey, builder.ToString());
 			}
 			yield return new ImportDataTeamCityMessage(ImportType.DotNetCoverage, XmlReportPath, DotNetCoverageTool.PartCover);
-		}
-
-		private IEnumerable<string> EnumerateReports()
-		{
-			foreach ( ITaskItem report in ReportXslts )
-			{
-				yield return report.ItemSpec;
-			}
 		}
 	}
 }

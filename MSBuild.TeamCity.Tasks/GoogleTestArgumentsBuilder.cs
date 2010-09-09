@@ -4,8 +4,8 @@
  * © 2007-2010 Alexander Egorov
  */
 
+using System.Collections.Generic;
 using System.Globalization;
-using System.Text;
 
 namespace MSBuild.TeamCity.Tasks
 {
@@ -46,23 +46,26 @@ namespace MSBuild.TeamCity.Tasks
 		///<returns>command line arguments string</returns>
 		public string CreateCommandLine()
 		{
-			StringBuilder sb = new StringBuilder(OutputXml);
+			SequenceBuilder<string> sequence = new SequenceBuilder<string>(CreateOptions(), Space);
+			return sequence.ToString();
+		}
+
+		private IEnumerable<string> CreateOptions()
+		{
+			yield return OutputXml;
+
 			if ( _runDisabledTests )
 			{
-				sb.Append(Space);
-				sb.Append(DisableTestsCommand);
+				yield return DisableTestsCommand;
 			}
 			if ( _catchExceptions )
 			{
-				sb.Append(Space);
-				sb.Append(CatchExceptionsCommand);
+				yield return CatchExceptionsCommand;
 			}
 			if ( !string.IsNullOrEmpty(_filter) )
 			{
-				sb.Append(Space);
-				sb.Append(string.Format(CultureInfo.CurrentCulture, FilterCommand, _filter));
+				yield return string.Format(CultureInfo.CurrentCulture, FilterCommand, _filter);
 			}
-			return sb.ToString();
 		}
 	}
 }

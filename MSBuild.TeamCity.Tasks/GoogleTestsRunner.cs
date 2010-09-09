@@ -4,7 +4,6 @@
  * © 2007-2010 Alexander Egorov
  */
 
-using System.Diagnostics;
 using System.IO;
 
 namespace MSBuild.TeamCity.Tasks
@@ -70,31 +69,13 @@ namespace MSBuild.TeamCity.Tasks
 
 			GoogleTestArgumentsBuilder commandLine =
 				new GoogleTestArgumentsBuilder(CatchGtestExceptions, RunDisabledTests, TestFilter);
-			Process gtestApp = new Process
-			                   	{
-			                   		StartInfo =
-			                   			{
-			                   				FileName = _testExePath,
-			                   				Arguments = commandLine.CreateCommandLine(),
-			                   				UseShellExecute = false,
-			                   				RedirectStandardOutput = false,
-			                   				WorkingDirectory = dir,
-			                   				CreateNoWindow = true
-			                   			}
-			                   	};
-
-			using ( gtestApp )
-			{
-				gtestApp.Start();
-				if ( ExecutionTimeoutMilliseconds > 0 )
-				{
-					gtestApp.WaitForExit(ExecutionTimeoutMilliseconds);
-				}
-				else
-				{
-					gtestApp.WaitForExit();
-				}
-			}
+			
+			ProcessRunner processRunner = new ProcessRunner(_testExePath)
+			                              	{
+			                              		ExecutionTimeoutMilliseconds = ExecutionTimeoutMilliseconds
+			                              	};
+			processRunner.Run(commandLine.CreateCommandLine());
+			
 			return xmlPath;
 		}
 	}

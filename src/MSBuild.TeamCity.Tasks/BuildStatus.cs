@@ -31,6 +31,23 @@ namespace MSBuild.TeamCity.Tasks
 	/// </example>
 	public class BuildStatus : TeamCityTask
 	{
+		///<summary>
+		/// Initializes a new instance of the <see cref="BuildStatus"/> class
+		///</summary>
+		public BuildStatus()
+		{
+		}
+
+		///<summary>
+		/// Initializes a new instance of the <see cref="BuildStatus"/> class using 
+		/// logger specified
+		///</summary>
+		///<param name="logger"><see cref="ILogger"/> implementation</param>
+		public BuildStatus( ILogger logger )
+			: base(logger)
+		{
+		}
+
 		/// <summary>
 		/// Gets or sets the status attribute that may take following values: FAILURE, SUCCESS.
 		/// </summary>

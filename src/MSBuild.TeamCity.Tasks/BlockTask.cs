@@ -13,6 +13,23 @@ namespace MSBuild.TeamCity.Tasks
 	///</summary>
 	public abstract class BlockTask : TeamCityTask
 	{
+		///<summary>
+		/// Initializes a new instance of the <see cref="BlockTask"/> class
+		///</summary>
+		protected BlockTask()
+		{
+		}
+
+		///<summary>
+		/// Initializes a new instance of the <see cref="BlockTask"/> class using 
+		/// logger specified
+		///</summary>
+		///<param name="logger"><see cref="ILogger"/> implementation</param>
+		protected BlockTask( ILogger logger )
+			: base(logger)
+		{
+		}
+
 		/// <summary>
 		/// Gets or sets block name
 		/// </summary>

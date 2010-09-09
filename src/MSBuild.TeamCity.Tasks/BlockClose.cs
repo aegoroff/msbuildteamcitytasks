@@ -26,6 +26,23 @@ namespace MSBuild.TeamCity.Tasks
 	/// </example>
 	public class BlockClose : BlockTask
 	{
+		///<summary>
+		/// Initializes a new instance of the <see cref="BlockClose"/> class
+		///</summary>
+		public BlockClose()
+		{
+		}
+
+		///<summary>
+		/// Initializes a new instance of the <see cref="BlockClose"/> class using 
+		/// logger specified
+		///</summary>
+		///<param name="logger"><see cref="ILogger"/> implementation</param>
+		public BlockClose( ILogger logger )
+			: base(logger)
+		{
+		}
+
 		/// <summary>
 		/// Reads TeamCity messages
 		/// </summary>

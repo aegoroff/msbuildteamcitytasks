@@ -24,6 +24,23 @@ namespace MSBuild.TeamCity.Tasks
 	/// </example>
 	public class BuildProgressMessage : BuildProgressTask
 	{
+		///<summary>
+		/// Initializes a new instance of the <see cref="BuildProgressMessage"/> class
+		///</summary>
+		public BuildProgressMessage()
+		{
+		}
+
+		///<summary>
+		/// Initializes a new instance of the <see cref="BuildProgressMessage"/> class using 
+		/// logger specified
+		///</summary>
+		///<param name="logger"><see cref="ILogger"/> implementation</param>
+		public BuildProgressMessage( ILogger logger )
+			: base(logger)
+		{
+		}
+
 		/// <summary>
 		/// Gets message name
 		/// </summary>

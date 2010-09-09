@@ -44,6 +44,23 @@ namespace MSBuild.TeamCity.Tasks
 	/// </example>
 	public class ReportMessage : TeamCityTask
 	{
+		///<summary>
+		/// Initializes a new instance of the <see cref="ReportMessage"/> class
+		///</summary>
+		public ReportMessage()
+		{
+		}
+
+		///<summary>
+		/// Initializes a new instance of the <see cref="ReportMessage"/> class using 
+		/// logger specified
+		///</summary>
+		///<param name="logger"><see cref="ILogger"/> implementation</param>
+		public ReportMessage( ILogger logger )
+			: base(logger)
+		{
+		}
+
 		/// <summary>
 		/// Gets or sets message text
 		/// </summary>

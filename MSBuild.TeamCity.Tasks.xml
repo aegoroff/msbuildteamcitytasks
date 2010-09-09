@@ -16,8 +16,6 @@
 		<PartCoverPath>C:\Program Files\Gubka Bob\PartCover .NET 2.3</PartCoverPath>
 		<!-- FXCop working path  -->
 		<FxCopPath>C:\Program Files\Microsoft FxCop 1.36</FxCopPath>
-		<!-- SandCastle help file builder working path  -->
-		<SHFBPath>C:\Program Files\EWSoftware\Sandcastle Help File Builder</SHFBPath>
 		<!-- FxCop full report file name  -->
 		<FxCopFullReportFile>FxCopFull.html</FxCopFullReportFile>
 		<!-- FxCop summary report file name  -->
@@ -175,9 +173,10 @@
 			Files="$(MSBuildProjectDirectory)\Setup\Product.wxs"
 			Regex='\$\(var\.SolutionDir\)'
 			ReplacementText='$(MSBuildProjectDirectory)\' />
-		<Exec
-			WorkingDirectory="$(MSBuildProjectDirectory)"
-			Command='"$(SHFBPath)\SandcastleBuilderConsole.exe" MSBuildTeamCityTasks.shfb'
+		<MSBuild
+			StopOnFirstFailure="true"
+			Projects="MSBuildTeamCityTasks.shfbproj"
+			Properties="Configuration=$(Configuration)" 
 		/>
 		<MSBuild
 			StopOnFirstFailure="true"

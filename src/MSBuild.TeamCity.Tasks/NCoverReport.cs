@@ -26,8 +26,8 @@ namespace MSBuild.TeamCity.Tasks
 	///		NCoverExplorerPath="C:\Program Files\NCoverExplorer"
 	///		XmlReportPath="D:\project\ncover.xml"
 	///		Arguments="arguments"
-	///		ReportType="1"
-	///		ReportOrder="1"
+	///		ReportType="ModuleClassFunctionSummary"
+	///		ReportOrder="0"
 	/// />
 	/// ]]></code>
 	/// </example>	
@@ -70,11 +70,28 @@ namespace MSBuild.TeamCity.Tasks
 		/// <summary>
 		/// Gets or sets value for /report: argument.
 		/// </summary>
+		/// <remarks>
+		/// can accept following values: None, ModuleSummary, ModuleNamespaceSummary, 
+		/// ModuleClassSummary, ModuleClassFunctionSummary, 
+		/// ModuleClassFunctionSummary
+		/// </remarks>
 		public string ReportType { get; set; }
 
 		/// <summary>
 		/// Gets or sets value for /sort: argument
 		/// </summary>
+		/// <remarks>
+		/// 0 = Name<br/>
+		/// 1 = ClassLine<br/>
+		/// 2 = CoveragePercentageAscending<br/>
+		/// 3 = CoveragePercentageDescending<br/>
+		/// 4 = UnvisitedSequencePointsAscending<br/>
+		/// 5 = UnvisitedSequencePointsDescending<br/>
+		/// 6 = VisitCountAscending<br/>
+		/// 7 = VisitCountDescending<br/>
+		/// 8 = FunctionCoverageAscending<br/>
+		/// 9 = FunctionCoverageDescending<br/>
+		/// </remarks>
 		public string ReportOrder { get; set; }
 
 		/// <summary>

@@ -13,6 +13,18 @@ namespace MSBuild.TeamCity.Tasks
 	/// <summary>
 	/// Runs code coverage using PartCover tool (http://partcover.blogspot.com/) and exports results into TC.
 	/// </summary>
+	/// <example>Working example of code coverage using PartCover and imports test results into TC
+	/// <code><![CDATA[
+	/// <RunPartCoverage
+	///		ToolPath='C:\Program Files\Gubka Bob\PartCover .NET 2.3'
+	///		TargetPath='C:\Program Files\NUnit 2.5.2\bin\net-2.0\nunit-console.exe'
+	///		Output='$(MSBuildProjectDirectory)\partcover.xml'
+	///		TargetArguments="$(MSBuildProjectDirectory)\Tests\bin\$(Configuration)\Tests.dll"
+	///		Includes='[MSBuild.TeamCity.Tasks]*'
+	///		ReportXslts='C:\Program Files\Gubka Bob\PartCover .NET 2.3\xslt\Report By Class.xslt=>CoverageSummary.html'
+	///	/>
+	/// ]]></code>
+	/// </example>
 	public class RunPartCoverage : TeamCityTask
 	{
 		private const string PartCoverExe = "PartCover.exe";

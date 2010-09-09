@@ -16,7 +16,7 @@ namespace Tests
 	[TestFixture]
 	public class TGoogleTestsRunner
 	{
-		private static readonly string CorrectExePath = Environment.CurrentDirectory + @"\..\..\..\External\_tst.exe";
+		internal static readonly string CorrectExePath = Environment.CurrentDirectory + @"\..\..\..\External\_tst.exe";
 
 		internal const string HasLoggedErrors = "HasLoggedErrors";
 		internal const string LogError = "LogError";
@@ -33,6 +33,11 @@ namespace Tests
 
 		[TearDown]
 		public void TearDown()
+		{
+			DeleteResult();
+		}
+
+		internal static void DeleteResult()
 		{
 			string xmlPath = TestResultPath;
 

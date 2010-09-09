@@ -38,6 +38,23 @@ namespace MSBuild.TeamCity.Tasks
 	/// </example>
 	public class ImportGoogleTests : TeamCityTask
 	{
+		///<summary>
+		/// Initializes a new instance of the <see cref="ImportGoogleTests"/> class
+		///</summary>
+		public ImportGoogleTests()
+		{
+		}
+
+		///<summary>
+		/// Initializes a new instance of the <see cref="ImportGoogleTests"/> class using 
+		/// logger specified
+		///</summary>
+		///<param name="logger"><see cref="ILogger"/> implementation</param>
+		public ImportGoogleTests( ILogger logger )
+			: base(logger)
+		{
+		}
+
 		/// <summary>
 		/// Gets or sets full path to Google test xml output file
 		/// </summary>

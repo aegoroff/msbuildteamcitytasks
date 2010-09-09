@@ -31,6 +31,23 @@ namespace MSBuild.TeamCity.Tasks
 	/// </example>	
 	public class NCover3Report : TeamCityTask
 	{
+		///<summary>
+		/// Initializes a new instance of the <see cref="NCover3Report"/> class
+		///</summary>
+		public NCover3Report()
+		{
+		}
+
+		///<summary>
+		/// Initializes a new instance of the <see cref="NCover3Report"/> class using 
+		/// logger specified
+		///</summary>
+		///<param name="logger"><see cref="ILogger"/> implementation</param>
+		public NCover3Report( ILogger logger )
+			: base(logger)
+		{
+		}
+
 		/// <summary>
 		/// Gets or sets full path to NCover 3 installation folder
 		/// </summary>

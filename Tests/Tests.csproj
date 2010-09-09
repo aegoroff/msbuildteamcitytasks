@@ -50,6 +50,7 @@
     <Compile Include="TGoogleTestsPlainImporter.cs" />
     <Compile Include="TGoogleTestsRunner.cs" />
     <Compile Include="TImportDataBuilder.cs" />
+    <Compile Include="TNCover3Report.cs" />
     <Compile Include="TNCoverReport.cs" />
     <Compile Include="TPublishArtifacts.cs" />
     <Compile Include="TReportMessageBuilder.cs" />

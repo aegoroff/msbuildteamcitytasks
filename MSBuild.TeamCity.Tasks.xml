@@ -128,7 +128,6 @@
 			ToolPath='C:\Program Files\Gubka Bob\PartCover .NET 2.3'
 			TargetPath='$(NUnitPath)\nunit-console.exe'
 			TargetArguments="$(MSBuildProjectDirectory)\Tests\bin\$(Configuration)\Tests.dll"
-			TargetWorkDir="$(MSBuildProjectDirectory)"
 			Includes='[MSBuild.TeamCity.Tasks]*'
 		/>
 	</Target>

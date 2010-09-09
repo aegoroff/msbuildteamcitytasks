@@ -86,8 +86,14 @@ namespace MSBuild.TeamCity.Tasks
 			                                   		TargetArguments = TargetArguments,
 			                                   		Output = PartCoverOutputXml,
 			                                   	};
-			( (List<string>) commandLine.Includes ).AddRange(Enumerate(Includes));
-			( (List<string>) commandLine.Excludes ).AddRange(Enumerate(Excludes));
+			if ( Includes != null )
+			{
+				( (List<string>) commandLine.Includes ).AddRange(Enumerate(Includes));
+			}
+			if ( Excludes != null )
+			{
+				( (List<string>) commandLine.Excludes ).AddRange(Enumerate(Excludes));
+			}
 
 			string partCoverExePath = Path.Combine(ToolPath, PartCoverExe);
 			ProcessRunner runner = new ProcessRunner(partCoverExePath);

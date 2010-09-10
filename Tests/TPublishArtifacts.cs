@@ -54,5 +54,15 @@ namespace Tests
 			                        	};
 			Assert.That(task.Execute(), Is.False); // TODO: fix it
 		}
+		
+		[Test]
+		public void ArtifactsProperty()
+		{
+			PublishArtifacts task = new PublishArtifacts(Logger)
+			                        	{
+			                        		Artifacts = new[] { _item1, _item2 }
+			                        	};
+			Assert.That(task.Artifacts, Is.EquivalentTo(new[] { _item1, _item2 }));
+		}
 	}
 }

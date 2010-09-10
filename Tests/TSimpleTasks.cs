@@ -7,12 +7,39 @@
 using MSBuild.TeamCity.Tasks;
 using NMock2;
 using NUnit.Framework;
+using Is = NUnit.Framework.Is;
 
 namespace Tests
 {
 	[TestFixture]
 	public class TSimpleTasks : TTask
 	{
+		[Test]
+		public void CommonPropertiesTest()
+		{
+			Expect.Once.On(Logger).Method(TTeamCityTaskImplementation.LogMessage).WithAnyArguments();
+
+			BlockOpen task = new BlockOpen(Logger)
+			                 	{
+			                 		Name = "n"
+			                 	};
+			task.FlowId = "1";
+			task.IsAddTimestamp = true;
+			Assert.That(task.Execute());
+		}
+		
+		[Test]
+		public void BlockTaskNameProperty()
+		{
+			Expect.Once.On(Logger).Method(TTeamCityTaskImplementation.LogMessage).WithAnyArguments();
+
+			BlockOpen task = new BlockOpen(Logger)
+			                 	{
+			                 		Name = "n"
+			                 	};
+			Assert.That(task.Name, Is.EqualTo("n"));
+		}
+		
 		[Test]
 		public void BlockOpen()
 		{

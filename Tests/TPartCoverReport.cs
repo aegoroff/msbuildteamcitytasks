@@ -56,5 +56,25 @@ namespace Tests
 			};
 			Assert.That(task.Execute(), Is.False); // TODO: fix it
 		}
+		
+		[Test]
+		public void XmlReportPath()
+		{
+			PartCoverReport task = new PartCoverReport(Logger)
+			{
+				XmlReportPath = "path"
+			};
+			Assert.That(task.XmlReportPath, Is.EqualTo("path"));
+		}
+		
+		[Test]
+		public void ReportXslts()
+		{
+			PartCoverReport task = new PartCoverReport(Logger)
+			{
+				ReportXslts = new[] { _item1, _item2 }
+			};
+			Assert.That(task.ReportXslts, Is.EquivalentTo(new[] { _item1, _item2 }));
+		}
 	}
 }

@@ -126,7 +126,7 @@
 		<RunPartCoverage
 			ToolPath='$(PartCoverPath)'
 			TargetPath='$(NUnitPath)\nunit-console.exe'
-			Output='$(MSBuildProjectDirectory)\partcover.xml'
+			XmlReportPath='$(MSBuildProjectDirectory)\partcover.xml'
 			TargetArguments="$(MSBuildProjectDirectory)\Tests\bin\$(Configuration)\Tests.dll"
 			Includes='[MSBuild.TeamCity.Tasks]*'
 			ReportXslts='$(MSBuildProjectDirectory)\External\Report By Class.xslt=>CoverageSummary.html'
@@ -173,6 +173,7 @@
 			Files="$(MSBuildProjectDirectory)\Setup\Product.wxs"
 			Regex='\$\(var\.SolutionDir\)'
 			ReplacementText='$(MSBuildProjectDirectory)\' />
+		<!-- Documentation building -->
 		<MSBuild
 			StopOnFirstFailure="true"
 			Projects="MSBuildTeamCityTasks.shfbproj"

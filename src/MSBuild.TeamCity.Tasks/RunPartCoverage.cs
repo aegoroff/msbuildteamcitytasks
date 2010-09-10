@@ -18,7 +18,7 @@ namespace MSBuild.TeamCity.Tasks
 	/// <RunPartCoverage
 	///		ToolPath='C:\Program Files\Gubka Bob\PartCover .NET 2.3'
 	///		TargetPath='C:\Program Files\NUnit 2.5.2\bin\net-2.0\nunit-console.exe'
-	///		Output='$(MSBuildProjectDirectory)\partcover.xml'
+	///		XmlReportPath='$(MSBuildProjectDirectory)\partcover.xml'
 	///		TargetArguments="$(MSBuildProjectDirectory)\Tests\bin\$(Configuration)\Tests.dll"
 	///		Includes='[MSBuild.TeamCity.Tasks]*'
 	///		ReportXslts='C:\Program Files\Gubka Bob\PartCover .NET 2.3\xslt\Report By Class.xslt=>CoverageSummary.html'

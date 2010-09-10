@@ -7,6 +7,7 @@
 using MSBuild.TeamCity.Tasks;
 using NMock2;
 using NUnit.Framework;
+using Is = NUnit.Framework.Is;
 
 namespace Tests
 {
@@ -38,6 +39,36 @@ namespace Tests
 				Arguments = "a"
 			};
 			Assert.That(task.Execute());
+		}
+		
+		[Test]
+		public void ToolPath()
+		{
+			NCover3Report task = new NCover3Report(Logger)
+			{
+				ToolPath = "p"
+			};
+			Assert.That(task.ToolPath, Is.EqualTo("p"));
+		}
+		
+		[Test]
+		public void XmlReportPath()
+		{
+			NCover3Report task = new NCover3Report(Logger)
+			{
+				XmlReportPath = "path"
+			};
+			Assert.That(task.XmlReportPath, Is.EqualTo("path"));
+		}
+		
+		[Test]
+		public void Arguments()
+		{
+			NCover3Report task = new NCover3Report(Logger)
+			{
+				Arguments = "a"
+			};
+			Assert.That(task.Arguments, Is.EqualTo("a"));
 		}
 	}
 }

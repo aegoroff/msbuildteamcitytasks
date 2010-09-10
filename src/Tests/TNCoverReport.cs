@@ -67,7 +67,7 @@ namespace Tests
 			                    		NCoverExplorerPath = "p",
 			                    		XmlReportPath = "path",
 			                    		Arguments = "a",
-			                    		ReportType = "1",
+										ReportType = "None",
 			                    		ReportOrder = "1"
 			                    	};
 			Assert.That(task.Execute());
@@ -84,6 +84,56 @@ namespace Tests
 			                    		XmlReportPath = "path",
 			                    	};
 			Assert.That(task.Execute(), Is.False);
+		}
+
+		[Test]
+		public void NCoverExplorerPath()
+		{
+			NCoverReport task = new NCoverReport(Logger)
+			{
+				NCoverExplorerPath = "p"
+			};
+			Assert.That(task.NCoverExplorerPath, Is.EqualTo("p"));
+		}
+		
+		[Test]
+		public void XmlReportPath()
+		{
+			NCoverReport task = new NCoverReport(Logger)
+			{
+				XmlReportPath = "path"
+			};
+			Assert.That(task.XmlReportPath, Is.EqualTo("path"));
+		}
+		
+		[Test]
+		public void Arguments()
+		{
+			NCoverReport task = new NCoverReport(Logger)
+			{
+				Arguments = "a"
+			};
+			Assert.That(task.Arguments, Is.EqualTo("a"));
+		}
+		
+		[Test]
+		public void ReportType()
+		{
+			NCoverReport task = new NCoverReport(Logger)
+			{
+				ReportType = "None"
+			};
+			Assert.That(task.ReportType, Is.EqualTo("None"));
+		}
+		
+		[Test]
+		public void ReportOrder()
+		{
+			NCoverReport task = new NCoverReport(Logger)
+			{
+				ReportOrder = "1"
+			};
+			Assert.That(task.ReportOrder, Is.EqualTo("1"));
 		}
 	}
 }

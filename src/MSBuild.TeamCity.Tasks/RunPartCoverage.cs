@@ -25,7 +25,7 @@ namespace MSBuild.TeamCity.Tasks
 	///	/>
 	/// ]]></code>
 	/// </example>
-	public class RunPartCoverage : TeamCityTask
+	public class RunPartCoverage : PartCoverReport
 	{
 		private const string PartCoverExe = "PartCover.exe";
 
@@ -63,22 +63,11 @@ namespace MSBuild.TeamCity.Tasks
 		/// </summary>
 		[Required]
 		public string TargetArguments { get; set; }
-		
-		/// <summary>
-		/// Gets or sets path to output file for writing result xml
-		/// </summary>
-		[Required]
-		public string Output { get; set; }
 
 		/// <summary>
 		/// Gets or sets path to working directory to target process
 		/// </summary>
 		public string TargetWorkDir { get; set; }
-
-		/// <summary>
-		/// Gets or sets xslt transformation rules one per line (use ; as separator) in the following format: file.xslt=>generatedFileName.html
-		/// </summary>
-		public ITaskItem[] ReportXslts { get; set; }
 
 		/// <summary>
 		/// Gets or sets items to include to coverate (use ; as separator in case of many)
@@ -101,7 +90,7 @@ namespace MSBuild.TeamCity.Tasks
 			                                   		Target = TargetPath,
 			                                   		TargetWorkDir = TargetWorkDir,
 			                                   		TargetArguments = TargetArguments,
-													Output = Output,
+													Output = XmlReportPath,
 			                                   	};
 			if ( Includes != null )
 			{
@@ -116,14 +105,7 @@ namespace MSBuild.TeamCity.Tasks
 			ProcessRunner runner = new ProcessRunner(partCoverExePath);
 			runner.Run(commandLine.ToString());
 
-			if ( ReportXslts != null )
-			{
-				SequenceBuilder<string> builder = new SequenceBuilder<string>(Enumerate(ReportXslts), "\n");
-				yield return new DotNetCoverMessage(DotNetCoverMessage.PartcoverReportXsltsKey, builder.ToString());
-			}
-			yield return new ImportDataTeamCityMessage(ImportType.DotNetCoverage,
-													   Output,
-			                                           DotNetCoverageTool.PartCover);
+			return base.ReadMessages();
 		}
 	}
 }

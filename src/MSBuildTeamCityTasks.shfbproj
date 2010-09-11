@@ -18,29 +18,29 @@
     <HtmlHelpName>MSBuild.TeamCity.Tasks</HtmlHelpName>
     <Language>en-US</Language>
     <ApiFilter>
-        <Filter entryType="Namespace" fullName="MSBuild.TeamCity.Tasks" isExposed="False" xmlns="">
-            <Filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.BlockClose" filterName="BlockClose" isExposed="True" />
-            <Filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.BlockOpen" filterName="BlockOpen" isExposed="True" />
-            <Filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.BlockTask" filterName="BlockTask" isExposed="True" />
-            <Filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.BuildNumber" filterName="BuildNumber" isExposed="True" />
-            <Filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.BuildProgressFinish" filterName="BuildProgressFinish" isExposed="True" />
-            <Filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.BuildProgressMessage" filterName="BuildProgressMessage" isExposed="True" />
-            <Filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.BuildProgressStart" filterName="BuildProgressStart" isExposed="True" />
-            <Filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.BuildProgressTask" filterName="BuildProgressTask" isExposed="True" />
-            <Filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.BuildStatus" filterName="BuildStatus" isExposed="True" />
-            <Filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.ImportData" filterName="ImportData" isExposed="True" />
-            <Filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.ImportGoogleTests" filterName="ImportGoogleTests" isExposed="True" />
-            <Filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.NCover3Report" filterName="NCover3Report" isExposed="True" />
-            <Filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.NCoverReport" filterName="NCoverReport" isExposed="True" />
-            <Filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.PartCoverReport" filterName="PartCoverReport" isExposed="True" />
-            <Filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.PublishArtifacts" filterName="PublishArtifacts" isExposed="True" />
-            <Filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.ReportBuildStatistic" filterName="ReportBuildStatistic" isExposed="True" />
-            <Filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.ReportMessage" filterName="ReportMessage" isExposed="True" />
-            <Filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.RunGoogleTests" filterName="RunGoogleTests" isExposed="True" />
-            <Filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.RunPartCoverage" filterName="RunPartCoverage" isExposed="True" />
-            <Filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.TeamCityTask" filterName="TeamCityTask" isExposed="True" />
-        </Filter>
-    </ApiFilter>
+      <Filter entryType="Namespace" fullName="MSBuild.TeamCity.Tasks" isExposed="False">
+  <Filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.BlockClose" filterName="BlockClose" isExposed="True" />
+  <Filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.BlockOpen" filterName="BlockOpen" isExposed="True" />
+  <Filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.BlockTask" filterName="BlockTask" isExposed="True" />
+  <Filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.BuildNumber" filterName="BuildNumber" isExposed="True" />
+  <Filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.BuildProgressFinish" filterName="BuildProgressFinish" isExposed="True" />
+  <Filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.BuildProgressStart" filterName="BuildProgressStart" isExposed="True" />
+  <Filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.BuildProgressTask" filterName="BuildProgressTask" isExposed="True" />
+  <Filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.BuildStatus" filterName="BuildStatus" isExposed="True" />
+  <Filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.ImportData" filterName="ImportData" isExposed="True" />
+  <Filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.ImportGoogleTests" filterName="ImportGoogleTests" isExposed="True" />
+  <Filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.NCover3Report" filterName="NCover3Report" isExposed="True" />
+  <Filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.NCoverReport" filterName="NCoverReport" isExposed="True" />
+  <Filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.PartCoverReport" filterName="PartCoverReport" isExposed="True" />
+  <Filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.PublishArtifacts" filterName="PublishArtifacts" isExposed="True" />
+  <Filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.ReportBuildStatistic" filterName="ReportBuildStatistic" isExposed="True" />
+  <Filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.ReportMessage" filterName="ReportMessage" isExposed="True" />
+  <Filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.RunGoogleTests" filterName="RunGoogleTests" isExposed="True" />
+  <Filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.RunPartCoverage" filterName="RunPartCoverage" isExposed="True" />
+  <Filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.TeamCityTask" filterName="TeamCityTask" isExposed="True" />
+</Filter>
+<Filter entryType="Namespace" fullName="MSBuild.TeamCity.Tasks.Internal" isExposed="False" />
+<Filter entryType="Namespace" fullName="MSBuild.TeamCity.Tasks.Messages" isExposed="False" /></ApiFilter>
     <ProjectSummary>
     </ProjectSummary>
     <MissingTags>Summary, Parameter, Returns, AutoDocumentCtors, TypeParameter</MissingTags>
@@ -65,10 +65,12 @@
     <SyntaxFilters>CSharp, VisualBasic</SyntaxFilters>
     <DocumentationSources>
       <DocumentationSource sourceFile=".\MSBuild.TeamCity.Tasks\bin\Release\MSBuild.TeamCity.Tasks.dll" xmlns="" />
-<DocumentationSource sourceFile=".\MSBuild.TeamCity.Tasks\bin\Release\MSBuild.TeamCity.Tasks.XML" xmlns="" /></DocumentationSources>
+      <DocumentationSource sourceFile=".\MSBuild.TeamCity.Tasks\bin\Release\MSBuild.TeamCity.Tasks.XML" xmlns="" />
+    </DocumentationSources>
     <NamespaceSummaries>
       <NamespaceSummaryItem name="(global)" isDocumented="False" xmlns="" />
-<NamespaceSummaryItem name="MSBuild.TeamCity.Tasks" isDocumented="True" xmlns="" /></NamespaceSummaries>
+      <NamespaceSummaryItem name="MSBuild.TeamCity.Tasks" isDocumented="True" xmlns="" />
+    </NamespaceSummaries>
   </PropertyGroup>
   <!-- There are no properties for these groups.  AnyCPU needs to appear in
        order for Visual Studio to perform the build.  The others are optional

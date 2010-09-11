@@ -117,7 +117,7 @@ namespace Tests
 				Includes = new[] { _item1 }
 			};
 
-			Assert.That(task.Execute(), Is.False); // TODO: Fix it
+			Assert.That(task.Execute());
 		}
 		
 		[Test]
@@ -137,7 +137,7 @@ namespace Tests
 				Excludes = new[] { _item2 }
 			};
 
-			Assert.That(task.Execute(), Is.False); // TODO: Fix it
+			Assert.That(task.Execute());
 		}
 		
 		[Test]
@@ -158,7 +158,7 @@ namespace Tests
 				Excludes = new[] { _item2 }
 			};
 
-			Assert.That(task.Execute(), Is.False); // TODO: Fix it
+			Assert.That(task.Execute());
 		}
 		
 		[Test]

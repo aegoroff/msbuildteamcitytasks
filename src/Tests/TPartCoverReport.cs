@@ -54,7 +54,7 @@ namespace Tests
 				XmlReportPath = "path",
 				ReportXslts = new[] { _item1, _item2 }
 			};
-			Assert.That(task.Execute(), Is.False); // TODO: fix it
+			Assert.That(task.Execute());
 		}
 		
 		[Test]

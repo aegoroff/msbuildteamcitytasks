@@ -6,6 +6,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
 
@@ -109,10 +110,7 @@ namespace MSBuild.TeamCity.Tasks
 		/// <returns>Strings collection</returns>
 		protected static IEnumerable<string> Enumerate( IEnumerable<ITaskItem> items )
 		{
-			foreach ( ITaskItem report in items )
-			{
-				yield return report.ItemSpec;
-			}
+			return items.Select(report => report.ItemSpec);
 		}
 
 		private void Initialize( ILogger logger )

@@ -80,5 +80,65 @@ namespace Tests
 			};
 			Assert.That(task.Execute());
 		}
+		
+		[Test]
+		public void TestExePathProperty()
+		{
+			RunGoogleTests task = new RunGoogleTests(Logger)
+			{
+				TestExePath = TGoogleTestsRunner.CorrectExePath,
+			};
+			Assert.That(task.TestExePath, Is.EqualTo(TGoogleTestsRunner.CorrectExePath));
+		}
+		
+		[Test]
+		public void ContinueOnFailuresProperty()
+		{
+			RunGoogleTests task = new RunGoogleTests(Logger)
+			{
+				ContinueOnFailures = true
+			};
+			Assert.That(task.ContinueOnFailures);
+		}
+		
+		[Test]
+		public void RunDisabledTestsProperty()
+		{
+			RunGoogleTests task = new RunGoogleTests(Logger)
+			{
+				RunDisabledTests = true
+			};
+			Assert.That(task.RunDisabledTests);
+		}
+		
+		[Test]
+		public void CatchGtestExceptionsProperty()
+		{
+			RunGoogleTests task = new RunGoogleTests(Logger)
+			{
+				CatchGtestExceptions = true
+			};
+			Assert.That(task.CatchGtestExceptions);
+		}
+		
+		[Test]
+		public void TestFilterProperty()
+		{
+			RunGoogleTests task = new RunGoogleTests(Logger)
+			{
+				TestFilter = "*"
+			};
+			Assert.That(task.TestFilter, Is.EqualTo("*"));
+		}
+		
+		[Test]
+		public void ExecutionTimeoutMillisecondsProperty()
+		{
+			RunGoogleTests task = new RunGoogleTests(Logger)
+			{
+				ExecutionTimeoutMilliseconds = 200,
+			};
+			Assert.That(task.ExecutionTimeoutMilliseconds, Is.EqualTo(200));
+		}
 	}
 }

@@ -20,6 +20,7 @@ namespace Tests
 		private ITaskItem _item1;
 		private ITaskItem _item2;
 		private const string ItemSpec = "ItemSpec";
+		private const string TargetArguments = "--help";
 
 
 		[SetUp]
@@ -77,7 +78,7 @@ namespace Tests
 			{
 				ToolPath = ValidPathToPartCover,
 				TargetPath = TGoogleTestsRunner.CorrectExePath,
-				TargetArguments = "--help"
+				TargetArguments = TargetArguments
 			};
 
 			Assert.That(task.Execute());
@@ -92,7 +93,7 @@ namespace Tests
 			{
 				ToolPath = ValidPathToPartCover,
 				TargetPath = TGoogleTestsRunner.CorrectExePath,
-				TargetArguments = "--help",
+				TargetArguments = TargetArguments,
 				TargetWorkDir = ".",
 			};
 
@@ -111,7 +112,7 @@ namespace Tests
 			{
 				ToolPath = ValidPathToPartCover,
 				TargetPath = TGoogleTestsRunner.CorrectExePath,
-				TargetArguments = "--help",
+				TargetArguments = TargetArguments,
 				TargetWorkDir = ".",
 				Includes = new[] { _item1 }
 			};
@@ -131,7 +132,7 @@ namespace Tests
 			{
 				ToolPath = ValidPathToPartCover,
 				TargetPath = TGoogleTestsRunner.CorrectExePath,
-				TargetArguments = "--help",
+				TargetArguments = TargetArguments,
 				TargetWorkDir = ".",
 				Excludes = new[] { _item2 }
 			};
@@ -151,13 +152,79 @@ namespace Tests
 			{
 				ToolPath = ValidPathToPartCover,
 				TargetPath = TGoogleTestsRunner.CorrectExePath,
-				TargetArguments = "--help",
+				TargetArguments = TargetArguments,
 				TargetWorkDir = ".",
 				Includes = new[] { _item1 },
 				Excludes = new[] { _item2 }
 			};
 
 			Assert.That(task.Execute(), Is.False); // TODO: Fix it
+		}
+		
+		[Test]
+		public void ToolPathProperty()
+		{
+			RunPartCoverage task = new RunPartCoverage(Logger)
+			{
+				ToolPath = ValidPathToPartCover,
+			};
+
+			Assert.That(task.ToolPath, Is.EqualTo(ValidPathToPartCover));
+		}
+		
+		[Test]
+		public void TargetPathProperty()
+		{
+			RunPartCoverage task = new RunPartCoverage(Logger)
+			{
+				TargetPath = TGoogleTestsRunner.CorrectExePath,
+			};
+
+			Assert.That(task.TargetPath, Is.EqualTo(TGoogleTestsRunner.CorrectExePath));
+		}
+		
+		[Test]
+		public void TargetArgumentsProperty()
+		{
+			RunPartCoverage task = new RunPartCoverage(Logger)
+			{
+				TargetArguments = TargetArguments,
+			};
+
+			Assert.That(task.TargetArguments, Is.EqualTo(TargetArguments));
+		}
+		
+		[Test]
+		public void TargetWorkDirProperty()
+		{
+			RunPartCoverage task = new RunPartCoverage(Logger)
+			{
+				TargetWorkDir = ".",
+			};
+
+			Assert.That(task.TargetWorkDir, Is.EqualTo("."));
+		}
+		
+		[Test]
+		public void IncludesProperty()
+		{
+			RunPartCoverage task = new RunPartCoverage(Logger)
+			{
+				Includes = new[] { _item1 }
+			};
+
+			Assert.That(task.Includes, Is.EquivalentTo(new[] { _item1 }));
+		}
+		
+		[Test]
+		public void ExcludesProperty()
+		{
+			RunPartCoverage task = new RunPartCoverage(Logger)
+			{
+				Excludes = new[] { _item2 }
+			};
+
+			Assert.That(task.Excludes, Is.EquivalentTo(new[] { _item2 }));
 		}
 	}
 }

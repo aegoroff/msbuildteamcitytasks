@@ -21,13 +21,13 @@ namespace Tests
 
 			BlockOpen task = new BlockOpen(Logger)
 			                 	{
-			                 		Name = "n"
+			                 		Name = "n",
+			                 		FlowId = "1",
+			                 		IsAddTimestamp = true
 			                 	};
-			task.FlowId = "1";
-			task.IsAddTimestamp = true;
 			Assert.That(task.Execute());
 		}
-		
+
 		[Test]
 		public void BlockTaskNameProperty()
 		{
@@ -39,7 +39,7 @@ namespace Tests
 			                 	};
 			Assert.That(task.Name, Is.EqualTo("n"));
 		}
-		
+
 		[Test]
 		public void BlockOpen()
 		{
@@ -74,6 +74,7 @@ namespace Tests
 			                   		Number = "1"
 			                   	};
 			Assert.That(task.Execute());
+			Assert.That(task.Number, Is.EqualTo("1"));
 		}
 
 		[Test]
@@ -86,6 +87,7 @@ namespace Tests
 			                          		Message = "m"
 			                          	};
 			Assert.That(task.Execute());
+			Assert.That(task.Message, Is.EqualTo("m"));
 		}
 
 		[Test]
@@ -98,6 +100,7 @@ namespace Tests
 			                            		Message = "m"
 			                            	};
 			Assert.That(task.Execute());
+			Assert.That(task.Message, Is.EqualTo("m"));
 		}
 
 		[Test]
@@ -110,6 +113,7 @@ namespace Tests
 			                           		Message = "m"
 			                           	};
 			Assert.That(task.Execute());
+			Assert.That(task.Message, Is.EqualTo("m"));
 		}
 
 		[Test]
@@ -137,35 +141,43 @@ namespace Tests
 			                     		ErrorDetails = "ed"
 			                     	};
 			Assert.That(task.Execute());
+			Assert.That(task.Status, Is.EqualTo("WARNING"));
+			Assert.That(task.Text, Is.EqualTo("t"));
+			Assert.That(task.ErrorDetails, Is.EqualTo("ed"));
 		}
-		
+
 		[Test]
 		public void ReportBuildStatistic()
 		{
 			Expect.Once.On(Logger).Method(TTeamCityTaskImplementation.LogMessage).WithAnyArguments();
 
 			ReportBuildStatistic task = new ReportBuildStatistic(Logger)
-			                     	{
-			                     		Key = "k",
-										Value = 1
-			                     	};
+			                            	{
+			                            		Key = "k",
+			                            		Value = 1
+			                            	};
 			Assert.That(task.Execute());
+			Assert.That(task.Key, Is.EqualTo("k"));
+			Assert.That(task.Value, Is.EqualTo(1));
 		}
-		
+
 		[Test]
 		public void ImportData()
 		{
 			Expect.Once.On(Logger).Method(TTeamCityTaskImplementation.LogMessage).WithAnyArguments();
-			
+
 			ImportData task = new ImportData(Logger)
-			                     	{
-			                     		Path = "p",
-			                     		Type = "dotNetCoverage",
-			                     		Tool = "ncover",
-			                     	};
+			                  	{
+			                  		Path = "p",
+			                  		Type = "dotNetCoverage",
+			                  		Tool = "ncover",
+			                  	};
 			Assert.That(task.Execute());
+			Assert.That(task.Path, Is.EqualTo("p"));
+			Assert.That(task.Type, Is.EqualTo("dotNetCoverage"));
+			Assert.That(task.Tool, Is.EqualTo("ncover"));
 		}
-		
+
 		[Test]
 		public void ImportGoogleTests()
 		{
@@ -173,11 +185,13 @@ namespace Tests
 			Expect.Once.On(Logger).GetProperty(TGoogleTestsRunner.HasLoggedErrors).Will(Return.Value(false));
 
 			ImportGoogleTests task = new ImportGoogleTests(Logger)
-			                     	{
-			                     		ContinueOnFailures = true,
-										TestResultsPath = TGoogleTestsPlainImporter.SuccessTestsPath,
-			                     	};
+			                         	{
+			                         		ContinueOnFailures = true,
+			                         		TestResultsPath = TGoogleTestsPlainImporter.SuccessTestsPath,
+			                         	};
 			Assert.That(task.Execute());
+			Assert.That(task.ContinueOnFailures);
+			Assert.That(task.TestResultsPath, Is.EqualTo(TGoogleTestsPlainImporter.SuccessTestsPath));
 		}
 	}
 }

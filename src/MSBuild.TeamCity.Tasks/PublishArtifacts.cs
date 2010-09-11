@@ -5,6 +5,7 @@
  */
 
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Build.Framework;
 
 namespace MSBuild.TeamCity.Tasks
@@ -59,10 +60,7 @@ namespace MSBuild.TeamCity.Tasks
 		/// <returns>TeamCity messages list</returns>
 		protected override IEnumerable<TeamCityMessage> ReadMessages()
 		{
-			foreach ( ITaskItem item in Artifacts )
-			{
-				yield return new SimpleTeamCityMessage("publishArtifacts", item.ItemSpec);
-			}
+			return Artifacts.Select(item => new SimpleTeamCityMessage("publishArtifacts", item.ItemSpec)).Cast<TeamCityMessage>();
 		}
 	}
 }

@@ -5,7 +5,6 @@
  */
 
 using MSBuild.TeamCity.Tasks;
-using MSBuild.TeamCity.Tasks.Messages;
 using NMock2;
 using NUnit.Framework;
 using Is = NUnit.Framework.Is;

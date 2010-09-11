@@ -63,6 +63,7 @@
     <Compile Include="TRunGoogleTests.cs" />
     <Compile Include="TSequenceBuilder.cs" />
     <Compile Include="TTask.cs" />
+    <Compile Include="TTaskDefaultCtor.cs" />
     <Compile Include="TTeamCityTaskImplementation.cs" />
     <Compile Include="Utils\BaseWriter.cs" />
     <Compile Include="Utils\CaseWriter.cs" />

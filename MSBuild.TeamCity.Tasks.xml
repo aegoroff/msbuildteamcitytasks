@@ -53,6 +53,7 @@
 	</ItemGroup>
 	<!-- Updating version and product code task -->
 	<Target Name="VersionUpdater" Condition=" '$(IsUpdateVersion)'=='true' ">
+		<BuildNumber Number="$(Build).$(Revision)" />
 		<!-- Updating AssemblyInfo.cs files -->
 		<FileUpdate
 			Files="@(AssemblyInfoFile)"
@@ -190,7 +191,7 @@
 		/>
 		<Delete Files="@(SetupFile)" />
 		<Exec
-			Command='python.exe $(MSBuildProjectDirectory)\googlecode_upload.py -p msbuildteamcitytasks -u $(GoogleLogin) -w $(GooglePassword) -s "Release $(Major).$(Minor) Build $(Build)" -l Featured,Type-Installer,OpSys-Windows @(SetupDestinationFile)'
+			Command='python.exe $(MSBuildProjectDirectory)\googlecode_upload.py -p msbuildteamcitytasks -u $(GoogleLogin) -w $(GooglePassword) -s "Release $(Major).$(Minor) Build $(Build).$(Revision)" -l Featured,Type-Installer,OpSys-Windows @(SetupDestinationFile)'
 			Timeout="90000"
 			Condition=" '$(IsUpload)'=='true' "
 		/>

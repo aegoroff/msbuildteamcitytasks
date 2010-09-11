@@ -56,7 +56,7 @@
     <Compile Include="BuildProgressTask.cs" />
     <Compile Include="BuildStatus.cs" />
     <Compile Include="Messages\BuildStatusTeamCityMessage.cs" />
-    <Compile Include="DotNetCoverageTool.cs" />
+    <Compile Include="Messages\DotNetCoverageTool.cs" />
     <Compile Include="Messages\DotNetCoverMessage.cs" />
     <Compile Include="Internal\GoogleTestArgumentsBuilder.cs" />
     <Compile Include="Internal\GoogleTestsImporter.cs" />
@@ -69,7 +69,7 @@
     <Compile Include="Messages\ImportDataMessageBuilder.cs" />
     <Compile Include="Messages\ImportDataTeamCityMessage.cs" />
     <Compile Include="ImportGoogleTests.cs" />
-    <Compile Include="ImportType.cs" />
+    <Compile Include="Messages\ImportType.cs" />
     <Compile Include="Internal\Logger.cs" />
     <Compile Include="Messages\NamedTeamCityMessage.cs" />
     <Compile Include="NCover3Report.cs" />

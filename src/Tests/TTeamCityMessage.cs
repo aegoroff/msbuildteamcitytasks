@@ -5,7 +5,6 @@
  */
 
 using System;
-using MSBuild.TeamCity.Tasks;
 using MSBuild.TeamCity.Tasks.Messages;
 using NUnit.Framework;
 

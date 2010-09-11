@@ -4,6 +4,8 @@
  * © 2007-2010 Alexander Egorov
  */
 
+using MSBuild.TeamCity.Tasks.Internal;
+
 namespace MSBuild.TeamCity.Tasks.Messages
 {
 	/// <summary>

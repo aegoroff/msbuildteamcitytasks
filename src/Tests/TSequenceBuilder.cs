@@ -4,6 +4,7 @@
  * © 2007-2010 Alexander Egorov
  */
 
+using System.Collections.Generic;
 using MSBuild.TeamCity.Tasks.Internal;
 using NUnit.Framework;
 
@@ -18,48 +19,29 @@ namespace Tests
 		private const string Separator = ",";
 		private readonly int[] _values = new[] { 1, 2 };
 
-		[Test]
-		public void Normal()
+		[TestCase( Filter, new[] { 1, 2 }, Head, Trail )]
+		[TestCase( "", new int[0], Head, Trail )]
+		[TestCase( "1,2", new[] { 1, 2 }, null, null )]
+		public void OneCall( string expected, IEnumerable<int> enumerator, string head, string trail )
 		{
-			SequenceBuilder<int> builder = new SequenceBuilder<int>(_values, Separator, Head, Trail);
-			Assert.AreEqual(Filter, builder.ToString());
+			SequenceBuilder<int> builder = new SequenceBuilder<int>(enumerator, Separator, head, trail);
+			Assert.That(builder.ToString(), Is.EqualTo(expected));
 		}
 
-		[Test]
-		public void ManyCalls()
+		[TestCase( Filter, new[] { 1, 2 } )]
+		[TestCase( "", new int[0] )]
+		public void ManyCalls( string expected, IEnumerable<int> enumerator )
 		{
-			SequenceBuilder<int> builder = new SequenceBuilder<int>(_values, Separator, Head, Trail);
-			Assert.AreEqual(Filter, builder.ToString());
-			Assert.AreEqual(Filter, builder.ToString());
-		}
-
-		[Test]
-		public void Empty()
-		{
-			SequenceBuilder<int> builder = new SequenceBuilder<int>(new int[0], Separator, Head, Trail);
-			Assert.AreEqual("", builder.ToString());
-		}
-
-		[Test]
-		public void EmptyManyCalls()
-		{
-			SequenceBuilder<int> builder = new SequenceBuilder<int>(new int[0], Separator, Head, Trail);
-			Assert.AreEqual("", builder.ToString());
-			Assert.AreEqual("", builder.ToString());
-		}
-
-		[Test]
-		public void NullEnds()
-		{
-			SequenceBuilder<int> builder = new SequenceBuilder<int>(_values, Separator, null, null);
-			Assert.AreEqual("1,2", builder.ToString());
+			SequenceBuilder<int> builder = new SequenceBuilder<int>(enumerator, Separator, Head, Trail);
+			Assert.That(builder.ToString(), Is.EqualTo(expected));
+			Assert.That(builder.ToString(), Is.EqualTo(expected));
 		}
 
 		[Test]
 		public void SimplifiedConstructor()
 		{
 			SequenceBuilder<int> builder = new SequenceBuilder<int>(_values, Separator);
-			Assert.AreEqual("1,2", builder.ToString());
+			Assert.That(builder.ToString(), Is.EqualTo("1,2"));
 		}
 	}
 }

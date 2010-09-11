@@ -18,9 +18,6 @@ namespace Tests
 		private const string Target = "t";
 		private const string TargetResult = "--target t";
 		
-		private const string TargetWithSpaces = "t s";
-		private const string TargetWithSpacesResult = "--target \"t s\"";
-		
 		private const string TargetWorkDir = "d";
 		private const string TargetWorkDirResult = "--target-work-dir d";
 
@@ -43,18 +40,13 @@ namespace Tests
 			_commandLine = new PartCoverCommandLine();
 		}
 
-		[Test]
-		public void TargetProperty()
+
+		[TestCase(Target, TargetResult)]
+		[TestCase("t s", "--target \"t s\"")]
+		public void TargetProperty(string target, string expected)
 		{
-			_commandLine.Target = Target;
-			Assert.That(_commandLine.ToString(), Is.EqualTo(TargetResult));
-		}
-		
-		[Test]
-		public void TargetWithSpacesProperty()
-		{
-			_commandLine.Target = TargetWithSpaces;
-			Assert.That(_commandLine.ToString(), Is.EqualTo(TargetWithSpacesResult));
+			_commandLine.Target = target;
+			Assert.That(_commandLine.ToString(), Is.EqualTo(expected));
 		}
 		
 		[Test]

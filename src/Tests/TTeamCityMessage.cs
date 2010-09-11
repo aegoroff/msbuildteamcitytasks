@@ -121,84 +121,28 @@ namespace Tests
 			Assert.That(message.ToString(), Is.EqualTo("##teamcity[importData type='FxCop' path='p']"));
 		}
 
-		[Test]
-		public void ImportDataFxCop()
+		[TestCase(ImportType.FxCop, "##teamcity[importData type='FxCop' path='p']")]
+		[TestCase(ImportType.Junit, "##teamcity[importData type='junit' path='p']")]
+		[TestCase(ImportType.Nunit, "##teamcity[importData type='nunit' path='p']")]
+		[TestCase(ImportType.Surefire, "##teamcity[importData type='surefire' path='p']")]
+		[TestCase(ImportType.Pmd, "##teamcity[importData type='pmd' path='p']")]
+		[TestCase(ImportType.FindBugs, "##teamcity[importData type='findBugs' path='p']")]
+		[TestCase(ImportType.Mstest, "##teamcity[importData type='mstest' path='p']")]
+		public void ImportData(ImportType type, string expected)
 		{
 			const string path = "p";
-			ImportDataTeamCityMessage message = new ImportDataTeamCityMessage(ImportType.FxCop, path);
-			Assert.That(message.ToString(), Is.EqualTo("##teamcity[importData type='FxCop' path='p']"));
+			ImportDataTeamCityMessage message = new ImportDataTeamCityMessage(type, path);
+			Assert.That(message.ToString(), Is.EqualTo(expected));
 		}
-		
-		[Test]
-		public void ImportDataJunit()
+
+		[TestCase(DotNetCoverageTool.PartCover, "##teamcity[importData type='dotNetCoverage' path='p' tool='partcover']")]
+		[TestCase(DotNetCoverageTool.Ncover, "##teamcity[importData type='dotNetCoverage' path='p' tool='ncover']")]
+		[TestCase(DotNetCoverageTool.Ncover3, "##teamcity[importData type='dotNetCoverage' path='p' tool='ncover3']")]
+		public void ImportDataDotNetCoverage(DotNetCoverageTool tool, string expected)
 		{
 			const string path = "p";
-			ImportDataTeamCityMessage message = new ImportDataTeamCityMessage(ImportType.Junit, path);
-			Assert.That(message.ToString(), Is.EqualTo("##teamcity[importData type='junit' path='p']"));
-		}
-		
-		[Test]
-		public void ImportDataNunit()
-		{
-			const string path = "p";
-			ImportDataTeamCityMessage message = new ImportDataTeamCityMessage(ImportType.Nunit, path);
-			Assert.That(message.ToString(), Is.EqualTo("##teamcity[importData type='nunit' path='p']"));
-		}
-		
-		[Test]
-		public void ImportDataSurefire()
-		{
-			const string path = "p";
-			ImportDataTeamCityMessage message = new ImportDataTeamCityMessage(ImportType.Surefire, path);
-			Assert.That(message.ToString(), Is.EqualTo("##teamcity[importData type='surefire' path='p']"));
-		}
-		
-		[Test]
-		public void ImportDataPmd()
-		{
-			const string path = "p";
-			ImportDataTeamCityMessage message = new ImportDataTeamCityMessage(ImportType.Pmd, path);
-			Assert.That(message.ToString(), Is.EqualTo("##teamcity[importData type='pmd' path='p']"));
-		}
-		
-		[Test]
-		public void ImportDataFindBugs()
-		{
-			const string path = "p";
-			ImportDataTeamCityMessage message = new ImportDataTeamCityMessage(ImportType.FindBugs, path);
-			Assert.That(message.ToString(), Is.EqualTo("##teamcity[importData type='findBugs' path='p']"));
-		}
-		
-		[Test]
-		public void ImportDataMstest()
-		{
-			const string path = "p";
-			ImportDataTeamCityMessage message = new ImportDataTeamCityMessage(ImportType.Mstest, path);
-			Assert.That(message.ToString(), Is.EqualTo("##teamcity[importData type='mstest' path='p']"));
-		}
-		
-		[Test]
-		public void ImportDataDotNetCoveragePartCover()
-		{
-			const string path = "p";
-			ImportDataTeamCityMessage message = new ImportDataTeamCityMessage(ImportType.DotNetCoverage, path, DotNetCoverageTool.PartCover);
-			Assert.That(message.ToString(), Is.EqualTo("##teamcity[importData type='dotNetCoverage' path='p' tool='partcover']"));
-		}
-		
-		[Test]
-		public void ImportDataDotNetCoverageNCover()
-		{
-			const string path = "p";
-			ImportDataTeamCityMessage message = new ImportDataTeamCityMessage(ImportType.DotNetCoverage, path, DotNetCoverageTool.Ncover);
-			Assert.That(message.ToString(), Is.EqualTo("##teamcity[importData type='dotNetCoverage' path='p' tool='ncover']"));
-		}
-		
-		[Test]
-		public void ImportDataDotNetCoverageNCover3()
-		{
-			const string path = "p";
-			ImportDataTeamCityMessage message = new ImportDataTeamCityMessage(ImportType.DotNetCoverage, path, DotNetCoverageTool.Ncover3);
-			Assert.That(message.ToString(), Is.EqualTo("##teamcity[importData type='dotNetCoverage' path='p' tool='ncover3']"));
+			ImportDataTeamCityMessage message = new ImportDataTeamCityMessage(ImportType.DotNetCoverage, path, tool);
+			Assert.That(message.ToString(), Is.EqualTo(expected));
 		}
 		
 		[Test]

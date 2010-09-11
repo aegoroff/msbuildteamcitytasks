@@ -6,7 +6,8 @@
 
 using System;
 using System.Collections.Generic;
-using MSBuild.TeamCity.Tasks;
+using MSBuild.TeamCity.Tasks.Internal;
+using MSBuild.TeamCity.Tasks.Messages;
 using NMock2;
 using NUnit.Framework;
 using ILogger = MSBuild.TeamCity.Tasks.ILogger;

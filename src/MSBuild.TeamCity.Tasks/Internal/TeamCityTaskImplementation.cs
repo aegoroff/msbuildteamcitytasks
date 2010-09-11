@@ -6,8 +6,9 @@
 
 using System;
 using Microsoft.Build.Framework;
+using MSBuild.TeamCity.Tasks.Messages;
 
-namespace MSBuild.TeamCity.Tasks
+namespace MSBuild.TeamCity.Tasks.Internal
 {
 	///<summary>
 	/// Represents TeamCity task business logic class

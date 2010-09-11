@@ -5,7 +5,7 @@
  */
 
 using System.Collections.Generic;
-using MSBuild.TeamCity.Tasks;
+using MSBuild.TeamCity.Tasks.Internal;
 using NUnit.Framework;
 
 namespace Tests

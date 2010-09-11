@@ -9,6 +9,9 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
+using MSBuild.TeamCity.Tasks.Internal;
+using MSBuild.TeamCity.Tasks.Messages;
+using Logger = MSBuild.TeamCity.Tasks.Internal.Logger;
 
 namespace MSBuild.TeamCity.Tasks
 {

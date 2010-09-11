@@ -6,6 +6,7 @@
 
 using System.Collections.Generic;
 using Microsoft.Build.Framework;
+using MSBuild.TeamCity.Tasks.Messages;
 
 namespace MSBuild.TeamCity.Tasks
 {
@@ -93,7 +94,7 @@ namespace MSBuild.TeamCity.Tasks
 		/// <returns>TeamCity messages list</returns>
 		protected override IEnumerable<TeamCityMessage> ReadMessages()
 		{
-			yield return new ImportDataBuilder(Tool, Path, Type).BuildMessage();
+			yield return new ImportDataMessageBuilder(Tool, Path, Type).BuildMessage();
 		}
 	}
 }

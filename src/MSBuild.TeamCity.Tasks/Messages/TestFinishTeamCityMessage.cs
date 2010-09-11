@@ -6,7 +6,7 @@
 
 using System.Globalization;
 
-namespace MSBuild.TeamCity.Tasks
+namespace MSBuild.TeamCity.Tasks.Messages
 {
 	///<summary>
 	/// Represents test finish TC message

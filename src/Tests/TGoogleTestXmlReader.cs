@@ -7,7 +7,7 @@
 using System.IO;
 using System.Text;
 using System.Xml;
-using MSBuild.TeamCity.Tasks;
+using MSBuild.TeamCity.Tasks.Internal;
 using NUnit.Framework;
 using Tests.Utils;
 

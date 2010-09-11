@@ -4,7 +4,7 @@
  * © 2007-2009 Alexander Egorov
  */
 
-namespace MSBuild.TeamCity.Tasks
+namespace MSBuild.TeamCity.Tasks.Messages
 {
 	/// <summary>
 	/// Writes progress message into TeamCity log

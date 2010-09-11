@@ -7,7 +7,7 @@
 using System.Diagnostics;
 using System.IO;
 
-namespace MSBuild.TeamCity.Tasks
+namespace MSBuild.TeamCity.Tasks.Internal
 {
 	///<summary>
 	/// Represents an executable file run wrapper

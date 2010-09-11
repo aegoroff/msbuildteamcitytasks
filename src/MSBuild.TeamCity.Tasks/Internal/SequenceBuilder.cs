@@ -7,7 +7,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace MSBuild.TeamCity.Tasks
+namespace MSBuild.TeamCity.Tasks.Internal
 {
 	/// <summary>
 	/// Builds strings of values separated by an element (comma) 

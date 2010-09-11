@@ -6,7 +6,7 @@
 
 using System.Text;
 
-namespace MSBuild.TeamCity.Tasks
+namespace MSBuild.TeamCity.Tasks.Messages
 {
 	/// <summary>
 	/// Represents TeamCity message attribute

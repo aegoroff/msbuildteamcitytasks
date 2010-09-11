@@ -10,7 +10,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Text;
 
-namespace MSBuild.TeamCity.Tasks
+namespace MSBuild.TeamCity.Tasks.Messages
 {
 	/// <summary>
 	/// Base class of all TC messages.

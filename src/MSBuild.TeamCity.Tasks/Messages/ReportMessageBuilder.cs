@@ -4,7 +4,7 @@
  * © 2007-2010 Alexander Egorov
  */
 
-namespace MSBuild.TeamCity.Tasks
+namespace MSBuild.TeamCity.Tasks.Messages
 {
 	/// <summary>
 	/// Represents <see cref="ReportMessageTeamCityMessage"/> instance builder

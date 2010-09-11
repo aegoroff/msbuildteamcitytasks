@@ -5,6 +5,7 @@
  */
 
 using Microsoft.Build.Framework;
+using MSBuild.TeamCity.Tasks.Internal;
 
 namespace MSBuild.TeamCity.Tasks
 {

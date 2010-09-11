@@ -7,6 +7,8 @@
 using System.Collections.Generic;
 using System.IO;
 using Microsoft.Build.Framework;
+using MSBuild.TeamCity.Tasks.Internal;
+using MSBuild.TeamCity.Tasks.Messages;
 
 namespace MSBuild.TeamCity.Tasks
 {

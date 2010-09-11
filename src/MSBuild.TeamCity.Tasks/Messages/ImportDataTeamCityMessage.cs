@@ -6,7 +6,7 @@
 
 using System;
 
-namespace MSBuild.TeamCity.Tasks
+namespace MSBuild.TeamCity.Tasks.Messages
 {
 	///<summary>
 	/// Represents importData TeamCity message that imports data from third party sources.

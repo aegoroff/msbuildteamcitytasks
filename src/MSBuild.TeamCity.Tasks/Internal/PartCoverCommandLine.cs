@@ -7,7 +7,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 
-namespace MSBuild.TeamCity.Tasks
+namespace MSBuild.TeamCity.Tasks.Internal
 {
 	/// <summary>
 	/// Represents PartCover command line object that creates correct command line to pass the tool.

@@ -4,7 +4,7 @@
  * © 2007-2010 Alexander Egorov
  */
 
-using MSBuild.TeamCity.Tasks;
+using MSBuild.TeamCity.Tasks.Messages;
 using NUnit.Framework;
 
 namespace Tests

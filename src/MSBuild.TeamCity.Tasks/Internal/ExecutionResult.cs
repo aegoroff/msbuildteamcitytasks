@@ -5,8 +5,9 @@
  */
 
 using System.Collections.Generic;
+using MSBuild.TeamCity.Tasks.Messages;
 
-namespace MSBuild.TeamCity.Tasks
+namespace MSBuild.TeamCity.Tasks.Internal
 {
 	///<summary>
 	/// Represents a task execution result

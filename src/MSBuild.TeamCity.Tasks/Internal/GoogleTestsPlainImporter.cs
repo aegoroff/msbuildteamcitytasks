@@ -4,7 +4,7 @@
  * © 2007-2010 Alexander Egorov
  */
 
-namespace MSBuild.TeamCity.Tasks
+namespace MSBuild.TeamCity.Tasks.Internal
 {
 	///<summary>
 	/// Represents plain wrapper that uses existing tests result xml import

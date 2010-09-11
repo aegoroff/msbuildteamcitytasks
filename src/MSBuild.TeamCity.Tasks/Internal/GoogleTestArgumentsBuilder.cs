@@ -7,7 +7,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 
-namespace MSBuild.TeamCity.Tasks
+namespace MSBuild.TeamCity.Tasks.Internal
 {
 	///<summary>
 	/// Helps to build command line arguments string to pass Google test executable

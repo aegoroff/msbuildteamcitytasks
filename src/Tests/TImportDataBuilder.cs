@@ -5,7 +5,7 @@
  */
 
 using System;
-using MSBuild.TeamCity.Tasks;
+using MSBuild.TeamCity.Tasks.Messages;
 using NUnit.Framework;
 
 namespace Tests
@@ -18,7 +18,7 @@ namespace Tests
 		{
 			const string type = "FxCop";
 			const string path = "p";
-			ImportDataBuilder builder = new ImportDataBuilder(null, path, type);
+			ImportDataMessageBuilder builder = new ImportDataMessageBuilder(null, path, type);
 			Assert.That(builder.BuildMessage().ToString(), Is.EqualTo("##teamcity[importData type='FxCop' path='p']"));
 		}
 		
@@ -27,7 +27,7 @@ namespace Tests
 		{
 			const string type = "FxCop";
 			const string path = "p";
-			ImportDataBuilder builder = new ImportDataBuilder("ncover", path, type);
+			ImportDataMessageBuilder builder = new ImportDataMessageBuilder("ncover", path, type);
 			Assert.That(builder.BuildMessage().ToString(), Is.EqualTo("##teamcity[importData type='dotNetCoverage' path='p' tool='ncover']"));
 		}
 		
@@ -37,7 +37,7 @@ namespace Tests
 		{
 			const string type = "FxCop";
 			const string path = "p";
-			ImportDataBuilder builder = new ImportDataBuilder("bad", path, type);
+			ImportDataMessageBuilder builder = new ImportDataMessageBuilder("bad", path, type);
 			Assert.That(builder.BuildMessage().ToString(), Is.EqualTo("##teamcity[importData type='dotNetCoverage' path='p' tool='ncover']"));
 		}
 	}

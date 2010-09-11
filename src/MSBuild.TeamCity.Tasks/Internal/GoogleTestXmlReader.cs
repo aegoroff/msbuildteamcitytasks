@@ -8,7 +8,7 @@ using System;
 using System.IO;
 using System.Xml;
 
-namespace MSBuild.TeamCity.Tasks
+namespace MSBuild.TeamCity.Tasks.Internal
 {
 	///<summary>
 	/// Represents Google test (http://code.google.com/p/googletest/) xml test result parser

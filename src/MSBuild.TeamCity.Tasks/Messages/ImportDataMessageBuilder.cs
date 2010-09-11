@@ -4,24 +4,24 @@
  * © 2007-2010 Alexander Egorov
  */
 
-namespace MSBuild.TeamCity.Tasks
+namespace MSBuild.TeamCity.Tasks.Messages
 {
 	/// <summary>
 	/// Represents import data message builder
 	/// </summary>
-	public class ImportDataBuilder
+	public class ImportDataMessageBuilder
 	{
 		private readonly string _tool;
 		private readonly string _path;
 		private readonly string _type;
 
 		///<summary>
-		/// Initializes a new instance of the <see cref="ImportDataBuilder"/> class
+		/// Initializes a new instance of the <see cref="ImportDataMessageBuilder"/> class
 		///</summary>
 		///<param name="tool">the tool name value can be partcover, ncover, or ncover3, depending on selected coverage tool in the coverage settings.</param>
 		///<param name="path">full path to data source file to import data from</param>
 		///<param name="type">imported data type.</param>
-		public ImportDataBuilder( string tool, string path, string type )
+		public ImportDataMessageBuilder( string tool, string path, string type )
 		{
 			_tool = tool;
 			_path = path;

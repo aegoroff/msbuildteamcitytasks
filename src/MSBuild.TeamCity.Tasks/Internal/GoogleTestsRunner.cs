@@ -6,7 +6,7 @@
 
 using System.IO;
 
-namespace MSBuild.TeamCity.Tasks
+namespace MSBuild.TeamCity.Tasks.Internal
 {
 	///<summary>
 	/// Represents Google test executable run wrapper

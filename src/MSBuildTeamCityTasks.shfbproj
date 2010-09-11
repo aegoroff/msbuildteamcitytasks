@@ -18,26 +18,8 @@
     <HtmlHelpName>MSBuild.TeamCity.Tasks</HtmlHelpName>
     <Language>en-US</Language>
     <ApiFilter>
-      <Filter entryType="Namespace" fullName="MSBuild.TeamCity.Tasks" isExposed="False">
-  <Filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.BlockClose" filterName="BlockClose" isExposed="True" />
-  <Filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.BlockOpen" filterName="BlockOpen" isExposed="True" />
-  <Filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.BlockTask" filterName="BlockTask" isExposed="True" />
-  <Filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.BuildNumber" filterName="BuildNumber" isExposed="True" />
-  <Filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.BuildProgressFinish" filterName="BuildProgressFinish" isExposed="True" />
-  <Filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.BuildProgressStart" filterName="BuildProgressStart" isExposed="True" />
-  <Filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.BuildProgressTask" filterName="BuildProgressTask" isExposed="True" />
-  <Filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.BuildStatus" filterName="BuildStatus" isExposed="True" />
-  <Filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.ImportData" filterName="ImportData" isExposed="True" />
-  <Filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.ImportGoogleTests" filterName="ImportGoogleTests" isExposed="True" />
-  <Filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.NCover3Report" filterName="NCover3Report" isExposed="True" />
-  <Filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.NCoverReport" filterName="NCoverReport" isExposed="True" />
-  <Filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.PartCoverReport" filterName="PartCoverReport" isExposed="True" />
-  <Filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.PublishArtifacts" filterName="PublishArtifacts" isExposed="True" />
-  <Filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.ReportBuildStatistic" filterName="ReportBuildStatistic" isExposed="True" />
-  <Filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.ReportMessage" filterName="ReportMessage" isExposed="True" />
-  <Filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.RunGoogleTests" filterName="RunGoogleTests" isExposed="True" />
-  <Filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.RunPartCoverage" filterName="RunPartCoverage" isExposed="True" />
-  <Filter entryType="Class" fullName="MSBuild.TeamCity.Tasks.TeamCityTask" filterName="TeamCityTask" isExposed="True" />
+      <Filter entryType="Namespace" fullName="MSBuild.TeamCity.Tasks" isExposed="True">
+  <Filter entryType="Interface" fullName="MSBuild.TeamCity.Tasks.ILogger" filterName="ILogger" isExposed="False" />
 </Filter>
 <Filter entryType="Namespace" fullName="MSBuild.TeamCity.Tasks.Internal" isExposed="False" />
 <Filter entryType="Namespace" fullName="MSBuild.TeamCity.Tasks.Messages" isExposed="False" /></ApiFilter>

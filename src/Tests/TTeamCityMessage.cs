@@ -37,8 +37,8 @@ namespace Tests
 		{
 			const string number = "1.0";
 			SimpleTeamCityMessage message = new SimpleTeamCityMessage(BuildNumber, number) { IsAddTimestamp = true };
-			string expected = string.Format("##teamcity[buildNumber '1.0' timestamp='{0}']", DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss.fffzzz"));
-			Assert.That(message.ToString(), Is.EqualTo(expected));
+			string expected = string.Format("##teamcity[buildNumber '1.0' timestamp='{0}", DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss"));
+			Assert.That(message.ToString(), Is.StringContaining(expected));
 		}
 		
 		[Test]

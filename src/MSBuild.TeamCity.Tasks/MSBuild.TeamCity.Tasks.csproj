@@ -53,7 +53,7 @@
     <Compile Include="Messages\BlockTeamCityMessage.cs" />
     <Compile Include="BuildNumber.cs" />
     <Compile Include="BuildProgressFinish.cs" />
-    <Compile Include="Messages\BuildProgressMessage.cs" />
+    <Compile Include="BuildProgressMessage.cs" />
     <Compile Include="BuildProgressStart.cs" />
     <Compile Include="BuildProgressTask.cs" />
     <Compile Include="BuildStatus.cs" />

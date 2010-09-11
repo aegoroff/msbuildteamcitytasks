@@ -30,6 +30,9 @@
 		<!-- Enables updating version mechanism -->
 		<IsUpdateVersion>false</IsUpdateVersion>
 		
+		<!-- Managed unit tests report  -->
+		<ManagedTestsReport>ManagedTests.xml</ManagedTestsReport>
+		
 		<!-- Version components  -->
 		<Major>1</Major>
 		<Minor>0</Minor>
@@ -42,10 +45,6 @@
 	<!-- Coverage report output file-->
 	<ItemGroup>
 		<CoverageFile Include="$(MSBuildProjectDirectory)\$(CoverageOutFile)" />
-	</ItemGroup>
-	<!-- Assemblies list that contain unit tests -->
-	<ItemGroup>
-		<Assembly Include="Tests\bin\$(Configuration)\Tests.dll" />
 	</ItemGroup>
 	<!-- AssemblyInfo.cs file definitions where to set version -->
 	<ItemGroup>
@@ -82,7 +81,13 @@
 	</Target>
 	<!-- Running server's and GUI's unit tests task -->
 	<Target Name="UnitTesting" DependsOnTargets="Compile">
-		<NUnit ToolPath="$(NUnitPath)" Assemblies="@(Assembly)"/>
+		<!-- Managed tests -->
+		<Exec
+			Command='"$(NUnitPath)\nunit-console.exe" /xml:$(MSBuildProjectDirectory)\$(ManagedTestsReport) Tests\bin\$(Configuration)\Tests.dll /config=$(Configuration)'
+			IgnoreExitCode="true"
+		/>
+		<!-- Import into TeamCity mono tests -->
+		<ImportData Type="nunit" Path="$(MSBuildProjectDirectory)\$(ManagedTestsReport)" />
 	</Target>
 	<!-- FxCop assemblies ty analyse -->
 	<ItemGroup>

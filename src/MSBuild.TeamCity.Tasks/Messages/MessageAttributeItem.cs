@@ -183,7 +183,9 @@ namespace MSBuild.TeamCity.Tasks.Messages
         /// </remarks>
         private string EscapeValue()
         {
-            return Value.Replace("|", "||").Replace("'", "|'").Replace("]", "|]").Replace("\n", "|n").Replace("\r", "|r");
+            StringBuilder sb = new StringBuilder(Value);
+            sb.Replace("|", "||").Replace("'", "|'").Replace("]", "|]").Replace("\n", "|n").Replace("\r", "|r");
+            return sb.ToString();
         }
     }
 }

@@ -8,28 +8,28 @@ using System.Globalization;
 
 namespace MSBuild.TeamCity.Tasks.Messages
 {
-	///<summary>
-	/// Represents test finish TC message
-	///</summary>
-	public class TestFinishTeamCityMessage : NamedTeamCityMessage
-	{
-		///<summary>
-		/// Initializes a new instance of the <see cref="TestFinishTeamCityMessage"/> class using name and duration in seconds specified
-		///</summary>
-		///<param name="name">Name attribute value</param>
-		///<param name="durationSeconds">Test duration in seconds</param>
-		public TestFinishTeamCityMessage( string name, double durationSeconds ) : base(name)
-		{
-			double duration = durationSeconds * 1000;
-			Attributes.Add(new MessageAttributeItem("duration", duration.ToString(CultureInfo.InvariantCulture)));
-		}
+    ///<summary>
+    /// Represents test finish TC message
+    ///</summary>
+    public class TestFinishTeamCityMessage : NamedTeamCityMessage
+    {
+        ///<summary>
+        /// Initializes a new instance of the <see cref="TestFinishTeamCityMessage"/> class using name and duration in seconds specified
+        ///</summary>
+        ///<param name="name">Name attribute value</param>
+        ///<param name="durationSeconds">Test duration in seconds</param>
+        public TestFinishTeamCityMessage( string name, double durationSeconds ) : base(name)
+        {
+            double duration = durationSeconds * 1000;
+            Attributes.Add(new MessageAttributeItem("duration", duration.ToString(CultureInfo.InvariantCulture)));
+        }
 
-		/// <summary>
-		/// Gets message name
-		/// </summary>
-		protected override string Message
-		{
-			get { return "testFinished"; }
-		}
-	}
+        /// <summary>
+        /// Gets message name
+        /// </summary>
+        protected override string Message
+        {
+            get { return "testFinished"; }
+        }
+    }
 }

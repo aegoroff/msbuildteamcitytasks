@@ -9,48 +9,49 @@ using NUnit.Framework;
 
 namespace Tests
 {
-	[TestFixture]
-	public class TReportMessageBuilder
-	{
-		const string Text = "t";
+    [TestFixture]
+    public class TReportMessageBuilder
+    {
+        private const string Text = "t";
 
-		[Test]
-		public void Full()
-		{
-			const string error = "e";
-			const string status = "ERROR";
-			
-			ReportMessageBuilder builder = new ReportMessageBuilder(Text, status, error);
+        [Test]
+        public void Full()
+        {
+            const string error = "e";
+            const string status = "ERROR";
 
-			Assert.That(builder.BuildMessage().ToString(), Is.EqualTo("##teamcity[message text='t' status='ERROR' errorDetails='e']"));
-		}
+            ReportMessageBuilder builder = new ReportMessageBuilder(Text, status, error);
 
-		[Test]
-		public void StatusAndText()
-		{
-			const string status = "WARNING";
-			
-			ReportMessageBuilder builder = new ReportMessageBuilder(Text, status, null);
-			
-			Assert.That(builder.BuildMessage().ToString(), Is.EqualTo("##teamcity[message text='t' status='WARNING']"));
-		}
+            Assert.That(builder.BuildMessage().ToString(),
+                        Is.EqualTo("##teamcity[message text='t' status='ERROR' errorDetails='e']"));
+        }
 
-		[Test]
-		public void OnlyText()
-		{
-			ReportMessageBuilder builder = new ReportMessageBuilder(Text, null, null);
+        [Test]
+        public void StatusAndText()
+        {
+            const string status = "WARNING";
 
-			Assert.That(builder.BuildMessage().ToString(), Is.EqualTo("##teamcity[message text='t']"));
-		}
+            ReportMessageBuilder builder = new ReportMessageBuilder(Text, status, null);
 
-		[Test]
-		public void OnlyDetails()
-		{
-			const string error = "e";
+            Assert.That(builder.BuildMessage().ToString(), Is.EqualTo("##teamcity[message text='t' status='WARNING']"));
+        }
 
-			ReportMessageBuilder builder = new ReportMessageBuilder(Text, null, error);
+        [Test]
+        public void OnlyText()
+        {
+            ReportMessageBuilder builder = new ReportMessageBuilder(Text, null, null);
 
-			Assert.That(builder.BuildMessage().ToString(), Is.EqualTo("##teamcity[message text='t']"));
-		}
-	}
+            Assert.That(builder.BuildMessage().ToString(), Is.EqualTo("##teamcity[message text='t']"));
+        }
+
+        [Test]
+        public void OnlyDetails()
+        {
+            const string error = "e";
+
+            ReportMessageBuilder builder = new ReportMessageBuilder(Text, null, error);
+
+            Assert.That(builder.BuildMessage().ToString(), Is.EqualTo("##teamcity[message text='t']"));
+        }
+    }
 }

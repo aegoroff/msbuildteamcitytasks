@@ -9,19 +9,19 @@ using System.Xml;
 
 namespace Tests.Utils
 {
-	public class BaseWriter : IDisposable
-	{
-		private readonly XmlWriter _xw;
+    public class BaseWriter : IDisposable
+    {
+        private readonly XmlWriter _xw;
 
-		protected BaseWriter(XmlWriter xw)
-		{
-			_xw = xw;
-		}
+        protected BaseWriter( XmlWriter xw )
+        {
+            _xw = xw;
+        }
 
-		public void Dispose()
-		{
-			_xw.WriteEndElement();
-			_xw.Flush();
-		}
-	}
+        public void Dispose()
+        {
+            _xw.WriteEndElement();
+            _xw.Flush();
+        }
+    }
 }

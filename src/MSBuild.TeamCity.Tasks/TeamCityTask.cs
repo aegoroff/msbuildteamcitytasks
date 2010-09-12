@@ -15,111 +15,111 @@ using Logger = MSBuild.TeamCity.Tasks.Internal.Logger;
 
 namespace MSBuild.TeamCity.Tasks
 {
-	/// <summary>
-	/// Represent abstract TeamCity task. Cannot be used directly (because it's abstract) in MSBuild script
-	/// </summary>
-	public abstract class TeamCityTask : Task
-	{
-		private TeamCityTaskImplementation _implementation;
+    /// <summary>
+    /// Represent abstract TeamCity task. Cannot be used directly (because it's abstract) in MSBuild script
+    /// </summary>
+    public abstract class TeamCityTask : Task
+    {
+        private TeamCityTaskImplementation _implementation;
 
-		/// <summary>
-		/// Initializes a new instance of the <see cref="TeamCityTask"/> class
-		/// </summary>
-		protected TeamCityTask()
-		{
-			Initialize(new Logger(Log));
-		}
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TeamCityTask"/> class
+        /// </summary>
+        protected TeamCityTask()
+        {
+            Initialize(new Logger(Log));
+        }
 
-		/// <summary>
-		/// Initializes a new instance of the <see cref="TeamCityTask"/> class using logger implementation specified
-		/// </summary>
-		/// <param name="logger">
-		/// Logger implementation
-		/// </param>
-		protected TeamCityTask( ILogger logger )
-		{
-			Initialize(logger);
-		}
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TeamCityTask"/> class using logger implementation specified
+        /// </summary>
+        /// <param name="logger">
+        /// Logger implementation
+        /// </param>
+        protected TeamCityTask( ILogger logger )
+        {
+            Initialize(logger);
+        }
 
-		/// <summary>
-		/// Gets or sets a value indicating whether to add message's timestamp attribute. False by default
-		/// </summary>
-		public bool IsAddTimestamp { get; set; }
+        /// <summary>
+        /// Gets or sets a value indicating whether to add message's timestamp attribute. False by default
+        /// </summary>
+        public bool IsAddTimestamp { get; set; }
 
-		/// <summary>
-		/// Gets or sets message flowId. The flowId is a unique identifier of the messages flow in a build. 
-		/// Flow tracking is necessary for example to distinguish separate processes running in parallel. 
-		/// The identifier is a string that should be unique in the scope of individual build.
-		/// </summary>
-		public string FlowId { get; set; }
+        /// <summary>
+        /// Gets or sets message flowId. The flowId is a unique identifier of the messages flow in a build. 
+        /// Flow tracking is necessary for example to distinguish separate processes running in parallel. 
+        /// The identifier is a string that should be unique in the scope of individual build.
+        /// </summary>
+        public string FlowId { get; set; }
 
-		/// <summary>
-		/// Gets logging object
-		/// </summary>
-		protected ILogger Logger { get; private set; }
+        /// <summary>
+        /// Gets logging object
+        /// </summary>
+        protected ILogger Logger { get; private set; }
 
-		/// <summary>
-		/// Gets task execution result
-		/// </summary>
-		protected virtual ExecutionResult ExecutionResult
-		{
-			get
-			{
-				ExecutionResult result = new ExecutionResult
-				                         	{
-				                         		Status = true,
-				                         		Messages = new List<TeamCityMessage>()
-				                         	};
-				foreach ( TeamCityMessage message in ReadMessages() )
-				{
-					result.Messages.Add(message);
-				}
-				return result;
-			}
-		}
+        /// <summary>
+        /// Gets task execution result
+        /// </summary>
+        protected virtual ExecutionResult ExecutionResult
+        {
+            get
+            {
+                ExecutionResult result = new ExecutionResult
+                                             {
+                                                 Status = true,
+                                                 Messages = new List<TeamCityMessage>()
+                                             };
+                foreach ( TeamCityMessage message in ReadMessages() )
+                {
+                    result.Messages.Add(message);
+                }
+                return result;
+            }
+        }
 
-		/// <summary>
-		/// When overridden in a derived class, executes the task.
-		/// </summary>
-		/// <returns>
-		/// true if the task successfully executed; otherwise, false.
-		/// </returns>
-		public override bool Execute()
-		{
-			try
-			{
-				return _implementation.Execute(ExecutionResult, IsAddTimestamp, FlowId);
-			}
-			catch ( Exception e )
-			{
-				Console.WriteLine(e);
-			}
-			return false;
-		}
+        /// <summary>
+        /// When overridden in a derived class, executes the task.
+        /// </summary>
+        /// <returns>
+        /// true if the task successfully executed; otherwise, false.
+        /// </returns>
+        public override bool Execute()
+        {
+            try
+            {
+                return _implementation.Execute(ExecutionResult, IsAddTimestamp, FlowId);
+            }
+            catch ( Exception e )
+            {
+                Console.WriteLine(e);
+            }
+            return false;
+        }
 
-		/// <summary>
-		/// Reads TeamCity messages
-		/// </summary>
-		/// <returns>TeamCity messages list</returns>
-		protected virtual IEnumerable<TeamCityMessage> ReadMessages()
-		{
-			return new List<TeamCityMessage>();
-		}
+        /// <summary>
+        /// Reads TeamCity messages
+        /// </summary>
+        /// <returns>TeamCity messages list</returns>
+        protected virtual IEnumerable<TeamCityMessage> ReadMessages()
+        {
+            return new List<TeamCityMessage>();
+        }
 
-		/// <summary>
-		/// Enumerates <see cref="ITaskItem"/> collection
-		/// </summary>
-		/// <param name="items">Collection to enumerate</param>
-		/// <returns>Strings collection</returns>
-		protected static IEnumerable<string> Enumerate( IEnumerable<ITaskItem> items )
-		{
-			return items.Select(report => report.ItemSpec);
-		}
+        /// <summary>
+        /// Enumerates <see cref="ITaskItem"/> collection
+        /// </summary>
+        /// <param name="items">Collection to enumerate</param>
+        /// <returns>Strings collection</returns>
+        protected static IEnumerable<string> Enumerate( IEnumerable<ITaskItem> items )
+        {
+            return items.Select(report => report.ItemSpec);
+        }
 
-		private void Initialize( ILogger logger )
-		{
-			Logger = logger;
-			_implementation = new TeamCityTaskImplementation(logger);
-		}
-	}
+        private void Initialize( ILogger logger )
+        {
+            Logger = logger;
+            _implementation = new TeamCityTaskImplementation(logger);
+        }
+    }
 }

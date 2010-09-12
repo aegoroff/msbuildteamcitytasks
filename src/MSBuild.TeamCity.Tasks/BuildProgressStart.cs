@@ -6,47 +6,47 @@
 
 namespace MSBuild.TeamCity.Tasks
 {
-	/// <summary>
-	/// Writes progress start message into TeamCity log
-	/// </summary>
-	/// <example>Writes progress start message into TeamCity log
-	/// <code><![CDATA[
-	/// <BuildProgressStart Message="Message text" />
-	/// ]]></code>
-	/// Writes progress start message into TeamCity log full example (with all optional attributes)
-	/// <code><![CDATA[
-	/// <BuildProgressStart
-	///		IsAddTimestamp="true"
-	///		FlowId="1"
-	///		Message="Message text"
-	/// />
-	/// ]]></code>
-	/// </example>
-	public class BuildProgressStart : BuildProgressTask
-	{
-		///<summary>
-		/// Initializes a new instance of the <see cref="BuildProgressStart"/> class
-		///</summary>
-		public BuildProgressStart()
-		{
-		}
+    /// <summary>
+    /// Writes progress start message into TeamCity log
+    /// </summary>
+    /// <example>Writes progress start message into TeamCity log
+    /// <code><![CDATA[
+    /// <BuildProgressStart Message="Message text" />
+    /// ]]></code>
+    /// Writes progress start message into TeamCity log full example (with all optional attributes)
+    /// <code><![CDATA[
+    /// <BuildProgressStart
+    ///     IsAddTimestamp="true"
+    ///     FlowId="1"
+    ///     Message="Message text"
+    /// />
+    /// ]]></code>
+    /// </example>
+    public class BuildProgressStart : BuildProgressTask
+    {
+        ///<summary>
+        /// Initializes a new instance of the <see cref="BuildProgressStart"/> class
+        ///</summary>
+        public BuildProgressStart()
+        {
+        }
 
-		///<summary>
-		/// Initializes a new instance of the <see cref="BuildProgressStart"/> class using 
-		/// logger specified
-		///</summary>
-		///<param name="logger"><see cref="ILogger"/> implementation</param>
-		public BuildProgressStart( ILogger logger )
-			: base(logger)
-		{
-		}
+        ///<summary>
+        /// Initializes a new instance of the <see cref="BuildProgressStart"/> class using 
+        /// logger specified
+        ///</summary>
+        ///<param name="logger"><see cref="ILogger"/> implementation</param>
+        public BuildProgressStart( ILogger logger )
+            : base(logger)
+        {
+        }
 
-		/// <summary>
-		/// Gets message name
-		/// </summary>
-		protected override string MessageName
-		{
-			get { return "progressStart"; }
-		}
-	}
+        /// <summary>
+        /// Gets message name
+        /// </summary>
+        protected override string MessageName
+        {
+            get { return "progressStart"; }
+        }
+    }
 }

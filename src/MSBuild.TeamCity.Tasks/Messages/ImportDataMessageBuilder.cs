@@ -6,39 +6,39 @@
 
 namespace MSBuild.TeamCity.Tasks.Messages
 {
-	/// <summary>
-	/// Represents import data message builder
-	/// </summary>
-	public class ImportDataMessageBuilder
-	{
-		private readonly string _tool;
-		private readonly string _path;
-		private readonly string _type;
+    /// <summary>
+    /// Represents import data message builder
+    /// </summary>
+    public class ImportDataMessageBuilder
+    {
+        private readonly string _tool;
+        private readonly string _path;
+        private readonly string _type;
 
-		///<summary>
-		/// Initializes a new instance of the <see cref="ImportDataMessageBuilder"/> class
-		///</summary>
-		///<param name="tool">the tool name value can be partcover, ncover, or ncover3, depending on selected coverage tool in the coverage settings.</param>
-		///<param name="path">full path to data source file to import data from</param>
-		///<param name="type">imported data type.</param>
-		public ImportDataMessageBuilder( string tool, string path, string type )
-		{
-			_tool = tool;
-			_path = path;
-			_type = type;
-		}
+        ///<summary>
+        /// Initializes a new instance of the <see cref="ImportDataMessageBuilder"/> class
+        ///</summary>
+        ///<param name="tool">the tool name value can be partcover, ncover, or ncover3, depending on selected coverage tool in the coverage settings.</param>
+        ///<param name="path">full path to data source file to import data from</param>
+        ///<param name="type">imported data type.</param>
+        public ImportDataMessageBuilder( string tool, string path, string type )
+        {
+            _tool = tool;
+            _path = path;
+            _type = type;
+        }
 
-		/// <summary>
-		/// Builds message
-		/// </summary>
-		/// <returns>The new instance of <see cref="TeamCityMessage"/> class</returns>
-		public TeamCityMessage BuildMessage()
-		{
-			return string.IsNullOrEmpty(_tool)
-			       	? new ImportDataTeamCityMessage(_type, _path)
-			       	: new ImportDataTeamCityMessage(ImportType.DotNetCoverage,
-			       	                                _path,
-			       	                                ImportDataTeamCityMessage.ToDotNetCoverateTool(_tool));
-		}
-	}
+        /// <summary>
+        /// Builds message
+        /// </summary>
+        /// <returns>The new instance of <see cref="TeamCityMessage"/> class</returns>
+        public TeamCityMessage BuildMessage()
+        {
+            return string.IsNullOrEmpty(_tool)
+                       ? new ImportDataTeamCityMessage(_type, _path)
+                       : new ImportDataTeamCityMessage(ImportType.DotNetCoverage,
+                                                       _path,
+                                                       ImportDataTeamCityMessage.ToDotNetCoverateTool(_tool));
+        }
+    }
 }

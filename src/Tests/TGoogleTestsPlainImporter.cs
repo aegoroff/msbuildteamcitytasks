@@ -13,59 +13,62 @@ using Is = NUnit.Framework.Is;
 
 namespace Tests
 {
-	[TestFixture]
-	public class TGoogleTestsPlainImporter
-	{
-		internal static readonly string SuccessTestsPath = Environment.CurrentDirectory + @"\..\..\..\External\GoogleTestsSuccess.xml";
-		private static readonly string FailTestsPath = Environment.CurrentDirectory + @"\..\..\..\External\GoogleTestsFailed.xml";
+    [TestFixture]
+    public class TGoogleTestsPlainImporter
+    {
+        internal static readonly string SuccessTestsPath = Environment.CurrentDirectory +
+                                                           @"\..\..\..\External\GoogleTestsSuccess.xml";
 
-		private Mockery _mockery;
-		private ILogger _logger;
+        private static readonly string FailTestsPath = Environment.CurrentDirectory +
+                                                       @"\..\..\..\External\GoogleTestsFailed.xml";
 
-		[SetUp]
-		public void Setup()
-		{
-			_mockery = new Mockery();
-			_logger = _mockery.NewMock<ILogger>();
-		}
+        private Mockery _mockery;
+        private ILogger _logger;
 
-		[Test]
-		public void ReadSuccessTests()
-		{
-			Expect.Once.On(_logger).GetProperty(TGoogleTestsRunner.HasLoggedErrors).Will(Return.Value(false));
+        [SetUp]
+        public void Setup()
+        {
+            _mockery = new Mockery();
+            _logger = _mockery.NewMock<ILogger>();
+        }
 
-			GoogleTestsPlainImporter importer = new GoogleTestsPlainImporter(_logger, false, SuccessTestsPath);
+        [Test]
+        public void ReadSuccessTests()
+        {
+            Expect.Once.On(_logger).GetProperty(TGoogleTestsRunner.HasLoggedErrors).Will(Return.Value(false));
 
-			ExecutionResult result = importer.Import();
+            GoogleTestsPlainImporter importer = new GoogleTestsPlainImporter(_logger, false, SuccessTestsPath);
 
-			Assert.That(result.Status);
-			Assert.That(result.Messages.Count, Is.EqualTo(1));
-		}
-		
-		[Test]
-		public void ReadFailTests()
-		{
-			Expect.Once.On(_logger).GetProperty(TGoogleTestsRunner.HasLoggedErrors).Will(Return.Value(false));
+            ExecutionResult result = importer.Import();
 
-			GoogleTestsPlainImporter importer = new GoogleTestsPlainImporter(_logger, false, FailTestsPath);
+            Assert.That(result.Status);
+            Assert.That(result.Messages.Count, Is.EqualTo(1));
+        }
 
-			ExecutionResult result = importer.Import();
+        [Test]
+        public void ReadFailTests()
+        {
+            Expect.Once.On(_logger).GetProperty(TGoogleTestsRunner.HasLoggedErrors).Will(Return.Value(false));
 
-			Assert.That(result.Status, Is.False);
-			Assert.That(result.Messages.Count, Is.EqualTo(1));
-		}
-		
-		[Test]
-		public void ReadFailTestsButContinueOnFailures()
-		{
-			Expect.Once.On(_logger).GetProperty(TGoogleTestsRunner.HasLoggedErrors).Will(Return.Value(false));
+            GoogleTestsPlainImporter importer = new GoogleTestsPlainImporter(_logger, false, FailTestsPath);
 
-			GoogleTestsPlainImporter importer = new GoogleTestsPlainImporter(_logger, true, FailTestsPath);
+            ExecutionResult result = importer.Import();
 
-			ExecutionResult result = importer.Import();
+            Assert.That(result.Status, Is.False);
+            Assert.That(result.Messages.Count, Is.EqualTo(1));
+        }
 
-			Assert.That(result.Status);
-			Assert.That(result.Messages.Count, Is.EqualTo(1));
-		}
-	}
+        [Test]
+        public void ReadFailTestsButContinueOnFailures()
+        {
+            Expect.Once.On(_logger).GetProperty(TGoogleTestsRunner.HasLoggedErrors).Will(Return.Value(false));
+
+            GoogleTestsPlainImporter importer = new GoogleTestsPlainImporter(_logger, true, FailTestsPath);
+
+            ExecutionResult result = importer.Import();
+
+            Assert.That(result.Status);
+            Assert.That(result.Messages.Count, Is.EqualTo(1));
+        }
+    }
 }

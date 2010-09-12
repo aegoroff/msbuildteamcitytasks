@@ -11,26 +11,27 @@ using NUnit.Framework;
 
 namespace Tests
 {
-	public class TTask
-	{
-		protected ILogger Logger { get; private set; }
+    public class TTask
+    {
+        protected ILogger Logger { get; private set; }
 
-		protected Mockery Mockery { get; private set; }
+        protected Mockery Mockery { get; private set; }
 
-		[SetUp]
-		public void Setup()
-		{
-			Mockery = new Mockery();
-			Logger = Mockery.NewMock<ILogger>();
-			Environment.SetEnvironmentVariable(TTeamCityTaskImplementation.TeamCityEnvVar,
-			                                   TTeamCityTaskImplementation.TeamCityProject, EnvironmentVariableTarget.Process);
-		}
+        [SetUp]
+        public void Setup()
+        {
+            Mockery = new Mockery();
+            Logger = Mockery.NewMock<ILogger>();
+            Environment.SetEnvironmentVariable(TTeamCityTaskImplementation.TeamCityEnvVar,
+                                               TTeamCityTaskImplementation.TeamCityProject,
+                                               EnvironmentVariableTarget.Process);
+        }
 
-		[TearDown]
-		public void Teardown()
-		{
-			Environment.SetEnvironmentVariable(TTeamCityTaskImplementation.TeamCityEnvVar, null,
-			                                   EnvironmentVariableTarget.Process);
-		}
-	}
+        [TearDown]
+        public void Teardown()
+        {
+            Environment.SetEnvironmentVariable(TTeamCityTaskImplementation.TeamCityEnvVar, null,
+                                               EnvironmentVariableTarget.Process);
+        }
+    }
 }

@@ -5,7 +5,6 @@
  */
 
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 
 namespace MSBuild.TeamCity.Tasks.Internal
@@ -15,6 +14,7 @@ namespace MSBuild.TeamCity.Tasks.Internal
     /// </summary>
     public class PartCoverCommandLine
     {
+        private const string OptionPrefix = "--";
         private const string TargetOpt = "target";
         private const string TargetWorkDirOpt = "target-work-dir";
         private const string TargetArgumentsOpt = "target-args";
@@ -113,7 +113,7 @@ namespace MSBuild.TeamCity.Tasks.Internal
         private static string CreateOption( string option, string value )
         {
             string v = value.Contains(Space) ? EscapeSymbol + value + EscapeSymbol : value;
-            return string.Format(CultureInfo.CurrentCulture, "--{0} {1}", option, v);
+            return OptionPrefix + option + Space + v;
         }
     }
 }

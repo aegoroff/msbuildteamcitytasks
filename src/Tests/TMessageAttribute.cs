@@ -50,6 +50,7 @@ namespace Tests
         [TestCase( Value + "\n", "'v|n'" )]
         [TestCase( Value + "\r", "'v|r'" )]
         [TestCase( Value + "\r\n|']", "'v|r|n|||'|]'" )]
+        [TestCase( null, "" )]
         public void OnlyValueTest( string value, string expected )
         {
             MessageAttributeItem attributeItem = new MessageAttributeItem { Value = value };

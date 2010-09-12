@@ -13,34 +13,15 @@ namespace Tests
     [TestFixture]
     public class TImportDataBuilder
     {
-        [Test]
-        public void NoTool()
+        [TestCase(null, "##teamcity[importData type='FxCop' path='p']")]
+        [TestCase("ncover", "##teamcity[importData type='dotNetCoverage' path='p' tool='ncover']")]
+        [TestCase("bad", null, ExpectedException = typeof(NotSupportedException))]
+        public void Test(string tool, string expected)
         {
             const string type = "FxCop";
             const string path = "p";
-            ImportDataMessageBuilder builder = new ImportDataMessageBuilder(null, path, type);
-            Assert.That(builder.BuildMessage().ToString(), Is.EqualTo("##teamcity[importData type='FxCop' path='p']"));
-        }
-
-        [Test]
-        public void WithTool()
-        {
-            const string type = "FxCop";
-            const string path = "p";
-            ImportDataMessageBuilder builder = new ImportDataMessageBuilder("ncover", path, type);
-            Assert.That(builder.BuildMessage().ToString(),
-                        Is.EqualTo("##teamcity[importData type='dotNetCoverage' path='p' tool='ncover']"));
-        }
-
-        [Test]
-        [ExpectedException( typeof(NotSupportedException) )]
-        public void WithBadTool()
-        {
-            const string type = "FxCop";
-            const string path = "p";
-            ImportDataMessageBuilder builder = new ImportDataMessageBuilder("bad", path, type);
-            Assert.That(builder.BuildMessage().ToString(),
-                        Is.EqualTo("##teamcity[importData type='dotNetCoverage' path='p' tool='ncover']"));
+            ImportDataMessageBuilder builder = new ImportDataMessageBuilder(tool, path, type);
+            Assert.That(builder.BuildMessage().ToString(), Is.EqualTo(expected));
         }
     }
 }

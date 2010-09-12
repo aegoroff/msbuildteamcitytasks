@@ -6,6 +6,7 @@
 
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 
 namespace MSBuild.TeamCity.Tasks.Internal
 {
@@ -87,29 +88,25 @@ namespace MSBuild.TeamCity.Tasks.Internal
 
         private IEnumerable<string> CreateOptions()
         {
-            if ( !string.IsNullOrEmpty(Target) )
-            {
-                yield return CreateOption(TargetOpt, Target);
-            }
-            if ( !string.IsNullOrEmpty(TargetWorkDir) )
-            {
-                yield return CreateOption(TargetWorkDirOpt, TargetWorkDir);
-            }
-            if ( !string.IsNullOrEmpty(TargetArguments) )
-            {
-                yield return CreateOption(TargetArgumentsOpt, TargetArguments);
-            }
-            if ( !string.IsNullOrEmpty(Output) )
-            {
-                yield return CreateOption(OutputOpt, Output);
-            }
+            return from option in EnumerateOptions()
+                   where !string.IsNullOrEmpty(option.Value)
+                   select CreateOption(option.Key, option.Value);
+        }
+
+        private IEnumerable<KeyValuePair<string, string>> EnumerateOptions()
+        {
+            yield return new KeyValuePair<string, string>(TargetOpt, Target);
+            yield return new KeyValuePair<string, string>(TargetWorkDirOpt, TargetWorkDir);
+            yield return new KeyValuePair<string, string>(TargetArgumentsOpt, TargetArguments);
+            yield return new KeyValuePair<string, string>(OutputOpt, Output);
+
             foreach ( string include in Includes )
             {
-                yield return CreateOption(IncludeOpt, include);
+                yield return new KeyValuePair<string, string>(IncludeOpt, include);
             }
             foreach ( string exclude in Excludes )
             {
-                yield return CreateOption(ExcludeOpt, exclude);
+                yield return new KeyValuePair<string, string>(ExcludeOpt, exclude);
             }
         }
 

@@ -29,8 +29,6 @@ namespace MSBuild.TeamCity.Tasks.Internal
     /// </example>
     public class SequenceBuilder<T>
     {
-        private delegate int Length( string s );
-
         private readonly StringBuilder _builder = new StringBuilder();
         private readonly IEnumerable<T> _enumerator;
         private readonly string _head;
@@ -65,6 +63,8 @@ namespace MSBuild.TeamCity.Tasks.Internal
             : this(enumerator, separator, null, null)
         {
         }
+
+        private delegate int Length(string s);
 
         /// <summary>
         /// Converts value of the instance into string.

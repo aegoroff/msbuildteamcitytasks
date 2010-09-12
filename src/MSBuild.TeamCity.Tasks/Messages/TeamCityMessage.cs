@@ -8,7 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
-using System.Text;
+using MSBuild.TeamCity.Tasks.Internal;
 
 namespace MSBuild.TeamCity.Tasks.Messages
 {
@@ -17,7 +17,8 @@ namespace MSBuild.TeamCity.Tasks.Messages
     /// </summary>
     public abstract class TeamCityMessage
     {
-        private readonly IList<MessageAttributeItem> _attributes = new List<MessageAttributeItem>();
+        private const string Space = " ";
+        private readonly List<MessageAttributeItem> _attributes = new List<MessageAttributeItem>();
 
         ///<summary>
         /// Gets or sets a value indicating whether to add timestamt to the message. False by default
@@ -67,20 +68,12 @@ namespace MSBuild.TeamCity.Tasks.Messages
                 _attributes.Add(flowId);
             }
 
-            StringBuilder sb = new StringBuilder();
+            SequenceBuilder<MessageAttributeItem> sequence = new SequenceBuilder<MessageAttributeItem>(_attributes,
+                                                                                                       Space,
+                                                                                                       "##teamcity[" + Message + Space,
+                                                                                                       "]");
 
-            foreach ( MessageAttributeItem attribute in _attributes )
-            {
-                sb.Append(attribute.ToString());
-                sb.Append(' ');
-            }
-
-            if ( sb.Length > 0 )
-            {
-                sb.Remove(sb.Length - 1, 1);
-            }
-
-            return string.Format(CultureInfo.CurrentCulture, "##teamcity[{0} {1}]", Message, sb);
+            return sequence.ToString();
         }
     }
 }

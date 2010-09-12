@@ -18,66 +18,21 @@ namespace Tests
         private const string Space = " ";
         private const string FilterCommand = "--gtest_filter=\"1\"";
         private const string Filter = "1";
+        private const string Empty = "";
 
-        [Test]
-        public void OnlyXml()
+        [TestCase(false, false, Empty, OutputXml)]
+        [TestCase(false, false, null, OutputXml)]
+        [TestCase(true, false, Empty, OutputXml + Space + CatchExceptionsCommand)]
+        [TestCase(false, true, Empty, OutputXml + Space + DisableTestsCommand)]
+        [TestCase(false, false, Filter, OutputXml + Space + FilterCommand)]
+        [TestCase(true, true, Empty, OutputXml + Space + DisableTestsCommand + Space + CatchExceptionsCommand)]
+        [TestCase(false, true, Filter, OutputXml + Space + DisableTestsCommand + Space + FilterCommand)]
+        [TestCase(true, false, Filter, OutputXml + Space + CatchExceptionsCommand + Space + FilterCommand)]
+        [TestCase(true, true, Filter, OutputXml + Space + DisableTestsCommand + Space + CatchExceptionsCommand + Space + FilterCommand)]
+        public void CreateCommandLine(bool catchExceptions, bool runDisabledTests, string filter, string expected)
         {
-            GoogleTestArgumentsBuilder builder = new GoogleTestArgumentsBuilder(false, false, string.Empty);
-            Assert.That(builder.CreateCommandLine(), Is.EqualTo(OutputXml));
-        }
-
-        [Test]
-        public void OnlyCathcingExceptions()
-        {
-            GoogleTestArgumentsBuilder builder = new GoogleTestArgumentsBuilder(true, false, string.Empty);
-            Assert.That(builder.CreateCommandLine(), Is.EqualTo(OutputXml + Space + CatchExceptionsCommand));
-        }
-
-        [Test]
-        public void OnlyRunDisabledTests()
-        {
-            GoogleTestArgumentsBuilder builder = new GoogleTestArgumentsBuilder(false, true, string.Empty);
-            Assert.That(builder.CreateCommandLine(), Is.EqualTo(OutputXml + Space + DisableTestsCommand));
-        }
-
-        [Test]
-        public void OnlyFilterTests()
-        {
-            GoogleTestArgumentsBuilder builder = new GoogleTestArgumentsBuilder(false, false, Filter);
-            Assert.That(builder.CreateCommandLine(), Is.EqualTo(OutputXml + Space + FilterCommand));
-        }
-
-        [Test]
-        public void RunDisabledTestsAndCathcingExceptions()
-        {
-            GoogleTestArgumentsBuilder builder = new GoogleTestArgumentsBuilder(true, true, string.Empty);
-            Assert.That(builder.CreateCommandLine(),
-                        Is.EqualTo(OutputXml + Space + DisableTestsCommand + Space + CatchExceptionsCommand));
-        }
-
-        [Test]
-        public void RunDisabledTestsAndFilter()
-        {
-            GoogleTestArgumentsBuilder builder = new GoogleTestArgumentsBuilder(false, true, Filter);
-            Assert.That(builder.CreateCommandLine(),
-                        Is.EqualTo(OutputXml + Space + DisableTestsCommand + Space + FilterCommand));
-        }
-
-        [Test]
-        public void CathcingExceptionsAndFilter()
-        {
-            GoogleTestArgumentsBuilder builder = new GoogleTestArgumentsBuilder(true, false, Filter);
-            Assert.That(builder.CreateCommandLine(),
-                        Is.EqualTo(OutputXml + Space + CatchExceptionsCommand + Space + FilterCommand));
-        }
-
-        [Test]
-        public void All()
-        {
-            GoogleTestArgumentsBuilder builder = new GoogleTestArgumentsBuilder(true, true, Filter);
-            Assert.That(builder.CreateCommandLine(),
-                        Is.EqualTo(OutputXml + Space + DisableTestsCommand + Space + CatchExceptionsCommand + Space +
-                                   FilterCommand));
+            GoogleTestArgumentsBuilder builder = new GoogleTestArgumentsBuilder(catchExceptions, runDisabledTests, filter);
+            Assert.That(builder.CreateCommandLine(), Is.EqualTo(expected));
         }
     }
 }

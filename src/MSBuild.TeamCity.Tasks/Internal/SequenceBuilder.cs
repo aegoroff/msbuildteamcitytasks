@@ -29,11 +29,14 @@ namespace MSBuild.TeamCity.Tasks.Internal
     /// </example>
     public class SequenceBuilder<T>
     {
+        private delegate int Length( string s );
+
         private readonly StringBuilder _builder = new StringBuilder();
         private readonly IEnumerable<T> _enumerator;
         private readonly string _head;
         private readonly string _separator;
         private readonly string _trail;
+        private readonly Length _length = s => !string.IsNullOrEmpty(s) ? s.Length : 0;
 
         /// <summary>
         /// Initializes a new instance of the SequenceBuilder class
@@ -63,16 +66,6 @@ namespace MSBuild.TeamCity.Tasks.Internal
         {
         }
 
-        private int TrailLength
-        {
-            get { return !string.IsNullOrEmpty(_trail) ? _trail.Length : 0; }
-        }
-
-        private int HeadLength
-        {
-            get { return !string.IsNullOrEmpty(_head) ? _head.Length : 0; }
-        }
-
         /// <summary>
         /// Converts value of the instance into string.
         /// </summary>
@@ -82,7 +75,7 @@ namespace MSBuild.TeamCity.Tasks.Internal
         /// </returns>
         public override string ToString()
         {
-            return ( _builder.Length == HeadLength - _separator.Length + TrailLength )
+            return ( _builder.Length == _length(_head) - _separator.Length + _length(_trail) )
                        ? string.Empty
                        : _builder.ToString();
         }

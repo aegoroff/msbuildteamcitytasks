@@ -28,6 +28,17 @@ namespace MSBuild.TeamCity.Tasks
     ///     Artifacts="File1.zip;File2.zip"
     /// />
     /// ]]></code>
+    /// Publish several artifacts complex example
+    /// <code><![CDATA[
+    /// <ItemGroup>
+    ///     <Artifact Include="File1.zip" />
+    ///     <Artifact Include="File2.zip" />
+    ///     <Artifact Include="File3.zip => Path" />
+    /// </ItemGroup>
+    /// <PublishArtifacts
+    ///     Artifacts="@(Artifact)"
+    /// />
+    /// ]]></code>
     /// </example>
     public class PublishArtifacts : TeamCityTask
     {
@@ -51,6 +62,11 @@ namespace MSBuild.TeamCity.Tasks
         /// <summary>
         /// Gets or sets the artifacts to publish.
         /// </summary>
+        /// <remarks>
+        /// Artifacts should adhere following format:<br/>
+        /// file_name|directory_name|wildcard [ => target_directory|target_archive ]<p/>
+        /// Details <a href="http://confluence.jetbrains.net/display/TCD5/Build+Artifact">in TeamCity documentation</a>
+        /// </remarks>
         /// <value>The artifacts.</value>
         [Required]
         public ITaskItem[] Artifacts { get; set; }

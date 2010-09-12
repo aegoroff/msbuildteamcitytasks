@@ -6,6 +6,7 @@
 
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Microsoft.Build.Framework;
 using MSBuild.TeamCity.Tasks.Internal;
 using MSBuild.TeamCity.Tasks.Messages;
@@ -96,11 +97,11 @@ namespace MSBuild.TeamCity.Tasks
                                                    };
             if ( Includes != null )
             {
-                ( (List<string>) commandLine.Includes ).AddRange(Enumerate(Includes));
+                ( (List<string>) commandLine.Includes ).AddRange(Includes.Select(item => item.ItemSpec));
             }
             if ( Excludes != null )
             {
-                ( (List<string>) commandLine.Excludes ).AddRange(Enumerate(Excludes));
+                ( (List<string>) commandLine.Excludes ).AddRange(Excludes.Select(item => item.ItemSpec));
             }
 
             string partCoverExePath = Path.Combine(ToolPath, PartCoverExe);

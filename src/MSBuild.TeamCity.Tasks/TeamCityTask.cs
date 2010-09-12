@@ -6,8 +6,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
 using MSBuild.TeamCity.Tasks.Internal;
 using MSBuild.TeamCity.Tasks.Messages;
@@ -104,16 +102,6 @@ namespace MSBuild.TeamCity.Tasks
         protected virtual IEnumerable<TeamCityMessage> ReadMessages()
         {
             return new List<TeamCityMessage>();
-        }
-
-        /// <summary>
-        /// Enumerates <see cref="ITaskItem"/> collection
-        /// </summary>
-        /// <param name="items">Collection to enumerate</param>
-        /// <returns>Strings collection</returns>
-        protected static IEnumerable<string> Enumerate( IEnumerable<ITaskItem> items )
-        {
-            return items.Select(report => report.ItemSpec);
         }
 
         private void Initialize( ILogger logger )

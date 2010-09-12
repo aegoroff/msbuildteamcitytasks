@@ -5,6 +5,7 @@
  */
 
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Build.Framework;
 using MSBuild.TeamCity.Tasks.Internal;
 using MSBuild.TeamCity.Tasks.Messages;
@@ -67,7 +68,8 @@ namespace MSBuild.TeamCity.Tasks
         {
             if ( ReportXslts != null )
             {
-                SequenceBuilder<string> builder = new SequenceBuilder<string>(Enumerate(ReportXslts), "\n");
+                SequenceBuilder<string> builder =
+                    new SequenceBuilder<string>(ReportXslts.Select(report => report.ItemSpec), "\n");
                 yield return new DotNetCoverMessage(DotNetCoverMessage.PartcoverReportXsltsKey, builder.ToString());
             }
             yield return

@@ -13,16 +13,12 @@ namespace MSBuild.TeamCity.Tasks.Messages
     ///</summary>
     public class ImportDataTeamCityMessage : TeamCityMessage
     {
-        private const string PartCover = "partcover";
-        private const string Ncover = "ncover";
-        private const string Ncover3 = "ncover3";
-
         ///<summary>
         /// Initializes a new instance of the <see cref="ImportDataTeamCityMessage"/> class using <see cref="ImportType"/> value and path specified
         ///</summary>
         ///<param name="type">Data type. FxCop for example</param>
         ///<param name="path">Full path to file</param>
-        public ImportDataTeamCityMessage( ImportType type, string path ) : this(ToString(type), path)
+        public ImportDataTeamCityMessage( ImportType type, string path ) : this(type.ImportTypeToString(), path)
         {
         }
 
@@ -49,7 +45,7 @@ namespace MSBuild.TeamCity.Tasks.Messages
             {
                 throw new NotSupportedException();
             }
-            Attributes.Add(new MessageAttributeItem("tool", ToString(tool)));
+            Attributes.Add(new MessageAttributeItem("tool", tool.ToolToString()));
         }
 
         /// <summary>
@@ -58,61 +54,6 @@ namespace MSBuild.TeamCity.Tasks.Messages
         protected override string Message
         {
             get { return "importData"; }
-        }
-
-        internal static DotNetCoverageTool ToDotNetCoverateTool( string type )
-        {
-            switch ( type )
-            {
-                case PartCover:
-                    return DotNetCoverageTool.PartCover;
-                case Ncover:
-                    return DotNetCoverageTool.Ncover;
-                case Ncover3:
-                    return DotNetCoverageTool.Ncover3;
-                default:
-                    throw new NotSupportedException();
-            }
-        }
-
-        private static string ToString( ImportType type )
-        {
-            switch ( type )
-            {
-                case ImportType.Junit:
-                    return "junit";
-                case ImportType.Surefire:
-                    return "surefire";
-                case ImportType.Nunit:
-                    return "nunit";
-                case ImportType.FindBugs:
-                    return "findBugs";
-                case ImportType.Pmd:
-                    return "pmd";
-                case ImportType.FxCop:
-                    return "FxCop";
-                case ImportType.DotNetCoverage:
-                    return "dotNetCoverage";
-                case ImportType.Mstest:
-                    return "mstest";
-                default:
-                    throw new NotSupportedException();
-            }
-        }
-
-        private static string ToString( DotNetCoverageTool type )
-        {
-            switch ( type )
-            {
-                case DotNetCoverageTool.PartCover:
-                    return PartCover;
-                case DotNetCoverageTool.Ncover:
-                    return Ncover;
-                case DotNetCoverageTool.Ncover3:
-                    return Ncover3;
-                default:
-                    throw new NotSupportedException();
-            }
         }
     }
 }

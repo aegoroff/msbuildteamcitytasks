@@ -38,7 +38,7 @@ namespace MSBuild.TeamCity.Tasks.Messages
                        ? new ImportDataTeamCityMessage(_type, _path)
                        : new ImportDataTeamCityMessage(ImportType.DotNetCoverage,
                                                        _path,
-                                                       ImportDataTeamCityMessage.ToDotNetCoverateTool(_tool));
+                                                       _tool.ToDotNetCoverateTool());
         }
     }
 }

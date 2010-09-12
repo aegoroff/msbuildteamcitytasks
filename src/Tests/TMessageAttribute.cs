@@ -37,59 +37,23 @@ namespace Tests
         }
 
         [Test]
-        public void NoNameDefined()
-        {
-            MessageAttributeItem attributeItem = new MessageAttributeItem(Value);
-            Assert.That(attributeItem.ToString(), Is.EqualTo("'v'"));
-        }
-
-        [Test]
         public void NameAndValueDefined()
         {
             MessageAttributeItem attributeItem = new MessageAttributeItem(Name, Value);
             Assert.That(attributeItem.ToString(), Is.EqualTo("n='v'"));
         }
 
-        [Test]
-        public void EscapeApos()
+        [TestCase( Value, "'v'" )]
+        [TestCase( Value + "'", "'v|''" )]
+        [TestCase( Value + "]", "'v|]'" )]
+        [TestCase( Value + "|", "'v||'" )]
+        [TestCase( Value + "\n", "'v|n'" )]
+        [TestCase( Value + "\r", "'v|r'" )]
+        [TestCase( Value + "\r\n|']", "'v|r|n|||'|]'" )]
+        public void OnlyValueTest( string value, string expected )
         {
-            MessageAttributeItem attributeItem = new MessageAttributeItem(Value + "'");
-            Assert.That(attributeItem.ToString(), Is.EqualTo("'v|''"));
-        }
-
-        [Test]
-        public void EscapeClosingBracket()
-        {
-            MessageAttributeItem attributeItem = new MessageAttributeItem(Value + "]");
-            Assert.That(attributeItem.ToString(), Is.EqualTo("'v|]'"));
-        }
-
-        [Test]
-        public void EscapeVerticalLine()
-        {
-            MessageAttributeItem attributeItem = new MessageAttributeItem(Value + "|");
-            Assert.That(attributeItem.ToString(), Is.EqualTo("'v||'"));
-        }
-
-        [Test]
-        public void EscapeN()
-        {
-            MessageAttributeItem attributeItem = new MessageAttributeItem(Value + "\n");
-            Assert.That(attributeItem.ToString(), Is.EqualTo("'v|n'"));
-        }
-
-        [Test]
-        public void EscapeR()
-        {
-            MessageAttributeItem attributeItem = new MessageAttributeItem(Value + "\r");
-            Assert.That(attributeItem.ToString(), Is.EqualTo("'v|r'"));
-        }
-
-        [Test]
-        public void EscapeAlltogether()
-        {
-            MessageAttributeItem attributeItem = new MessageAttributeItem(Value + "\r\n|']");
-            Assert.That(attributeItem.ToString(), Is.EqualTo("'v|r|n|||'|]'"));
+            MessageAttributeItem attributeItem = new MessageAttributeItem { Value = value };
+            Assert.That(attributeItem.ToString(), Is.EqualTo(expected));
         }
 
         [Test]

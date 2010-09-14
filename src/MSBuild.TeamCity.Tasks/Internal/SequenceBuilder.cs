@@ -34,7 +34,7 @@ namespace MSBuild.TeamCity.Tasks.Internal
         private readonly string _head;
         private readonly string _separator;
         private readonly string _trail;
-        private readonly Length _length = s => !string.IsNullOrEmpty(s) ? s.Length : 0;
+        private readonly Length _length = s => (s ?? string.Empty).Length;
 
         /// <summary>
         /// Initializes a new instance of the SequenceBuilder class

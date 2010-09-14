@@ -38,6 +38,8 @@
 		<Minor>0</Minor>
 		<Build>0</Build>
 		<Revision>0</Revision>
+		<Stage>alpha</Stage>
+		<IsFeatured>Featured</IsFeatured>
 		<GoogleLogin>1</GoogleLogin>
 		<GooglePassword>1</GooglePassword>
 		<IsUpload>false</IsUpload>
@@ -195,7 +197,7 @@
 		/>
 		<Delete Files="@(SetupFile)" />
 		<Exec
-			Command='python.exe $(MSBuildProjectDirectory)\googlecode_upload.py -p msbuildteamcitytasks -u $(GoogleLogin) -w $(GooglePassword) -s "Release $(Major).$(Minor) Build $(Build)" -l Featured,Type-Installer,OpSys-Windows @(SetupDestinationFile)'
+			Command='python.exe $(MSBuildProjectDirectory)\googlecode_upload.py -p msbuildteamcitytasks -u $(GoogleLogin) -w $(GooglePassword) -s "Release $(Major).$(Minor) Build $(Build) $(Stage)" -l $(IsFeatured),Type-Installer,OpSys-Windows @(SetupDestinationFile)'
 			Timeout="90000"
 			Condition=" '$(IsUpload)'=='true' "
 		/>

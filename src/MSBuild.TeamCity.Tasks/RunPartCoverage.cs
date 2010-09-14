@@ -97,11 +97,11 @@ namespace MSBuild.TeamCity.Tasks
                                                    };
             if ( Includes != null )
             {
-                commandLine.Includes.Concat(Includes.Select(item => item.ItemSpec));
+                ( (List<string>) commandLine.Includes ).AddRange(Includes.Select(item => item.ItemSpec));
             }
             if ( Excludes != null )
             {
-                commandLine.Excludes.Concat(Excludes.Select(item => item.ItemSpec));
+                ( (List<string>) commandLine.Excludes ).AddRange(Excludes.Select(item => item.ItemSpec));
             }
 
             string partCoverExePath = Path.Combine(ToolPath, PartCoverExe);

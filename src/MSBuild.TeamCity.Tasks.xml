@@ -38,7 +38,9 @@
 		<Minor>0</Minor>
 		<Build>0</Build>
 		<Revision>0</Revision>
+		<!-- Development cycle stage (alpha, beta, etc.) -->
 		<Stage>alpha</Stage>
+		<!-- Can be Featured or empty Featured means to place it on main project page -->
 		<IsFeatured>Featured</IsFeatured>
 		<GoogleLogin>1</GoogleLogin>
 		<GooglePassword>1</GooglePassword>

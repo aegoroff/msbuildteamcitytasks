@@ -51,7 +51,7 @@ namespace MSBuild.TeamCity.Tasks.Internal
                                           Arguments = cmdLine.ToString(),
                                           UseShellExecute = false,
                                           RedirectStandardOutput = false,
-                                          WorkingDirectory = dir,
+                                          WorkingDirectory = dir ?? ".",
                                           CreateNoWindow = true
                                       }
                               };

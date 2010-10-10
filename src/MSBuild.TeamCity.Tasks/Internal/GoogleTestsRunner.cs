@@ -67,14 +67,14 @@ namespace MSBuild.TeamCity.Tasks.Internal
                 File.Delete(xmlPath);
             }
 
-            GoogleTestArgumentsBuilder commandLine =
-                new GoogleTestArgumentsBuilder(CatchGtestExceptions, RunDisabledTests, TestFilter);
+            GoogleTestCommandLine commandLine =
+                new GoogleTestCommandLine(CatchGtestExceptions, RunDisabledTests, TestFilter);
 
             ProcessRunner processRunner = new ProcessRunner(_testExePath)
                                               {
                                                   ExecutionTimeoutMilliseconds = ExecutionTimeoutMilliseconds
                                               };
-            processRunner.Run(commandLine.CreateCommandLine());
+            processRunner.Run(commandLine.ToString());
 
             return xmlPath;
         }

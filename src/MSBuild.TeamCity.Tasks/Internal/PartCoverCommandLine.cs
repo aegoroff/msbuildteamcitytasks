@@ -5,24 +5,20 @@
  */
 
 using System.Collections.Generic;
-using System.Linq;
 
 namespace MSBuild.TeamCity.Tasks.Internal
 {
     /// <summary>
     /// Represents PartCover command line object that creates correct command line to pass the tool.
     /// </summary>
-    public class PartCoverCommandLine
+    public sealed class PartCoverCommandLine : CommandLine
     {
-        private const string OptionPrefix = "--";
         private const string TargetOpt = "target";
         private const string TargetWorkDirOpt = "target-work-dir";
         private const string TargetArgumentsOpt = "target-args";
         private const string OutputOpt = "output";
         private const string IncludeOpt = "include";
         private const string ExcludeOpt = "exclude";
-        private const string EscapeSymbol = "\"";
-        private const string Space = " ";
 
         ///<summary>
         /// Initializes a new instance of the <see cref="PartCoverCommandLine"/> class
@@ -74,26 +70,18 @@ namespace MSBuild.TeamCity.Tasks.Internal
         public IList<string> Excludes { get; private set; }
 
         /// <summary>
-        /// Returns a <see cref="T:System.String"/> that represents the current <see cref="T:System.Object"/>.
+        /// Gets option's value separator that separates oprion value from option itself
         /// </summary>
-        /// <returns>
-        /// A <see cref="T:System.String"/> that represents the current <see cref="T:System.Object"/>.
-        /// </returns>
-        /// <filterpriority>2</filterpriority>
-        public override string ToString()
+        protected override string OptionValueSeparator
         {
-            SequenceBuilder<string> sequence = new SequenceBuilder<string>(CreateOptions(), Space);
-            return sequence.ToString();
+            get { return Space; }
         }
 
-        private IEnumerable<string> CreateOptions()
-        {
-            return from option in EnumerateOptions()
-                   where !string.IsNullOrEmpty(option.Value)
-                   select CreateOption(option.Key, option.Value);
-        }
-
-        private IEnumerable<KeyValuePair<string, string>> EnumerateOptions()
+        /// <summary>
+        /// Enumerates all possible options
+        /// </summary>
+        /// <returns>All possible options' pairs</returns>
+        protected override IEnumerable<KeyValuePair<string, string>> EnumerateOptions()
         {
             yield return new KeyValuePair<string, string>(TargetOpt, Target);
             yield return new KeyValuePair<string, string>(TargetWorkDirOpt, TargetWorkDir);
@@ -108,12 +96,6 @@ namespace MSBuild.TeamCity.Tasks.Internal
             {
                 yield return new KeyValuePair<string, string>(ExcludeOpt, exclude);
             }
-        }
-
-        private static string CreateOption( string option, string value )
-        {
-            string v = value.Contains(Space) ? EscapeSymbol + value + EscapeSymbol : value;
-            return OptionPrefix + option + Space + v;
         }
     }
 }

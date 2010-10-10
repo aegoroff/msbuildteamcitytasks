@@ -94,8 +94,7 @@ namespace MSBuild.TeamCity.Tasks.Internal
         {
             foreach ( T s in _enumerator )
             {
-                _builder.Append(s);
-                _builder.Append(_separator);
+                _builder.Append(s).Append(_separator);
             }
         }
 

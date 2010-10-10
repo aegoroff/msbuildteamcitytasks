@@ -68,13 +68,12 @@ namespace MSBuild.TeamCity.Tasks.Messages
             StringBuilder sb = new StringBuilder();
             if ( !string.IsNullOrEmpty(Name) )
             {
-                sb.Append(Name);
-                sb.Append("=");
+                sb.Append(Name).Append("=");
             }
 
-            sb.Append(ValueSeparator);
-            sb.Append(EscapeValue());
-            sb.Append(ValueSeparator);
+            sb.Append(ValueSeparator).
+                Append(EscapeValue()).
+                Append(ValueSeparator);
             return sb.ToString();
         }
 

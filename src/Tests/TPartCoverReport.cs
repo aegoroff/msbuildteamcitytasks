@@ -45,8 +45,8 @@ namespace Tests
         public void All()
         {
             Expect.Exactly(2).On(Logger).Method(TTeamCityTaskImplementation.LogMessage).WithAnyArguments();
-            Expect.Once.On(_item1).GetProperty(ItemSpec).Will(Return.Value("a"));
-            Expect.Once.On(_item2).GetProperty(ItemSpec).Will(Return.Value("b"));
+            Expect.Exactly(2).On(_item1).GetProperty(ItemSpec).Will(Return.Value("a"));
+            Expect.Exactly(2).On(_item2).GetProperty(ItemSpec).Will(Return.Value("b"));
 
             PartCoverReport task = new PartCoverReport(Logger)
                                        {

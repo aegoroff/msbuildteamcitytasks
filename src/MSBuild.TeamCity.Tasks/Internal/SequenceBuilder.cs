@@ -5,39 +5,44 @@
  */
 
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 
 namespace MSBuild.TeamCity.Tasks.Internal
 {
     /// <summary>
     /// Builds strings of values separated by an element (comma) 
-    /// using all values of an IEnumerable&lt;T&gt; item.
+    /// using all values of an IEnumerable item.
     /// </summary>
-    /// <typeparam name="T">The type of sequence element</typeparam>
     /// <example>
     /// <code>
+    ///	private static IEnumerable&lt;string&gt; EnumerateInt(int[] values)
+    ///	{
+    ///		foreach (int value in values)
+    ///		{
+    ///			yield return value.ToString();
+    ///		}
+    ///	}
+    /// 
     /// void Example()
     /// {
-    ///     int[] values = new int[] { 1, 2 }
-    ///     SequenceBuilder&lt;int&gt; bi = new SequenceBuilder&lt;int&gt;(values, ", ", "(", ")");
-    ///     // bi.ToString() will output: (1, 2)
-    ///     string[] strValues = new string[] { "one", "two" }
-    ///     SequenceBuilder&lt;string&gt; bs = new SequenceBuilder&lt;string&gt;(strValues, ", ", "(", ")");
-    ///     // bs.ToString() will output: (one, two)
+    ///		int[] values = new int[] { 1, 2 }
+    ///		SequenceBuilder&lt;string&gt; builder = new SequenceBuilder&lt;string&gt;(EnumerateInt(values), ", ", "(", ")");
+    ///		// builder.ToString() will output: (1, 2)
+    ///		string[] strValues = new string[] { "one", "two" }
+    ///		builder = new SequenceBuilder(strValues, ", ", "(", ")");
+    ///		// builder.ToString() will output: (one, two)
     /// }
     /// </code>
     /// </example>
     public class SequenceBuilder<T>
     {
-        private readonly StringBuilder _builder = new StringBuilder();
         private readonly IEnumerable<T> _enumerator;
-        private readonly string _head;
         private readonly string _separator;
+        private readonly string _head;
         private readonly string _trail;
-        private readonly Length _length = s => (s ?? string.Empty).Length;
 
         /// <summary>
-        /// Initializes a new instance of the SequenceBuilder class
+        /// Creates new sequence builder instance.
         /// </summary>
         /// <param name="enumerator">Enumerator that yields values in desired sequence</param>
         /// <param name="separator">Separator string beetwen values</param>
@@ -49,13 +54,10 @@ namespace MSBuild.TeamCity.Tasks.Internal
             _separator = separator;
             _head = head;
             _trail = trail;
-            AddHead();
-            Enumerate();
-            AddTrail();
         }
 
         /// <summary>
-        /// Initializes a new instance of the SequenceBuilder class with null head and trail.
+        /// Creates new filter builder instance with null head and trail.
         /// </summary>
         /// <param name="enumerator">Enumerator that yields values in desired sequence</param>
         /// <param name="separator">Separator string beetwen values</param>
@@ -63,8 +65,6 @@ namespace MSBuild.TeamCity.Tasks.Internal
             : this(enumerator, separator, null, null)
         {
         }
-
-        private delegate int Length(string s);
 
         /// <summary>
         /// Converts value of the instance into string.
@@ -75,32 +75,12 @@ namespace MSBuild.TeamCity.Tasks.Internal
         /// </returns>
         public override string ToString()
         {
-            return ( _builder.Length == _length(_head) - _separator.Length + _length(_trail) )
-                       ? string.Empty
-                       : _builder.ToString();
-        }
-
-        private void AddTrail()
-        {
-            if ( _builder.Length <= _separator.Length )
+            if ( _enumerator.Count() == 0 )
             {
-                return;
+                return string.Empty;
             }
-            _builder.Remove(_builder.Length - _separator.Length, _separator.Length);
-            _builder.Append(_trail);
-        }
-
-        private void Enumerate()
-        {
-            foreach ( T s in _enumerator )
-            {
-                _builder.Append(s).Append(_separator);
-            }
-        }
-
-        private void AddHead()
-        {
-            _builder.Append(_head);
+            IEnumerable<string> strings = from T item in _enumerator select item.ToString();
+            return _head + string.Join(_separator, strings.ToArray()) + _trail;
         }
     }
 }

@@ -11,26 +11,19 @@ namespace MSBuild.TeamCity.Tasks.Internal
 {
     /// <summary>
     /// Builds strings of values separated by an element (comma) 
-    /// using all values of an IEnumerable item.
+    /// using all values of an IEnumerable&lt;T&gt; item.
     /// </summary>
+    /// <typeparam name="T">The type of sequence element</typeparam>
     /// <example>
     /// <code>
-    ///	private static IEnumerable&lt;string&gt; EnumerateInt(int[] values)
-    ///	{
-    ///		foreach (int value in values)
-    ///		{
-    ///			yield return value.ToString();
-    ///		}
-    ///	}
-    /// 
     /// void Example()
     /// {
-    ///		int[] values = new int[] { 1, 2 }
-    ///		SequenceBuilder&lt;string&gt; builder = new SequenceBuilder&lt;string&gt;(EnumerateInt(values), ", ", "(", ")");
-    ///		// builder.ToString() will output: (1, 2)
-    ///		string[] strValues = new string[] { "one", "two" }
-    ///		builder = new SequenceBuilder(strValues, ", ", "(", ")");
-    ///		// builder.ToString() will output: (one, two)
+    ///     int[] values = new int[] { 1, 2 }
+    ///     SequenceBuilder&lt;int&gt; bi = new SequenceBuilder&lt;int&gt;(values, ", ", "(", ")");
+    ///     // bi.ToString() will output: (1, 2)
+    ///     string[] strValues = new string[] { "one", "two" }
+    ///     SequenceBuilder&lt;string&gt; bs = new SequenceBuilder&lt;string&gt;(strValues, ", ", "(", ")");
+    ///     // bs.ToString() will output: (one, two)
     /// }
     /// </code>
     /// </example>
@@ -42,7 +35,7 @@ namespace MSBuild.TeamCity.Tasks.Internal
         private readonly string _trail;
 
         /// <summary>
-        /// Creates new sequence builder instance.
+        /// Initializes a new instance of the SequenceBuilder class
         /// </summary>
         /// <param name="enumerator">Enumerator that yields values in desired sequence</param>
         /// <param name="separator">Separator string beetwen values</param>
@@ -57,7 +50,7 @@ namespace MSBuild.TeamCity.Tasks.Internal
         }
 
         /// <summary>
-        /// Creates new filter builder instance with null head and trail.
+        /// Initializes a new instance of the SequenceBuilder class with null head and trail.
         /// </summary>
         /// <param name="enumerator">Enumerator that yields values in desired sequence</param>
         /// <param name="separator">Separator string beetwen values</param>

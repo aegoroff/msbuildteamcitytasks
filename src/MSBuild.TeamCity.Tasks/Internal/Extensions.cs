@@ -27,13 +27,22 @@ namespace MSBuild.TeamCity.Tasks.Internal
             return string.Join(separator, enumerable.ToArray());
         }
 
-        internal static void AddRange( this IList<string> list, ITaskItem[] items )
+        internal static void AddRange( this IList<string> list, IEnumerable<ITaskItem> items )
         {
             if ( items == null )
             {
                 return;
             }
-            foreach ( string include in items.Select(item => item.ItemSpec) )
+            list.AddRange(items.Select(item => item.ItemSpec));
+        }
+
+        internal static void AddRange<T>( this IList<T> list, IEnumerable<T> items )
+        {
+            if ( items == null )
+            {
+                return;
+            }
+            foreach ( T include in items )
             {
                 list.Add(include);
             }

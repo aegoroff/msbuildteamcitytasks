@@ -68,10 +68,7 @@ namespace MSBuild.TeamCity.Tasks
                                                  Status = true,
                                                  Messages = new List<TeamCityMessage>()
                                              };
-                foreach ( TeamCityMessage message in ReadMessages() )
-                {
-                    result.Messages.Add(message);
-                }
+                result.Messages.AddRange(ReadMessages());
                 return result;
             }
         }

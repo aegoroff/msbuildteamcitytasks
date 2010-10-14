@@ -23,7 +23,7 @@ namespace MSBuild.TeamCity.Tasks.Internal
         /// <returns>concatenated string</returns>
         internal static string Join( this IEnumerable<string> enumerable, string separator )
         {
-            return enumerable == null ? string.Empty : string.Join(separator, enumerable.ToArray());
+            return string.Join(separator, enumerable.ToArray());
         }
     }
 }

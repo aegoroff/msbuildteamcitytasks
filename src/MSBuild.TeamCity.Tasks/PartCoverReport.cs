@@ -68,9 +68,9 @@ namespace MSBuild.TeamCity.Tasks
         {
             if ( ReportXslts != null )
             {
-                SequenceBuilder<string> builder =
-                    new SequenceBuilder<string>(ReportXslts.Select(report => report.ItemSpec), "\n");
-                yield return new DotNetCoverMessage(DotNetCoverMessage.PartcoverReportXsltsKey, builder.ToString());
+                yield return
+                    new DotNetCoverMessage(DotNetCoverMessage.PartcoverReportXsltsKey,
+                                           ReportXslts.Select(report => report.ItemSpec).Join("\n"));
             }
             yield return
                 new ImportDataTeamCityMessage(ImportType.DotNetCoverage, XmlReportPath, DotNetCoverageTool.PartCover);

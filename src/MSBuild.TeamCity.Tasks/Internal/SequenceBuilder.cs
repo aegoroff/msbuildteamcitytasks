@@ -73,7 +73,7 @@ namespace MSBuild.TeamCity.Tasks.Internal
                 return string.Empty;
             }
             IEnumerable<string> strings = from T item in _enumerator select item.ToString();
-            return _head + string.Join(_separator, strings.ToArray()) + _trail;
+            return _head + strings.Join(_separator) + _trail;
         }
     }
 }

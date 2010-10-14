@@ -51,6 +51,7 @@
     <Compile Include="BlockOpen.cs" />
     <Compile Include="BlockTask.cs" />
     <Compile Include="Internal\CommandLine.cs" />
+    <Compile Include="Internal\Extensions.cs" />
     <Compile Include="Messages\BlockTeamCityMessage.cs" />
     <Compile Include="BuildNumber.cs" />
     <Compile Include="BuildProgressFinish.cs" />

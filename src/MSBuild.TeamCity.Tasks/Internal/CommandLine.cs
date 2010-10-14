@@ -4,6 +4,7 @@
  * © 2007-2010 Alexander Egorov
  */
 
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -51,7 +52,7 @@ namespace MSBuild.TeamCity.Tasks.Internal
         /// Enumerates all possible options
         /// </summary>
         /// <returns>All possible options' pairs</returns>
-        protected abstract IEnumerable<KeyValuePair<string, string>> EnumerateOptions();
+        protected abstract IEnumerable<DictionaryEntry> EnumerateOptions();
 
         /// <summary>
         /// Creates properly escaped option to pass to an aplication
@@ -59,7 +60,7 @@ namespace MSBuild.TeamCity.Tasks.Internal
         /// <param name="option">option name</param>
         /// <param name="value">option value</param>
         /// <returns>Properly escaped option</returns>
-        protected string CreateOption( string option, string value )
+        private string CreateOption( object option, string value )
         {
             if ( string.IsNullOrEmpty(value) )
             {
@@ -74,8 +75,9 @@ namespace MSBuild.TeamCity.Tasks.Internal
             return
                 from option in EnumerateOptions()
                 where
-                    ( !string.IsNullOrEmpty(option.Value) && !IsOutputInCaseOfEmptyValue ) || IsOutputInCaseOfEmptyValue
-                select CreateOption(option.Key, option.Value);
+                    ( !string.IsNullOrEmpty(option.Value as string) && !IsOutputInCaseOfEmptyValue ) ||
+                    IsOutputInCaseOfEmptyValue
+                select CreateOption(option.Key, option.Value as string);
         }
     }
 }

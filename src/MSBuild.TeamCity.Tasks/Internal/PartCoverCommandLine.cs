@@ -4,6 +4,7 @@
  * © 2007-2010 Alexander Egorov
  */
 
+using System.Collections;
 using System.Collections.Generic;
 
 namespace MSBuild.TeamCity.Tasks.Internal
@@ -81,20 +82,20 @@ namespace MSBuild.TeamCity.Tasks.Internal
         /// Enumerates all possible options
         /// </summary>
         /// <returns>All possible options' pairs</returns>
-        protected override IEnumerable<KeyValuePair<string, string>> EnumerateOptions()
+        protected override IEnumerable<DictionaryEntry> EnumerateOptions()
         {
-            yield return new KeyValuePair<string, string>(TargetOpt, Target);
-            yield return new KeyValuePair<string, string>(TargetWorkDirOpt, TargetWorkDir);
-            yield return new KeyValuePair<string, string>(TargetArgumentsOpt, TargetArguments);
-            yield return new KeyValuePair<string, string>(OutputOpt, Output);
+            yield return new DictionaryEntry(TargetOpt, Target);
+            yield return new DictionaryEntry(TargetWorkDirOpt, TargetWorkDir);
+            yield return new DictionaryEntry(TargetArgumentsOpt, TargetArguments);
+            yield return new DictionaryEntry(OutputOpt, Output);
 
             foreach ( string include in Includes )
             {
-                yield return new KeyValuePair<string, string>(IncludeOpt, include);
+                yield return new DictionaryEntry(IncludeOpt, include);
             }
             foreach ( string exclude in Excludes )
             {
-                yield return new KeyValuePair<string, string>(ExcludeOpt, exclude);
+                yield return new DictionaryEntry(ExcludeOpt, exclude);
             }
         }
     }

@@ -4,6 +4,7 @@
  * © 2007-2010 Alexander Egorov
  */
 
+using System.Collections;
 using System.Collections.Generic;
 
 namespace MSBuild.TeamCity.Tasks.Internal
@@ -58,20 +59,20 @@ namespace MSBuild.TeamCity.Tasks.Internal
         /// Enumerates all possible options
         /// </summary>
         /// <returns>All possible options' pairs</returns>
-        protected override IEnumerable<KeyValuePair<string, string>> EnumerateOptions()
+        protected override IEnumerable<DictionaryEntry> EnumerateOptions()
         {
-            yield return new KeyValuePair<string, string>(OutputOpt, "xml:");
+            yield return new DictionaryEntry(OutputOpt, "xml:");
             if ( _runDisabledTests )
             {
-                yield return new KeyValuePair<string, string>(RunDisabledTestsOpt, string.Empty);
+                yield return new DictionaryEntry(RunDisabledTestsOpt, string.Empty);
             }
             if ( _catchExceptions )
             {
-                yield return new KeyValuePair<string, string>(CatchExceptionsOpt, string.Empty);
+                yield return new DictionaryEntry(CatchExceptionsOpt, string.Empty);
             }
             if ( !string.IsNullOrEmpty(_filter) )
             {
-                yield return new KeyValuePair<string, string>(FilterOpt, _filter);
+                yield return new DictionaryEntry(FilterOpt, _filter);
             }
         }
     }

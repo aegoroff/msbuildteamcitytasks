@@ -6,7 +6,6 @@
 
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using Microsoft.Build.Framework;
 using MSBuild.TeamCity.Tasks.Internal;
 using MSBuild.TeamCity.Tasks.Messages;
@@ -95,14 +94,8 @@ namespace MSBuild.TeamCity.Tasks
                                                        TargetArguments = TargetArguments,
                                                        Output = XmlReportPath,
                                                    };
-            if ( Includes != null )
-            {
-                ( (List<string>) commandLine.Includes ).AddRange(Includes.Select(item => item.ItemSpec));
-            }
-            if ( Excludes != null )
-            {
-                ( (List<string>) commandLine.Excludes ).AddRange(Excludes.Select(item => item.ItemSpec));
-            }
+            commandLine.Includes.AddRange(Includes);
+            commandLine.Excludes.AddRange(Excludes);
 
             string partCoverExePath = Path.Combine(ToolPath, PartCoverExe);
             ProcessRunner runner = new ProcessRunner(partCoverExePath);

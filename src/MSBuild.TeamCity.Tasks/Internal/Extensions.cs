@@ -6,6 +6,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Build.Framework;
 
 namespace MSBuild.TeamCity.Tasks.Internal
 {
@@ -24,6 +25,18 @@ namespace MSBuild.TeamCity.Tasks.Internal
         internal static string Join( this IEnumerable<string> enumerable, string separator )
         {
             return string.Join(separator, enumerable.ToArray());
+        }
+
+        internal static void AddRange( this IList<string> list, ITaskItem[] items )
+        {
+            if ( items == null )
+            {
+                return;
+            }
+            foreach ( string include in items.Select(item => item.ItemSpec) )
+            {
+                list.Add(include);
+            }
         }
     }
 }

@@ -19,8 +19,8 @@ namespace MSBuild.TeamCity.Tasks.Messages
         ///<param name="details">Failure details like stack trace</param>
         public TestFailedTeamCityMessage( string name, string message, string details ) : base(name)
         {
-            Attributes.Add(new MessageAttributeItem("message", message));
-            Attributes.Add(new MessageAttributeItem("details", details));
+            Attributes.Add("message", message);
+            Attributes.Add("details", details);
         }
 
         /// <summary>

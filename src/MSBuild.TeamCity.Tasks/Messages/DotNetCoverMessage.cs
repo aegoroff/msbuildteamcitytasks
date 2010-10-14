@@ -40,7 +40,7 @@ namespace MSBuild.TeamCity.Tasks.Messages
             }
             Key = key;
             Value = value;
-            Attributes.Add(new MessageAttributeItem(Key, Value));
+            Attributes.Add(Key, Value);
         }
 
         /// <summary>

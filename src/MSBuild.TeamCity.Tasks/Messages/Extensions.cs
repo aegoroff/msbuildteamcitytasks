@@ -5,6 +5,7 @@
  */
 
 using System;
+using System.Collections.Generic;
 
 namespace MSBuild.TeamCity.Tasks.Messages
 {
@@ -16,6 +17,11 @@ namespace MSBuild.TeamCity.Tasks.Messages
         private const string PartCover = "partcover";
         private const string Ncover = "ncover";
         private const string Ncover3 = "ncover3";
+
+        internal static void Add( this IList<MessageAttributeItem> list, string name, string value )
+        {
+            list.Add(new MessageAttributeItem(name, value));
+        }
 
         internal static string ToolToString( this DotNetCoverageTool tool )
         {

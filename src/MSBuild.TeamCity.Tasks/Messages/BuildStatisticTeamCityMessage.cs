@@ -22,8 +22,8 @@ namespace MSBuild.TeamCity.Tasks.Messages
         {
             Key = key;
             Value = value;
-            Attributes.Add(new MessageAttributeItem("key", Key));
-            Attributes.Add(new MessageAttributeItem("value", string.Format(CultureInfo.InvariantCulture, "{0:F}", Value)));
+            Attributes.Add("key", Key);
+            Attributes.Add("value", string.Format(CultureInfo.InvariantCulture, "{0:F}", Value));
         }
 
         /// <summary>

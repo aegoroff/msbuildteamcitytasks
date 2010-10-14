@@ -17,7 +17,7 @@ namespace MSBuild.TeamCity.Tasks.Messages
         ///<param name="name">Name attribute value</param>
         protected NamedTeamCityMessage( string name )
         {
-            Attributes.Add(new MessageAttributeItem("name", name));
+            Attributes.Add("name", name);
         }
     }
 }

@@ -5,6 +5,7 @@
  */
 
 using System.Collections.Generic;
+using System.Linq;
 using MSBuild.TeamCity.Tasks.Internal;
 using NUnit.Framework;
 
@@ -111,8 +112,7 @@ namespace Tests
             _commandLine.Includes.Add(Include);
             _commandLine.Excludes.Add(Exclude);
             _commandLine.Excludes.Add(Exclude);
-            SequenceBuilder<string> sequence = new SequenceBuilder<string>(EnumerateAllResults(), Space);
-            Assert.That(_commandLine.ToString(), Is.EqualTo(sequence.ToString()));
+            Assert.That(_commandLine.ToString(), Is.EqualTo(string.Join(Space, EnumerateAllResults().ToArray())));
         }
 
         private static IEnumerable<string> EnumerateAllResults()

@@ -41,14 +41,12 @@ namespace MSBuild.TeamCity.Tasks.Internal
         {
             string dir = Path.GetDirectoryName(Path.GetFullPath(_testExePath));
 
-            SequenceBuilder<string> cmdLine = new SequenceBuilder<string>(commandLine, " ");
-
             Process app = new Process
                               {
                                   StartInfo =
                                       {
                                           FileName = _testExePath,
-                                          Arguments = cmdLine.ToString(),
+                                          Arguments = string.Join(" ", commandLine),
                                           UseShellExecute = false,
                                           RedirectStandardOutput = false,
                                           WorkingDirectory = dir ?? ".",

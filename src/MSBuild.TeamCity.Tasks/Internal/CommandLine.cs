@@ -44,8 +44,7 @@ namespace MSBuild.TeamCity.Tasks.Internal
         /// <filterpriority>2</filterpriority>
         public override string ToString()
         {
-            SequenceBuilder<string> sequence = new SequenceBuilder<string>(CreateOptions(), Space);
-            return sequence.ToString();
+            return string.Join(Space, CreateOptions().ToArray());
         }
 
         /// <summary>

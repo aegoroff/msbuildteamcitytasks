@@ -26,6 +26,8 @@ namespace Tests
     [TestFixture( typeof(ReportMessage) )]
     [TestFixture( typeof(RunGoogleTests) )]
     [TestFixture( typeof(RunPartCoverage) )]
+    [TestFixture( typeof(EnableServiceMessages) )]
+    [TestFixture( typeof(DisableServiceMessages) )]
     public class TTaskDefaultCtor<TTsk> where TTsk : TeamCityTask, new()
     {
         [Test]

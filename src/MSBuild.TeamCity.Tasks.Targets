@@ -22,5 +22,7 @@
   <UsingTask AssemblyFile="$(MSBuildTeamCityTasksLib)" TaskName="MSBuild.TeamCity.Tasks.NCover3Report" />
   <UsingTask AssemblyFile="$(MSBuildTeamCityTasksLib)" TaskName="MSBuild.TeamCity.Tasks.PartCoverReport" />
   <UsingTask AssemblyFile="$(MSBuildTeamCityTasksLib)" TaskName="MSBuild.TeamCity.Tasks.RunPartCoverage" />
+  <UsingTask AssemblyFile="$(MSBuildTeamCityTasksLib)" TaskName="MSBuild.TeamCity.Tasks.EnableServiceMessages" />
+  <UsingTask AssemblyFile="$(MSBuildTeamCityTasksLib)" TaskName="MSBuild.TeamCity.Tasks.DisableServiceMessages" />
 
   </Project>

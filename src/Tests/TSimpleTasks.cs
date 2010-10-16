@@ -193,5 +193,23 @@ namespace Tests
             Assert.That(task.ContinueOnFailures);
             Assert.That(task.TestResultsPath, Is.EqualTo(TGoogleTestsPlainImporter.SuccessTestsPath));
         }
+
+        [Test]
+        public void EnableServiceMessages()
+        {
+            Expect.Once.On(Logger).Method(TTeamCityTaskImplementation.LogMessage).WithAnyArguments();
+
+            EnableServiceMessages task = new EnableServiceMessages(Logger);
+            Assert.That(task.Execute());
+        }
+        
+        [Test]
+        public void DisableServiceMessages()
+        {
+            Expect.Once.On(Logger).Method(TTeamCityTaskImplementation.LogMessage).WithAnyArguments();
+
+            DisableServiceMessages task = new DisableServiceMessages(Logger);
+            Assert.That(task.Execute());
+        }
     }
 }

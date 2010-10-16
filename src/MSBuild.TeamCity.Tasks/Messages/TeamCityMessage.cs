@@ -18,6 +18,8 @@ namespace MSBuild.TeamCity.Tasks.Messages
     public abstract class TeamCityMessage
     {
         private const string Space = " ";
+        private const string TeamCityMessageHead = "##teamcity[";
+        private const string TeamCityMessageTrail = "]";
         private readonly List<MessageAttributeItem> _attributes = new List<MessageAttributeItem>();
 
         ///<summary>
@@ -68,10 +70,15 @@ namespace MSBuild.TeamCity.Tasks.Messages
                 _attributes.Add(flowId);
             }
 
+            if ( _attributes.Count == 0 )
+            {
+                return TeamCityMessageHead + Message + TeamCityMessageTrail;
+            }
+
             SequenceBuilder<MessageAttributeItem> sequence = new SequenceBuilder<MessageAttributeItem>(_attributes,
                                                                                                        Space,
-                                                                                                       "##teamcity[" + Message + Space,
-                                                                                                       "]");
+                                                                                                       TeamCityMessageHead + Message + Space,
+                                                                                                       TeamCityMessageTrail);
 
             return sequence.ToString();
         }

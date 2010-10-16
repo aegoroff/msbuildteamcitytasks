@@ -14,10 +14,11 @@ namespace Tests
     public class TTeamCityMessage
     {
         private const string BuildNumber = "buildNumber";
-        const string Number = "1.0";
-        const string Text = "t";
-        const string Path = "p";
-        const string Name = "t1";
+        private const string EnableServiceMessages = "enableServiceMessages";
+        private const string Number = "1.0";
+        private const string Text = "t";
+        private const string Path = "p";
+        private const string Name = "t1";
 
         [Test]
         public void BuildStat()
@@ -25,6 +26,22 @@ namespace Tests
             const string key = "k";
             BuildStatisticTeamCityMessage message = new BuildStatisticTeamCityMessage(key, 10);
             Assert.That(message.ToString(), Is.EqualTo("##teamcity[buildStatisticValue key='k' value='10.00']"));
+        }
+
+        [Test]
+        public void Attributeless()
+        {
+            AttributeLessMessage message = new AttributeLessMessage(EnableServiceMessages);
+            Assert.That(message.ToString(), Is.EqualTo("##teamcity[enableServiceMessages]"));
+        }
+
+        [Test]
+        public void AttributelessWithTimestamp()
+        {
+            AttributeLessMessage message = new AttributeLessMessage(EnableServiceMessages) { IsAddTimestamp = true };
+            string expected = string.Format("##teamcity[enableServiceMessages timestamp='{0}']",
+                                            DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss.fffzzz"));
+            Assert.That(message.ToString(), Is.EqualTo(expected));
         }
 
         [Test]

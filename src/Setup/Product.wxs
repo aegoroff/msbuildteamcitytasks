@@ -28,16 +28,6 @@
 		</Upgrade>
 		
 		<!--
-			Conditions to be satisfied before the installer begins.
-			Note that we are using "Installed OR" in the conditions so
-			so they never block the user from repairing, patching, or 
-			uninstalling the package after it has been installed. 
-
-			For	example the user could do something odd like uninstall .NET 2.0
- 			and then run the msi to uninstall SharpDevelop. Without the 
-			"Installed OR" this would not be allowed.
-		-->
-		<!--
 			Check for .NET 3.5
 		-->
 		<PropertyRef Id="NETFRAMEWORK35"/>

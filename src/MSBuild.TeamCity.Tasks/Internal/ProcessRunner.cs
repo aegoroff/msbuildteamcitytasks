@@ -5,7 +5,6 @@
  */
 
 using System.Diagnostics;
-using System.IO;
 
 namespace MSBuild.TeamCity.Tasks.Internal
 {
@@ -39,8 +38,6 @@ namespace MSBuild.TeamCity.Tasks.Internal
         /// </param>
         internal void Run( params string[] commandLine )
         {
-            string dir = Path.GetDirectoryName(Path.GetFullPath(_testExePath));
-
             Process app = new Process
                               {
                                   StartInfo =
@@ -49,7 +46,7 @@ namespace MSBuild.TeamCity.Tasks.Internal
                                           Arguments = string.Join(" ", commandLine),
                                           UseShellExecute = false,
                                           RedirectStandardOutput = false,
-                                          WorkingDirectory = dir ?? ".",
+                                          WorkingDirectory = _testExePath.GetDirectoryName(),
                                           CreateNoWindow = true
                                       }
                               };

@@ -5,6 +5,7 @@
  */
 
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Microsoft.Build.Framework;
 
@@ -46,6 +47,11 @@ namespace MSBuild.TeamCity.Tasks.Internal
             {
                 list.Add(include);
             }
+        }
+
+        internal static string GetDirectoryName( this string path )
+        {
+            return Path.GetDirectoryName(Path.GetFullPath(path));
         }
     }
 }

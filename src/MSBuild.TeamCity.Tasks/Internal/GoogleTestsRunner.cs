@@ -58,7 +58,7 @@ namespace MSBuild.TeamCity.Tasks.Internal
         protected override string CreateXmlImport()
         {
             string file = Path.GetFileNameWithoutExtension(_testExePath);
-            string dir = Path.GetDirectoryName(Path.GetFullPath(_testExePath));
+            string dir = _testExePath.GetDirectoryName();
             string xmlPath = dir + @"\" + file + ".xml";
 
             // to fix IssueID 3 (delete file from previous tests run)

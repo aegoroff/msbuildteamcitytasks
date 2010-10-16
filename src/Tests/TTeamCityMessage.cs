@@ -19,6 +19,7 @@ namespace Tests
         private const string Text = "t";
         private const string Path = "p";
         private const string Name = "t1";
+        private const string DateRegex = @"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}\+\d{2}:\d{2}";
 
         [Test]
         public void BuildStat()
@@ -39,9 +40,8 @@ namespace Tests
         public void AttributelessWithTimestamp()
         {
             AttributeLessMessage message = new AttributeLessMessage(EnableServiceMessages) { IsAddTimestamp = true };
-            string expected = string.Format("##teamcity[enableServiceMessages timestamp='{0}']",
-                                            DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss.fffzzz"));
-            Assert.That(message.ToString(), Is.EqualTo(expected));
+            string expected = string.Format(@"##teamcity\[enableServiceMessages timestamp='{0}'\]", DateRegex);
+            Assert.That(message.ToString(), Is.StringMatching(expected));
         }
 
         [Test]
@@ -56,9 +56,8 @@ namespace Tests
         public void SimpleMessageAddTimeStamp()
         {
             SimpleTeamCityMessage message = new SimpleTeamCityMessage(BuildNumber, Number) { IsAddTimestamp = true };
-            string expected = string.Format("##teamcity[buildNumber '1.0' timestamp='{0}",
-                                            DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss"));
-            Assert.That(message.ToString(), Is.StringContaining(expected));
+            string expected = string.Format(@"##teamcity\[buildNumber '1\.0' timestamp='{0}'\]", DateRegex);
+            Assert.That(message.ToString(), Is.StringMatching(expected));
         }
 
         [Test]
@@ -66,9 +65,8 @@ namespace Tests
         {
             SimpleTeamCityMessage message = new SimpleTeamCityMessage(BuildNumber, Number)
                                                 { IsAddTimestamp = true, FlowId = "1" };
-            string expected = string.Format("##teamcity[buildNumber '1.0' timestamp='{0}' flowId='1']",
-                                            DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss.fffzzz"));
-            Assert.That(message.ToString(), Is.EqualTo(expected));
+            string expected = string.Format(@"##teamcity\[buildNumber '1\.0' timestamp='{0}' flowId='1'\]", DateRegex);
+            Assert.That(message.ToString(), Is.StringMatching(expected));
         }
 
         [Test]
@@ -76,10 +74,9 @@ namespace Tests
         {
             SimpleTeamCityMessage message = new SimpleTeamCityMessage(BuildNumber, Number)
                                                 { IsAddTimestamp = true, FlowId = "1" };
-            string expected = string.Format("##teamcity[buildNumber '1.0' timestamp='{0}' flowId='1']",
-                                            DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss.fffzzz"));
-            Assert.That(message.ToString(), Is.EqualTo(expected));
-            Assert.That(message.ToString(), Is.EqualTo(expected));
+            string expected = string.Format(@"##teamcity\[buildNumber '1\.0' timestamp='{0}' flowId='1'\]", DateRegex);
+            Assert.That(message.ToString(), Is.StringMatching(expected));
+            Assert.That(message.ToString(), Is.StringMatching(expected));
         }
 
         [Test]

@@ -171,9 +171,9 @@
 		/>
 	</Target>
 	<ItemGroup>
-		<Artifact Include="$(BinariesFile)" />
-		<Artifact Include="$(ReportsFile)" />
-		<Artifact Include="MSBuild.TeamCity.Tasks.$(Major).$(Minor).$(Build).$(Revision).msi" />
+		<Artifact Include="src/$(BinariesFile)" />
+		<Artifact Include="src/$(ReportsFile)" />
+		<Artifact Include="src/MSBuild.TeamCity.Tasks.$(Major).$(Minor).$(Build).$(Revision).msi" />
 	</ItemGroup>
 	<!-- Setting next build version and finish build process -->
 	<Target Name="Build" DependsOnTargets="Zipping">

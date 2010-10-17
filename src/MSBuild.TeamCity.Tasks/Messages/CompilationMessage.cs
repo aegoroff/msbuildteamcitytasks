@@ -9,24 +9,28 @@ namespace MSBuild.TeamCity.Tasks.Messages
     ///<summary>
     /// Represents compilationStarted TeamCity message
     ///</summary>
-    public class CompilationStartedMessage : TeamCityMessage
+    public class CompilationMessage : TeamCityMessage
     {
+        private readonly string _message;
+
         ///<summary>
-        /// Initializes a new instance of the <see cref="CompilationStartedMessage"/> class
+        /// Initializes a new instance of the <see cref="CompilationMessage"/> class
         ///</summary>
         ///<param name="compiler">Compiler attribute value</param>
-        public CompilationStartedMessage(string compiler)
+        ///<param name="message">Compilation start/finish message</param>
+        public CompilationMessage(string compiler, string message)
         {
+            _message = message;
             Attributes.Add("compiler", compiler);
         }
 
-        
+
         /// <summary>
         /// Gets message name
         /// </summary>
         protected override string Message
         {
-            get { return "compilationStarted"; }
+            get { return _message; }
         }
     }
 }

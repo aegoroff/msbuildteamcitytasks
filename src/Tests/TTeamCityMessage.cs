@@ -216,21 +216,14 @@ namespace Tests
             DotNetCoverMessage message = new DotNetCoverMessage(key, value);
             Assert.That(message.ToString(), Is.EqualTo("##teamcity[dotNetCoverage ncover3_home='v']"));
         }
-        
-        [Test]
-        public void CompilationStarted()
+
+        [TestCase("compilationStarted", "##teamcity[compilationStarted compiler='c']")]
+        [TestCase("compilationFinished", "##teamcity[compilationFinished compiler='c']")]
+        public void Compilation(string msg, string expected)
         {
             const string compiler = "c";
-            CompilationStartedMessage message = new CompilationStartedMessage(compiler);
-            Assert.That(message.ToString(), Is.EqualTo("##teamcity[compilationStarted compiler='c']"));
-        }
-        
-        [Test]
-        public void CompilationFinished()
-        {
-            const string compiler = "c";
-            CompilationFinishedMessage message = new CompilationFinishedMessage(compiler);
-            Assert.That(message.ToString(), Is.EqualTo("##teamcity[compilationFinished compiler='c']"));
+            CompilationMessage message = new CompilationMessage(compiler, msg);
+            Assert.That(message.ToString(), Is.EqualTo(expected));
         }
     }
 }

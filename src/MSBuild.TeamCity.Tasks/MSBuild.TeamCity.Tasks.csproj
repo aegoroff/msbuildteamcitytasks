@@ -51,6 +51,7 @@
     <Compile Include="BlockClose.cs" />
     <Compile Include="BlockOpen.cs" />
     <Compile Include="BlockTask.cs" />
+    <Compile Include="CompilationStarted.cs" />
     <Compile Include="DisableServiceMessages.cs" />
     <Compile Include="EnableServiceMessages.cs" />
     <Compile Include="Internal\CommandLine.cs" />
@@ -64,8 +65,7 @@
     <Compile Include="BuildProgressTask.cs" />
     <Compile Include="BuildStatus.cs" />
     <Compile Include="Messages\BuildStatusTeamCityMessage.cs" />
-    <Compile Include="Messages\CompilationFinishedMessage.cs" />
-    <Compile Include="Messages\CompilationStartedMessage.cs" />
+    <Compile Include="Messages\CompilationMessage.cs" />
     <Compile Include="Messages\DotNetCoverageTool.cs" />
     <Compile Include="Messages\DotNetCoverMessage.cs" />
     <Compile Include="Internal\GoogleTestCommandLine.cs" />

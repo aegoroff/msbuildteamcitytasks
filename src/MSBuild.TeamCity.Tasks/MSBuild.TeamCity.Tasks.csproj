@@ -51,7 +51,7 @@
     <Compile Include="BlockClose.cs" />
     <Compile Include="BlockOpen.cs" />
     <Compile Include="BlockTask.cs" />
-    <Compile Include="CompilationStarted.cs" />
+    <Compile Include="CompilationTask.cs" />
     <Compile Include="DisableServiceMessages.cs" />
     <Compile Include="EnableServiceMessages.cs" />
     <Compile Include="Internal\CommandLine.cs" />

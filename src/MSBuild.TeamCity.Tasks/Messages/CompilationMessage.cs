@@ -24,7 +24,6 @@ namespace MSBuild.TeamCity.Tasks.Messages
             Attributes.Add("compiler", compiler);
         }
 
-
         /// <summary>
         /// Gets message name
         /// </summary>

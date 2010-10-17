@@ -29,6 +29,7 @@ namespace Tests
     [TestFixture( typeof(EnableServiceMessages) )]
     [TestFixture( typeof(DisableServiceMessages) )]
     [TestFixture( typeof(CompilationStarted) )]
+    [TestFixture( typeof(CompilationFinished) )]
     public class TTaskDefaultCtor<TTsk> where TTsk : TeamCityTask, new()
     {
         [Test]

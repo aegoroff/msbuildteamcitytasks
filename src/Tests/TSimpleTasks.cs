@@ -211,5 +211,23 @@ namespace Tests
             DisableServiceMessages task = new DisableServiceMessages(Logger);
             Assert.That(task.Execute());
         }
+        
+        [Test]
+        public void CompilationStarted()
+        {
+            Expect.Once.On(Logger).Method(TTeamCityTaskImplementation.LogMessage).WithAnyArguments();
+
+            CompilationStarted task = new CompilationStarted(Logger);
+            Assert.That(task.Execute());
+        }
+        
+        [Test]
+        public void CompilationFinished()
+        {
+            Expect.Once.On(Logger).Method(TTeamCityTaskImplementation.LogMessage).WithAnyArguments();
+
+            CompilationFinished task = new CompilationFinished(Logger);
+            Assert.That(task.Execute());
+        }
     }
 }

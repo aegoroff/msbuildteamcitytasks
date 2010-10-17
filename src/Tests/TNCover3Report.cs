@@ -14,61 +14,55 @@ namespace Tests
     [TestFixture]
     public class TNCover3Report : TTask
     {
+        private NCover3Report _task;
+        private const string ToolPth = "p";
+        private const string XmlReportPth = "path";
+        private const string Args = "a";
+        
+        [SetUp]
+        public void Init()
+        {
+            _task = new NCover3Report(Logger);
+        }
+        
         [Test]
         public void OnlyRequired()
         {
             Expect.Exactly(2).On(Logger).Method(TTeamCityTaskImplementation.LogMessage).WithAnyArguments();
-
-            NCover3Report task = new NCover3Report(Logger)
-                                     {
-                                         ToolPath = "p",
-                                         XmlReportPath = "path"
-                                     };
-            Assert.That(task.Execute());
+            _task.ToolPath = ToolPth;
+            _task.XmlReportPath = XmlReportPth;
+            Assert.That(_task.Execute());
         }
 
         [Test]
         public void AllProperties()
         {
             Expect.Exactly(3).On(Logger).Method(TTeamCityTaskImplementation.LogMessage).WithAnyArguments();
-
-            NCover3Report task = new NCover3Report(Logger)
-                                     {
-                                         ToolPath = "p",
-                                         XmlReportPath = "path",
-                                         Arguments = "a"
-                                     };
-            Assert.That(task.Execute());
+            _task.ToolPath = ToolPth;
+            _task.XmlReportPath = XmlReportPth;
+            _task.Arguments = Args;
+            Assert.That(_task.Execute());
         }
 
         [Test]
         public void ToolPath()
         {
-            NCover3Report task = new NCover3Report(Logger)
-                                     {
-                                         ToolPath = "p"
-                                     };
-            Assert.That(task.ToolPath, Is.EqualTo("p"));
+            _task.ToolPath = ToolPth;
+            Assert.That(_task.ToolPath, Is.EqualTo(ToolPth));
         }
 
         [Test]
         public void XmlReportPath()
         {
-            NCover3Report task = new NCover3Report(Logger)
-                                     {
-                                         XmlReportPath = "path"
-                                     };
-            Assert.That(task.XmlReportPath, Is.EqualTo("path"));
+            _task.XmlReportPath = XmlReportPth;
+            Assert.That(_task.XmlReportPath, Is.EqualTo(XmlReportPth));
         }
 
         [Test]
         public void Arguments()
         {
-            NCover3Report task = new NCover3Report(Logger)
-                                     {
-                                         Arguments = "a"
-                                     };
-            Assert.That(task.Arguments, Is.EqualTo("a"));
+            _task.Arguments = Args;
+            Assert.That(_task.Arguments, Is.EqualTo(Args));
         }
     }
 }

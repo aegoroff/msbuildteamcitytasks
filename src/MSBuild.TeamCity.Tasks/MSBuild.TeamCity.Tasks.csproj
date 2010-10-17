@@ -64,6 +64,8 @@
     <Compile Include="BuildProgressTask.cs" />
     <Compile Include="BuildStatus.cs" />
     <Compile Include="Messages\BuildStatusTeamCityMessage.cs" />
+    <Compile Include="Messages\CompilationFinishedMessage.cs" />
+    <Compile Include="Messages\CompilationStartedMessage.cs" />
     <Compile Include="Messages\DotNetCoverageTool.cs" />
     <Compile Include="Messages\DotNetCoverMessage.cs" />
     <Compile Include="Internal\GoogleTestCommandLine.cs" />

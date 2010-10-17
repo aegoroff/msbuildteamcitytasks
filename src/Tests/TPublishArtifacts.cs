@@ -18,6 +18,7 @@ namespace Tests
         private ITaskItem _item1;
         private ITaskItem _item2;
         private const string ItemSpec = "ItemSpec";
+        private PublishArtifacts _task;
 
 
         [SetUp]
@@ -26,6 +27,7 @@ namespace Tests
             Setup();
             _item1 = Mockery.NewMock<ITaskItem>();
             _item2 = Mockery.NewMock<ITaskItem>();
+            _task = new PublishArtifacts(Logger);
         }
 
         [Test]
@@ -34,11 +36,8 @@ namespace Tests
             Expect.Once.On(Logger).Method(TTeamCityTaskImplementation.LogMessage).WithAnyArguments();
             Expect.Once.On(_item1).GetProperty(ItemSpec).Will(Return.Value("a"));
 
-            PublishArtifacts task = new PublishArtifacts(Logger)
-                                        {
-                                            Artifacts = new[] { _item1 }
-                                        };
-            Assert.That(task.Execute());
+            _task.Artifacts = new[] { _item1 };
+            Assert.That(_task.Execute());
         }
 
         [Test]
@@ -48,21 +47,15 @@ namespace Tests
             Expect.Once.On(_item1).GetProperty(ItemSpec).Will(Return.Value("a"));
             Expect.Once.On(_item2).GetProperty(ItemSpec).Will(Return.Value("b"));
 
-            PublishArtifacts task = new PublishArtifacts(Logger)
-                                        {
-                                            Artifacts = new[] { _item1, _item2 }
-                                        };
-            Assert.That(task.Execute());
+            _task.Artifacts = new[] { _item1, _item2 };
+            Assert.That(_task.Execute());
         }
 
         [Test]
         public void ArtifactsProperty()
         {
-            PublishArtifacts task = new PublishArtifacts(Logger)
-                                        {
-                                            Artifacts = new[] { _item1, _item2 }
-                                        };
-            Assert.That(task.Artifacts, Is.EquivalentTo(new[] { _item1, _item2 }));
+            _task.Artifacts = new[] { _item1, _item2 };
+            Assert.That(_task.Artifacts, Is.EquivalentTo(new[] { _item1, _item2 }));
         }
     }
 }

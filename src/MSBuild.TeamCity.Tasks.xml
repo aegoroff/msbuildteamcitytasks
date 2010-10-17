@@ -14,12 +14,6 @@
 		<!-- NUnit working path  -->
 		<NUnitPath>C:\Program Files\NUnit 2.5.7\bin\net-2.0</NUnitPath>
 		<PartCoverPath>C:\Program Files\Gubka Bob\PartCover .NET 2.3</PartCoverPath>
-		<!-- FXCop working path  -->
-		<FxCopPath>C:\Program Files\Microsoft FxCop 1.36</FxCopPath>
-		<!-- FxCop full report file name  -->
-		<FxCopFullReportFile>FxCopFull.html</FxCopFullReportFile>
-		<!-- FxCop summary report file name  -->
-		<FxCopSummaryReportFile>FxCopSummary.html</FxCopSummaryReportFile>
 		
 		<!-- Binaries zip  -->
 		<BinariesFile>Binaries.zip</BinariesFile>
@@ -93,45 +87,8 @@
 		<!-- Import into TeamCity mono tests -->
 		<ImportData Type="nunit" Path="$(MSBuildProjectDirectory)\$(ManagedTestsReport)" />
 	</Target>
-	<!-- FxCop assemblies ty analyse -->
-	<ItemGroup>
-		<FxCopTargetAssembly Include="$(MSBuildProjectDirectory)\MSBuild.TeamCity.Tasks\bin\$(Configuration)\MSBuild.TeamCity.Tasks.dll" />
-	</ItemGroup>
-	<!-- FxCop exclude rules -->
-	<ItemGroup>
-		<FxCopExcludeRule Include="-Microsoft.Design#CA2210" />
-		<FxCopExcludeRule Include="-Microsoft.Design#CA1028" />
-		<FxCopExcludeRule Include="-Microsoft.Design#CA1031" />
-		<FxCopExcludeRule Include="-Microsoft.Design#CA1043" />
-		<FxCopExcludeRule Include="-Microsoft.Design#CA1000" />
-		<FxCopExcludeRule Include="-Microsoft.Performance#CA1824" />
-	</ItemGroup>
 	<!-- Running managed code coverage task -->
 	<Target Name="Coverage" DependsOnTargets="UnitTesting">
-		<FxCop 
-			TargetAssemblies="@(FxCopTargetAssembly)"
-			RuleLibraries="@(FxCopRuleAssemblies)" 
-			AnalysisReportFileName="$(FxCopFullReportFile)"
-			DependencyDirectories="$(MSBuildCommunityTasksPath)"
-			FailOnError="False"
-			ApplyOutXsl="True"
-			OutputXslFileName="$(FxCopPath)\Xml\FxCopReport.xsl"
-			ToolPath="$(FxCopPath)"
-			ContinueOnError="true"
-			Rules="@(FxCopExcludeRule)"
-		/>
-		<FxCop 
-			TargetAssemblies="@(FxCopTargetAssembly)"
-			RuleLibraries="@(FxCopRuleAssemblies)" 
-			AnalysisReportFileName="$(FxCopSummaryReportFile)"
-			DependencyDirectories="$(MSBuildCommunityTasksPath)"
-			FailOnError="False"
-			ApplyOutXsl="True"
-			OutputXslFileName="Lib\FxCopGraph.xsl"
-			ToolPath="$(FxCopPath)"
-			ContinueOnError="true"
-			Rules="@(FxCopExcludeRule)"
-		/>
 		<RunPartCoverage
 			ToolPath='$(PartCoverPath)'
 			TargetPath='$(NUnitPath)\nunit-console.exe'
@@ -144,7 +101,6 @@
 	<!-- Report files' definition-->
 	<ItemGroup>
 		<ReportFile Include="TestResult.xml" />
-		<ReportFile Include="$(FxCopFullReportFile)" />
 	</ItemGroup>
 	<!-- Zipping build artefacts task -->
 	<Target Name="Zipping" DependsOnTargets="Coverage">

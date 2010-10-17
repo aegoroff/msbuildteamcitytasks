@@ -15,125 +15,103 @@ namespace Tests
     [TestFixture]
     public class TNCoverReport : TTask
     {
+        private NCoverReport _task;
+        private const string NCoverExplorerPth = @"ncoverexplorer\path";
+        private const string XmlReportPth = @"path\report";
+        private const string Args = "a";
+        private const string RptType = "None";
+        private const string RptOrder = "1";
+        
+        [SetUp]
+        public void Init()
+        {
+            _task = new NCoverReport(Logger);
+        }
+        
         [Test]
         public void OnlyRequired()
         {
             Expect.Exactly(2).On(Logger).Method(TTeamCityTaskImplementation.LogMessage).WithAnyArguments();
-
-            NCoverReport task = new NCoverReport(Logger)
-                                    {
-                                        NCoverExplorerPath = "p",
-                                        XmlReportPath = "path"
-                                    };
-            Assert.That(task.Execute());
+            _task.NCoverExplorerPath = NCoverExplorerPth;
+            _task.XmlReportPath = XmlReportPth;
+            Assert.That(_task.Execute());
         }
 
         [Test]
         public void OnlyRequiredAndArguments()
         {
             Expect.Exactly(3).On(Logger).Method(TTeamCityTaskImplementation.LogMessage).WithAnyArguments();
-
-            NCoverReport task = new NCoverReport(Logger)
-                                    {
-                                        NCoverExplorerPath = "p",
-                                        XmlReportPath = "path",
-                                        Arguments = "a"
-                                    };
-            Assert.That(task.Execute());
+            _task.NCoverExplorerPath = NCoverExplorerPth;
+            _task.XmlReportPath = XmlReportPth;
+            _task.Arguments = Args;
+            Assert.That(_task.Execute());
         }
 
         [Test]
         public void OnlyRequiredAndArgumentsAndReportType()
         {
             Expect.Exactly(4).On(Logger).Method(TTeamCityTaskImplementation.LogMessage).WithAnyArguments();
-
-            NCoverReport task = new NCoverReport(Logger)
-                                    {
-                                        NCoverExplorerPath = "p",
-                                        XmlReportPath = "path",
-                                        Arguments = "a",
-                                        ReportType = "1"
-                                    };
-            Assert.That(task.Execute());
+            _task.NCoverExplorerPath = NCoverExplorerPth;
+            _task.XmlReportPath = XmlReportPth;
+            _task.Arguments = Args;
+            _task.ReportType = RptType;
+            Assert.That(_task.Execute());
         }
 
         [Test]
         public void Full()
         {
             Expect.Exactly(5).On(Logger).Method(TTeamCityTaskImplementation.LogMessage).WithAnyArguments();
-
-            NCoverReport task = new NCoverReport(Logger)
-                                    {
-                                        NCoverExplorerPath = "p",
-                                        XmlReportPath = "path",
-                                        Arguments = "a",
-                                        ReportType = "None",
-                                        ReportOrder = "1"
-                                    };
-            Assert.That(task.Execute());
+            _task.NCoverExplorerPath = NCoverExplorerPth;
+            _task.XmlReportPath = XmlReportPth;
+            _task.Arguments = Args;
+            _task.ReportType = RptType;
+            _task.ReportOrder = RptOrder;
+            Assert.That(_task.Execute());
         }
 
         [Test]
         public void WithException()
         {
             Expect.Once.On(Logger).Method(TTeamCityTaskImplementation.LogMessage).Will(Throw.Exception(new Exception()));
-
-            NCoverReport task = new NCoverReport(Logger)
-                                    {
-                                        NCoverExplorerPath = "p",
-                                        XmlReportPath = "path",
-                                    };
-            Assert.That(task.Execute(), Is.False);
+            _task.NCoverExplorerPath = NCoverExplorerPth;
+            _task.XmlReportPath = XmlReportPth;
+            Assert.That(_task.Execute(), Is.False);
         }
 
         [Test]
         public void NCoverExplorerPath()
         {
-            NCoverReport task = new NCoverReport(Logger)
-                                    {
-                                        NCoverExplorerPath = "p"
-                                    };
-            Assert.That(task.NCoverExplorerPath, Is.EqualTo("p"));
+            _task.NCoverExplorerPath = NCoverExplorerPth;
+            Assert.That(_task.NCoverExplorerPath, Is.EqualTo(NCoverExplorerPth));
         }
 
         [Test]
         public void XmlReportPath()
         {
-            NCoverReport task = new NCoverReport(Logger)
-                                    {
-                                        XmlReportPath = "path"
-                                    };
-            Assert.That(task.XmlReportPath, Is.EqualTo("path"));
+            _task.XmlReportPath = XmlReportPth;
+            Assert.That(_task.XmlReportPath, Is.EqualTo(XmlReportPth));
         }
 
         [Test]
         public void Arguments()
         {
-            NCoverReport task = new NCoverReport(Logger)
-                                    {
-                                        Arguments = "a"
-                                    };
-            Assert.That(task.Arguments, Is.EqualTo("a"));
+            _task.Arguments = Args;
+            Assert.That(_task.Arguments, Is.EqualTo(Args));
         }
 
         [Test]
         public void ReportType()
         {
-            NCoverReport task = new NCoverReport(Logger)
-                                    {
-                                        ReportType = "None"
-                                    };
-            Assert.That(task.ReportType, Is.EqualTo("None"));
+            _task.ReportType = RptType;
+            Assert.That(_task.ReportType, Is.EqualTo(RptType));
         }
 
         [Test]
         public void ReportOrder()
         {
-            NCoverReport task = new NCoverReport(Logger)
-                                    {
-                                        ReportOrder = "1"
-                                    };
-            Assert.That(task.ReportOrder, Is.EqualTo("1"));
+            _task.ReportOrder = RptOrder;
+            Assert.That(_task.ReportOrder, Is.EqualTo(RptOrder));
         }
     }
 }

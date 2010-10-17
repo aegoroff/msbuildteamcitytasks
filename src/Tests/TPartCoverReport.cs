@@ -19,7 +19,7 @@ namespace Tests
         private ITaskItem _item1;
         private ITaskItem _item2;
         private const string ItemSpec = "ItemSpec";
-        private PartCoverReport task;
+        private PartCoverReport _task;
         private const string XmlReportPth = "path";
 
 
@@ -29,15 +29,15 @@ namespace Tests
             Setup();
             _item1 = Mockery.NewMock<ITaskItem>();
             _item2 = Mockery.NewMock<ITaskItem>();
-            task = new PartCoverReport(Logger);
+            _task = new PartCoverReport(Logger);
         }
 
         [Test]
         public void OnlyRequired()
         {
             Expect.Once.On(Logger).Method(TTeamCityTaskImplementation.LogMessage).WithAnyArguments();
-            task.XmlReportPath = XmlReportPth;
-            Assert.That(task.Execute());
+            _task.XmlReportPath = XmlReportPth;
+            Assert.That(_task.Execute());
         }
 
         [Test]
@@ -46,23 +46,23 @@ namespace Tests
             Expect.Exactly(2).On(Logger).Method(TTeamCityTaskImplementation.LogMessage).WithAnyArguments();
             Expect.Exactly(2).On(_item1).GetProperty(ItemSpec).Will(Return.Value("a"));
             Expect.Exactly(2).On(_item2).GetProperty(ItemSpec).Will(Return.Value("b"));
-            task.XmlReportPath = XmlReportPth;
-            task.ReportXslts = new[] { _item1, _item2 };
-            Assert.That(task.Execute());
+            _task.XmlReportPath = XmlReportPth;
+            _task.ReportXslts = new[] { _item1, _item2 };
+            Assert.That(_task.Execute());
         }
 
         [Test]
         public void XmlReportPath()
         {
-            task.XmlReportPath = XmlReportPth;
-            Assert.That(task.XmlReportPath, Is.EqualTo(XmlReportPth));
+            _task.XmlReportPath = XmlReportPth;
+            Assert.That(_task.XmlReportPath, Is.EqualTo(XmlReportPth));
         }
 
         [Test]
         public void ReportXslts()
         {
-            task.ReportXslts = new[] { _item1, _item2 };
-            Assert.That(task.ReportXslts, Is.EquivalentTo(new[] { _item1, _item2 }));
+            _task.ReportXslts = new[] { _item1, _item2 };
+            Assert.That(_task.ReportXslts, Is.EquivalentTo(new[] { _item1, _item2 }));
         }
     }
 }

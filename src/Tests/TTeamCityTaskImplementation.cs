@@ -10,6 +10,7 @@ using MSBuild.TeamCity.Tasks.Internal;
 using MSBuild.TeamCity.Tasks.Messages;
 using NMock2;
 using NUnit.Framework;
+using Tests.Utils;
 using ILogger = MSBuild.TeamCity.Tasks.ILogger;
 using Is = NUnit.Framework.Is;
 
@@ -25,8 +26,6 @@ namespace Tests
 
         internal const string LogMessage = "LogMessage";
         private const string BuildNumber = "buildNumber";
-        internal const string TeamCityEnvVar = "TEAMCITY_PROJECT_NAME";
-        internal const string TeamCityProject = "prj";
 
         [SetUp]
         public void Setup()
@@ -50,16 +49,9 @@ namespace Tests
         public void WriteMessageInsideTeamCityEnvironment()
         {
             Expect.Once.On(_logger).Method(LogMessage).WithAnyArguments();
-
-            Environment.SetEnvironmentVariable(TeamCityEnvVar, TeamCityProject, EnvironmentVariableTarget.Process);
-
-            try
+            using (new TeamCityEnv())
             {
                 _implementation.Write(_message);
-            }
-            finally
-            {
-                Environment.SetEnvironmentVariable(TeamCityEnvVar, null, EnvironmentVariableTarget.Process);
             }
         }
 
@@ -68,16 +60,9 @@ namespace Tests
         public void WriteMessageInsideTeamCityEnvironmentThrowException()
         {
             Expect.Once.On(_logger).Method(LogMessage).Will(Throw.Exception(new Exception()));
-
-            Environment.SetEnvironmentVariable(TeamCityEnvVar, TeamCityProject, EnvironmentVariableTarget.Process);
-
-            try
+            using(new TeamCityEnv())
             {
                 _implementation.Write(_message);
-            }
-            finally
-            {
-                Environment.SetEnvironmentVariable(TeamCityEnvVar, null, EnvironmentVariableTarget.Process);
             }
         }
 

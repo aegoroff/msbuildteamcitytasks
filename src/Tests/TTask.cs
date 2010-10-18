@@ -8,6 +8,7 @@ using System;
 using MSBuild.TeamCity.Tasks;
 using NMock2;
 using NUnit.Framework;
+using Tests.Utils;
 
 namespace Tests
 {
@@ -22,15 +23,15 @@ namespace Tests
         {
             Mockery = new Mockery();
             Logger = Mockery.NewMock<ILogger>();
-            Environment.SetEnvironmentVariable(TTeamCityTaskImplementation.TeamCityEnvVar,
-                                               TTeamCityTaskImplementation.TeamCityProject,
+            Environment.SetEnvironmentVariable(TeamCityEnv.TeamCityEnvVar,
+                                               TeamCityEnv.TeamCityProject,
                                                EnvironmentVariableTarget.Process);
         }
 
         [TearDown]
         public void Teardown()
         {
-            Environment.SetEnvironmentVariable(TTeamCityTaskImplementation.TeamCityEnvVar, null,
+            Environment.SetEnvironmentVariable(TeamCityEnv.TeamCityEnvVar, null,
                                                EnvironmentVariableTarget.Process);
         }
     }

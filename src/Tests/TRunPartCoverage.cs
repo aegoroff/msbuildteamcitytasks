@@ -123,7 +123,7 @@ namespace Tests
             _task.TargetPath = TGoogleTestsRunner.CorrectExePath;
             _task.TargetArguments = TargetArguments;
             _task.TargetWorkDir = TargetWorkDir;
-            _task.Excludes = new[] { _item1 };
+            _task.Includes = new[] { _item1 };
             _task.Excludes = new[] { _item2 };
             Assert.That(_task.Execute());
         }

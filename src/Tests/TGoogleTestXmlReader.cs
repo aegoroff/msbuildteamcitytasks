@@ -44,9 +44,7 @@ namespace Tests
             using ( new SuiteWriter(_xw, 0, 0, 0.016, AllTests) )
             {
             }
-            GoogleTestXmlReader reader = new GoogleTestXmlReader(new StringReader(_sb.ToString()));
-            reader.Read();
-            Assert.That(reader.FailuresCount, Is.EqualTo(0));
+            AssertFailures(0);
         }
 
         [Test]
@@ -61,9 +59,7 @@ namespace Tests
                     }
                 }
             }
-            GoogleTestXmlReader reader = new GoogleTestXmlReader(new StringReader(_sb.ToString()));
-            reader.Read();
-            Assert.That(reader.FailuresCount, Is.EqualTo(0));
+            AssertFailures(0);
         }
 
         [Test]
@@ -74,9 +70,7 @@ namespace Tests
                 WriteTwoSuccess(Suite1);
                 WriteTwoSuccess(Suite2);
             }
-            GoogleTestXmlReader reader = new GoogleTestXmlReader(new StringReader(_sb.ToString()));
-            reader.Read();
-            Assert.That(reader.FailuresCount, Is.EqualTo(0));
+            AssertFailures(0);
         }
 
         [Test]
@@ -98,9 +92,7 @@ namespace Tests
                 }
                 WriteTwoSuccess(Suite2);
             }
-            GoogleTestXmlReader reader = new GoogleTestXmlReader(new StringReader(_sb.ToString()));
-            reader.Read();
-            Assert.That(reader.FailuresCount, Is.EqualTo(1));
+            AssertFailures(1);
         }
 
         [Test]
@@ -110,16 +102,14 @@ namespace Tests
             {
                 using ( new SuiteWriter(_xw, 1, 2, 0.016, Suite1) )
                 {
-                    WriteToFails();
+                    WriteTwoFails();
                     using ( new CaseWriter(_xw, Test2, 0, Suite1) )
                     {
                     }
                 }
                 WriteTwoSuccess(Suite2);
             }
-            GoogleTestXmlReader reader = new GoogleTestXmlReader(new StringReader(_sb.ToString()));
-            reader.Read();
-            Assert.That(reader.FailuresCount, Is.EqualTo(2));
+            AssertFailures(2);
         }
 
         [Test]
@@ -129,7 +119,7 @@ namespace Tests
             {
                 using ( new SuiteWriter(_xw, 1, 3, 0.016, Suite1) )
                 {
-                    WriteToFails();
+                    WriteTwoFails();
                     using ( new CaseWriter(_xw, Test2, 0, Suite1) )
                     {
                         using ( new FailWriter(_xw, "m3", "d3") )
@@ -139,9 +129,15 @@ namespace Tests
                 }
                 WriteTwoSuccess(Suite2);
             }
+            AssertFailures(3);
+        }
+
+
+        private void AssertFailures(int expected)
+        {
             GoogleTestXmlReader reader = new GoogleTestXmlReader(new StringReader(_sb.ToString()));
             reader.Read();
-            Assert.That(reader.FailuresCount, Is.EqualTo(3));
+            Assert.That(reader.FailuresCount, Is.EqualTo(expected));
         }
 
         private void WriteTwoSuccess( string suite )
@@ -157,7 +153,7 @@ namespace Tests
             }
         }
 
-        private void WriteToFails()
+        private void WriteTwoFails()
         {
             using ( new CaseWriter(_xw, Test1, 0.016, Suite1) )
             {

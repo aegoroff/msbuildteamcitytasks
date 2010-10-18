@@ -71,24 +71,8 @@ namespace Tests
         {
             using ( new SuiteWriter(_xw, 4, 0, 0.032, AllTests) )
             {
-                using ( new SuiteWriter(_xw, 1, 0, 0.016, Suite1) )
-                {
-                    using ( new CaseWriter(_xw, Test1, 0.016, Suite1) )
-                    {
-                    }
-                    using ( new CaseWriter(_xw, Test2, 0, Suite1) )
-                    {
-                    }
-                }
-                using ( new SuiteWriter(_xw, 1, 0, 0.016, Suite2) )
-                {
-                    using ( new CaseWriter(_xw, Test1, 0.016, Suite2) )
-                    {
-                    }
-                    using ( new CaseWriter(_xw, Test2, 0, Suite2) )
-                    {
-                    }
-                }
+                WriteTwoSuccess(Suite1);
+                WriteTwoSuccess(Suite2);
             }
             GoogleTestXmlReader reader = new GoogleTestXmlReader(new StringReader(_sb.ToString()));
             reader.Read();
@@ -112,15 +96,7 @@ namespace Tests
                     {
                     }
                 }
-                using ( new SuiteWriter(_xw, 1, 0, 0.016, Suite2) )
-                {
-                    using ( new CaseWriter(_xw, Test1, 0.016, Suite2) )
-                    {
-                    }
-                    using ( new CaseWriter(_xw, Test2, 0, Suite2) )
-                    {
-                    }
-                }
+                WriteTwoSuccess(Suite2);
             }
             GoogleTestXmlReader reader = new GoogleTestXmlReader(new StringReader(_sb.ToString()));
             reader.Read();
@@ -134,28 +110,12 @@ namespace Tests
             {
                 using ( new SuiteWriter(_xw, 1, 2, 0.016, Suite1) )
                 {
-                    using ( new CaseWriter(_xw, Test1, 0.016, Suite1) )
-                    {
-                        using ( new FailWriter(_xw, "m1", "d1") )
-                        {
-                        }
-                        using ( new FailWriter(_xw, "m2", "d2") )
-                        {
-                        }
-                    }
+                    WriteToFails();
                     using ( new CaseWriter(_xw, Test2, 0, Suite1) )
                     {
                     }
                 }
-                using ( new SuiteWriter(_xw, 1, 0, 0.016, Suite2) )
-                {
-                    using ( new CaseWriter(_xw, Test1, 0.016, Suite2) )
-                    {
-                    }
-                    using ( new CaseWriter(_xw, Test2, 0, Suite2) )
-                    {
-                    }
-                }
+                WriteTwoSuccess(Suite2);
             }
             GoogleTestXmlReader reader = new GoogleTestXmlReader(new StringReader(_sb.ToString()));
             reader.Read();
@@ -169,15 +129,7 @@ namespace Tests
             {
                 using ( new SuiteWriter(_xw, 1, 3, 0.016, Suite1) )
                 {
-                    using ( new CaseWriter(_xw, Test1, 0.016, Suite1) )
-                    {
-                        using ( new FailWriter(_xw, "m1", "d1") )
-                        {
-                        }
-                        using ( new FailWriter(_xw, "m2", "d2") )
-                        {
-                        }
-                    }
+                    WriteToFails();
                     using ( new CaseWriter(_xw, Test2, 0, Suite1) )
                     {
                         using ( new FailWriter(_xw, "m3", "d3") )
@@ -185,19 +137,37 @@ namespace Tests
                         }
                     }
                 }
-                using ( new SuiteWriter(_xw, 1, 0, 0.016, Suite2) )
-                {
-                    using ( new CaseWriter(_xw, Test1, 0.016, Suite2) )
-                    {
-                    }
-                    using ( new CaseWriter(_xw, Test2, 0, Suite2) )
-                    {
-                    }
-                }
+                WriteTwoSuccess(Suite2);
             }
             GoogleTestXmlReader reader = new GoogleTestXmlReader(new StringReader(_sb.ToString()));
             reader.Read();
             Assert.That(reader.FailuresCount, Is.EqualTo(3));
+        }
+
+        private void WriteTwoSuccess( string suite )
+        {
+            using ( new SuiteWriter(_xw, 1, 0, 0.016, suite) )
+            {
+                using ( new CaseWriter(_xw, Test1, 0.016, suite) )
+                {
+                }
+                using ( new CaseWriter(_xw, Test2, 0, suite) )
+                {
+                }
+            }
+        }
+
+        private void WriteToFails()
+        {
+            using ( new CaseWriter(_xw, Test1, 0.016, Suite1) )
+            {
+                using ( new FailWriter(_xw, "m1", "d1") )
+                {
+                }
+                using ( new FailWriter(_xw, "m2", "d2") )
+                {
+                }
+            }
         }
     }
 }

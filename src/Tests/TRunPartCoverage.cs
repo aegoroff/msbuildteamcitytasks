@@ -85,7 +85,6 @@ namespace Tests
             Expect.Once.On(Logger).Method(TTeamCityTaskImplementation.LogMessage).WithAnyArguments();
 
             Expect.Once.On(_item1).GetProperty(ItemSpec).Will(Return.Value("a"));
-            Expect.Once.On(_item2).GetProperty(ItemSpec).Will(Return.Value("b"));
 
             _task.ToolPath = ValidPathToPartCover;
             _task.TargetPath = TGoogleTestsRunner.CorrectExePath;

@@ -11,7 +11,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Alexander Egorov")]
 [assembly: AssemblyProduct("MSBuild TeamCity Tasks")]
-[assembly: AssemblyCopyright("Copyright © Alexander Egorov 2009")]
+[assembly: AssemblyCopyright("Copyright © Alexander Egorov 2009-2010")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: CLSCompliant(false)]

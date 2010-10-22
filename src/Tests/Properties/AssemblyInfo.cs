@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Tests")]
+[assembly: AssemblyTitle("MSBuild TeamCity Tasks Tests")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Company")]
-[assembly: AssemblyProduct("Tests")]
-[assembly: AssemblyCopyright("Copyright © Company 2009")]
+[assembly: AssemblyCompany("Alexander Egorov")]
+[assembly: AssemblyProduct("MSBuild TeamCity Tasks Tests")]
+[assembly: AssemblyCopyright("Copyright © Alexander Egorov 2009-2010")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

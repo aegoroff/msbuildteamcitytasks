@@ -59,12 +59,12 @@ namespace MSBuild.TeamCity.Tasks.Messages
                                                                       DateTime.Now.ToString(
                                                                           "yyyy-MM-ddTHH:mm:ss.fffzzz",
                                                                           CultureInfo.InvariantCulture));
-            MessageAttributeItem flowId = new MessageAttributeItem("flowId", FlowId);
             if ( IsAddTimestamp && !_attributes.Contains(timestamp) )
             {
                 _attributes.Add(timestamp);
             }
 
+            MessageAttributeItem flowId = new MessageAttributeItem("flowId", FlowId);
             if ( !string.IsNullOrEmpty(FlowId) && !_attributes.Contains(flowId) )
             {
                 _attributes.Add(flowId);

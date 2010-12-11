@@ -11,7 +11,7 @@ using MSBuild.TeamCity.Tasks.Messages;
 namespace MSBuild.TeamCity.Tasks
 {
     ///<summary>
-    /// Represent base class of all BuildProgress* tasks. Cannot be used directly (because it's abstract) in MSBuild script.
+    /// Represent base class of all BuildProgress* tasks. Cannot be used directly in MSBuild script (because it's abstract).
     ///</summary>
     public abstract class BuildProgressTask : TeamCityTask
     {

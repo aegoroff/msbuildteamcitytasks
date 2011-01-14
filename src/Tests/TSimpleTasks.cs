@@ -229,5 +229,29 @@ namespace Tests
             CompilationFinished task = new CompilationFinished(Logger);
             Assert.That(task.Execute());
         }
+
+        [Test]
+        public void TestSuiteStarted()
+        {
+            Expect.Once.On(Logger).Method(TTeamCityTaskImplementation.LogMessage).WithAnyArguments();
+
+            TestSuiteStarted task = new TestSuiteStarted(Logger)
+            {
+                Name = "n"
+            };
+            Assert.That(task.Execute());
+        }
+        
+        [Test]
+        public void TestSuiteFinished()
+        {
+            Expect.Once.On(Logger).Method(TTeamCityTaskImplementation.LogMessage).WithAnyArguments();
+
+            TestSuiteFinished task = new TestSuiteFinished(Logger)
+            {
+                Name = "n"
+            };
+            Assert.That(task.Execute());
+        }
     }
 }

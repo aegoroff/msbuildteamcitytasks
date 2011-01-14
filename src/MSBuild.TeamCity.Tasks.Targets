@@ -26,5 +26,6 @@
   <UsingTask AssemblyFile="$(MSBuildTeamCityTasksLib)" TaskName="MSBuild.TeamCity.Tasks.DisableServiceMessages" />
   <UsingTask AssemblyFile="$(MSBuildTeamCityTasksLib)" TaskName="MSBuild.TeamCity.Tasks.CompilationStarted" />
   <UsingTask AssemblyFile="$(MSBuildTeamCityTasksLib)" TaskName="MSBuild.TeamCity.Tasks.CompilationFinished" />
+  <UsingTask AssemblyFile="$(MSBuildTeamCityTasksLib)" TaskName="MSBuild.TeamCity.Tasks.TestSuiteStarted" />
 
   </Project>

@@ -1,7 +1,7 @@
 /*
  * Created by: egr
  * Created at: 27.08.2010
- * © 2007-2010 Alexander Egorov
+ * © 2007-2011 Alexander Egorov
  */
 
 using Microsoft.Build.Framework;

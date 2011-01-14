@@ -1,7 +1,7 @@
 /*
  * Created by: egr
  * Created at: 01.05.2009
- * © 2007-2009 Alexander Egorov
+ * © 2007-2011 Alexander Egorov
  */
 
 using System.Text;

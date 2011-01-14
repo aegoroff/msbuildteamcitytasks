@@ -1,7 +1,7 @@
 /*
  * Created by: egr
  * Created at: 03.05.2009
- * © 2007-2009 Alexander Egorov
+ * © 2007-2011 Alexander Egorov
  */
 
 namespace MSBuild.TeamCity.Tasks

@@ -108,6 +108,7 @@
     <Compile Include="Messages\TestStartTeamCityMessage.cs" />
     <Compile Include="Messages\TestSuiteFinishTeamCityMessage.cs" />
     <Compile Include="Messages\TestSuiteStartTeamCityMessage.cs" />
+    <Compile Include="TestSuiteFinished.cs" />
     <Compile Include="TestSuiteStarted.cs" />
   </ItemGroup>
   <ItemGroup>

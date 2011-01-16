@@ -265,5 +265,18 @@ namespace Tests
             };
             Assert.That(task.Execute());
         }
+        
+        [Test]
+        public void TestFinished()
+        {
+            Expect.Once.On(Logger).Method(TTeamCityTaskImplementation.LogMessage).WithAnyArguments();
+
+            TestFinished task = new TestFinished(Logger)
+            {
+                Name = "n",
+                Duration = 3.0
+            };
+            Assert.That(task.Execute());
+        }
     }
 }

@@ -28,5 +28,6 @@
   <UsingTask AssemblyFile="$(MSBuildTeamCityTasksLib)" TaskName="MSBuild.TeamCity.Tasks.CompilationFinished" />
   <UsingTask AssemblyFile="$(MSBuildTeamCityTasksLib)" TaskName="MSBuild.TeamCity.Tasks.TestSuiteStarted" />
   <UsingTask AssemblyFile="$(MSBuildTeamCityTasksLib)" TaskName="MSBuild.TeamCity.Tasks.TestSuiteFinished" />
+  <UsingTask AssemblyFile="$(MSBuildTeamCityTasksLib)" TaskName="MSBuild.TeamCity.Tasks.TestStarted" />
 
   </Project>

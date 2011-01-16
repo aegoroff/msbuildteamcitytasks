@@ -253,5 +253,17 @@ namespace Tests
             };
             Assert.That(task.Execute());
         }
+
+        [Test]
+        public void TestStarted()
+        {
+            Expect.Once.On(Logger).Method(TTeamCityTaskImplementation.LogMessage).WithAnyArguments();
+
+            TestStarted task = new TestStarted(Logger)
+            {
+                Name = "n"
+            };
+            Assert.That(task.Execute());
+        }
     }
 }

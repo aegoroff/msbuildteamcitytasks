@@ -40,7 +40,7 @@
     <FrameworkVersion>2.0.50727</FrameworkVersion>
     <HelpTitle>MSBuild TeamCity Tasks</HelpTitle>
     <CopyrightHref>http://code.google.com/p/msbuildteamcitytasks/</CopyrightHref>
-    <CopyrightText>Alexander Egorov %28c%29 2009-2010</CopyrightText>
+    <CopyrightText>Alexander Egorov %28c%29 2009-2011</CopyrightText>
     <FeedbackEMailAddress>egoroff%40gmail.com</FeedbackEMailAddress>
     <HeaderText>MSBuild TeamCity Tasks</HeaderText>
     <PresentationStyle>vs2005</PresentationStyle>

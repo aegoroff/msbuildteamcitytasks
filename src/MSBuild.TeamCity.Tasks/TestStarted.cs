@@ -46,7 +46,7 @@ namespace MSBuild.TeamCity.Tasks
         }
 
         /// <summary>
-        /// Gets or sets test suite name
+        /// Gets or sets test name
         /// </summary>
         [Required]
         public string Name { get; set; }

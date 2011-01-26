@@ -72,7 +72,7 @@ namespace MSBuild.TeamCity.Tasks
         /// <returns>TeamCity messages list</returns>
         protected override IEnumerable<TeamCityMessage> ReadMessages()
         {
-            yield return new TestStartTeamCityMessage(Name);
+            yield return new TestStartTeamCityMessage(Name, CaptureStandardOutput);
         }
     }
 }

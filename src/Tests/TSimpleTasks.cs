@@ -267,6 +267,19 @@ namespace Tests
         }
         
         [Test]
+        public void TestStartedCaptureStandardOutput()
+        {
+            Expect.Once.On(Logger).Method(TTeamCityTaskImplementation.LogMessage).WithAnyArguments();
+
+            TestStarted task = new TestStarted(Logger)
+            {
+                Name = "n",
+                CaptureStandardOutput = true
+            };
+            Assert.That(task.Execute());
+        }
+        
+        [Test]
         public void TestFinished()
         {
             Expect.Once.On(Logger).Method(TTeamCityTaskImplementation.LogMessage).WithAnyArguments();

@@ -183,6 +183,13 @@ namespace Tests
             TestStartTeamCityMessage message = new TestStartTeamCityMessage(Name);
             Assert.That(message.ToString(), Is.EqualTo("##teamcity[testStarted name='t1']"));
         }
+        
+        [Test]
+        public void TestStartCaptureStandardOutput()
+        {
+            TestStartTeamCityMessage message = new TestStartTeamCityMessage(Name, true);
+            Assert.That(message.ToString(), Is.EqualTo("##teamcity[testStarted name='t1' captureStandardOutput='true']"));
+        }
 
         [Test]
         public void TestFinish()

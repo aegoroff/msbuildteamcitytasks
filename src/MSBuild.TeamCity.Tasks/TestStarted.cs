@@ -17,12 +17,20 @@ namespace MSBuild.TeamCity.Tasks
     /// <code><![CDATA[
     /// <TestStarted Name="test.name" />
     /// ]]></code>
+    /// Starts a test and captures standard output
+    /// <code><![CDATA[
+    /// <TestStarted
+    ///     Name="test.name"
+    ///     CaptureStandardOutput="true"
+    /// />
+    /// ]]></code>
     /// Starts a test full example (with all optional attributes)
     /// <code><![CDATA[
     /// <TestStarted
     ///     IsAddTimestamp="true"
     ///     FlowId="1"
     ///     Name="test.name"
+    ///     CaptureStandardOutput="true"
     /// />
     /// ]]></code>
     /// </example>
@@ -50,6 +58,13 @@ namespace MSBuild.TeamCity.Tasks
         /// </summary>
         [Required]
         public string Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to identify whether to include output received between 
+        /// <see cref="TestStarted"/> and <see cref="TestFinished"/> 
+        /// messages as test output or not
+        /// </summary>
+        public bool CaptureStandardOutput { get; set; }
 
         /// <summary>
         /// Reads TeamCity messages

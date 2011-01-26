@@ -19,6 +19,20 @@ namespace MSBuild.TeamCity.Tasks.Messages
         {
         }
 
+        ///<summary>
+        /// Initializes a new instance of the <see cref="TestStartTeamCityMessage"/> class using name specified
+        ///</summary>
+        ///<param name="name">Name attribute value</param>
+        ///<param name="captureStandardOutput">Whether to capture standart output</param>
+        public TestStartTeamCityMessage( string name, bool captureStandardOutput )
+            : base(name)
+        {
+            if ( captureStandardOutput )
+            {
+                Attributes.Add("captureStandardOutput", "true");
+            }
+        }
+
         /// <summary>
         /// Gets message name
         /// </summary>

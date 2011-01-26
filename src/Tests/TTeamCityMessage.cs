@@ -180,7 +180,7 @@ namespace Tests
         [Test]
         public void TestStart()
         {
-            TestStartTeamCityMessage message = new TestStartTeamCityMessage(Name);
+            TestStartTeamCityMessage message = new TestStartTeamCityMessage(Name, false);
             Assert.That(message.ToString(), Is.EqualTo("##teamcity[testStarted name='t1']"));
         }
         

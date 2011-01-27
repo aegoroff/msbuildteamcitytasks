@@ -291,5 +291,18 @@ namespace Tests
             };
             Assert.That(task.Execute());
         }
+        
+        [Test]
+        public void TestIgnored()
+        {
+            Expect.Once.On(Logger).Method(TTeamCityTaskImplementation.LogMessage).WithAnyArguments();
+
+            TestIgnored task = new TestIgnored(Logger)
+            {
+                Name = "n",
+                Message = "Comment"
+            };
+            Assert.That(task.Execute());
+        }
     }
 }

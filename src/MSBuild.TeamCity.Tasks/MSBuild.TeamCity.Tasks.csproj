@@ -112,6 +112,7 @@
     <Compile Include="Messages\TestSuiteFinishTeamCityMessage.cs" />
     <Compile Include="Messages\TestSuiteStartTeamCityMessage.cs" />
     <Compile Include="TestFinished.cs" />
+    <Compile Include="TestIgnored.cs" />
     <Compile Include="TestStarted.cs" />
     <Compile Include="TestSuiteFinished.cs" />
     <Compile Include="TestSuiteStarted.cs" />

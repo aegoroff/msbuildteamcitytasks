@@ -114,6 +114,7 @@
     <Compile Include="TestFinished.cs" />
     <Compile Include="TestIgnored.cs" />
     <Compile Include="TestStarted.cs" />
+    <Compile Include="TestStdOut.cs" />
     <Compile Include="TestSuiteFinished.cs" />
     <Compile Include="TestSuiteStarted.cs" />
   </ItemGroup>

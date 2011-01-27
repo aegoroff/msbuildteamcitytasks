@@ -11,37 +11,37 @@ using MSBuild.TeamCity.Tasks.Messages;
 namespace MSBuild.TeamCity.Tasks
 {
     ///<summary>
-    /// Test ignore message
+    /// Test output task
     ///</summary>
-    /// <example>Ignores a test
+    /// <example>Output test data
     /// <code><![CDATA[
-    /// <TestIgnored Name="test.name" Message="Ignore comment" />
+    /// <TestStdOut Name="test.name" Out="output" />
     /// ]]></code>
-    /// Ignores a test full example (with all optional attributes)
+    /// Output test data full example (with all optional attributes)
     /// <code><![CDATA[
-    /// <TestIgnored
+    /// <TestStdOut
     ///     IsAddTimestamp="true"
     ///     FlowId="1"
     ///     Name="test.name"
-    ///     Message="Ignore comment"
+    ///     Out="output"
     /// />
     /// ]]></code>
     /// </example>
-    public class TestIgnored : TeamCityTask
+    public class TestStdOut : TeamCityTask
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="TestIgnored"/> class
-        /// </summary>
-        public TestIgnored()
+        ///<summary>
+        /// Initializes a new instance of the <see cref="TestStdOut"/> class
+        ///</summary>
+        public TestStdOut()
         {
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="TestIgnored"/> class using 
+        ///<summary>
+        /// Initializes a new instance of the <see cref="TestStdOut"/> class using 
         /// logger specified
-        /// </summary>
-        /// <param name="logger"><see cref="ILogger"/> implementation</param>
-        public TestIgnored( ILogger logger )
+        ///</summary>
+        ///<param name="logger"><see cref="ILogger"/> implementation</param>
+        public TestStdOut( ILogger logger )
             : base(logger)
         {
         }
@@ -53,10 +53,10 @@ namespace MSBuild.TeamCity.Tasks
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets ignore comment
+        /// Gets or sets test output reporting (to be shown as the test result if the test fails)
         /// </summary>
         [Required]
-        public string Message { get; set; }
+        public string Out { get; set; }
 
         /// <summary>
         /// Reads TeamCity messages
@@ -64,7 +64,7 @@ namespace MSBuild.TeamCity.Tasks
         /// <returns>TeamCity messages list</returns>
         protected override IEnumerable<TeamCityMessage> ReadMessages()
         {
-            yield return new TestIgnoredTeamCityMessage(Name, Message);
+            yield return new TestStdOutTeamCityMessage(Name, Out);
         }
     }
 }

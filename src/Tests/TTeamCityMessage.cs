@@ -183,7 +183,7 @@ namespace Tests
             TestStartTeamCityMessage message = new TestStartTeamCityMessage(Name, false);
             Assert.That(message.ToString(), Is.EqualTo("##teamcity[testStarted name='t1']"));
         }
-        
+
         [Test]
         public void TestStartCaptureStandardOutput()
         {
@@ -209,6 +209,30 @@ namespace Tests
         }
 
         [Test]
+        public void TestIgnored()
+        {
+            const string msg = "m1";
+            TestIgnoredTeamCityMessage message = new TestIgnoredTeamCityMessage(Name, msg);
+            Assert.That(message.ToString(), Is.EqualTo("##teamcity[testIgnored name='t1' message='m1']"));
+        }
+
+        [Test]
+        public void TestStdOut()
+        {
+            const string output = "m1";
+            TestStdOutTeamCityMessage message = new TestStdOutTeamCityMessage(Name, output);
+            Assert.That(message.ToString(), Is.EqualTo("##teamcity[testStdOut name='t1' out='m1']"));
+        }
+
+        [Test]
+        public void TestStdErr()
+        {
+            const string output = "m1";
+            TestStdErrTeamCityMessage message = new TestStdErrTeamCityMessage(Name, output);
+            Assert.That(message.ToString(), Is.EqualTo("##teamcity[testStdErr name='t1' out='m1']"));
+        }
+
+        [Test]
         [ExpectedException( typeof(ArgumentException) )]
         public void DotNetCoverageInvalidKey()
         {
@@ -224,9 +248,9 @@ namespace Tests
             Assert.That(message.ToString(), Is.EqualTo("##teamcity[dotNetCoverage ncover3_home='v']"));
         }
 
-        [TestCase("compilationStarted", "##teamcity[compilationStarted compiler='c']")]
-        [TestCase("compilationFinished", "##teamcity[compilationFinished compiler='c']")]
-        public void Compilation(string msg, string expected)
+        [TestCase( "compilationStarted", "##teamcity[compilationStarted compiler='c']" )]
+        [TestCase( "compilationFinished", "##teamcity[compilationFinished compiler='c']" )]
+        public void Compilation( string msg, string expected )
         {
             const string compiler = "c";
             CompilationMessage message = new CompilationMessage(compiler, msg);

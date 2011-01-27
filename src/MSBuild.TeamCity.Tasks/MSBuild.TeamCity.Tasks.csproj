@@ -83,6 +83,9 @@
     <Compile Include="Messages\ImportType.cs" />
     <Compile Include="Internal\Logger.cs" />
     <Compile Include="Messages\NamedTeamCityMessage.cs" />
+    <Compile Include="Messages\TestIgnoredTeamCityMessage.cs" />
+    <Compile Include="Messages\TestStdErrTeamCityMessage.cs" />
+    <Compile Include="Messages\TestStdOutTeamCityMessage.cs" />
     <Compile Include="NCover3Report.cs" />
     <Compile Include="NCoverReport.cs" />
     <Compile Include="Internal\PartCoverCommandLine.cs" />

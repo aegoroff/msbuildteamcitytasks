@@ -304,5 +304,31 @@ namespace Tests
             };
             Assert.That(task.Execute());
         }
+        
+        [Test]
+        public void TestStdOut()
+        {
+            Expect.Once.On(Logger).Method(TTeamCityTaskImplementation.LogMessage).WithAnyArguments();
+
+            TestStdOut task = new TestStdOut(Logger)
+            {
+                Name = "n",
+                Out = "out"
+            };
+            Assert.That(task.Execute());
+        }
+        
+        [Test]
+        public void TestStdErr()
+        {
+            Expect.Once.On(Logger).Method(TTeamCityTaskImplementation.LogMessage).WithAnyArguments();
+
+            TestStdErr task = new TestStdErr(Logger)
+            {
+                Name = "n",
+                Out = "out"
+            };
+            Assert.That(task.Execute());
+        }
     }
 }

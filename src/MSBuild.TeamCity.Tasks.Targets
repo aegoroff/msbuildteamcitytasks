@@ -32,5 +32,6 @@
   <UsingTask AssemblyFile="$(MSBuildTeamCityTasksLib)" TaskName="MSBuild.TeamCity.Tasks.TestFinished" />
   <UsingTask AssemblyFile="$(MSBuildTeamCityTasksLib)" TaskName="MSBuild.TeamCity.Tasks.TestIgnored" />
   <UsingTask AssemblyFile="$(MSBuildTeamCityTasksLib)" TaskName="MSBuild.TeamCity.Tasks.TestStdOut" />
+  <UsingTask AssemblyFile="$(MSBuildTeamCityTasksLib)" TaskName="MSBuild.TeamCity.Tasks.TestStdErr" />
 
 </Project>

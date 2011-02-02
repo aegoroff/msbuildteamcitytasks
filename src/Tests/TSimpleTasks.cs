@@ -330,5 +330,35 @@ namespace Tests
             };
             Assert.That(task.Execute());
         }
+        
+        [Test]
+        public void TestFailedRequired()
+        {
+            Expect.Once.On(Logger).Method(TTeamCityTaskImplementation.LogMessage).WithAnyArguments();
+
+            TestFailed task = new TestFailed(Logger)
+            {
+                Name = "n",
+                Message = "m",
+                Details = "d"
+            };
+            Assert.That(task.Execute());
+        }
+        
+        [Test]
+        public void TestFailedAll()
+        {
+            Expect.Once.On(Logger).Method(TTeamCityTaskImplementation.LogMessage).WithAnyArguments();
+
+            TestFailed task = new TestFailed(Logger)
+            {
+                Name = "n",
+                Message = "m",
+                Details = "d",
+                Actual = "1",
+                Expected = "2",
+            };
+            Assert.That(task.Execute());
+        }
     }
 }

@@ -207,6 +207,73 @@ namespace Tests
             TestFailedTeamCityMessage message = new TestFailedTeamCityMessage(Name, msg, details);
             Assert.That(message.ToString(), Is.EqualTo("##teamcity[testFailed name='t1' message='m1' details='d1']"));
         }
+        
+        [Test]
+        public void TestFailedFull()
+        {
+            const string msg = "m1";
+            const string details = "d1";
+            TestFailedTeamCityMessage message = new TestFailedTeamCityMessage(Name, msg, details);
+            message.Expected = "e";
+            message.Actual = "a";
+            Assert.That(message.ToString(), Is.EqualTo("##teamcity[testFailed name='t1' message='m1' details='d1' expected='e' actual='a']"));
+        }
+        
+        [Test]
+        public void TestFailedExpectedNotSet()
+        {
+            const string msg = "m1";
+            const string details = "d1";
+            TestFailedTeamCityMessage message = new TestFailedTeamCityMessage(Name, msg, details);
+            Assert.That(message.Expected, Is.Empty);
+        }
+        
+        [Test]
+        public void TestFailedWithExpectedAttr()
+        {
+            const string msg = "m1";
+            const string details = "d1";
+            TestFailedTeamCityMessage message = new TestFailedTeamCityMessage(Name, msg, details) { Expected = "e" };
+            Assert.That(message.ToString(), Is.EqualTo("##teamcity[testFailed name='t1' message='m1' details='d1' expected='e']"));
+        }
+        
+        [Test]
+        public void TestFailedWithExpectedAttrOverwrite()
+        {
+            const string msg = "m1";
+            const string details = "d1";
+            TestFailedTeamCityMessage message = new TestFailedTeamCityMessage(Name, msg, details) { Expected = "e" };
+            message.Expected = "o";
+            Assert.That(message.ToString(), Is.EqualTo("##teamcity[testFailed name='t1' message='m1' details='d1' expected='o']"));
+        }
+        
+        [Test]
+        public void TestFailedActualNotSet()
+        {
+            const string msg = "m1";
+            const string details = "d1";
+            TestFailedTeamCityMessage message = new TestFailedTeamCityMessage(Name, msg, details);
+            Assert.That(message.Actual, Is.Empty);
+        }
+        
+        [Test]
+        public void TestFailedWithActualAttr()
+        {
+            const string msg = "m1";
+            const string details = "d1";
+            TestFailedTeamCityMessage message = new TestFailedTeamCityMessage(Name, msg, details) { Actual = "e" };
+            Assert.That(message.ToString(), Is.EqualTo("##teamcity[testFailed name='t1' message='m1' details='d1' actual='e']"));
+        }
+        
+        [Test]
+        public void TestFailedWithActualAttrOverwrite()
+        {
+            const string msg = "m1";
+            const string details = "d1";
+            TestFailedTeamCityMessage message = new TestFailedTeamCityMessage(Name, msg, details) { Actual = "e" };
+            message.Actual = "o";
+            Assert.That(message.ToString(), Is.EqualTo("##teamcity[testFailed name='t1' message='m1' details='d1' actual='o']"));
+        }
 
         [Test]
         public void TestIgnored()

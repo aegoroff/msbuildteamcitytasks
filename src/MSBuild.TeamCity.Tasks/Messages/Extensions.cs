@@ -20,7 +20,13 @@ namespace MSBuild.TeamCity.Tasks.Messages
 
         internal static void Add( this IList<MessageAttributeItem> list, string name, string value )
         {
-            list.Add(new MessageAttributeItem(name, value));
+            MessageAttributeItem item = new MessageAttributeItem(name, value);
+
+            if ( list.Contains(item) )
+            {
+                list.Remove(item);
+            }
+            list.Add(item);
         }
 
         internal static string ToolToString( this DotNetCoverageTool tool )

@@ -11,6 +11,9 @@ namespace MSBuild.TeamCity.Tasks.Messages
     ///</summary>
     public class TestFailedTeamCityMessage : NamedTeamCityMessage
     {
+        private const string ExpectedAttr = "expected";
+        private const string ActualAttr = "actual";
+
         ///<summary>
         /// Initializes a new instance of the <see cref="TestFailedTeamCityMessage"/> class
         ///</summary>
@@ -21,6 +24,24 @@ namespace MSBuild.TeamCity.Tasks.Messages
         {
             Attributes.Add("message", message);
             Attributes.Add("details", details);
+        }
+
+        ///<summary>
+        /// Gets or sets expected attribute value
+        ///</summary>
+        public string Expected
+        {
+            get { return GetAttributeValue(ExpectedAttr); }
+            set { Attributes.Add(ExpectedAttr, value); }
+        }
+
+        ///<summary>
+        /// Gets or sets actual attribute value
+        ///</summary>
+        public string Actual
+        {
+            get { return GetAttributeValue(ActualAttr); }
+            set { Attributes.Add(ActualAttr, value); }
         }
 
         /// <summary>

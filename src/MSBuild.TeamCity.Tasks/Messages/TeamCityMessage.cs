@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
+using System.Linq;
 using MSBuild.TeamCity.Tasks.Internal;
 
 namespace MSBuild.TeamCity.Tasks.Messages
@@ -81,6 +82,20 @@ namespace MSBuild.TeamCity.Tasks.Messages
                                                                                                        TeamCityMessageTrail);
 
             return sequence.ToString();
+        }
+
+        /// <summary>
+        /// Gets attribute's value
+        /// </summary>
+        /// <param name="attr">attribute name</param>
+        /// <returns>The attribute's value or empty string if no attribute found</returns>
+        protected string GetAttributeValue( string attr )
+        {
+            foreach ( MessageAttributeItem item in Attributes.Where(item => item.Name == attr) )
+            {
+                return item.Value;
+            }
+            return string.Empty;
         }
     }
 }

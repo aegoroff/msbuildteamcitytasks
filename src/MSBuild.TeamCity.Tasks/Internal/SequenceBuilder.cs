@@ -72,7 +72,7 @@ namespace MSBuild.TeamCity.Tasks.Internal
             {
                 return string.Empty;
             }
-            IEnumerable<string> strings = from T item in _enumerator select item.ToString();
+            IEnumerable<string> strings = from T item in _enumerator where !string.IsNullOrEmpty(item.ToString()) select item.ToString();
             return _head + strings.Join(_separator) + _trail;
         }
     }

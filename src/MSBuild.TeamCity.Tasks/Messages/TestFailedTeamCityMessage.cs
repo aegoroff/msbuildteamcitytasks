@@ -33,16 +33,8 @@ namespace MSBuild.TeamCity.Tasks.Messages
         ///</summary>
         public string Expected
         {
-            get
-            {
-                return GetAttributeValue(ExpectedAttr);
-            }
-            
-            set
-            {
-                InsertType();
-                Attributes.Add(ExpectedAttr, value);
-            }
+            get { return GetAttributeValue(ExpectedAttr); }
+            set { SetAttributeValue(value, ExpectedAttr); }
         }
 
         ///<summary>
@@ -50,16 +42,8 @@ namespace MSBuild.TeamCity.Tasks.Messages
         ///</summary>
         public string Actual
         {
-            get
-            {
-                return GetAttributeValue(ActualAttr);
-            }
-            
-            set
-            {
-                InsertType();
-                Attributes.Add(ActualAttr, value);
-            }
+            get { return GetAttributeValue(ActualAttr); }
+            set { SetAttributeValue(value, ActualAttr); }
         }
 
         /// <summary>
@@ -78,6 +62,15 @@ namespace MSBuild.TeamCity.Tasks.Messages
                 Attributes.Remove(item);
             }
             Attributes.Insert(0, item);
+        }
+
+        private void SetAttributeValue( string value, string attr )
+        {
+            if ( !string.IsNullOrEmpty(value) )
+            {
+                InsertType();
+            }
+            Attributes.Add(attr, value);
         }
     }
 }

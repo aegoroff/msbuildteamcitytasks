@@ -220,6 +220,39 @@ namespace Tests
         }
         
         [Test]
+        public void TestFailedFullEmpty()
+        {
+            const string msg = "m1";
+            const string details = "d1";
+            TestFailedTeamCityMessage message = new TestFailedTeamCityMessage(Name, msg, details);
+            message.Expected = string.Empty;
+            message.Actual = string.Empty;
+            Assert.That(message.ToString(), Is.EqualTo("##teamcity[testFailed name='t1' message='m1' details='d1']"));
+        }
+        
+        [Test]
+        public void TestFailedFullEmptyExpected()
+        {
+            const string msg = "m1";
+            const string details = "d1";
+            TestFailedTeamCityMessage message = new TestFailedTeamCityMessage(Name, msg, details);
+            message.Expected = string.Empty;
+            message.Actual = "a";
+            Assert.That(message.ToString(), Is.EqualTo("##teamcity[testFailed type='comparisonFailure' name='t1' message='m1' details='d1' actual='a']"));
+        }
+        
+        [Test]
+        public void TestFailedFullEmptyActual()
+        {
+            const string msg = "m1";
+            const string details = "d1";
+            TestFailedTeamCityMessage message = new TestFailedTeamCityMessage(Name, msg, details);
+            message.Expected = "e";
+            message.Actual = string.Empty;
+            Assert.That(message.ToString(), Is.EqualTo("##teamcity[testFailed type='comparisonFailure' name='t1' message='m1' details='d1' expected='e']"));
+        }
+        
+        [Test]
         public void TestFailedExpectedNotSet()
         {
             const string msg = "m1";

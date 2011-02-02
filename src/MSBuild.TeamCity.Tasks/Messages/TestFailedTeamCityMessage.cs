@@ -13,6 +13,8 @@ namespace MSBuild.TeamCity.Tasks.Messages
     {
         private const string ExpectedAttr = "expected";
         private const string ActualAttr = "actual";
+        private const string TypeAttr = "type";
+        private const string TypeAttrValue = "comparisonFailure";
 
         ///<summary>
         /// Initializes a new instance of the <see cref="TestFailedTeamCityMessage"/> class
@@ -31,8 +33,16 @@ namespace MSBuild.TeamCity.Tasks.Messages
         ///</summary>
         public string Expected
         {
-            get { return GetAttributeValue(ExpectedAttr); }
-            set { Attributes.Add(ExpectedAttr, value); }
+            get
+            {
+                return GetAttributeValue(ExpectedAttr);
+            }
+            
+            set
+            {
+                InsertType();
+                Attributes.Add(ExpectedAttr, value);
+            }
         }
 
         ///<summary>
@@ -40,8 +50,16 @@ namespace MSBuild.TeamCity.Tasks.Messages
         ///</summary>
         public string Actual
         {
-            get { return GetAttributeValue(ActualAttr); }
-            set { Attributes.Add(ActualAttr, value); }
+            get
+            {
+                return GetAttributeValue(ActualAttr);
+            }
+            
+            set
+            {
+                InsertType();
+                Attributes.Add(ActualAttr, value);
+            }
         }
 
         /// <summary>
@@ -50,6 +68,16 @@ namespace MSBuild.TeamCity.Tasks.Messages
         protected override string Message
         {
             get { return "testFailed"; }
+        }
+
+        private void InsertType()
+        {
+            MessageAttributeItem item = new MessageAttributeItem(TypeAttr, TypeAttrValue);
+            if ( Attributes.Contains(item) )
+            {
+                Attributes.Remove(item);
+            }
+            Attributes.Insert(0, item);
         }
     }
 }

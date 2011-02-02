@@ -216,7 +216,7 @@ namespace Tests
             TestFailedTeamCityMessage message = new TestFailedTeamCityMessage(Name, msg, details);
             message.Expected = "e";
             message.Actual = "a";
-            Assert.That(message.ToString(), Is.EqualTo("##teamcity[testFailed name='t1' message='m1' details='d1' expected='e' actual='a']"));
+            Assert.That(message.ToString(), Is.EqualTo("##teamcity[testFailed type='comparisonFailure' name='t1' message='m1' details='d1' expected='e' actual='a']"));
         }
         
         [Test]
@@ -234,7 +234,7 @@ namespace Tests
             const string msg = "m1";
             const string details = "d1";
             TestFailedTeamCityMessage message = new TestFailedTeamCityMessage(Name, msg, details) { Expected = "e" };
-            Assert.That(message.ToString(), Is.EqualTo("##teamcity[testFailed name='t1' message='m1' details='d1' expected='e']"));
+            Assert.That(message.ToString(), Is.EqualTo("##teamcity[testFailed type='comparisonFailure' name='t1' message='m1' details='d1' expected='e']"));
         }
         
         [Test]
@@ -244,7 +244,7 @@ namespace Tests
             const string details = "d1";
             TestFailedTeamCityMessage message = new TestFailedTeamCityMessage(Name, msg, details) { Expected = "e" };
             message.Expected = "o";
-            Assert.That(message.ToString(), Is.EqualTo("##teamcity[testFailed name='t1' message='m1' details='d1' expected='o']"));
+            Assert.That(message.ToString(), Is.EqualTo("##teamcity[testFailed type='comparisonFailure' name='t1' message='m1' details='d1' expected='o']"));
         }
         
         [Test]
@@ -262,7 +262,7 @@ namespace Tests
             const string msg = "m1";
             const string details = "d1";
             TestFailedTeamCityMessage message = new TestFailedTeamCityMessage(Name, msg, details) { Actual = "e" };
-            Assert.That(message.ToString(), Is.EqualTo("##teamcity[testFailed name='t1' message='m1' details='d1' actual='e']"));
+            Assert.That(message.ToString(), Is.EqualTo("##teamcity[testFailed type='comparisonFailure' name='t1' message='m1' details='d1' actual='e']"));
         }
         
         [Test]
@@ -272,7 +272,7 @@ namespace Tests
             const string details = "d1";
             TestFailedTeamCityMessage message = new TestFailedTeamCityMessage(Name, msg, details) { Actual = "e" };
             message.Actual = "o";
-            Assert.That(message.ToString(), Is.EqualTo("##teamcity[testFailed name='t1' message='m1' details='d1' actual='o']"));
+            Assert.That(message.ToString(), Is.EqualTo("##teamcity[testFailed type='comparisonFailure' name='t1' message='m1' details='d1' actual='o']"));
         }
 
         [Test]

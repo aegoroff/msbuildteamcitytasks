@@ -11,7 +11,11 @@ using MSBuild.TeamCity.Tasks.Messages;
 namespace MSBuild.TeamCity.Tasks
 {
     ///<summary>
-    /// Test ignore message
+    /// Indicates that the test "test.name" is present but was not run (was ignored). 
+    /// For an ignored test, report the <see cref="TestIgnored"/> message between 
+    /// corresponding <see cref="TestStarted"/> and <see cref="TestFinished"/> messages. 
+    /// <see cref="TestIgnored"/> message can be reported without 
+    /// matching <see cref="TestStarted"/> and <see cref="TestFinished"/> messages.
     ///</summary>
     /// <example>Ignores a test
     /// <code><![CDATA[

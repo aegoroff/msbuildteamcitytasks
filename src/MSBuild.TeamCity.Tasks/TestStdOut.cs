@@ -11,7 +11,10 @@ using MSBuild.TeamCity.Tasks.Messages;
 namespace MSBuild.TeamCity.Tasks
 {
     ///<summary>
-    /// Test output task
+    /// Test output reporting (to be shown as the test result if the test fails). 
+    /// A test should have no more then one <see cref="TestStdOut"/> message. 
+    /// The messages should appear inside <see cref="TestStarted"/> and <see cref="TestFinished"/> messages with the 
+    /// matching name attributes.
     ///</summary>
     /// <example>Output test data
     /// <code><![CDATA[

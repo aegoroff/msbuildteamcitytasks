@@ -11,7 +11,9 @@ using MSBuild.TeamCity.Tasks.Messages;
 namespace MSBuild.TeamCity.Tasks
 {
     ///<summary>
-    /// Test failed message.
+    /// Indicates that the test with the name "test.name" has failed. Only one <see cref="TestFailed"/> messages should 
+    /// appear for a given test name. actual and expected attributes can be used for 
+    /// reporting comparison failure. The values will be used when opening the test in the IDE.
     ///</summary>
     /// <example>Finishes a test
     /// <code><![CDATA[

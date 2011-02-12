@@ -11,7 +11,11 @@ using MSBuild.TeamCity.Tasks.Messages;
 namespace MSBuild.TeamCity.Tasks
 {
     ///<summary>
-    /// Test start message.
+    /// Indicates that test has been started. 
+    /// Optional CaptureStandardOutput boolean attribute can be present in the <see cref="TestStarted"/> service message to 
+    /// identify whether to include output received between <see cref="TestStarted"/> and <see cref="TestFinished"/> messages 
+    /// as test output or not. The default value is false. 
+    /// If true standard output is reported as test output and standard error as test error output.
     ///</summary>
     /// <example>Starts a test
     /// <code><![CDATA[

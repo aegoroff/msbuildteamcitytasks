@@ -50,5 +50,30 @@ namespace MSBuild.TeamCity.Tasks.Messages
         /// Represents MS test report "mstest"
         /// </summary>
         Mstest,
+        
+        /// <summary>
+        /// Represents Google Test XML reports "gtest"
+        /// </summary>
+        Gtest,
+        
+        /// <summary>
+        /// Represents JSLint XML reports "jslint"
+        /// </summary>
+        Jslint,
+        
+        /// <summary>
+        /// Represents Checkstyle inspections XML reports "checkstyle"
+        /// </summary>
+        CheckStyle,
+        
+        /// <summary>
+        /// Represents PMD Copy/Paste Detector (CPD) XML reports "pmdCpd"
+        /// </summary>
+        PmdCpd,
+        
+        /// <summary>
+        /// Represents ReSharper dupfinder.exe XML reports "ReSharperDupFinder"
+        /// </summary>
+        ReSharperDupFinder,
     }
 }

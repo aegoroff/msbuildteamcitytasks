@@ -140,6 +140,11 @@ namespace Tests
         [TestCase( ImportType.Pmd, "##teamcity[importData type='pmd' path='p']" )]
         [TestCase( ImportType.FindBugs, "##teamcity[importData type='findBugs' path='p']" )]
         [TestCase( ImportType.Mstest, "##teamcity[importData type='mstest' path='p']" )]
+        [TestCase( ImportType.Gtest, "##teamcity[importData type='gtest' path='p']" )]
+        [TestCase( ImportType.Jslint, "##teamcity[importData type='jslint' path='p']" )]
+        [TestCase( ImportType.CheckStyle, "##teamcity[importData type='checkstyle' path='p']" )]
+        [TestCase( ImportType.PmdCpd, "##teamcity[importData type='pmdCpd' path='p']" )]
+        [TestCase( ImportType.ReSharperDupFinder, "##teamcity[importData type='ReSharperDupFinder' path='p']" )]
         public void ImportData( ImportType type, string expected )
         {
             ImportDataTeamCityMessage message = new ImportDataTeamCityMessage(type, Path);

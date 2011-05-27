@@ -79,6 +79,16 @@ namespace MSBuild.TeamCity.Tasks.Messages
                     return "dotNetCoverage";
                 case ImportType.Mstest:
                     return "mstest";
+                case ImportType.Gtest:
+                    return "gtest";
+                case ImportType.Jslint:
+                    return "jslint";
+                case ImportType.CheckStyle:
+                    return "checkstyle";
+                case ImportType.PmdCpd:
+                    return "pmdCpd";
+                case ImportType.ReSharperDupFinder:
+                    return "ReSharperDupFinder";
                 default:
                     throw new NotSupportedException();
             }

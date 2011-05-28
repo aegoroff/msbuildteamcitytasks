@@ -73,6 +73,11 @@ namespace MSBuild.TeamCity.Tasks
         /// <b>FxCop</b> for FxCop inspections XML reports<br/>
         /// <b>dotNetCoverage</b> Starting with TeamCity 5.0, NUnit Test Launcher bundles support for .NET code coverage using NCover and PartCover coverage engines.<br/>
         /// <b>mstest</b> for MSTest XML reports. Starting with TeamCity 5.1<br/>
+        /// <b>checkstyle</b> for Checkstyle inspections XML reports. Starting with TeamCity 6.5<br/>
+        /// <b>pmdCpd</b> for PMD Copy/Paste Detector (CPD) XML reports. Starting with TeamCity 6.5<br/>
+        /// <b>gtest</b> for Google Test XML reports. Starting with TeamCity 6.5<br/>
+        /// <b>jslint</b> for JSLint XML reports. Starting with TeamCity 6.5<br/>
+        /// <b>ReSharperDupFinder</b> for ReSharper dupfinder.exe XML reports. Starting with TeamCity 6.5<br/>
         /// </summary>
         [Required]
         public string Type { get; set; }

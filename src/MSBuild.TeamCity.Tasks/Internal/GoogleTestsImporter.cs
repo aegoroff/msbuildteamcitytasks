@@ -47,7 +47,7 @@ namespace MSBuild.TeamCity.Tasks.Internal
                 reader.Read();
                 result.Messages = new List<TeamCityMessage>
                                       {
-                                          new ImportDataTeamCityMessage(ImportType.Junit, xmlPath)
+                                          new ImportDataTeamCityMessage(ImportType.Gtest, xmlPath)
                                       };
             }
             catch ( Exception e )

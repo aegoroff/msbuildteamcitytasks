@@ -13,7 +13,7 @@ namespace Tests.Utils
     {
         private readonly XmlWriter _xw;
 
-        protected BaseWriter( XmlWriter xw )
+        protected BaseWriter(XmlWriter xw)
         {
             _xw = xw;
         }

@@ -19,18 +19,18 @@ namespace Tests
         private const string Separator = ",";
         private readonly int[] _values = new[] { 1, 2 };
 
-        [TestCase( Filter, new[] { 1, 2 }, Head, Trail )]
-        [TestCase( "", new int[0], Head, Trail )]
-        [TestCase( "1,2", new[] { 1, 2 }, null, null )]
-        public void OneCall( string expected, IEnumerable<int> enumerator, string head, string trail )
+        [TestCase(Filter, new[] { 1, 2 }, Head, Trail)]
+        [TestCase("", new int[0], Head, Trail)]
+        [TestCase("1,2", new[] { 1, 2 }, null, null)]
+        public void OneCall(string expected, IEnumerable<int> enumerator, string head, string trail)
         {
             SequenceBuilder<int> builder = new SequenceBuilder<int>(enumerator, Separator, head, trail);
             Assert.That(builder.ToString(), Is.EqualTo(expected));
         }
 
-        [TestCase( Filter, new[] { 1, 2 } )]
-        [TestCase( "", new int[0] )]
-        public void ManyCalls( string expected, IEnumerable<int> enumerator )
+        [TestCase(Filter, new[] { 1, 2 })]
+        [TestCase("", new int[0])]
+        public void ManyCalls(string expected, IEnumerable<int> enumerator)
         {
             SequenceBuilder<int> builder = new SequenceBuilder<int>(enumerator, Separator, Head, Trail);
             Assert.That(builder.ToString(), Is.EqualTo(expected));

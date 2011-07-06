@@ -22,7 +22,7 @@ namespace MSBuild.TeamCity.Tasks.Messages
         ///<param name="name">Test's name</param>
         ///<param name="message">Failure message</param>
         ///<param name="details">Failure details like stack trace</param>
-        public TestFailedTeamCityMessage( string name, string message, string details ) : base(name)
+        public TestFailedTeamCityMessage(string name, string message, string details) : base(name)
         {
             Attributes.Add("message", message);
             Attributes.Add("details", details);
@@ -57,16 +57,16 @@ namespace MSBuild.TeamCity.Tasks.Messages
         private void InsertType()
         {
             MessageAttributeItem item = new MessageAttributeItem(TypeAttr, TypeAttrValue);
-            if ( Attributes.Contains(item) )
+            if (Attributes.Contains(item))
             {
                 Attributes.Remove(item);
             }
             Attributes.Insert(0, item);
         }
 
-        private void SetAttributeValue( string value, string attr )
+        private void SetAttributeValue(string value, string attr)
         {
-            if (!string.IsNullOrEmpty(value) )
+            if (!string.IsNullOrEmpty(value))
             {
                 InsertType();
             }

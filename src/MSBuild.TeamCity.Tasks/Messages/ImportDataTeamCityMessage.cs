@@ -18,7 +18,7 @@ namespace MSBuild.TeamCity.Tasks.Messages
         ///</summary>
         ///<param name="type">Data type. FxCop for example</param>
         ///<param name="path">Full path to file</param>
-        public ImportDataTeamCityMessage( ImportType type, string path ) : this(type.ImportTypeToString(), path)
+        public ImportDataTeamCityMessage(ImportType type, string path) : this(type.ImportTypeToString(), path)
         {
         }
 
@@ -27,7 +27,7 @@ namespace MSBuild.TeamCity.Tasks.Messages
         ///</summary>
         ///<param name="type">Data type. FxCop for example</param>
         ///<param name="path">Full path to file</param>
-        public ImportDataTeamCityMessage( string type, string path )
+        public ImportDataTeamCityMessage(string type, string path)
         {
             Attributes.Add("type", type);
             Attributes.Add("path", path);
@@ -39,9 +39,9 @@ namespace MSBuild.TeamCity.Tasks.Messages
         ///<param name="type">Data type. FxCop for example</param>
         ///<param name="path">Full path to file</param>
         ///<param name="tool">Here the tool name value can be partcover, ncover, or ncover3, depending on selected coverage tool in the coverage settings.</param>
-        public ImportDataTeamCityMessage( ImportType type, string path, DotNetCoverageTool tool ) : this(type, path)
+        public ImportDataTeamCityMessage(ImportType type, string path, DotNetCoverageTool tool) : this(type, path)
         {
-            if ( type != ImportType.DotNetCoverage )
+            if (type != ImportType.DotNetCoverage)
             {
                 throw new NotSupportedException();
             }

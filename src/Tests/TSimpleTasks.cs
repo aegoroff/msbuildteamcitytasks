@@ -202,7 +202,7 @@ namespace Tests
             EnableServiceMessages task = new EnableServiceMessages(Logger);
             Assert.That(task.Execute());
         }
-        
+
         [Test]
         public void DisableServiceMessages()
         {
@@ -211,7 +211,7 @@ namespace Tests
             DisableServiceMessages task = new DisableServiceMessages(Logger);
             Assert.That(task.Execute());
         }
-        
+
         [Test]
         public void CompilationStarted()
         {
@@ -220,7 +220,7 @@ namespace Tests
             CompilationStarted task = new CompilationStarted(Logger);
             Assert.That(task.Execute());
         }
-        
+
         [Test]
         public void CompilationFinished()
         {
@@ -236,21 +236,21 @@ namespace Tests
             Expect.Once.On(Logger).Method(TTeamCityTaskImplementation.LogMessage).WithAnyArguments();
 
             TestSuiteStarted task = new TestSuiteStarted(Logger)
-            {
-                Name = "n"
-            };
+                                        {
+                                            Name = "n"
+                                        };
             Assert.That(task.Execute());
         }
-        
+
         [Test]
         public void TestSuiteFinished()
         {
             Expect.Once.On(Logger).Method(TTeamCityTaskImplementation.LogMessage).WithAnyArguments();
 
             TestSuiteFinished task = new TestSuiteFinished(Logger)
-            {
-                Name = "n"
-            };
+                                         {
+                                             Name = "n"
+                                         };
             Assert.That(task.Execute());
         }
 
@@ -260,104 +260,104 @@ namespace Tests
             Expect.Once.On(Logger).Method(TTeamCityTaskImplementation.LogMessage).WithAnyArguments();
 
             TestStarted task = new TestStarted(Logger)
-            {
-                Name = "n"
-            };
+                                   {
+                                       Name = "n"
+                                   };
             Assert.That(task.Execute());
         }
-        
+
         [Test]
         public void TestStartedCaptureStandardOutput()
         {
             Expect.Once.On(Logger).Method(TTeamCityTaskImplementation.LogMessage).WithAnyArguments();
 
             TestStarted task = new TestStarted(Logger)
-            {
-                Name = "n",
-                CaptureStandardOutput = true
-            };
+                                   {
+                                       Name = "n",
+                                       CaptureStandardOutput = true
+                                   };
             Assert.That(task.Execute());
         }
-        
+
         [Test]
         public void TestFinished()
         {
             Expect.Once.On(Logger).Method(TTeamCityTaskImplementation.LogMessage).WithAnyArguments();
 
             TestFinished task = new TestFinished(Logger)
-            {
-                Name = "n",
-                Duration = 3.0
-            };
+                                    {
+                                        Name = "n",
+                                        Duration = 3.0
+                                    };
             Assert.That(task.Execute());
         }
-        
+
         [Test]
         public void TestIgnored()
         {
             Expect.Once.On(Logger).Method(TTeamCityTaskImplementation.LogMessage).WithAnyArguments();
 
             TestIgnored task = new TestIgnored(Logger)
-            {
-                Name = "n",
-                Message = "Comment"
-            };
+                                   {
+                                       Name = "n",
+                                       Message = "Comment"
+                                   };
             Assert.That(task.Execute());
         }
-        
+
         [Test]
         public void TestStdOut()
         {
             Expect.Once.On(Logger).Method(TTeamCityTaskImplementation.LogMessage).WithAnyArguments();
 
             TestStdOut task = new TestStdOut(Logger)
-            {
-                Name = "n",
-                Out = "out"
-            };
+                                  {
+                                      Name = "n",
+                                      Out = "out"
+                                  };
             Assert.That(task.Execute());
         }
-        
+
         [Test]
         public void TestStdErr()
         {
             Expect.Once.On(Logger).Method(TTeamCityTaskImplementation.LogMessage).WithAnyArguments();
 
             TestStdErr task = new TestStdErr(Logger)
-            {
-                Name = "n",
-                Out = "out"
-            };
+                                  {
+                                      Name = "n",
+                                      Out = "out"
+                                  };
             Assert.That(task.Execute());
         }
-        
+
         [Test]
         public void TestFailedRequired()
         {
             Expect.Once.On(Logger).Method(TTeamCityTaskImplementation.LogMessage).WithAnyArguments();
 
             TestFailed task = new TestFailed(Logger)
-            {
-                Name = "n",
-                Message = "m",
-                Details = "d"
-            };
+                                  {
+                                      Name = "n",
+                                      Message = "m",
+                                      Details = "d"
+                                  };
             Assert.That(task.Execute());
         }
-        
+
         [Test]
         public void TestFailedAll()
         {
             Expect.Once.On(Logger).Method(TTeamCityTaskImplementation.LogMessage).WithAnyArguments();
 
             TestFailed task = new TestFailed(Logger)
-            {
-                Name = "n",
-                Message = "m",
-                Details = "d",
-                Actual = "1",
-                Expected = "2",
-            };
+                                  {
+                                      Name = "n",
+                                      Message = "m",
+                                      Details = "d",
+                                      Actual = "1",
+                                      Expected = "2",
+                                  };
             Assert.That(task.Execute());
         }
     }

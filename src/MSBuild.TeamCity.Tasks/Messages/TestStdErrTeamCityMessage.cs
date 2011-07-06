@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Created by: egr
  * Created at: 27.01.2011
  * © 2007-2011 Alexander Egorov
@@ -16,7 +16,7 @@ namespace MSBuild.TeamCity.Tasks.Messages
         ///</summary>
         ///<param name="name">Test's name</param>
         ///<param name="output">Test output</param>
-        public TestStdErrTeamCityMessage( string name, string output )
+        public TestStdErrTeamCityMessage(string name, string output)
             : base(name)
         {
             Attributes.Add("out", output);

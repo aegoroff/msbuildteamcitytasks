@@ -19,7 +19,7 @@ namespace MSBuild.TeamCity.Tasks.Internal
         ///<param name="logger">Logger instance</param>
         ///<param name="continueOnFailures">Whether to continue execution on broken tests</param>
         ///<param name="testResultsPath">Path to tests' xml import</param>
-        public GoogleTestsPlainImporter( ILogger logger, bool continueOnFailures, string testResultsPath )
+        public GoogleTestsPlainImporter(ILogger logger, bool continueOnFailures, string testResultsPath)
             : base(logger, continueOnFailures)
         {
             _testResultsPath = testResultsPath;

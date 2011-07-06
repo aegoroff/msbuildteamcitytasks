@@ -23,7 +23,7 @@ namespace MSBuild.TeamCity.Tasks.Internal
         /// </summary>
         /// <param name="logger">Logger instance</param>
         /// <param name="continueOnFailures">Whether to continue build in case of failing tests</param>
-        protected GoogleTestsImporter( ILogger logger, bool continueOnFailures )
+        protected GoogleTestsImporter(ILogger logger, bool continueOnFailures)
         {
             _logger = logger;
             _continueOnFailures = continueOnFailures;
@@ -50,22 +50,22 @@ namespace MSBuild.TeamCity.Tasks.Internal
                                           new ImportDataTeamCityMessage(ImportType.Gtest, xmlPath)
                                       };
             }
-            catch ( Exception e )
+            catch (Exception e)
             {
                 _logger.LogError(e.ToString());
             }
             finally
             {
-                if ( reader != null )
+                if (reader != null)
                 {
                     reader.Dispose();
                 }
             }
-            if ( _continueOnFailures )
+            if (_continueOnFailures)
             {
                 result.Status = !_logger.HasLoggedErrors;
             }
-            else if ( reader == null )
+            else if (reader == null)
             {
                 result.Status = false;
             }

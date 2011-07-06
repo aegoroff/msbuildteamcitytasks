@@ -36,7 +36,7 @@ namespace MSBuild.TeamCity.Tasks
         /// logger specified
         ///</summary>
         ///<param name="logger"><see cref="ILogger"/> implementation</param>
-        public BuildProgressStart( ILogger logger )
+        public BuildProgressStart(ILogger logger)
             : base(logger)
         {
         }

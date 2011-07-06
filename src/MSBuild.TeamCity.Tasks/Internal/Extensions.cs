@@ -23,33 +23,33 @@ namespace MSBuild.TeamCity.Tasks.Internal
         /// <param name="enumerable">Sequence to concatenate</param>
         /// <param name="separator">Separator between items</param>
         /// <returns>concatenated string</returns>
-        internal static string Join( this IEnumerable<string> enumerable, string separator )
+        internal static string Join(this IEnumerable<string> enumerable, string separator)
         {
             return string.Join(separator, enumerable.ToArray());
         }
 
-        internal static void AddRange( this IList<string> list, IEnumerable<ITaskItem> items )
+        internal static void AddRange(this IList<string> list, IEnumerable<ITaskItem> items)
         {
-            if ( items == null )
+            if (items == null)
             {
                 return;
             }
             list.AddRange(items.Select(item => item.ItemSpec));
         }
 
-        internal static void AddRange<T>( this IList<T> list, IEnumerable<T> items )
+        internal static void AddRange<T>(this IList<T> list, IEnumerable<T> items)
         {
-            if ( items == null )
+            if (items == null)
             {
                 return;
             }
-            foreach ( T include in items )
+            foreach (T include in items)
             {
                 list.Add(include);
             }
         }
 
-        internal static string GetDirectoryName( this string path )
+        internal static string GetDirectoryName(this string path)
         {
             return Path.GetDirectoryName(Path.GetFullPath(path));
         }

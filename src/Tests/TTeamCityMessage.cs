@@ -133,36 +133,36 @@ namespace Tests
             Assert.That(message.ToString(), Is.EqualTo("##teamcity[importData type='FxCop' path='p']"));
         }
 
-        [TestCase( ImportType.FxCop, "##teamcity[importData type='FxCop' path='p']" )]
-        [TestCase( ImportType.Junit, "##teamcity[importData type='junit' path='p']" )]
-        [TestCase( ImportType.Nunit, "##teamcity[importData type='nunit' path='p']" )]
-        [TestCase( ImportType.Surefire, "##teamcity[importData type='surefire' path='p']" )]
-        [TestCase( ImportType.Pmd, "##teamcity[importData type='pmd' path='p']" )]
-        [TestCase( ImportType.FindBugs, "##teamcity[importData type='findBugs' path='p']" )]
-        [TestCase( ImportType.Mstest, "##teamcity[importData type='mstest' path='p']" )]
-        [TestCase( ImportType.Gtest, "##teamcity[importData type='gtest' path='p']" )]
-        [TestCase( ImportType.Jslint, "##teamcity[importData type='jslint' path='p']" )]
-        [TestCase( ImportType.CheckStyle, "##teamcity[importData type='checkstyle' path='p']" )]
-        [TestCase( ImportType.PmdCpd, "##teamcity[importData type='pmdCpd' path='p']" )]
-        [TestCase( ImportType.ReSharperDupFinder, "##teamcity[importData type='ReSharperDupFinder' path='p']" )]
-        public void ImportData( ImportType type, string expected )
+        [TestCase(ImportType.FxCop, "##teamcity[importData type='FxCop' path='p']")]
+        [TestCase(ImportType.Junit, "##teamcity[importData type='junit' path='p']")]
+        [TestCase(ImportType.Nunit, "##teamcity[importData type='nunit' path='p']")]
+        [TestCase(ImportType.Surefire, "##teamcity[importData type='surefire' path='p']")]
+        [TestCase(ImportType.Pmd, "##teamcity[importData type='pmd' path='p']")]
+        [TestCase(ImportType.FindBugs, "##teamcity[importData type='findBugs' path='p']")]
+        [TestCase(ImportType.Mstest, "##teamcity[importData type='mstest' path='p']")]
+        [TestCase(ImportType.Gtest, "##teamcity[importData type='gtest' path='p']")]
+        [TestCase(ImportType.Jslint, "##teamcity[importData type='jslint' path='p']")]
+        [TestCase(ImportType.CheckStyle, "##teamcity[importData type='checkstyle' path='p']")]
+        [TestCase(ImportType.PmdCpd, "##teamcity[importData type='pmdCpd' path='p']")]
+        [TestCase(ImportType.ReSharperDupFinder, "##teamcity[importData type='ReSharperDupFinder' path='p']")]
+        public void ImportData(ImportType type, string expected)
         {
             ImportDataTeamCityMessage message = new ImportDataTeamCityMessage(type, Path);
             Assert.That(message.ToString(), Is.EqualTo(expected));
         }
 
-        [TestCase( DotNetCoverageTool.PartCover,
-            "##teamcity[importData type='dotNetCoverage' path='p' tool='partcover']" )]
-        [TestCase( DotNetCoverageTool.Ncover, "##teamcity[importData type='dotNetCoverage' path='p' tool='ncover']" )]
-        [TestCase( DotNetCoverageTool.Ncover3, "##teamcity[importData type='dotNetCoverage' path='p' tool='ncover3']" )]
-        public void ImportDataDotNetCoverage( DotNetCoverageTool tool, string expected )
+        [TestCase(DotNetCoverageTool.PartCover,
+            "##teamcity[importData type='dotNetCoverage' path='p' tool='partcover']")]
+        [TestCase(DotNetCoverageTool.Ncover, "##teamcity[importData type='dotNetCoverage' path='p' tool='ncover']")]
+        [TestCase(DotNetCoverageTool.Ncover3, "##teamcity[importData type='dotNetCoverage' path='p' tool='ncover3']")]
+        public void ImportDataDotNetCoverage(DotNetCoverageTool tool, string expected)
         {
             ImportDataTeamCityMessage message = new ImportDataTeamCityMessage(ImportType.DotNetCoverage, Path, tool);
             Assert.That(message.ToString(), Is.EqualTo(expected));
         }
 
         [Test]
-        [ExpectedException( typeof(NotSupportedException) )]
+        [ExpectedException(typeof(NotSupportedException))]
         public void ImportDataDotNetCoverageNotSupported()
         {
             new ImportDataTeamCityMessage(ImportType.Nunit, Path, DotNetCoverageTool.Ncover3);
@@ -212,7 +212,7 @@ namespace Tests
             TestFailedTeamCityMessage message = new TestFailedTeamCityMessage(Name, msg, details);
             Assert.That(message.ToString(), Is.EqualTo("##teamcity[testFailed name='t1' message='m1' details='d1']"));
         }
-        
+
         [Test]
         public void TestFailedFull()
         {
@@ -221,9 +221,11 @@ namespace Tests
             TestFailedTeamCityMessage message = new TestFailedTeamCityMessage(Name, msg, details);
             message.Expected = "e";
             message.Actual = "a";
-            Assert.That(message.ToString(), Is.EqualTo("##teamcity[testFailed type='comparisonFailure' name='t1' message='m1' details='d1' expected='e' actual='a']"));
+            Assert.That(message.ToString(),
+                        Is.EqualTo(
+                            "##teamcity[testFailed type='comparisonFailure' name='t1' message='m1' details='d1' expected='e' actual='a']"));
         }
-        
+
         [Test]
         public void TestFailedFullEmpty()
         {
@@ -234,7 +236,7 @@ namespace Tests
             message.Actual = string.Empty;
             Assert.That(message.ToString(), Is.EqualTo("##teamcity[testFailed name='t1' message='m1' details='d1']"));
         }
-        
+
         [Test]
         public void TestFailedFullEmptyExpected()
         {
@@ -243,9 +245,11 @@ namespace Tests
             TestFailedTeamCityMessage message = new TestFailedTeamCityMessage(Name, msg, details);
             message.Expected = string.Empty;
             message.Actual = "a";
-            Assert.That(message.ToString(), Is.EqualTo("##teamcity[testFailed type='comparisonFailure' name='t1' message='m1' details='d1' actual='a']"));
+            Assert.That(message.ToString(),
+                        Is.EqualTo(
+                            "##teamcity[testFailed type='comparisonFailure' name='t1' message='m1' details='d1' actual='a']"));
         }
-        
+
         [Test]
         public void TestFailedFullEmptyActual()
         {
@@ -254,9 +258,11 @@ namespace Tests
             TestFailedTeamCityMessage message = new TestFailedTeamCityMessage(Name, msg, details);
             message.Expected = "e";
             message.Actual = string.Empty;
-            Assert.That(message.ToString(), Is.EqualTo("##teamcity[testFailed type='comparisonFailure' name='t1' message='m1' details='d1' expected='e']"));
+            Assert.That(message.ToString(),
+                        Is.EqualTo(
+                            "##teamcity[testFailed type='comparisonFailure' name='t1' message='m1' details='d1' expected='e']"));
         }
-        
+
         [Test]
         public void TestFailedExpectedNotSet()
         {
@@ -265,16 +271,18 @@ namespace Tests
             TestFailedTeamCityMessage message = new TestFailedTeamCityMessage(Name, msg, details);
             Assert.That(message.Expected, Is.Empty);
         }
-        
+
         [Test]
         public void TestFailedWithExpectedAttr()
         {
             const string msg = "m1";
             const string details = "d1";
             TestFailedTeamCityMessage message = new TestFailedTeamCityMessage(Name, msg, details) { Expected = "e" };
-            Assert.That(message.ToString(), Is.EqualTo("##teamcity[testFailed type='comparisonFailure' name='t1' message='m1' details='d1' expected='e']"));
+            Assert.That(message.ToString(),
+                        Is.EqualTo(
+                            "##teamcity[testFailed type='comparisonFailure' name='t1' message='m1' details='d1' expected='e']"));
         }
-        
+
         [Test]
         public void TestFailedWithExpectedAttrOverwrite()
         {
@@ -282,9 +290,11 @@ namespace Tests
             const string details = "d1";
             TestFailedTeamCityMessage message = new TestFailedTeamCityMessage(Name, msg, details) { Expected = "e" };
             message.Expected = "o";
-            Assert.That(message.ToString(), Is.EqualTo("##teamcity[testFailed type='comparisonFailure' name='t1' message='m1' details='d1' expected='o']"));
+            Assert.That(message.ToString(),
+                        Is.EqualTo(
+                            "##teamcity[testFailed type='comparisonFailure' name='t1' message='m1' details='d1' expected='o']"));
         }
-        
+
         [Test]
         public void TestFailedActualNotSet()
         {
@@ -293,16 +303,18 @@ namespace Tests
             TestFailedTeamCityMessage message = new TestFailedTeamCityMessage(Name, msg, details);
             Assert.That(message.Actual, Is.Empty);
         }
-        
+
         [Test]
         public void TestFailedWithActualAttr()
         {
             const string msg = "m1";
             const string details = "d1";
             TestFailedTeamCityMessage message = new TestFailedTeamCityMessage(Name, msg, details) { Actual = "e" };
-            Assert.That(message.ToString(), Is.EqualTo("##teamcity[testFailed type='comparisonFailure' name='t1' message='m1' details='d1' actual='e']"));
+            Assert.That(message.ToString(),
+                        Is.EqualTo(
+                            "##teamcity[testFailed type='comparisonFailure' name='t1' message='m1' details='d1' actual='e']"));
         }
-        
+
         [Test]
         public void TestFailedWithActualAttrOverwrite()
         {
@@ -310,7 +322,9 @@ namespace Tests
             const string details = "d1";
             TestFailedTeamCityMessage message = new TestFailedTeamCityMessage(Name, msg, details) { Actual = "e" };
             message.Actual = "o";
-            Assert.That(message.ToString(), Is.EqualTo("##teamcity[testFailed type='comparisonFailure' name='t1' message='m1' details='d1' actual='o']"));
+            Assert.That(message.ToString(),
+                        Is.EqualTo(
+                            "##teamcity[testFailed type='comparisonFailure' name='t1' message='m1' details='d1' actual='o']"));
         }
 
         [Test]
@@ -338,7 +352,7 @@ namespace Tests
         }
 
         [Test]
-        [ExpectedException( typeof(ArgumentException) )]
+        [ExpectedException(typeof(ArgumentException))]
         public void DotNetCoverageInvalidKey()
         {
             new DotNetCoverMessage("i", "v");
@@ -353,9 +367,9 @@ namespace Tests
             Assert.That(message.ToString(), Is.EqualTo("##teamcity[dotNetCoverage ncover3_home='v']"));
         }
 
-        [TestCase( "compilationStarted", "##teamcity[compilationStarted compiler='c']" )]
-        [TestCase( "compilationFinished", "##teamcity[compilationFinished compiler='c']" )]
-        public void Compilation( string msg, string expected )
+        [TestCase("compilationStarted", "##teamcity[compilationStarted compiler='c']")]
+        [TestCase("compilationFinished", "##teamcity[compilationFinished compiler='c']")]
+        public void Compilation(string msg, string expected)
         {
             const string compiler = "c";
             CompilationMessage message = new CompilationMessage(compiler, msg);

@@ -17,7 +17,7 @@ namespace MSBuild.TeamCity.Tasks.Messages
         /// Initializes a new instance of the <see cref="AttributeLessMessage"/> class using message name specified
         ///</summary>
         ///<param name="message">TeamCity message name</param>
-        public AttributeLessMessage( string message )
+        public AttributeLessMessage(string message)
         {
             _message = message;
         }

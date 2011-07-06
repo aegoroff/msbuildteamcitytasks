@@ -23,7 +23,7 @@ namespace MSBuild.TeamCity.Tasks.Internal
         /// logger specified
         ///</summary>
         ///<param name="logger"><see cref="ILogger"/> implementation</param>
-        public TeamCityTaskImplementation( ILogger logger )
+        public TeamCityTaskImplementation(ILogger logger)
         {
             _logger = logger;
         }
@@ -32,9 +32,9 @@ namespace MSBuild.TeamCity.Tasks.Internal
         /// Writes <see cref="TeamCityMessage"/> into MSBuild log using MessageImportance.High level
         /// </summary>
         /// <param name="message">Message to write</param>
-        public void Write( TeamCityMessage message )
+        public void Write(TeamCityMessage message)
         {
-            if (!string.IsNullOrEmpty(Environment.GetEnvironmentVariable(TeamcityDiscoveryEnvVariable)) )
+            if (!string.IsNullOrEmpty(Environment.GetEnvironmentVariable(TeamcityDiscoveryEnvVariable)))
             {
                 _logger.LogMessage(MessageImportance.High, message.ToString());
             }
@@ -47,7 +47,7 @@ namespace MSBuild.TeamCity.Tasks.Internal
         /// <returns>
         /// true if the task successfully executed; otherwise, false.
         /// </returns>
-        public bool Execute( ExecutionResult result )
+        public bool Execute(ExecutionResult result)
         {
             return Execute(result, false, null);
         }
@@ -61,11 +61,11 @@ namespace MSBuild.TeamCity.Tasks.Internal
         /// <returns>
         /// true if the task successfully executed; otherwise, false.
         /// </returns>
-        public bool Execute( ExecutionResult result, bool isAddTimestamp, string flowId )
+        public bool Execute(ExecutionResult result, bool isAddTimestamp, string flowId)
         {
-            if ( result.Messages != null )
+            if (result.Messages != null)
             {
-                foreach ( TeamCityMessage message in result.Messages )
+                foreach (TeamCityMessage message in result.Messages)
                 {
                     message.FlowId = flowId;
                     message.IsAddTimestamp = isAddTimestamp;

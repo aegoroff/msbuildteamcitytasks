@@ -60,7 +60,7 @@ namespace MSBuild.TeamCity.Tasks.Messages
                                                                       DateTime.Now.ToString(
                                                                           "yyyy-MM-ddTHH:mm:ss.fffzzz",
                                                                           CultureInfo.InvariantCulture));
-            if ( IsAddTimestamp && !_attributes.Contains(timestamp) )
+            if (IsAddTimestamp && !_attributes.Contains(timestamp))
             {
                 _attributes.Add(timestamp);
             }
@@ -71,14 +71,15 @@ namespace MSBuild.TeamCity.Tasks.Messages
                 _attributes.Add(flowId);
             }
 
-            if ( _attributes.Count == 0 )
+            if (_attributes.Count == 0)
             {
                 return TeamCityMessageHead + Message + TeamCityMessageTrail;
             }
 
             SequenceBuilder<MessageAttributeItem> sequence = new SequenceBuilder<MessageAttributeItem>(_attributes,
                                                                                                        Space,
-                                                                                                       TeamCityMessageHead + Message + Space,
+                                                                                                       TeamCityMessageHead +
+                                                                                                       Message + Space,
                                                                                                        TeamCityMessageTrail);
 
             return sequence.ToString();
@@ -89,9 +90,9 @@ namespace MSBuild.TeamCity.Tasks.Messages
         /// </summary>
         /// <param name="attr">attribute name</param>
         /// <returns>The attribute's value or empty string if no attribute found</returns>
-        protected string GetAttributeValue( string attr )
+        protected string GetAttributeValue(string attr)
         {
-            foreach ( MessageAttributeItem item in Attributes.Where(item => item.Name == attr) )
+            foreach (MessageAttributeItem item in Attributes.Where(item => item.Name == attr))
             {
                 return item.Value;
             }

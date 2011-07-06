@@ -19,7 +19,7 @@ namespace MSBuild.TeamCity.Tasks.Internal
         /// Initializes a new instance of the <see cref="ProcessRunner"/> class
         ///</summary>
         ///<param name="testExePath">Path to executable file</param>
-        internal ProcessRunner( string testExePath )
+        internal ProcessRunner(string testExePath)
         {
             _testExePath = testExePath;
         }
@@ -36,7 +36,7 @@ namespace MSBuild.TeamCity.Tasks.Internal
         /// <param name="commandLine">
         /// Command line
         /// </param>
-        internal void Run( params string[] commandLine )
+        internal void Run(params string[] commandLine)
         {
             Process app = new Process
                               {
@@ -51,10 +51,10 @@ namespace MSBuild.TeamCity.Tasks.Internal
                                       }
                               };
 
-            using ( app )
+            using (app)
             {
                 app.Start();
-                if ( ExecutionTimeoutMilliseconds > 0 )
+                if (ExecutionTimeoutMilliseconds > 0)
                 {
                     app.WaitForExit(ExecutionTimeoutMilliseconds);
                 }

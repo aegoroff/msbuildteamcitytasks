@@ -15,7 +15,7 @@ namespace MSBuild.TeamCity.Tasks.Messages
         /// Initializes a new instance of the <see cref="NamedTeamCityMessage"/> class
         ///</summary>
         ///<param name="name">Name attribute value</param>
-        protected NamedTeamCityMessage( string name )
+        protected NamedTeamCityMessage(string name)
         {
             Attributes.Add("name", name);
         }

@@ -11,7 +11,7 @@ namespace Tests.Utils
 {
     public class SuiteWriter : BaseWriter
     {
-        public SuiteWriter( XmlWriter xw, int testCount, int failCount, double time, string name ) : base(xw)
+        public SuiteWriter(XmlWriter xw, int testCount, int failCount, double time, string name) : base(xw)
         {
             xw.WriteStartElement("testsuite");
             xw.WriteAttributeString("tests", testCount.ToString());

@@ -16,7 +16,7 @@ namespace MSBuild.TeamCity.Tasks.Messages
         ///</summary>
         ///<param name="status">The status attribute may take following values: FAILURE, SUCCESS.</param>
         ///<param name="text">Some useful status text</param>
-        public BuildStatusTeamCityMessage( string status, string text )
+        public BuildStatusTeamCityMessage(string status, string text)
         {
             Attributes.Add("status", status);
             Attributes.Add("text", text);

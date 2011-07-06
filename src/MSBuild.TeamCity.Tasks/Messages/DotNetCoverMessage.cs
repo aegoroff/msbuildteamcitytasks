@@ -32,9 +32,9 @@ namespace MSBuild.TeamCity.Tasks.Messages
         /// <exception cref="ArgumentException">
         /// Occurs in case of invalid key name
         /// </exception>
-        public DotNetCoverMessage( string key, string value )
+        public DotNetCoverMessage(string key, string value)
         {
-            if (!_validKeys.ContainsKey(key) )
+            if (!_validKeys.ContainsKey(key))
             {
                 throw new ArgumentException("Invalid key name.", "key");
             }

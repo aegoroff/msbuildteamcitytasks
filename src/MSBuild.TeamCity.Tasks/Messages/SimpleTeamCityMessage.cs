@@ -18,7 +18,7 @@ namespace MSBuild.TeamCity.Tasks.Messages
         ///</summary>
         ///<param name="message">TeamCity message name</param>
         ///<param name="messageText">Build progress start message text</param>
-        public SimpleTeamCityMessage( string message, string messageText )
+        public SimpleTeamCityMessage(string message, string messageText)
         {
             _message = message;
             MessageText = messageText;

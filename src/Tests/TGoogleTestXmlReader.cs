@@ -41,7 +41,7 @@ namespace Tests
         [Test]
         public void ReadEmpty()
         {
-            using ( new SuiteWriter(_xw, 0, 0, 0.016, AllTests) )
+            using (new SuiteWriter(_xw, 0, 0, 0.016, AllTests))
             {
             }
             AssertFailures(0);
@@ -50,11 +50,11 @@ namespace Tests
         [Test]
         public void ReadOneSuiteAndTest()
         {
-            using ( new SuiteWriter(_xw, 1, 0, 0.016, AllTests) )
+            using (new SuiteWriter(_xw, 1, 0, 0.016, AllTests))
             {
-                using ( new SuiteWriter(_xw, 1, 0, 0.016, Suite1) )
+                using (new SuiteWriter(_xw, 1, 0, 0.016, Suite1))
                 {
-                    using ( new CaseWriter(_xw, Test1, 0.016, Suite1) )
+                    using (new CaseWriter(_xw, Test1, 0.016, Suite1))
                     {
                     }
                 }
@@ -65,7 +65,7 @@ namespace Tests
         [Test]
         public void ReadTwoSuiteAndTwoTest()
         {
-            using ( new SuiteWriter(_xw, 4, 0, 0.032, AllTests) )
+            using (new SuiteWriter(_xw, 4, 0, 0.032, AllTests))
             {
                 WriteTwoSuccess(Suite1);
                 WriteTwoSuccess(Suite2);
@@ -76,17 +76,17 @@ namespace Tests
         [Test]
         public void ReadTwoSuiteAndTwoTestOneFailed()
         {
-            using ( new SuiteWriter(_xw, 4, 1, 0.032, AllTests) )
+            using (new SuiteWriter(_xw, 4, 1, 0.032, AllTests))
             {
-                using ( new SuiteWriter(_xw, 1, 1, 0.016, Suite1) )
+                using (new SuiteWriter(_xw, 1, 1, 0.016, Suite1))
                 {
-                    using ( new CaseWriter(_xw, Test1, 0.016, Suite1) )
+                    using (new CaseWriter(_xw, Test1, 0.016, Suite1))
                     {
-                        using ( new FailWriter(_xw, "m1", "d1") )
+                        using (new FailWriter(_xw, "m1", "d1"))
                         {
                         }
                     }
-                    using ( new CaseWriter(_xw, Test2, 0, Suite1) )
+                    using (new CaseWriter(_xw, Test2, 0, Suite1))
                     {
                     }
                 }
@@ -98,12 +98,12 @@ namespace Tests
         [Test]
         public void ReadTwoSuiteAndTwoTestOneWithTwoFailures()
         {
-            using ( new SuiteWriter(_xw, 4, 2, 0.032, AllTests) )
+            using (new SuiteWriter(_xw, 4, 2, 0.032, AllTests))
             {
-                using ( new SuiteWriter(_xw, 1, 2, 0.016, Suite1) )
+                using (new SuiteWriter(_xw, 1, 2, 0.016, Suite1))
                 {
                     WriteTwoFails();
-                    using ( new CaseWriter(_xw, Test2, 0, Suite1) )
+                    using (new CaseWriter(_xw, Test2, 0, Suite1))
                     {
                     }
                 }
@@ -115,14 +115,14 @@ namespace Tests
         [Test]
         public void ReadTwoSuiteAndTwoTestOnWithOneFailureOtherWithTwoFailures()
         {
-            using ( new SuiteWriter(_xw, 4, 3, 0.032, AllTests) )
+            using (new SuiteWriter(_xw, 4, 3, 0.032, AllTests))
             {
-                using ( new SuiteWriter(_xw, 1, 3, 0.016, Suite1) )
+                using (new SuiteWriter(_xw, 1, 3, 0.016, Suite1))
                 {
                     WriteTwoFails();
-                    using ( new CaseWriter(_xw, Test2, 0, Suite1) )
+                    using (new CaseWriter(_xw, Test2, 0, Suite1))
                     {
-                        using ( new FailWriter(_xw, "m3", "d3") )
+                        using (new FailWriter(_xw, "m3", "d3"))
                         {
                         }
                     }
@@ -140,14 +140,14 @@ namespace Tests
             Assert.That(reader.FailuresCount, Is.EqualTo(expected));
         }
 
-        private void WriteTwoSuccess( string suite )
+        private void WriteTwoSuccess(string suite)
         {
-            using ( new SuiteWriter(_xw, 1, 0, 0.016, suite) )
+            using (new SuiteWriter(_xw, 1, 0, 0.016, suite))
             {
-                using ( new CaseWriter(_xw, Test1, 0.016, suite) )
+                using (new CaseWriter(_xw, Test1, 0.016, suite))
                 {
                 }
-                using ( new CaseWriter(_xw, Test2, 0, suite) )
+                using (new CaseWriter(_xw, Test2, 0, suite))
                 {
                 }
             }
@@ -155,12 +155,12 @@ namespace Tests
 
         private void WriteTwoFails()
         {
-            using ( new CaseWriter(_xw, Test1, 0.016, Suite1) )
+            using (new CaseWriter(_xw, Test1, 0.016, Suite1))
             {
-                using ( new FailWriter(_xw, "m1", "d1") )
+                using (new FailWriter(_xw, "m1", "d1"))
                 {
                 }
-                using ( new FailWriter(_xw, "m2", "d2") )
+                using (new FailWriter(_xw, "m2", "d2"))
                 {
                 }
             }

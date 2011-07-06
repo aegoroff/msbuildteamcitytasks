@@ -32,7 +32,7 @@ namespace MSBuild.TeamCity.Tasks.Internal
         /// none of the negative patterns. '?' matches any single character; '*' 
         /// matches any substring; ':' separates two patterns.
         /// </param>
-        public GoogleTestCommandLine( bool catchExceptions, bool runDisabledTests, string filter )
+        public GoogleTestCommandLine(bool catchExceptions, bool runDisabledTests, string filter)
         {
             _catchExceptions = catchExceptions;
             _runDisabledTests = runDisabledTests;
@@ -62,15 +62,15 @@ namespace MSBuild.TeamCity.Tasks.Internal
         protected override IEnumerable<DictionaryEntry> EnumerateOptions()
         {
             yield return new DictionaryEntry(OutputOpt, "xml:");
-            if ( _runDisabledTests )
+            if (_runDisabledTests)
             {
                 yield return new DictionaryEntry(RunDisabledTestsOpt, string.Empty);
             }
-            if ( _catchExceptions )
+            if (_catchExceptions)
             {
                 yield return new DictionaryEntry(CatchExceptionsOpt, string.Empty);
             }
-            if (!string.IsNullOrEmpty(_filter) )
+            if (!string.IsNullOrEmpty(_filter))
             {
                 yield return new DictionaryEntry(FilterOpt, _filter);
             }

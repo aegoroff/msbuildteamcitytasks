@@ -34,7 +34,7 @@ namespace MSBuild.TeamCity.Tasks
         /// <param name="logger">
         /// Logger implementation
         /// </param>
-        protected TeamCityTask( ILogger logger )
+        protected TeamCityTask(ILogger logger)
         {
             Initialize(logger);
         }
@@ -85,7 +85,7 @@ namespace MSBuild.TeamCity.Tasks
             {
                 return _implementation.Execute(ExecutionResult, IsAddTimestamp, FlowId);
             }
-            catch ( Exception e )
+            catch (Exception e)
             {
                 Console.WriteLine(e);
             }
@@ -101,7 +101,7 @@ namespace MSBuild.TeamCity.Tasks
             return new List<TeamCityMessage>();
         }
 
-        private void Initialize( ILogger logger )
+        private void Initialize(ILogger logger)
         {
             Logger = logger;
             _implementation = new TeamCityTaskImplementation(logger);

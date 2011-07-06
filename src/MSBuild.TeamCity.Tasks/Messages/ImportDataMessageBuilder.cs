@@ -21,7 +21,7 @@ namespace MSBuild.TeamCity.Tasks.Messages
         ///<param name="tool">the tool name value can be partcover, ncover, or ncover3, depending on selected coverage tool in the coverage settings.</param>
         ///<param name="path">full path to data source file to import data from</param>
         ///<param name="type">imported data type.</param>
-        public ImportDataMessageBuilder( string tool, string path, string type )
+        public ImportDataMessageBuilder(string tool, string path, string type)
         {
             _tool = tool;
             _path = path;

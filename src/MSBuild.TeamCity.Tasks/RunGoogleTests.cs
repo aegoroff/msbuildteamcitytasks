@@ -69,7 +69,7 @@ namespace MSBuild.TeamCity.Tasks
         /// logger specified
         ///</summary>
         ///<param name="logger"><see cref="ILogger"/> implementation</param>
-        public RunGoogleTests( ILogger logger ) : base(logger)
+        public RunGoogleTests(ILogger logger) : base(logger)
         {
         }
 

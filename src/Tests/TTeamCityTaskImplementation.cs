@@ -56,11 +56,11 @@ namespace Tests
         }
 
         [Test]
-        [ExpectedException( typeof(Exception) )]
+        [ExpectedException(typeof(Exception))]
         public void WriteMessageInsideTeamCityEnvironmentThrowException()
         {
             Expect.Once.On(_logger).Method(LogMessage).Will(Throw.Exception(new Exception()));
-            using(new TeamCityEnv())
+            using (new TeamCityEnv())
             {
                 _implementation.Write(_message);
             }

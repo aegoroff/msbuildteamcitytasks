@@ -41,7 +41,7 @@ namespace MSBuild.TeamCity.Tasks.Internal
         /// <param name="separator">Separator string beetwen values</param>
         /// <param name="head">Sequence's header</param>
         /// <param name="trail">Sequence's trail</param>
-        public SequenceBuilder( IEnumerable<T> enumerator, string separator, string head, string trail )
+        public SequenceBuilder(IEnumerable<T> enumerator, string separator, string head, string trail)
         {
             _enumerator = enumerator;
             _separator = separator;
@@ -54,7 +54,7 @@ namespace MSBuild.TeamCity.Tasks.Internal
         /// </summary>
         /// <param name="enumerator">Enumerator that yields values in desired sequence</param>
         /// <param name="separator">Separator string beetwen values</param>
-        public SequenceBuilder( IEnumerable<T> enumerator, string separator )
+        public SequenceBuilder(IEnumerable<T> enumerator, string separator)
             : this(enumerator, separator, null, null)
         {
         }
@@ -68,11 +68,13 @@ namespace MSBuild.TeamCity.Tasks.Internal
         /// </returns>
         public override string ToString()
         {
-            if ( _enumerator.Count() == 0 )
+            if (_enumerator.Count() == 0)
             {
                 return string.Empty;
             }
-            IEnumerable<string> strings = from T item in _enumerator where !string.IsNullOrEmpty(item.ToString()) select item.ToString();
+            IEnumerable<string> strings = from T item in _enumerator
+                                          where !string.IsNullOrEmpty(item.ToString())
+                                          select item.ToString();
             return _head + strings.Join(_separator) + _trail;
         }
     }

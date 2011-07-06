@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Created by: egr
  * Created at: 16.01.2011
  * © 2007-2011 Alexander Egorov
@@ -51,7 +51,7 @@ namespace MSBuild.TeamCity.Tasks
         /// </summary>
         [Required]
         public string Name { get; set; }
-        
+
         /// <summary>
         /// Gets or sets test's duration in seconds
         /// </summary>

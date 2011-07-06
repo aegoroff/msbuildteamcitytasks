@@ -60,9 +60,9 @@ namespace MSBuild.TeamCity.Tasks.Internal
         /// <param name="option">option name</param>
         /// <param name="value">option value</param>
         /// <returns>Properly escaped option</returns>
-        private string CreateOption( object option, string value )
+        private string CreateOption(object option, string value)
         {
-            if ( string.IsNullOrEmpty(value) )
+            if (string.IsNullOrEmpty(value))
             {
                 return OptionPrefix + option;
             }
@@ -75,7 +75,7 @@ namespace MSBuild.TeamCity.Tasks.Internal
             return
                 from option in EnumerateOptions()
                 where
-                    (!string.IsNullOrEmpty(option.Value as string) && !IsOutputInCaseOfEmptyValue ) ||
+                    (!string.IsNullOrEmpty(option.Value as string) && !IsOutputInCaseOfEmptyValue) ||
                     IsOutputInCaseOfEmptyValue
                 select CreateOption(option.Key, option.Value as string);
         }

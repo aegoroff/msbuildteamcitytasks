@@ -28,7 +28,8 @@ namespace Tests
         [TestCase(true, true, Empty, OutputXml + Space + DisableTestsCommand + Space + CatchExceptionsCommand)]
         [TestCase(false, true, Filter, OutputXml + Space + DisableTestsCommand + Space + FilterCommand)]
         [TestCase(true, false, Filter, OutputXml + Space + CatchExceptionsCommand + Space + FilterCommand)]
-        [TestCase(true, true, Filter, OutputXml + Space + DisableTestsCommand + Space + CatchExceptionsCommand + Space + FilterCommand)]
+        [TestCase(true, true, Filter,
+            OutputXml + Space + DisableTestsCommand + Space + CatchExceptionsCommand + Space + FilterCommand)]
         public void CreateCommandLine(bool catchExceptions, bool runDisabledTests, string filter, string expected)
         {
             GoogleTestCommandLine builder = new GoogleTestCommandLine(catchExceptions, runDisabledTests, filter);

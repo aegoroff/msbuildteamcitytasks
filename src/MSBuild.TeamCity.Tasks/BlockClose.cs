@@ -39,7 +39,7 @@ namespace MSBuild.TeamCity.Tasks
         /// logger specified
         ///</summary>
         ///<param name="logger"><see cref="ILogger"/> implementation</param>
-        public BlockClose( ILogger logger )
+        public BlockClose(ILogger logger)
             : base(logger)
         {
         }

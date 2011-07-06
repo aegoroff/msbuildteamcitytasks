@@ -18,13 +18,13 @@ namespace Tests
         private const string ToolPth = "p";
         private const string XmlReportPth = "path";
         private const string Args = "a";
-        
+
         [SetUp]
         public void Init()
         {
             _task = new NCover3Report(Logger);
         }
-        
+
         [Test]
         public void OnlyRequired()
         {

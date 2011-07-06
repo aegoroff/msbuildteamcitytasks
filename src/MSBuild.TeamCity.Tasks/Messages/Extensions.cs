@@ -18,20 +18,20 @@ namespace MSBuild.TeamCity.Tasks.Messages
         private const string Ncover = "ncover";
         private const string Ncover3 = "ncover3";
 
-        internal static void Add( this IList<MessageAttributeItem> list, string name, string value )
+        internal static void Add(this IList<MessageAttributeItem> list, string name, string value)
         {
             MessageAttributeItem item = new MessageAttributeItem(name, value);
 
-            if ( list.Contains(item) )
+            if (list.Contains(item))
             {
                 list.Remove(item);
             }
             list.Add(item);
         }
 
-        internal static string ToolToString( this DotNetCoverageTool tool )
+        internal static string ToolToString(this DotNetCoverageTool tool)
         {
-            switch ( tool )
+            switch (tool)
             {
                 case DotNetCoverageTool.PartCover:
                     return PartCover;
@@ -44,9 +44,9 @@ namespace MSBuild.TeamCity.Tasks.Messages
             }
         }
 
-        internal static DotNetCoverageTool ToDotNetCoverateTool( this string str )
+        internal static DotNetCoverageTool ToDotNetCoverateTool(this string str)
         {
-            switch ( str )
+            switch (str)
             {
                 case PartCover:
                     return DotNetCoverageTool.PartCover;
@@ -59,9 +59,9 @@ namespace MSBuild.TeamCity.Tasks.Messages
             }
         }
 
-        internal static string ImportTypeToString( this ImportType type )
+        internal static string ImportTypeToString(this ImportType type)
         {
-            switch ( type )
+            switch (type)
             {
                 case ImportType.Junit:
                     return "junit";

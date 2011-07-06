@@ -21,7 +21,7 @@ namespace MSBuild.TeamCity.Tasks.Messages
         ///<param name="text">Message text</param>
         ///<param name="status">The status attribute may take following values: NORMAL, WARNING, FAILURE, ERROR. The default value is NORMAL.</param>
         ///<param name="details">error details text that is used only if status is ERROR</param>
-        public ReportMessageBuilder( string text, string status, string details )
+        public ReportMessageBuilder(string text, string status, string details)
         {
             _text = text;
             _status = status;
@@ -34,11 +34,11 @@ namespace MSBuild.TeamCity.Tasks.Messages
         /// <returns>The new instance of <see cref="TeamCityMessage"/> class</returns>
         public TeamCityMessage BuildMessage()
         {
-            if (!string.IsNullOrEmpty(_status) && !string.IsNullOrEmpty(_details) )
+            if (!string.IsNullOrEmpty(_status) && !string.IsNullOrEmpty(_details))
             {
                 return new ReportMessageTeamCityMessage(_text, _status, _details);
             }
-            if (!string.IsNullOrEmpty(_status) )
+            if (!string.IsNullOrEmpty(_status))
             {
                 return new ReportMessageTeamCityMessage(_text, _status);
             }

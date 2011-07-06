@@ -16,10 +16,10 @@ namespace MSBuild.TeamCity.Tasks.Messages
         ///</summary>
         ///<param name="name">Name attribute value</param>
         ///<param name="captureStandardOutput">Whether to capture standart output</param>
-        public TestStartTeamCityMessage( string name, bool captureStandardOutput )
+        public TestStartTeamCityMessage(string name, bool captureStandardOutput)
             : base(name)
         {
-            if ( captureStandardOutput )
+            if (captureStandardOutput)
             {
                 Attributes.Add("captureStandardOutput", "true");
             }

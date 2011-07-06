@@ -18,7 +18,7 @@ namespace MSBuild.TeamCity.Tasks.Messages
         /// </summary>
         /// <param name="key">Parameter key</param>
         /// <param name="value">Parameter value</param>
-        public BuildStatisticTeamCityMessage( string key, float value )
+        public BuildStatisticTeamCityMessage(string key, float value)
         {
             Key = key;
             Value = value;

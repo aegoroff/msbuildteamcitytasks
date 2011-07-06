@@ -21,7 +21,7 @@ namespace MSBuild.TeamCity.Tasks.Internal
         /// <see cref="TaskLoggingHelper"/> instance.
         ///</summary>
         ///<param name="loggingHelper"><see cref="TaskLoggingHelper"/> to wrap up</param>
-        public Logger( TaskLoggingHelper loggingHelper )
+        public Logger(TaskLoggingHelper loggingHelper)
         {
             _loggingHelper = loggingHelper;
         }
@@ -39,7 +39,7 @@ namespace MSBuild.TeamCity.Tasks.Internal
         /// </summary>
         /// <param name="message">The message.</param>
         /// <param name="messageArgs">Optional arguments for formatting the message string.</param>
-        public void LogError( string message, params object[] messageArgs )
+        public void LogError(string message, params object[] messageArgs)
         {
             _loggingHelper.LogError(message, messageArgs);
         }
@@ -50,7 +50,7 @@ namespace MSBuild.TeamCity.Tasks.Internal
         /// <param name="importance">One of the enumeration values that specifies the importance of the message.</param>
         /// <param name="message">The message.</param>
         /// <param name="messageArgs">The arguments for formatting the message.</param>
-        public void LogMessage( MessageImportance importance, string message, params object[] messageArgs )
+        public void LogMessage(MessageImportance importance, string message, params object[] messageArgs)
         {
             _loggingHelper.LogMessage(importance, message, messageArgs);
         }

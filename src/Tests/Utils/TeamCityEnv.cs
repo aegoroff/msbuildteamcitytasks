@@ -17,16 +17,16 @@ namespace Tests.Utils
         {
             Environment.SetEnvironmentVariable(TeamCityEnvVar, TeamCityProject, EnvironmentVariableTarget.Process);
         }
-        
+
         public void Dispose()
         {
             Dispose(true);
             GC.SuppressFinalize(this);
         }
-        
+
         private static void Dispose(bool disposing)
         {
-            if ( disposing )
+            if (disposing)
             {
                 Environment.SetEnvironmentVariable(TeamCityEnvVar, null, EnvironmentVariableTarget.Process);
             }

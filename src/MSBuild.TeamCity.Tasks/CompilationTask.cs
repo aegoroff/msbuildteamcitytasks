@@ -27,7 +27,7 @@ namespace MSBuild.TeamCity.Tasks
         /// logger specified
         ///</summary>
         ///<param name="logger"><see cref="ILogger"/> implementation</param>
-        protected CompilationTask( ILogger logger )
+        protected CompilationTask(ILogger logger)
             : base(logger)
         {
         }
@@ -78,7 +78,7 @@ namespace MSBuild.TeamCity.Tasks
         /// logger specified
         ///</summary>
         ///<param name="logger"><see cref="ILogger"/> implementation</param>
-        public CompilationFinished( ILogger logger )
+        public CompilationFinished(ILogger logger)
             : base(logger)
         {
         }
@@ -117,7 +117,7 @@ namespace MSBuild.TeamCity.Tasks
         /// logger specified
         ///</summary>
         ///<param name="logger"><see cref="ILogger"/> implementation</param>
-        public CompilationStarted( ILogger logger )
+        public CompilationStarted(ILogger logger)
             : base(logger)
         {
         }

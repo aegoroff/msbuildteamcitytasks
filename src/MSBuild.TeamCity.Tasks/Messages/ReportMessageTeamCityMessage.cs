@@ -15,7 +15,7 @@ namespace MSBuild.TeamCity.Tasks.Messages
         /// Initializes a new instance of the <see cref="ReportMessageTeamCityMessage"/> class which status is NORMAL
         ///</summary>
         ///<param name="text">Message text</param>
-        public ReportMessageTeamCityMessage( string text )
+        public ReportMessageTeamCityMessage(string text)
         {
             Attributes.Add("text", text);
         }
@@ -25,7 +25,7 @@ namespace MSBuild.TeamCity.Tasks.Messages
         ///</summary>
         ///<param name="text">Message text</param>
         ///<param name="status">The status attribute may take following values: NORMAL, WARNING, FAILURE, ERROR. The default value is NORMAL.</param>
-        public ReportMessageTeamCityMessage( string text, string status ) : this(text)
+        public ReportMessageTeamCityMessage(string text, string status) : this(text)
         {
             Attributes.Add("status", status);
         }
@@ -36,7 +36,7 @@ namespace MSBuild.TeamCity.Tasks.Messages
         ///<param name="text">Message text</param>
         ///<param name="status">The status attribute may take following values: NORMAL, WARNING, FAILURE, ERROR. The default value is NORMAL.</param>
         ///<param name="errorDetails">errorDetails attribute is used only if status is ERROR, in other cases it is ignored.</param>
-        public ReportMessageTeamCityMessage( string text, string status, string errorDetails ) : this(text, status)
+        public ReportMessageTeamCityMessage(string text, string status, string errorDetails) : this(text, status)
         {
             Attributes.Add("errorDetails", errorDetails);
         }

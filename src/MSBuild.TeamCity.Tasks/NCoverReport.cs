@@ -46,7 +46,7 @@ namespace MSBuild.TeamCity.Tasks
         /// logger specified
         ///</summary>
         ///<param name="logger"><see cref="ILogger"/> implementation</param>
-        public NCoverReport( ILogger logger )
+        public NCoverReport(ILogger logger)
             : base(logger)
         {
         }

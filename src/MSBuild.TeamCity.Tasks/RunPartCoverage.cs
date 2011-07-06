@@ -43,7 +43,7 @@ namespace MSBuild.TeamCity.Tasks
         /// logger specified
         ///</summary>
         ///<param name="logger"><see cref="ILogger"/> implementation</param>
-        public RunPartCoverage( ILogger logger )
+        public RunPartCoverage(ILogger logger)
             : base(logger)
         {
         }

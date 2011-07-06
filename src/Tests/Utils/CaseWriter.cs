@@ -11,7 +11,7 @@ namespace Tests.Utils
 {
     public class CaseWriter : BaseWriter
     {
-        public CaseWriter( XmlWriter xw, string name, double time, string className ) : base(xw)
+        public CaseWriter(XmlWriter xw, string name, double time, string className) : base(xw)
         {
             xw.WriteStartElement("testcase");
             xw.WriteAttributeString("name", name);

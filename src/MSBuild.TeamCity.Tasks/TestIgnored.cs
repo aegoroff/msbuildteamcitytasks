@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Created by: egr
  * Created at: 27.01.2011
  * © 2007-2011 Alexander Egorov
@@ -45,7 +45,7 @@ namespace MSBuild.TeamCity.Tasks
         /// logger specified
         /// </summary>
         /// <param name="logger"><see cref="ILogger"/> implementation</param>
-        public TestIgnored( ILogger logger )
+        public TestIgnored(ILogger logger)
             : base(logger)
         {
         }

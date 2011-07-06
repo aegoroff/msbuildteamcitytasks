@@ -26,7 +26,7 @@ namespace MSBuild.TeamCity.Tasks.Messages
         /// Initializes a new instance of the <see cref="MessageAttributeItem"/> class using value specified
         ///</summary>
         /// <param name="value">Attribute value</param>
-        public MessageAttributeItem( string value ) : this(null, value)
+        public MessageAttributeItem(string value) : this(null, value)
         {
         }
 
@@ -35,7 +35,7 @@ namespace MSBuild.TeamCity.Tasks.Messages
         ///</summary>
         /// <param name="name">Attribute name</param>
         /// <param name="value">Attribute value</param>
-        public MessageAttributeItem( string name, string value )
+        public MessageAttributeItem(string name, string value)
         {
             Name = name;
             Value = value;
@@ -60,13 +60,13 @@ namespace MSBuild.TeamCity.Tasks.Messages
         /// <filterpriority>2</filterpriority>
         public override string ToString()
         {
-            if ( string.IsNullOrEmpty(Value) )
+            if (string.IsNullOrEmpty(Value))
             {
                 return string.Empty;
             }
 
             StringBuilder sb = new StringBuilder();
-            if (!string.IsNullOrEmpty(Name) )
+            if (!string.IsNullOrEmpty(Name))
             {
                 sb.Append(Name).Append("=");
             }
@@ -83,17 +83,17 @@ namespace MSBuild.TeamCity.Tasks.Messages
         ///<returns>
         /// true if item1 is the same instance as item2 or if item1.Equals(item2) returns true; otherwise, false.
         /// </returns>
-        public static bool operator ==( MessageAttributeItem item1, MessageAttributeItem item2 )
+        public static bool operator ==(MessageAttributeItem item1, MessageAttributeItem item2)
         {
-            if ( ReferenceEquals(item1, item2) )
+            if (ReferenceEquals(item1, item2))
             {
                 return true;
             }
-            if ( ReferenceEquals(item1, null) )
+            if (ReferenceEquals(item1, null))
             {
                 return false;
             }
-            if ( ReferenceEquals(item2, null) )
+            if (ReferenceEquals(item2, null))
             {
                 return false;
             }
@@ -108,9 +108,9 @@ namespace MSBuild.TeamCity.Tasks.Messages
         ///<returns>
         /// true if item1 is not the same instance as item2 or if item1.Equals(item2) returns false; otherwise, true.
         /// </returns>
-        public static bool operator !=( MessageAttributeItem item1, MessageAttributeItem item2 )
+        public static bool operator !=(MessageAttributeItem item1, MessageAttributeItem item2)
         {
-            return !( item1 == item2 );
+            return !(item1 == item2);
         }
 
         ///<summary>
@@ -120,13 +120,13 @@ namespace MSBuild.TeamCity.Tasks.Messages
         ///<returns>
         /// true if the specified <see cref="MessageAttributeItem"/> is equal to the current <see cref="MessageAttributeItem"/>; otherwise, false.
         /// </returns>
-        public bool Equals( MessageAttributeItem other )
+        public bool Equals(MessageAttributeItem other)
         {
-            if ( ReferenceEquals(null, other) )
+            if (ReferenceEquals(null, other))
             {
                 return false;
             }
-            if ( ReferenceEquals(this, other) )
+            if (ReferenceEquals(this, other))
             {
                 return true;
             }
@@ -142,17 +142,17 @@ namespace MSBuild.TeamCity.Tasks.Messages
         /// <param name="obj">The <see cref="System.Object"/> to compare with the current <see cref="MessageAttributeItem"/>. 
         ///                 </param>
         /// <filterpriority>2</filterpriority>
-        public override bool Equals( object obj )
+        public override bool Equals(object obj)
         {
-            if ( ReferenceEquals(null, obj) )
+            if (ReferenceEquals(null, obj))
             {
                 return false;
             }
-            if ( ReferenceEquals(this, obj) )
+            if (ReferenceEquals(this, obj))
             {
                 return true;
             }
-            if ( obj.GetType() != typeof(MessageAttributeItem) )
+            if (obj.GetType() != typeof(MessageAttributeItem))
             {
                 return false;
             }

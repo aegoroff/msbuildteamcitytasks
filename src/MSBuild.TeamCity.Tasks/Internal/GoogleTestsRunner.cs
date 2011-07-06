@@ -21,7 +21,7 @@ namespace MSBuild.TeamCity.Tasks.Internal
         ///<param name="logger">Logger instance</param>
         ///<param name="continueOnFailures">Whether to continue execution on broken tests</param>
         ///<param name="testExePath">Path to Google test executable</param>
-        public GoogleTestsRunner( ILogger logger, bool continueOnFailures, string testExePath )
+        public GoogleTestsRunner(ILogger logger, bool continueOnFailures, string testExePath)
             : base(logger, continueOnFailures)
         {
             _testExePath = testExePath;
@@ -62,7 +62,7 @@ namespace MSBuild.TeamCity.Tasks.Internal
             string xmlPath = dir + @"\" + file + ".xml";
 
             // to fix IssueID 3 (delete file from previous tests run)
-            if ( File.Exists(xmlPath) )
+            if (File.Exists(xmlPath))
             {
                 File.Delete(xmlPath);
             }

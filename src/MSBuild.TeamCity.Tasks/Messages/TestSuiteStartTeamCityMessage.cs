@@ -15,7 +15,7 @@ namespace MSBuild.TeamCity.Tasks.Messages
         /// Initializes a new instance of the <see cref="TestSuiteStartTeamCityMessage"/> class using name specified
         ///</summary>
         ///<param name="name">Name attribute value</param>
-        public TestSuiteStartTeamCityMessage( string name ) : base(name)
+        public TestSuiteStartTeamCityMessage(string name) : base(name)
         {
         }
 

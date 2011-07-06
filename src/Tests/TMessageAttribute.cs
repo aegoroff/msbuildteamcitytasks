@@ -43,15 +43,15 @@ namespace Tests
             Assert.That(attributeItem.ToString(), Is.EqualTo("n='v'"));
         }
 
-        [TestCase( Value, "'v'" )]
-        [TestCase( Value + "'", "'v|''" )]
-        [TestCase( Value + "]", "'v|]'" )]
-        [TestCase( Value + "|", "'v||'" )]
-        [TestCase( Value + "\n", "'v|n'" )]
-        [TestCase( Value + "\r", "'v|r'" )]
-        [TestCase( Value + "\r\n|']", "'v|r|n|||'|]'" )]
-        [TestCase( null, "" )]
-        public void OnlyValueTest( string value, string expected )
+        [TestCase(Value, "'v'")]
+        [TestCase(Value + "'", "'v|''")]
+        [TestCase(Value + "]", "'v|]'")]
+        [TestCase(Value + "|", "'v||'")]
+        [TestCase(Value + "\n", "'v|n'")]
+        [TestCase(Value + "\r", "'v|r'")]
+        [TestCase(Value + "\r\n|']", "'v|r|n|||'|]'")]
+        [TestCase(null, "")]
+        public void OnlyValueTest(string value, string expected)
         {
             MessageAttributeItem attributeItem = new MessageAttributeItem { Value = value };
             Assert.That(attributeItem.ToString(), Is.EqualTo(expected));

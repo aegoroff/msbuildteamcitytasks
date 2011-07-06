@@ -21,13 +21,13 @@ namespace Tests
         private const string Args = "a";
         private const string RptType = "None";
         private const string RptOrder = "1";
-        
+
         [SetUp]
         public void Init()
         {
             _task = new NCoverReport(Logger);
         }
-        
+
         [Test]
         public void OnlyRequired()
         {

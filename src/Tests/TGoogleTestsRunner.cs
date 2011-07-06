@@ -42,7 +42,7 @@ namespace Tests
         {
             string xmlPath = TestResultPath;
 
-            if ( File.Exists(xmlPath) )
+            if (File.Exists(xmlPath))
             {
                 File.Delete(xmlPath);
             }

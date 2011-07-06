@@ -44,7 +44,7 @@ namespace MSBuild.TeamCity.Tasks
         /// logger specified
         ///</summary>
         ///<param name="logger"><see cref="ILogger"/> implementation</param>
-        public PartCoverReport( ILogger logger )
+        public PartCoverReport(ILogger logger)
             : base(logger)
         {
         }
@@ -66,7 +66,7 @@ namespace MSBuild.TeamCity.Tasks
         /// <returns>TeamCity messages list</returns>
         protected override IEnumerable<TeamCityMessage> ReadMessages()
         {
-            if ( ReportXslts != null )
+            if (ReportXslts != null)
             {
                 yield return
                     new DotNetCoverMessage(DotNetCoverMessage.PartcoverReportXsltsKey,

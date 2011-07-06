@@ -23,7 +23,7 @@ namespace MSBuild.TeamCity.Tasks
         /// </summary>
         /// <param name="message">The message.</param>
         /// <param name="messageArgs">Optional arguments for formatting the message string.</param>
-        void LogError( string message, params object[] messageArgs );
+        void LogError(string message, params object[] messageArgs);
 
         /// <summary>
         /// Logs a message with the specified string.
@@ -31,6 +31,6 @@ namespace MSBuild.TeamCity.Tasks
         /// <param name="importance">One of the enumeration values that specifies the importance of the message.</param>
         /// <param name="message">The message.</param>
         /// <param name="messageArgs">The arguments for formatting the message.</param>
-        void LogMessage( MessageImportance importance, string message, params object[] messageArgs );
+        void LogMessage(MessageImportance importance, string message, params object[] messageArgs);
     }
 }

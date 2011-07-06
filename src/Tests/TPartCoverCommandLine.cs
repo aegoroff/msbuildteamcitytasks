@@ -42,9 +42,9 @@ namespace Tests
         }
 
 
-        [TestCase( Target, TargetResult )]
-        [TestCase( "t s", "--target \"t s\"" )]
-        public void TargetProperty( string target, string expected )
+        [TestCase(Target, TargetResult)]
+        [TestCase("t s", "--target \"t s\"")]
+        public void TargetProperty(string target, string expected)
         {
             _commandLine.Target = target;
             Assert.That(_commandLine.ToString(), Is.EqualTo(expected));

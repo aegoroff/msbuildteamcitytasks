@@ -54,7 +54,7 @@ namespace MSBuild.TeamCity.Tasks
         /// logger specified
         ///</summary>
         ///<param name="logger"><see cref="ILogger"/> implementation</param>
-        public PublishArtifacts( ILogger logger )
+        public PublishArtifacts(ILogger logger)
             : base(logger)
         {
         }
@@ -78,7 +78,8 @@ namespace MSBuild.TeamCity.Tasks
         protected override IEnumerable<TeamCityMessage> ReadMessages()
         {
             return
-                Artifacts.Select(item => new SimpleTeamCityMessage("publishArtifacts", item.ItemSpec)).Cast<TeamCityMessage>();
+                Artifacts.Select(item => new SimpleTeamCityMessage("publishArtifacts", item.ItemSpec)).Cast
+                    <TeamCityMessage>();
         }
     }
 }

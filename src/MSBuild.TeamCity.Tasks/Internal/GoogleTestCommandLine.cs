@@ -70,7 +70,7 @@ namespace MSBuild.TeamCity.Tasks.Internal
             {
                 yield return new DictionaryEntry(CatchExceptionsOpt, string.Empty);
             }
-            if ( !string.IsNullOrEmpty(_filter) )
+            if (!string.IsNullOrEmpty(_filter) )
             {
                 yield return new DictionaryEntry(FilterOpt, _filter);
             }

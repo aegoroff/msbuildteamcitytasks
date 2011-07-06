@@ -34,7 +34,7 @@ namespace MSBuild.TeamCity.Tasks.Messages
         /// </exception>
         public DotNetCoverMessage( string key, string value )
         {
-            if ( !_validKeys.ContainsKey(key) )
+            if (!_validKeys.ContainsKey(key) )
             {
                 throw new ArgumentException("Invalid key name.", "key");
             }

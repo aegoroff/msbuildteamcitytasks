@@ -34,7 +34,7 @@ namespace MSBuild.TeamCity.Tasks.Internal
         /// <param name="message">Message to write</param>
         public void Write( TeamCityMessage message )
         {
-            if ( !string.IsNullOrEmpty(Environment.GetEnvironmentVariable(TeamcityDiscoveryEnvVariable)) )
+            if (!string.IsNullOrEmpty(Environment.GetEnvironmentVariable(TeamcityDiscoveryEnvVariable)) )
             {
                 _logger.LogMessage(MessageImportance.High, message.ToString());
             }

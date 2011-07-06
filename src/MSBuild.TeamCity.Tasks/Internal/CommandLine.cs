@@ -75,7 +75,7 @@ namespace MSBuild.TeamCity.Tasks.Internal
             return
                 from option in EnumerateOptions()
                 where
-                    ( !string.IsNullOrEmpty(option.Value as string) && !IsOutputInCaseOfEmptyValue ) ||
+                    (!string.IsNullOrEmpty(option.Value as string) && !IsOutputInCaseOfEmptyValue ) ||
                     IsOutputInCaseOfEmptyValue
                 select CreateOption(option.Key, option.Value as string);
         }

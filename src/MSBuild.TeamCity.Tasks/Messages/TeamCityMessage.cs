@@ -66,7 +66,7 @@ namespace MSBuild.TeamCity.Tasks.Messages
             }
 
             MessageAttributeItem flowId = new MessageAttributeItem("flowId", FlowId);
-            if ( !string.IsNullOrEmpty(FlowId) && !_attributes.Contains(flowId) )
+            if (!string.IsNullOrEmpty(FlowId) && !_attributes.Contains(flowId))
             {
                 _attributes.Add(flowId);
             }

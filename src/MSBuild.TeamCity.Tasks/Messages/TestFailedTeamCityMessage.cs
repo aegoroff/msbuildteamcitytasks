@@ -66,7 +66,7 @@ namespace MSBuild.TeamCity.Tasks.Messages
 
         private void SetAttributeValue( string value, string attr )
         {
-            if ( !string.IsNullOrEmpty(value) )
+            if (!string.IsNullOrEmpty(value) )
             {
                 InsertType();
             }

@@ -103,17 +103,17 @@ namespace MSBuild.TeamCity.Tasks
         {
             yield return new DotNetCoverMessage(DotNetCoverMessage.NCoverExplorerToolKey, NCoverExplorerPath);
 
-            if ( !string.IsNullOrEmpty(Arguments) )
+            if (!string.IsNullOrEmpty(Arguments))
             {
                 yield return new DotNetCoverMessage(DotNetCoverMessage.NCoverExplorerToolArgsKey, Arguments);
             }
 
-            if ( !string.IsNullOrEmpty(ReportType) )
+            if (!string.IsNullOrEmpty(ReportType))
             {
                 yield return new DotNetCoverMessage(DotNetCoverMessage.NCoverExplorerReportTypeKey, ReportType);
             }
 
-            if ( !string.IsNullOrEmpty(ReportOrder) )
+            if (!string.IsNullOrEmpty(ReportOrder))
             {
                 yield return new DotNetCoverMessage(DotNetCoverMessage.NCoverExplorerReportOrderKey, ReportOrder);
             }

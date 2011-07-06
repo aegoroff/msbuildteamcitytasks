@@ -34,11 +34,11 @@ namespace MSBuild.TeamCity.Tasks.Messages
         /// <returns>The new instance of <see cref="TeamCityMessage"/> class</returns>
         public TeamCityMessage BuildMessage()
         {
-            if ( !string.IsNullOrEmpty(_status) && !string.IsNullOrEmpty(_details) )
+            if (!string.IsNullOrEmpty(_status) && !string.IsNullOrEmpty(_details) )
             {
                 return new ReportMessageTeamCityMessage(_text, _status, _details);
             }
-            if ( !string.IsNullOrEmpty(_status) )
+            if (!string.IsNullOrEmpty(_status) )
             {
                 return new ReportMessageTeamCityMessage(_text, _status);
             }

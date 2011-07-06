@@ -73,7 +73,7 @@ namespace MSBuild.TeamCity.Tasks
         protected override IEnumerable<TeamCityMessage> ReadMessages()
         {
             yield return new DotNetCoverMessage(DotNetCoverMessage.NCover3HomeKey, ToolPath);
-            if ( !string.IsNullOrEmpty(Arguments) )
+            if (!string.IsNullOrEmpty(Arguments))
             {
                 yield return new DotNetCoverMessage(DotNetCoverMessage.NCover3ReporterArgsKey, Arguments);
             }

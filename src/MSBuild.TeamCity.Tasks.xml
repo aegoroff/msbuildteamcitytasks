@@ -133,20 +133,18 @@
 	</ItemGroup>
 	<!-- Setting next build version and finish build process -->
 	<Target Name="Build" DependsOnTargets="Zipping">
+		<ItemGroup>
+			<Project Include="MSBuildTeamCityTasks.shfbproj" />
+			<Project Include="Setup\Setup.wixproj" />
+		</ItemGroup>
 		<!-- Updating WiX files -->
 		<FileUpdate
 			Files="$(MSBuildProjectDirectory)\Setup\Product.wxs"
 			Regex='\$\(var\.SolutionDir\)'
 			ReplacementText='$(MSBuildProjectDirectory)\' />
-		<!-- Documentation building -->
 		<MSBuild
 			StopOnFirstFailure="true"
-			Projects="MSBuildTeamCityTasks.shfbproj"
-			Properties="Configuration=$(Configuration)" 
-		/>
-		<MSBuild
-			StopOnFirstFailure="true"
-			Projects="Setup\Setup.wixproj"
+			Projects="%(Project.Identity)"
 			Properties="Configuration=$(Configuration)" 
 		/>
 		<Copy

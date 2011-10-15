@@ -1,17 +1,17 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSBuild.TeamCity.Tasks", "MSBuild.TeamCity.Tasks\MSBuild.TeamCity.Tasks.csproj", "{236D2242-876D-4D94-BA8D-0DDAF1991EC4}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{86F5E374-6AE8-40B7-A4B2-C3F5ADA73AA8}"
-EndProject
-Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "Setup", "Setup\Setup.wixproj", "{A1D41F0C-465C-41AB-8573-D5F8599B1E86}"
-EndProject
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4980103F-534C-4099-ADCB-437D86DE4619}"
 	ProjectSection(SolutionItems) = preProject
 		MSBuild.TeamCity.Tasks.Targets = MSBuild.TeamCity.Tasks.Targets
 		MSBuild.TeamCity.Tasks.xml = MSBuild.TeamCity.Tasks.xml
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSBuild.TeamCity.Tasks", "MSBuild.TeamCity.Tasks\MSBuild.TeamCity.Tasks.csproj", "{236D2242-876D-4D94-BA8D-0DDAF1991EC4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{86F5E374-6AE8-40B7-A4B2-C3F5ADA73AA8}"
+EndProject
+Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "Setup", "Setup\Setup.wixproj", "{A1D41F0C-465C-41AB-8573-D5F8599B1E86}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

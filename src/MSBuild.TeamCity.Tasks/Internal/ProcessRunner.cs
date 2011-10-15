@@ -38,21 +38,17 @@ namespace MSBuild.TeamCity.Tasks.Internal
         /// </param>
         internal void Run(params string[] commandLine)
         {
-            Process app = new Process
-                              {
-                                  StartInfo =
-                                      {
-                                          FileName = _testExePath,
-                                          Arguments = string.Join(" ", commandLine),
-                                          UseShellExecute = false,
-                                          RedirectStandardOutput = false,
-                                          WorkingDirectory = _testExePath.GetDirectoryName(),
-                                          CreateNoWindow = true
-                                      }
-                              };
-
-            using (app)
+            using (Process app = new Process())
             {
+                app.StartInfo = new ProcessStartInfo
+                                    {
+                                        FileName = _testExePath,
+                                        Arguments = string.Join(" ", commandLine),
+                                        UseShellExecute = false,
+                                        RedirectStandardOutput = false,
+                                        WorkingDirectory = _testExePath.GetDirectoryName(),
+                                        CreateNoWindow = true
+                                    };
                 app.Start();
                 if (ExecutionTimeoutMilliseconds > 0)
                 {

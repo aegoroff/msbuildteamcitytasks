@@ -39,6 +39,13 @@ namespace Tests
         }
 
         [Test]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void WriteNullMessage()
+        {
+            _implementation.Write(null);
+        }
+
+        [Test]
         public void WriteMessageOutsideTeamCityEnvironment()
         {
             Expect.Never.On(_logger).Method(LogMessage).WithAnyArguments();

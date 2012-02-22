@@ -5,8 +5,8 @@
  */
 
 using System.Collections.Generic;
-using MSBuild.TeamCity.Tasks.Messages;
 using Microsoft.Build.Framework;
+using MSBuild.TeamCity.Tasks.Messages;
 
 namespace MSBuild.TeamCity.Tasks
 {
@@ -29,7 +29,7 @@ namespace MSBuild.TeamCity.Tasks
     ///    IsAddTimestamp="true"
     ///    FlowId="1"
     ///    Name="n1"
-    ///	   Value="v1"
+    ///    Value="v1"
     /// />
     /// ]]></code>
     /// </example>

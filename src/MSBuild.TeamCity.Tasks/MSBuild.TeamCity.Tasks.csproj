@@ -127,6 +127,7 @@
     <Compile Include="ReportMessage.cs" />
     <Compile Include="Messages\ReportMessageTeamCityMessage.cs" />
     <Compile Include="Messages\TeamCityMessage.cs" />
+    <Compile Include="SetParameter.cs" />
     <Compile Include="TeamCityTask.cs" />
     <Compile Include="Internal\TeamCityTaskImplementation.cs" />
     <Compile Include="Messages\TestFailedTeamCityMessage.cs" />

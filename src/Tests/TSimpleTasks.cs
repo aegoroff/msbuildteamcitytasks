@@ -360,5 +360,18 @@ namespace Tests
                                   };
             Assert.That(task.Execute());
         }
+
+        [Test]
+        public void SetParameter()
+        {
+            Expect.Once.On(Logger).Method(TTeamCityTaskImplementation.LogMessage).WithAnyArguments();
+
+            SetParameter task = new SetParameter(Logger)
+            {
+                Name = "n",
+                Value = "v"
+            };
+            Assert.That(task.Execute());
+        }
     }
 }

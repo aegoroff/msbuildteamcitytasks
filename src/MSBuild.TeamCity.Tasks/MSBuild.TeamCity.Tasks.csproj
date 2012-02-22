@@ -105,6 +105,7 @@
     <Compile Include="Messages\ImportType.cs" />
     <Compile Include="Internal\Logger.cs" />
     <Compile Include="Messages\NamedTeamCityMessage.cs" />
+    <Compile Include="Messages\SetParameterTeamCityMessage.cs" />
     <Compile Include="Messages\TestIgnoredTeamCityMessage.cs" />
     <Compile Include="Messages\TestStdErrTeamCityMessage.cs" />
     <Compile Include="Messages\TestStdOutTeamCityMessage.cs" />

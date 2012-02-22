@@ -375,5 +375,12 @@ namespace Tests
             CompilationMessage message = new CompilationMessage(compiler, msg);
             Assert.That(message.ToString(), Is.EqualTo(expected));
         }
+
+        [Test]
+        public void SetParameter()
+        {
+            SetParameterTeamCityMessage message = new SetParameterTeamCityMessage(Name, Text);
+            Assert.That(message.ToString(), Is.EqualTo("##teamcity[setParameter name='t1' value='t']"));
+        }
     }
 }

@@ -68,7 +68,7 @@ namespace MSBuild.TeamCity.Tasks.Internal
         /// </returns>
         public override string ToString()
         {
-            if (_enumerator.Count() == 0)
+            if (!_enumerator.Any())
             {
                 return string.Empty;
             }

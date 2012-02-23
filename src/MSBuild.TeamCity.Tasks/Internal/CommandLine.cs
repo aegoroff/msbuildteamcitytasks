@@ -66,7 +66,7 @@ namespace MSBuild.TeamCity.Tasks.Internal
             {
                 return OptionPrefix + option;
             }
-            string v = value.Contains(Space) ? EscapeSymbol + value + EscapeSymbol : value;
+            var v = value.Contains(Space) ? EscapeSymbol + value + EscapeSymbol : value;
             return OptionPrefix + option + OptionValueSeparator + v;
         }
 

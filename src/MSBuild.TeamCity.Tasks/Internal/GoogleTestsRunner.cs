@@ -57,9 +57,9 @@ namespace MSBuild.TeamCity.Tasks.Internal
         /// <returns>Path to xml file to import</returns>
         protected override string CreateXmlImport()
         {
-            string file = Path.GetFileNameWithoutExtension(_testExePath);
-            string dir = _testExePath.GetDirectoryName();
-            string xmlPath = dir + @"\" + file + ".xml";
+            var file = Path.GetFileNameWithoutExtension(_testExePath);
+            var dir = _testExePath.GetDirectoryName();
+            var xmlPath = dir + @"\" + file + ".xml";
 
             // to fix IssueID 3 (delete file from previous tests run)
             if (File.Exists(xmlPath))
@@ -67,10 +67,10 @@ namespace MSBuild.TeamCity.Tasks.Internal
                 File.Delete(xmlPath);
             }
 
-            GoogleTestCommandLine commandLine =
+            var commandLine =
                 new GoogleTestCommandLine(CatchGtestExceptions, RunDisabledTests, TestFilter);
 
-            ProcessRunner processRunner = new ProcessRunner(_testExePath)
+            var processRunner = new ProcessRunner(_testExePath)
                                               {
                                                   ExecutionTimeoutMilliseconds = ExecutionTimeoutMilliseconds
                                               };

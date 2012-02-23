@@ -115,7 +115,7 @@ namespace MSBuild.TeamCity.Tasks
         {
             get
             {
-                GoogleTestsRunner runner = new GoogleTestsRunner(Logger, ContinueOnFailures, TestExePath)
+                var runner = new GoogleTestsRunner(Logger, ContinueOnFailures, TestExePath)
                                                {
                                                    CatchGtestExceptions = CatchGtestExceptions,
                                                    ExecutionTimeoutMilliseconds = ExecutionTimeoutMilliseconds,

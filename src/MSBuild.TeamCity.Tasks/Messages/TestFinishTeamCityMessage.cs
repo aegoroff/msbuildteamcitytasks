@@ -20,7 +20,7 @@ namespace MSBuild.TeamCity.Tasks.Messages
         ///<param name="durationSeconds">Test duration in seconds</param>
         public TestFinishTeamCityMessage(string name, double durationSeconds) : base(name)
         {
-            double duration = durationSeconds * 1000;
+            var duration = durationSeconds * 1000;
             Attributes.Add("duration", duration.ToString(CultureInfo.InvariantCulture));
         }
 

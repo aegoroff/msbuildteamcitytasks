@@ -87,7 +87,7 @@ namespace MSBuild.TeamCity.Tasks
         /// <returns>TeamCity messages list</returns>
         protected override IEnumerable<TeamCityMessage> ReadMessages()
         {
-            PartCoverCommandLine commandLine = new PartCoverCommandLine
+            var commandLine = new PartCoverCommandLine
                                                    {
                                                        Target = TargetPath,
                                                        TargetWorkDir = TargetWorkDir,
@@ -97,8 +97,8 @@ namespace MSBuild.TeamCity.Tasks
             commandLine.Includes.AddRange(Includes);
             commandLine.Excludes.AddRange(Excludes);
 
-            string partCoverExePath = Path.Combine(ToolPath, PartCoverExe);
-            ProcessRunner runner = new ProcessRunner(partCoverExePath);
+            var partCoverExePath = Path.Combine(ToolPath, PartCoverExe);
+            var runner = new ProcessRunner(partCoverExePath);
             runner.Run(commandLine.ToString());
 
             return base.ReadMessages();

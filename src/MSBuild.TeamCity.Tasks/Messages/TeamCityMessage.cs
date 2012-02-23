@@ -48,7 +48,7 @@ namespace MSBuild.TeamCity.Tasks.Messages
         }
 
         /// <summary>
-        /// Returns a <see cref="String"/> that represents the current <see cref="MessageAttributeItem"/>.
+        /// Returns a <see cref="string"/> that represents the current <see cref="MessageAttributeItem"/>.
         /// </summary>
         /// <returns>
         /// A <see cref="System.String"/> that represents the current <see cref="MessageAttributeItem"/>.
@@ -56,16 +56,16 @@ namespace MSBuild.TeamCity.Tasks.Messages
         /// <filterpriority>2</filterpriority>
         public override string ToString()
         {
-            MessageAttributeItem timestamp = new MessageAttributeItem("timestamp",
-                                                                      DateTime.Now.ToString(
-                                                                          "yyyy-MM-ddTHH:mm:ss.fffzzz",
-                                                                          CultureInfo.InvariantCulture));
+            var timestamp = new MessageAttributeItem("timestamp",
+                                                     DateTime.Now.ToString(
+                                                         "yyyy-MM-ddTHH:mm:ss.fffzzz",
+                                                         CultureInfo.InvariantCulture));
             if (IsAddTimestamp && !_attributes.Contains(timestamp))
             {
                 _attributes.Add(timestamp);
             }
 
-            MessageAttributeItem flowId = new MessageAttributeItem("flowId", FlowId);
+            var flowId = new MessageAttributeItem("flowId", FlowId);
             if (!string.IsNullOrEmpty(FlowId) && !_attributes.Contains(flowId))
             {
                 _attributes.Add(flowId);
@@ -76,11 +76,11 @@ namespace MSBuild.TeamCity.Tasks.Messages
                 return TeamCityMessageHead + Message + TeamCityMessageTrail;
             }
 
-            SequenceBuilder<MessageAttributeItem> sequence = new SequenceBuilder<MessageAttributeItem>(_attributes,
-                                                                                                       Space,
-                                                                                                       TeamCityMessageHead +
-                                                                                                       Message + Space,
-                                                                                                       TeamCityMessageTrail);
+            var sequence = new SequenceBuilder<MessageAttributeItem>(_attributes,
+                                                                     Space,
+                                                                     TeamCityMessageHead +
+                                                                     Message + Space,
+                                                                     TeamCityMessageTrail);
 
             return sequence.ToString();
         }
@@ -92,7 +92,7 @@ namespace MSBuild.TeamCity.Tasks.Messages
         /// <returns>The attribute's value or empty string if no attribute found</returns>
         protected string GetAttributeValue(string attr)
         {
-            foreach (MessageAttributeItem item in Attributes.Where(item => item.Name == attr))
+            foreach (var item in Attributes.Where(item => item.Name == attr))
             {
                 return item.Value;
             }

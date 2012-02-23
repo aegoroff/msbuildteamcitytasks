@@ -38,7 +38,7 @@ namespace MSBuild.TeamCity.Tasks.Internal
         /// </param>
         internal void Run(params string[] commandLine)
         {
-            using (Process app = new Process())
+            using (var app = new Process())
             {
                 app.StartInfo = new ProcessStartInfo
                                     {

@@ -63,7 +63,7 @@ namespace MSBuild.TeamCity.Tasks.Messages
 
         private static Dictionary<string, int> CreateValidKeys()
         {
-            Dictionary<string, int> result = new Dictionary<string, int>
+            var result = new Dictionary<string, int>
                                                  {
                                                      { NCover3HomeKey, 1 },
                                                      { NCover3ReporterArgsKey, 1 },

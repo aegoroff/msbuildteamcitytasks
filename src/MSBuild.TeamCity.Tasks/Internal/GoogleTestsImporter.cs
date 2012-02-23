@@ -37,11 +37,11 @@ namespace MSBuild.TeamCity.Tasks.Internal
         /// </returns>
         public ExecutionResult Import()
         {
-            ExecutionResult result = new ExecutionResult();
+            var result = new ExecutionResult();
             GoogleTestXmlReader reader = null;
             try
             {
-                string xmlPath = CreateXmlImport();
+                var xmlPath = CreateXmlImport();
 
                 reader = new GoogleTestXmlReader(xmlPath);
                 reader.Read();

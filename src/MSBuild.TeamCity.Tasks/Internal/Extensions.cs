@@ -43,7 +43,7 @@ namespace MSBuild.TeamCity.Tasks.Internal
             {
                 return;
             }
-            foreach (T include in items)
+            foreach (var include in items)
             {
                 list.Add(include);
             }

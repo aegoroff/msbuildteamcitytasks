@@ -89,11 +89,11 @@ namespace MSBuild.TeamCity.Tasks.Internal
             yield return new DictionaryEntry(TargetArgumentsOpt, TargetArguments);
             yield return new DictionaryEntry(OutputOpt, Output);
 
-            foreach (string include in Includes)
+            foreach (var include in Includes)
             {
                 yield return new DictionaryEntry(IncludeOpt, include);
             }
-            foreach (string exclude in Excludes)
+            foreach (var exclude in Excludes)
             {
                 yield return new DictionaryEntry(ExcludeOpt, exclude);
             }

@@ -69,7 +69,7 @@ namespace MSBuild.TeamCity.Tasks.Internal
         {
             if (result.Messages != null)
             {
-                foreach (TeamCityMessage message in result.Messages)
+                foreach (var message in result.Messages)
                 {
                     message.FlowId = flowId;
                     message.IsAddTimestamp = isAddTimestamp;

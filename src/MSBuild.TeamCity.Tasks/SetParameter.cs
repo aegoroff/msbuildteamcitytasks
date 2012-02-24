@@ -16,6 +16,17 @@ namespace MSBuild.TeamCity.Tasks
     /// you can dynamically update some build parameters right from a build step, 
     /// so that following build steps will run with modified set of build parameters.
     /// </summary>
+    /// <remarks>
+    /// When specifying a build parameter's name, mind the prefix:
+    /// <ul>
+    /// <li><b>system</b> for system properties.</li>
+    /// <li><b>env</b> for environment variables. </li>
+    /// <li>no prefix for configuration parameter.</li>
+    /// </ul>
+    /// <p/>
+    /// <a href="http://confluence.jetbrains.net/display/TCD7/Configuring+Build+Parameters">Read more about build parameters and their prefixes</a> 
+    /// The changed build parameters will also be available in dependent builds as %dep.% properties.
+    /// </remarks>
     /// <example>Sets build parameter "n1"
     /// <code><![CDATA[
     /// <SetParameter 

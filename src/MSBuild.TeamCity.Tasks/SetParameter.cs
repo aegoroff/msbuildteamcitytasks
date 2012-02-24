@@ -32,6 +32,20 @@ namespace MSBuild.TeamCity.Tasks
     ///    Value="v1"
     /// />
     /// ]]></code>
+    /// Sets environment variable VAR1
+    /// <code><![CDATA[
+    /// <SetParameter 
+    ///     Name="env.VAR1" 
+    ///     Value="value" 
+    /// />
+    /// ]]></code>
+    /// Sets system property prop1
+    /// <code><![CDATA[
+    /// <SetParameter 
+    ///     Name="system.prop1" 
+    ///     Value="value" 
+    /// />
+    /// ]]></code>
     /// </example>
     public class SetParameter : TeamCityTask
     {

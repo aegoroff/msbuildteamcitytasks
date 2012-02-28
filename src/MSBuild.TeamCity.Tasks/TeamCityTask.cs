@@ -87,7 +87,7 @@ namespace MSBuild.TeamCity.Tasks
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                Logger.LogError(e.ToString());
             }
             return false;
         }

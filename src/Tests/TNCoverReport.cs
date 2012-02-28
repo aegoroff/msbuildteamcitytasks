@@ -74,6 +74,7 @@ namespace Tests
         public void WithException()
         {
             Expect.Once.On(Logger).Method(TTeamCityTaskImplementation.LogMessage).Will(Throw.Exception(new Exception()));
+            Expect.Once.On(Logger).Method(TTeamCityTaskImplementation.LogError).WithAnyArguments();
             _task.NCoverExplorerPath = NCoverExplorerPth;
             _task.XmlReportPath = XmlReportPth;
             Assert.That(_task.Execute(), Is.False);

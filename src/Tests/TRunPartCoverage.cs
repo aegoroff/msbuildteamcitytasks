@@ -45,6 +45,7 @@ namespace Tests
         [Test]
         public void ToolPathInvalid()
         {
+            Expect.Once.On(Logger).Method(TTeamCityTaskImplementation.LogError).WithAnyArguments();
             _task.ToolPath = "bad";
             Assert.That(_task.Execute(), Is.False);
         }

@@ -56,9 +56,7 @@ namespace MSBuild.TeamCity.Tasks.Messages
         /// <filterpriority>2</filterpriority>
         public override string ToString()
         {
-            var timestamp = new MessageAttributeItem(DateTime.Now.ToString(
-                "yyyy-MM-ddTHH:mm:ss.fffzzz",
-                CultureInfo.InvariantCulture), "timestamp");
+            var timestamp = new MessageAttributeItem(DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss.fffzzz", CultureInfo.InvariantCulture), "timestamp");
             if (IsAddTimestamp && !_attributes.Contains(timestamp))
             {
                 _attributes.Add(timestamp);

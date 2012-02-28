@@ -78,7 +78,7 @@ namespace MSBuild.TeamCity.Tasks
         protected override IEnumerable<TeamCityMessage> ReadMessages()
         {
             return
-                Artifacts.Select(item => new SimpleTeamCityMessage("publishArtifacts", item.ItemSpec)).Cast<TeamCityMessage>();
+                Artifacts.Select(item => new SimpleTeamCityMessage("publishArtifacts", item.ItemSpec));
         }
     }
 }

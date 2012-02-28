@@ -78,9 +78,6 @@
     <Compile Include="Messages\AttributeLessMessage.cs" />
     <Compile Include="Messages\BlockTeamCityMessage.cs" />
     <Compile Include="BuildNumber.cs" />
-    <Compile Include="BuildProgressFinish.cs" />
-    <Compile Include="BuildProgressMessage.cs" />
-    <Compile Include="BuildProgressStart.cs" />
     <Compile Include="BuildProgressTask.cs" />
     <Compile Include="BuildStatus.cs" />
     <Compile Include="Messages\BuildStatusTeamCityMessage.cs" />

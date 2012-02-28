@@ -25,7 +25,7 @@ namespace Tests
         private TeamCityTaskImplementation _implementation;
 
         internal const string LogMessage = "LogMessage";
-        internal const string LogError = "LogError";
+        internal const string LogError = "LogErrorFromException";
         private const string BuildNumber = "buildNumber";
 
         [SetUp]

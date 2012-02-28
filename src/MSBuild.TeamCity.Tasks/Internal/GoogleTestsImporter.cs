@@ -52,7 +52,7 @@ namespace MSBuild.TeamCity.Tasks.Internal
             }
             catch (Exception e)
             {
-                _logger.LogError(e.ToString());
+                _logger.LogErrorFromException(e, true);
             }
             finally
             {

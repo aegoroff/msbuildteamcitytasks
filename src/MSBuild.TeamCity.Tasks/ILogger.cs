@@ -4,6 +4,7 @@
  * © 2007-2012 Alexander Egorov
  */
 
+using System;
 using Microsoft.Build.Framework;
 
 namespace MSBuild.TeamCity.Tasks
@@ -19,11 +20,11 @@ namespace MSBuild.TeamCity.Tasks
         bool HasLoggedErrors { get; }
 
         /// <summary>
-        /// Logs an error with the specified message.
+        /// Logs an error using the message, and optionally the stack trace, from the given exception.
         /// </summary>
-        /// <param name="message">The message.</param>
-        /// <param name="messageArgs">Optional arguments for formatting the message string.</param>
-        void LogError(string message, params object[] messageArgs);
+        /// <param name="exception">The exception to log</param>
+        /// <param name="showStackTrace">true to include the stack trace in the log; otherwise, false.</param>
+        void LogErrorFromException(Exception exception, bool showStackTrace);
 
         /// <summary>
         /// Logs a message with the specified string.

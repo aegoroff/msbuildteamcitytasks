@@ -14,7 +14,6 @@ namespace Tests
     [TestFixture]
     public class TRunGoogleTests : TTask
     {
-        internal const string LogError = "LogError";
         private const string TestFilter = "*";
         private const int ExecutionTimeoutMilliseconds = 200;
         private RunGoogleTests _task;
@@ -45,7 +44,7 @@ namespace Tests
         [Test]
         public void BadPath()
         {
-            Expect.Once.On(Logger).Method(LogError).WithAnyArguments();
+            Expect.Once.On(Logger).Method(TTeamCityTaskImplementation.LogError).WithAnyArguments();
             Expect.Once.On(Logger).GetProperty(TGoogleTestsRunner.HasLoggedErrors).Will(Return.Value(true));
 
             _task.TestExePath = "bad";
@@ -55,7 +54,7 @@ namespace Tests
         [Test]
         public void ContinueOnFailures()
         {
-            Expect.Once.On(Logger).Method(LogError).WithAnyArguments();
+            Expect.Once.On(Logger).Method(TTeamCityTaskImplementation.LogError).WithAnyArguments();
             Expect.Once.On(Logger).GetProperty(TGoogleTestsRunner.HasLoggedErrors).Will(Return.Value(false));
 
             _task.TestExePath = "bad";

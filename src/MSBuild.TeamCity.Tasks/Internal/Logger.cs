@@ -4,6 +4,7 @@
  * © 2007-2012 Alexander Egorov
  */
 
+using System;
 using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
 
@@ -35,13 +36,13 @@ namespace MSBuild.TeamCity.Tasks.Internal
         }
 
         /// <summary>
-        /// Logs an error with the specified message.
+        /// Logs an error using the message, and optionally the stack trace, from the given exception.
         /// </summary>
-        /// <param name="message">The message.</param>
-        /// <param name="messageArgs">Optional arguments for formatting the message string.</param>
-        public void LogError(string message, params object[] messageArgs)
+        /// <param name="exception">The exception to log</param>
+        /// <param name="showStackTrace">true to include the stack trace in the log; otherwise, false.</param>
+        public void LogErrorFromException(Exception exception, bool showStackTrace)
         {
-            _loggingHelper.LogError(message, messageArgs);
+            _loggingHelper.LogErrorFromException(exception, showStackTrace);
         }
 
         /// <summary>

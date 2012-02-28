@@ -20,7 +20,6 @@ namespace Tests
         internal static readonly string CorrectExePath = Environment.CurrentDirectory + @"\..\..\..\External\_tst.exe";
 
         internal const string HasLoggedErrors = "HasLoggedErrors";
-        internal const string LogError = "LogError";
 
         private Mockery _mockery;
         private ILogger _logger;
@@ -103,7 +102,7 @@ namespace Tests
         public void IncorrectExe()
         {
             Expect.Once.On(_logger).GetProperty(HasLoggedErrors).Will(Return.Value(true));
-            Expect.Once.On(_logger).Method(LogError).WithAnyArguments();
+            Expect.Once.On(_logger).Method(TTeamCityTaskImplementation.LogError).WithAnyArguments();
 
             GoogleTestsRunner runner = new GoogleTestsRunner(_logger, false, "bad");
             ExecutionResult result = runner.Import();

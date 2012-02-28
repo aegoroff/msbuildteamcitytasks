@@ -18,7 +18,7 @@
 		<!--
 			Check for .NET 4.0 Full
 		-->
-		<PropertyRef Id="NETFRAMEWORK35"/>
+		<PropertyRef Id="NETFRAMEWORK40FULL"/>
 		<Condition Message="This setup requires the .NET Framework 4.0 full or higher.">
 			Installed OR NETFRAMEWORK40FULL
 		</Condition>

@@ -25,7 +25,7 @@ namespace MSBuild.TeamCity.Tasks.Internal
         /// <returns>concatenated string</returns>
         internal static string Join(this IEnumerable<string> enumerable, string separator)
         {
-            return string.Join(separator, enumerable.ToArray());
+            return string.Join(separator, enumerable);
         }
 
         internal static void AddRange(this IList<string> list, IEnumerable<ITaskItem> items)

@@ -112,7 +112,7 @@ namespace Tests
             _commandLine.Includes.Add(Include);
             _commandLine.Excludes.Add(Exclude);
             _commandLine.Excludes.Add(Exclude);
-            Assert.That(_commandLine.ToString(), Is.EqualTo(string.Join(Space, EnumerateAllResults().ToArray())));
+            Assert.That(_commandLine.ToString(), Is.EqualTo(string.Join(Space, EnumerateAllResults())));
         }
 
         private static IEnumerable<string> EnumerateAllResults()

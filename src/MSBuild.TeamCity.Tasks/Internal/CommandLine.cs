@@ -45,7 +45,7 @@ namespace MSBuild.TeamCity.Tasks.Internal
         /// <filterpriority>2</filterpriority>
         public override string ToString()
         {
-            return string.Join(Space, CreateOptions().ToArray());
+            return string.Join(Space, CreateOptions());
         }
 
         /// <summary>

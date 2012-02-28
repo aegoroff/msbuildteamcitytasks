@@ -41,22 +41,12 @@ namespace MSBuild.TeamCity.Tasks.Internal
         /// <param name="separator">Separator string beetwen values</param>
         /// <param name="head">Sequence's header</param>
         /// <param name="trail">Sequence's trail</param>
-        public SequenceBuilder(IEnumerable<T> enumerator, string separator, string head, string trail)
+        public SequenceBuilder(IEnumerable<T> enumerator, string separator, string head = null, string trail = null)
         {
             _enumerator = enumerator;
             _separator = separator;
             _head = head;
             _trail = trail;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the SequenceBuilder class with null head and trail.
-        /// </summary>
-        /// <param name="enumerator">Enumerator that yields values in desired sequence</param>
-        /// <param name="separator">Separator string beetwen values</param>
-        public SequenceBuilder(IEnumerable<T> enumerator, string separator)
-            : this(enumerator, separator, null, null)
-        {
         }
 
         /// <summary>

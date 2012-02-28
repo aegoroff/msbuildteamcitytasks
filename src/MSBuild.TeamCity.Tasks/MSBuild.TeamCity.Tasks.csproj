@@ -69,8 +69,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BlockClose.cs" />
-    <Compile Include="BlockOpen.cs" />
     <Compile Include="BlockTask.cs" />
     <Compile Include="CompilationTask.cs" />
     <Compile Include="DisableServiceMessages.cs" />

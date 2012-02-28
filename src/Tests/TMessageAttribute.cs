@@ -39,7 +39,7 @@ namespace Tests
         [Test]
         public void NameAndValueDefined()
         {
-            MessageAttributeItem attributeItem = new MessageAttributeItem(Name, Value);
+            MessageAttributeItem attributeItem = new MessageAttributeItem(Value, Name);
             Assert.That(attributeItem.ToString(), Is.EqualTo("n='v'"));
         }
 
@@ -60,8 +60,8 @@ namespace Tests
         [Test]
         public void EqOperator()
         {
-            MessageAttributeItem a1 = new MessageAttributeItem(Name, Value + 1);
-            MessageAttributeItem a2 = new MessageAttributeItem(Name, Value + 2);
+            MessageAttributeItem a1 = new MessageAttributeItem(Value + 1, Name);
+            MessageAttributeItem a2 = new MessageAttributeItem(Value + 2, Name);
             Assert.That(a1 == a2);
         }
 
@@ -76,7 +76,7 @@ namespace Tests
         [Test]
         public void EqOperatorSameObject()
         {
-            MessageAttributeItem a1 = new MessageAttributeItem(Name, Value);
+            MessageAttributeItem a1 = new MessageAttributeItem(Value, Name);
             MessageAttributeItem a2 = a1;
             Assert.That(a1 == a2);
         }
@@ -84,29 +84,29 @@ namespace Tests
         [Test]
         public void EqOperatorNullFirst()
         {
-            MessageAttributeItem a1 = new MessageAttributeItem(Name, Value);
+            MessageAttributeItem a1 = new MessageAttributeItem(Value, Name);
             Assert.That(null == a1, Is.False);
         }
 
         [Test]
         public void EqOperatorNullSecond()
         {
-            MessageAttributeItem a1 = new MessageAttributeItem(Name, Value);
+            MessageAttributeItem a1 = new MessageAttributeItem(Value, Name);
             Assert.That(a1 == null, Is.False);
         }
 
         [Test]
         public void NeOperator()
         {
-            MessageAttributeItem a1 = new MessageAttributeItem(Name + 1, Value);
-            MessageAttributeItem a2 = new MessageAttributeItem(Name + 2, Value);
+            MessageAttributeItem a1 = new MessageAttributeItem(Value, Name + 1);
+            MessageAttributeItem a2 = new MessageAttributeItem(Value, Name + 2);
             Assert.That(a1 != a2);
         }
 
         [Test]
         public void NeOperatorFalse()
         {
-            MessageAttributeItem a1 = new MessageAttributeItem(Name + 1, Value);
+            MessageAttributeItem a1 = new MessageAttributeItem(Value, Name + 1);
             MessageAttributeItem a2 = a1;
             Assert.That(a1 != a2, Is.False);
         }
@@ -114,23 +114,23 @@ namespace Tests
         [Test]
         public void EqualsMethod()
         {
-            MessageAttributeItem a1 = new MessageAttributeItem(Name, Value + 1);
-            MessageAttributeItem a2 = new MessageAttributeItem(Name, Value + 2);
+            MessageAttributeItem a1 = new MessageAttributeItem(Value + 1, Name);
+            MessageAttributeItem a2 = new MessageAttributeItem(Value + 2, Name);
             Assert.That(a1.Equals(a2));
         }
 
         [Test]
         public void EqualsMethodFalse()
         {
-            MessageAttributeItem a1 = new MessageAttributeItem(Name + 1, Value);
-            MessageAttributeItem a2 = new MessageAttributeItem(Name + 2, Value);
+            MessageAttributeItem a1 = new MessageAttributeItem(Value, Name + 1);
+            MessageAttributeItem a2 = new MessageAttributeItem(Value, Name + 2);
             Assert.That(a1.Equals(a2), Is.False);
         }
 
         [Test]
         public void EqualsMethodSameObject()
         {
-            MessageAttributeItem a1 = new MessageAttributeItem(Name, Value);
+            MessageAttributeItem a1 = new MessageAttributeItem(Value, Name);
             MessageAttributeItem a2 = a1;
             Assert.That(a1.Equals(a2));
         }
@@ -146,7 +146,7 @@ namespace Tests
         [Test]
         public void EqualsMethodNullOther()
         {
-            MessageAttributeItem a1 = new MessageAttributeItem(Name, Value);
+            MessageAttributeItem a1 = new MessageAttributeItem(Value, Name);
             const MessageAttributeItem a2 = null;
             Assert.That(a1.Equals(a2), Is.False);
         }
@@ -154,15 +154,15 @@ namespace Tests
         [Test]
         public void EqualsObjMethod()
         {
-            MessageAttributeItem a1 = new MessageAttributeItem(Name, Value + 1);
-            object a2 = new MessageAttributeItem(Name, Value + 2);
+            MessageAttributeItem a1 = new MessageAttributeItem(Value + 1, Name);
+            object a2 = new MessageAttributeItem(Value + 2, Name);
             Assert.That(a1.Equals(a2));
         }
 
         [Test]
         public void EqualsObjMethodSameObject()
         {
-            MessageAttributeItem a1 = new MessageAttributeItem(Name, Value + 1);
+            MessageAttributeItem a1 = new MessageAttributeItem(Value + 1, Name);
             object a2 = a1;
             Assert.That(a1.Equals(a2));
         }
@@ -170,15 +170,15 @@ namespace Tests
         [Test]
         public void EqualsObjMethodFalse()
         {
-            MessageAttributeItem a1 = new MessageAttributeItem(Name + 1, Value);
-            object a2 = new MessageAttributeItem(Name + 2, Value);
+            MessageAttributeItem a1 = new MessageAttributeItem(Value, Name + 1);
+            object a2 = new MessageAttributeItem(Value, Name + 2);
             Assert.That(a1.Equals(a2), Is.False);
         }
 
         [Test]
         public void EqualsObjMethodNullOther()
         {
-            MessageAttributeItem a1 = new MessageAttributeItem(Name, Value);
+            MessageAttributeItem a1 = new MessageAttributeItem(Value, Name);
             const object a2 = null;
             Assert.That(a1.Equals(a2), Is.False);
         }
@@ -186,14 +186,14 @@ namespace Tests
         [Test]
         public void EqualsObjMethodDifferentType()
         {
-            MessageAttributeItem a1 = new MessageAttributeItem(Name, Value);
+            MessageAttributeItem a1 = new MessageAttributeItem(Value, Name);
             Assert.That(a1.Equals(Name), Is.False);
         }
 
         [Test]
         public void GetHashCodeT()
         {
-            MessageAttributeItem a1 = new MessageAttributeItem(Name, Value);
+            MessageAttributeItem a1 = new MessageAttributeItem(Value, Name);
             Assert.That(a1.GetHashCode(), Is.EqualTo(Name.GetHashCode()));
         }
 

@@ -23,19 +23,11 @@ namespace MSBuild.TeamCity.Tasks.Messages
         }
 
         ///<summary>
-        /// Initializes a new instance of the <see cref="MessageAttributeItem"/> class using value specified
-        ///</summary>
-        /// <param name="value">Attribute value</param>
-        public MessageAttributeItem(string value) : this(null, value)
-        {
-        }
-
-        ///<summary>
         /// Initializes a new instance of the <see cref="MessageAttributeItem"/> class using name and value specified.
         ///</summary>
-        /// <param name="name">Attribute name</param>
-        /// <param name="value">Attribute value</param>
-        public MessageAttributeItem(string name, string value)
+        ///<param name="value">Attribute value</param>
+        ///<param name="name">Attribute name</param>
+        public MessageAttributeItem(string value, string name = null)
         {
             Name = name;
             Value = value;

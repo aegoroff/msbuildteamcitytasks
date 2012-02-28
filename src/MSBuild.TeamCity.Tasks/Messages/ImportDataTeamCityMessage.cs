@@ -45,7 +45,7 @@ namespace MSBuild.TeamCity.Tasks.Messages
             {
                 throw new NotSupportedException();
             }
-            Attributes.Add(new MessageAttributeItem("tool", tool.ToolToString()));
+            Attributes.Add(new MessageAttributeItem(tool.ToolToString(), "tool"));
         }
 
         /// <summary>

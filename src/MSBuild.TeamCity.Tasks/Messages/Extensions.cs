@@ -20,7 +20,7 @@ namespace MSBuild.TeamCity.Tasks.Messages
 
         internal static void Add(this IList<MessageAttributeItem> list, string name, string value)
         {
-            var item = new MessageAttributeItem(name, value);
+            var item = new MessageAttributeItem(value, name);
 
             if (list.Contains(item))
             {

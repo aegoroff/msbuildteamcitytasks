@@ -56,7 +56,7 @@ namespace MSBuild.TeamCity.Tasks.Messages
 
         private void InsertType()
         {
-            var item = new MessageAttributeItem(TypeAttr, TypeAttrValue);
+            var item = new MessageAttributeItem(TypeAttrValue, TypeAttr);
             if (Attributes.Contains(item))
             {
                 Attributes.Remove(item);

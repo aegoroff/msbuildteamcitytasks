@@ -50,6 +50,7 @@
 	</ItemGroup>
 	<!-- Updating version and product code task -->
 	<Target Name="VersionUpdater" Condition=" '$(IsUpdateVersion)'=='true' ">
+		<BuildNumber Number="$(Build).$(Revision)" />
 		<!-- Updating AssemblyInfo.cs files -->
 		<FileUpdate
 			Files="@(AssemblyInfoFile)"

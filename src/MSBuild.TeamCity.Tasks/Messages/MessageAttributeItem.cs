@@ -27,6 +27,7 @@ namespace MSBuild.TeamCity.Tasks.Messages
         ///</summary>
         ///<param name="value">Attribute value</param>
         ///<param name="name">Attribute name</param>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed", Justification = "By design")]
         public MessageAttributeItem(string value, string name = null)
         {
             Name = name;

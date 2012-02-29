@@ -41,6 +41,7 @@ namespace MSBuild.TeamCity.Tasks.Internal
         /// <param name="separator">Separator string beetwen values</param>
         /// <param name="head">Sequence's header</param>
         /// <param name="trail">Sequence's trail</param>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed", Justification = "By design")]
         public SequenceBuilder(IEnumerable<T> enumerator, string separator, string head = null, string trail = null)
         {
             _enumerator = enumerator;

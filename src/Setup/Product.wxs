@@ -3,7 +3,7 @@
 	<?define SourcePath = "$(var.SolutionDir)MSBuild.TeamCity.Tasks\bin\$(var.CONFIGURATION)" ?>
 	<?define Version = "1.0.0.0" ?>
 	<Product
-		Id="*"
+		Id="33FBD18F-C1BA-4456-B4F9-B5DB5AB96134"
 		Name="MSBuild TeamCity Tasks $(var.Version)"
 		Language="1033"
 		Version="$(var.Version)"

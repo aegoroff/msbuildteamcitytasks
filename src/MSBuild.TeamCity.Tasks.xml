@@ -29,8 +29,8 @@
 		
 		<!-- Version components  -->
 		<Major>2</Major>
-		<Minor>1</Minor>
-		<Build>0</Build>
+		<Minor>3</Minor>
+		<Build>176</Build>
 		<Revision>0</Revision>
 		<!-- Development cycle stage (alpha, beta, etc.) -->
 		<Stage>alpha</Stage>

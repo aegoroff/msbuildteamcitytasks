@@ -11,7 +11,7 @@ namespace MSBuild.TeamCity.Tasks.Messages
     ///</summary>
     public class CompilationMessage : TeamCityMessage
     {
-        private readonly string _message;
+        private readonly string message;
 
         ///<summary>
         /// Initializes a new instance of the <see cref="CompilationMessage"/> class
@@ -20,7 +20,7 @@ namespace MSBuild.TeamCity.Tasks.Messages
         ///<param name="message">Compilation start/finish message</param>
         public CompilationMessage(string compiler, string message)
         {
-            _message = message;
+            this.message = message;
             Attributes.Add("compiler", compiler);
         }
 
@@ -29,7 +29,7 @@ namespace MSBuild.TeamCity.Tasks.Messages
         /// </summary>
         protected override string Message
         {
-            get { return _message; }
+            get { return message; }
         }
     }
 }

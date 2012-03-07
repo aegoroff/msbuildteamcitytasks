@@ -13,7 +13,7 @@ namespace MSBuild.TeamCity.Tasks.Internal
     ///</summary>
     public sealed class GoogleTestsRunner : GoogleTestsImporter
     {
-        private readonly string _testExePath;
+        private readonly string testExePath;
 
         ///<summary>
         /// Initializes a new instance of the <see cref="GoogleTestsRunner"/> class
@@ -24,7 +24,7 @@ namespace MSBuild.TeamCity.Tasks.Internal
         public GoogleTestsRunner(ILogger logger, bool continueOnFailures, string testExePath)
             : base(logger, continueOnFailures)
         {
-            _testExePath = testExePath;
+            this.testExePath = testExePath;
         }
 
         ///<summary>
@@ -57,8 +57,8 @@ namespace MSBuild.TeamCity.Tasks.Internal
         /// <returns>Path to xml file to import</returns>
         protected override string CreateXmlImport()
         {
-            var file = Path.GetFileNameWithoutExtension(_testExePath);
-            var dir = _testExePath.GetDirectoryName();
+            var file = Path.GetFileNameWithoutExtension(testExePath);
+            var dir = testExePath.GetDirectoryName();
             var xmlPath = dir + @"\" + file + ".xml";
 
             // to fix IssueID 3 (delete file from previous tests run)
@@ -70,7 +70,7 @@ namespace MSBuild.TeamCity.Tasks.Internal
             var commandLine =
                 new GoogleTestCommandLine(CatchGtestExceptions, RunDisabledTests, TestFilter);
 
-            var processRunner = new ProcessRunner(_testExePath)
+            var processRunner = new ProcessRunner(testExePath)
                                               {
                                                   ExecutionTimeoutMilliseconds = ExecutionTimeoutMilliseconds
                                               };

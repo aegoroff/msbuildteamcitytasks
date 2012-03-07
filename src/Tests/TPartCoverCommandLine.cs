@@ -14,7 +14,7 @@ namespace Tests
     [TestFixture]
     public class TPartCoverCommandLine
     {
-        private PartCoverCommandLine _commandLine;
+        private PartCoverCommandLine commandLine;
 
         private const string Target = "t";
         private const string TargetResult = "--target t";
@@ -38,7 +38,7 @@ namespace Tests
         [SetUp]
         public void Setup()
         {
-            _commandLine = new PartCoverCommandLine();
+            commandLine = new PartCoverCommandLine();
         }
 
 
@@ -46,73 +46,73 @@ namespace Tests
         [TestCase("t s", "--target \"t s\"")]
         public void TargetProperty(string target, string expected)
         {
-            _commandLine.Target = target;
-            Assert.That(_commandLine.ToString(), Is.EqualTo(expected));
+            commandLine.Target = target;
+            Assert.That(commandLine.ToString(), Is.EqualTo(expected));
         }
 
         [Test]
         public void TargetWorkDirProperty()
         {
-            _commandLine.TargetWorkDir = TargetWorkDir;
-            Assert.That(_commandLine.ToString(), Is.EqualTo(TargetWorkDirResult));
+            commandLine.TargetWorkDir = TargetWorkDir;
+            Assert.That(commandLine.ToString(), Is.EqualTo(TargetWorkDirResult));
         }
 
         [Test]
         public void TargetArgumentsProperty()
         {
-            _commandLine.TargetArguments = TargetArguments;
-            Assert.That(_commandLine.ToString(), Is.EqualTo(TargetArgumentsResult));
+            commandLine.TargetArguments = TargetArguments;
+            Assert.That(commandLine.ToString(), Is.EqualTo(TargetArgumentsResult));
         }
 
         [Test]
         public void OutputProperty()
         {
-            _commandLine.Output = Output;
-            Assert.That(_commandLine.ToString(), Is.EqualTo(OutputResult));
+            commandLine.Output = Output;
+            Assert.That(commandLine.ToString(), Is.EqualTo(OutputResult));
         }
 
         [Test]
         public void IncludesProperty()
         {
-            _commandLine.Includes.Add(Include);
-            Assert.That(_commandLine.ToString(), Is.EqualTo(IncludeResult));
+            commandLine.Includes.Add(Include);
+            Assert.That(commandLine.ToString(), Is.EqualTo(IncludeResult));
         }
 
         [Test]
         public void ManyIncludesProperty()
         {
-            _commandLine.Includes.Add(Include);
-            _commandLine.Includes.Add(Include);
-            Assert.That(_commandLine.ToString(), Is.EqualTo(IncludeResult + Space + IncludeResult));
+            commandLine.Includes.Add(Include);
+            commandLine.Includes.Add(Include);
+            Assert.That(commandLine.ToString(), Is.EqualTo(IncludeResult + Space + IncludeResult));
         }
 
         [Test]
         public void ExcludesProperty()
         {
-            _commandLine.Excludes.Add(Exclude);
-            Assert.That(_commandLine.ToString(), Is.EqualTo(ExcludeResult));
+            commandLine.Excludes.Add(Exclude);
+            Assert.That(commandLine.ToString(), Is.EqualTo(ExcludeResult));
         }
 
         [Test]
         public void ManyExcludesProperty()
         {
-            _commandLine.Excludes.Add(Exclude);
-            _commandLine.Excludes.Add(Exclude);
-            Assert.That(_commandLine.ToString(), Is.EqualTo(ExcludeResult + Space + ExcludeResult));
+            commandLine.Excludes.Add(Exclude);
+            commandLine.Excludes.Add(Exclude);
+            Assert.That(commandLine.ToString(), Is.EqualTo(ExcludeResult + Space + ExcludeResult));
         }
 
         [Test]
         public void AllProperties()
         {
-            _commandLine.Target = Target;
-            _commandLine.TargetWorkDir = TargetWorkDir;
-            _commandLine.TargetArguments = TargetArguments;
-            _commandLine.Output = Output;
-            _commandLine.Includes.Add(Include);
-            _commandLine.Includes.Add(Include);
-            _commandLine.Excludes.Add(Exclude);
-            _commandLine.Excludes.Add(Exclude);
-            Assert.That(_commandLine.ToString(), Is.EqualTo(string.Join(Space, EnumerateAllResults())));
+            commandLine.Target = Target;
+            commandLine.TargetWorkDir = TargetWorkDir;
+            commandLine.TargetArguments = TargetArguments;
+            commandLine.Output = Output;
+            commandLine.Includes.Add(Include);
+            commandLine.Includes.Add(Include);
+            commandLine.Excludes.Add(Exclude);
+            commandLine.Excludes.Add(Exclude);
+            Assert.That(commandLine.ToString(), Is.EqualTo(string.Join(Space, EnumerateAllResults())));
         }
 
         private static IEnumerable<string> EnumerateAllResults()

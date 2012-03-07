@@ -15,7 +15,7 @@ namespace MSBuild.TeamCity.Tasks.Internal
     ///</summary>
     internal sealed class Logger : ILogger
     {
-        private readonly TaskLoggingHelper _loggingHelper;
+        private readonly TaskLoggingHelper loggingHelper;
 
         ///<summary>
         /// Initializes a new instance of the <see cref="Logger"/> class using 
@@ -24,7 +24,7 @@ namespace MSBuild.TeamCity.Tasks.Internal
         ///<param name="loggingHelper"><see cref="TaskLoggingHelper"/> to wrap up</param>
         public Logger(TaskLoggingHelper loggingHelper)
         {
-            _loggingHelper = loggingHelper;
+            this.loggingHelper = loggingHelper;
         }
 
         /// <summary>
@@ -32,7 +32,7 @@ namespace MSBuild.TeamCity.Tasks.Internal
         /// </summary>
         public bool HasLoggedErrors
         {
-            get { return _loggingHelper.HasLoggedErrors; }
+            get { return loggingHelper.HasLoggedErrors; }
         }
 
         /// <summary>
@@ -42,7 +42,7 @@ namespace MSBuild.TeamCity.Tasks.Internal
         /// <param name="showStackTrace">true to include the stack trace in the log; otherwise, false.</param>
         public void LogErrorFromException(Exception exception, bool showStackTrace)
         {
-            _loggingHelper.LogErrorFromException(exception, showStackTrace);
+            loggingHelper.LogErrorFromException(exception, showStackTrace);
         }
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace MSBuild.TeamCity.Tasks.Internal
         /// <param name="messageArgs">The arguments for formatting the message.</param>
         public void LogMessage(MessageImportance importance, string message, params object[] messageArgs)
         {
-            _loggingHelper.LogMessage(importance, message, messageArgs);
+            loggingHelper.LogMessage(importance, message, messageArgs);
         }
     }
 }

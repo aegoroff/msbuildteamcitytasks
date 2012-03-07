@@ -15,8 +15,8 @@ namespace MSBuild.TeamCity.Tasks.Internal
     /// </summary>
     public abstract class GoogleTestsImporter
     {
-        private readonly ILogger _logger;
-        private readonly bool _continueOnFailures;
+        private readonly ILogger logger;
+        private readonly bool continueOnFailures;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GoogleTestsImporter"/> class
@@ -25,8 +25,8 @@ namespace MSBuild.TeamCity.Tasks.Internal
         /// <param name="continueOnFailures">Whether to continue build in case of failing tests</param>
         protected GoogleTestsImporter(ILogger logger, bool continueOnFailures)
         {
-            _logger = logger;
-            _continueOnFailures = continueOnFailures;
+            this.logger = logger;
+            this.continueOnFailures = continueOnFailures;
         }
 
         /// <summary>
@@ -52,7 +52,7 @@ namespace MSBuild.TeamCity.Tasks.Internal
             }
             catch (Exception e)
             {
-                _logger.LogErrorFromException(e, true);
+                logger.LogErrorFromException(e, true);
             }
             finally
             {
@@ -61,9 +61,9 @@ namespace MSBuild.TeamCity.Tasks.Internal
                     reader.Dispose();
                 }
             }
-            if (_continueOnFailures)
+            if (continueOnFailures)
             {
-                result.Status = !_logger.HasLoggedErrors;
+                result.Status = !logger.HasLoggedErrors;
             }
             else if (reader == null)
             {
@@ -71,7 +71,7 @@ namespace MSBuild.TeamCity.Tasks.Internal
             }
             else
             {
-                result.Status = reader.FailuresCount == 0 && !_logger.HasLoggedErrors;
+                result.Status = reader.FailuresCount == 0 && !logger.HasLoggedErrors;
             }
             return result;
         }

@@ -11,7 +11,7 @@ namespace MSBuild.TeamCity.Tasks.Messages
     ///</summary>
     public class SimpleTeamCityMessage : TeamCityMessage
     {
-        private readonly string _message;
+        private readonly string message;
 
         ///<summary>
         /// Initializes a new instance of the <see cref="SimpleTeamCityMessage"/> class using message name and text specified
@@ -20,7 +20,7 @@ namespace MSBuild.TeamCity.Tasks.Messages
         ///<param name="messageText">Build progress start message text</param>
         public SimpleTeamCityMessage(string message, string messageText)
         {
-            _message = message;
+            this.message = message;
             MessageText = messageText;
             Attributes.Add(new MessageAttributeItem(messageText));
         }
@@ -35,7 +35,7 @@ namespace MSBuild.TeamCity.Tasks.Messages
         /// </summary>
         protected override string Message
         {
-            get { return _message; }
+            get { return message; }
         }
     }
 }

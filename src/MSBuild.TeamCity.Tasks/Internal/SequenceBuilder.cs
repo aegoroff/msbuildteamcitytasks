@@ -29,10 +29,10 @@ namespace MSBuild.TeamCity.Tasks.Internal
     /// </example>
     public class SequenceBuilder<T>
     {
-        private readonly IEnumerable<T> _enumerator;
-        private readonly string _separator;
-        private readonly string _head;
-        private readonly string _trail;
+        private readonly IEnumerable<T> enumerator;
+        private readonly string separator;
+        private readonly string head;
+        private readonly string trail;
 
         /// <summary>
         /// Initializes a new instance of the SequenceBuilder class
@@ -44,10 +44,10 @@ namespace MSBuild.TeamCity.Tasks.Internal
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed", Justification = "By design")]
         public SequenceBuilder(IEnumerable<T> enumerator, string separator, string head = null, string trail = null)
         {
-            _enumerator = enumerator;
-            _separator = separator;
-            _head = head;
-            _trail = trail;
+            this.enumerator = enumerator;
+            this.separator = separator;
+            this.head = head;
+            this.trail = trail;
         }
 
         /// <summary>
@@ -59,14 +59,14 @@ namespace MSBuild.TeamCity.Tasks.Internal
         /// </returns>
         public override string ToString()
         {
-            if (!_enumerator.Any())
+            if (!enumerator.Any())
             {
                 return string.Empty;
             }
-            var strings = from T item in _enumerator
+            var strings = from T item in enumerator
                                           where !string.IsNullOrEmpty(item.ToString())
                                           select item.ToString();
-            return _head + strings.Join(_separator) + _trail;
+            return head + strings.Join(separator) + trail;
         }
     }
 }

@@ -21,7 +21,7 @@ namespace MSBuild.TeamCity.Tasks.Messages
         private const string Space = " ";
         private const string TeamCityMessageHead = "##teamcity[";
         private const string TeamCityMessageTrail = "]";
-        private readonly List<MessageAttributeItem> _attributes = new List<MessageAttributeItem>();
+        private readonly List<MessageAttributeItem> attributes = new List<MessageAttributeItem>();
 
         ///<summary>
         /// Gets or sets a value indicating whether to add timestamt to the message. False by default
@@ -44,7 +44,7 @@ namespace MSBuild.TeamCity.Tasks.Messages
         protected IList<MessageAttributeItem> Attributes
         {
             [DebuggerStepThrough]
-            get { return _attributes; }
+            get { return attributes; }
         }
 
         /// <summary>
@@ -57,23 +57,23 @@ namespace MSBuild.TeamCity.Tasks.Messages
         public override string ToString()
         {
             var timestamp = new MessageAttributeItem(DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss.fffzzz", CultureInfo.InvariantCulture), "timestamp");
-            if (IsAddTimestamp && !_attributes.Contains(timestamp))
+            if (IsAddTimestamp && !attributes.Contains(timestamp))
             {
-                _attributes.Add(timestamp);
+                attributes.Add(timestamp);
             }
 
             var flowId = new MessageAttributeItem(FlowId, "flowId");
-            if (!string.IsNullOrEmpty(FlowId) && !_attributes.Contains(flowId))
+            if (!string.IsNullOrEmpty(FlowId) && !attributes.Contains(flowId))
             {
-                _attributes.Add(flowId);
+                attributes.Add(flowId);
             }
 
-            if (_attributes.Count == 0)
+            if (attributes.Count == 0)
             {
                 return TeamCityMessageHead + Message + TeamCityMessageTrail;
             }
 
-            var sequence = new SequenceBuilder<MessageAttributeItem>(_attributes,
+            var sequence = new SequenceBuilder<MessageAttributeItem>(attributes,
                                                                      Space,
                                                                      TeamCityMessageHead +
                                                                      Message + Space,

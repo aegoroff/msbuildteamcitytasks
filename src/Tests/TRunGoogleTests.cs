@@ -16,12 +16,12 @@ namespace Tests
     {
         private const string TestFilter = "*";
         private const int ExecutionTimeoutMilliseconds = 200;
-        private RunGoogleTests _task;
+        private RunGoogleTests task;
 
         [SetUp]
         public void Init()
         {
-            _task = new RunGoogleTests(Logger);
+            task = new RunGoogleTests(Logger);
         }
 
         [TearDown]
@@ -37,8 +37,8 @@ namespace Tests
             Expect.Once.On(Logger).Method(TTeamCityTaskImplementation.LogMessage).WithAnyArguments();
             Expect.Once.On(Logger).GetProperty(TGoogleTestsRunner.HasLoggedErrors).Will(Return.Value(false));
 
-            _task.TestExePath = TGoogleTestsRunner.CorrectExePath;
-            Assert.That(_task.Execute());
+            task.TestExePath = TGoogleTestsRunner.CorrectExePath;
+            Assert.That(task.Execute());
         }
 
         [Test]
@@ -47,8 +47,8 @@ namespace Tests
             Expect.Once.On(Logger).Method(TTeamCityTaskImplementation.LogError).WithAnyArguments();
             Expect.Once.On(Logger).GetProperty(TGoogleTestsRunner.HasLoggedErrors).Will(Return.Value(true));
 
-            _task.TestExePath = "bad";
-            Assert.That(_task.Execute(), Is.False);
+            task.TestExePath = "bad";
+            Assert.That(task.Execute(), Is.False);
         }
 
         [Test]
@@ -57,9 +57,9 @@ namespace Tests
             Expect.Once.On(Logger).Method(TTeamCityTaskImplementation.LogError).WithAnyArguments();
             Expect.Once.On(Logger).GetProperty(TGoogleTestsRunner.HasLoggedErrors).Will(Return.Value(false));
 
-            _task.TestExePath = "bad";
-            _task.ContinueOnFailures = true;
-            Assert.That(_task.Execute());
+            task.TestExePath = "bad";
+            task.ContinueOnFailures = true;
+            Assert.That(task.Execute());
         }
 
         [Test]
@@ -68,55 +68,55 @@ namespace Tests
             Expect.Once.On(Logger).Method(TTeamCityTaskImplementation.LogMessage).WithAnyArguments();
             Expect.Once.On(Logger).GetProperty(TGoogleTestsRunner.HasLoggedErrors).Will(Return.Value(false));
 
-            _task.TestExePath = TGoogleTestsRunner.CorrectExePath;
-            _task.ContinueOnFailures = false;
-            _task.RunDisabledTests = true;
-            _task.CatchGtestExceptions = true;
-            _task.TestFilter = TestFilter;
-            _task.ExecutionTimeoutMilliseconds = ExecutionTimeoutMilliseconds;
-            Assert.That(_task.Execute());
+            task.TestExePath = TGoogleTestsRunner.CorrectExePath;
+            task.ContinueOnFailures = false;
+            task.RunDisabledTests = true;
+            task.CatchGtestExceptions = true;
+            task.TestFilter = TestFilter;
+            task.ExecutionTimeoutMilliseconds = ExecutionTimeoutMilliseconds;
+            Assert.That(task.Execute());
         }
 
         [Test]
         public void TestExePathProperty()
         {
-            _task.TestExePath = TGoogleTestsRunner.CorrectExePath;
-            Assert.That(_task.TestExePath, Is.EqualTo(TGoogleTestsRunner.CorrectExePath));
+            task.TestExePath = TGoogleTestsRunner.CorrectExePath;
+            Assert.That(task.TestExePath, Is.EqualTo(TGoogleTestsRunner.CorrectExePath));
         }
 
         [Test]
         public void ContinueOnFailuresProperty()
         {
-            _task.ContinueOnFailures = true;
-            Assert.That(_task.ContinueOnFailures);
+            task.ContinueOnFailures = true;
+            Assert.That(task.ContinueOnFailures);
         }
 
         [Test]
         public void RunDisabledTestsProperty()
         {
-            _task.RunDisabledTests = true;
-            Assert.That(_task.RunDisabledTests);
+            task.RunDisabledTests = true;
+            Assert.That(task.RunDisabledTests);
         }
 
         [Test]
         public void CatchGtestExceptionsProperty()
         {
-            _task.CatchGtestExceptions = true;
-            Assert.That(_task.CatchGtestExceptions);
+            task.CatchGtestExceptions = true;
+            Assert.That(task.CatchGtestExceptions);
         }
 
         [Test]
         public void TestFilterProperty()
         {
-            _task.TestFilter = TestFilter;
-            Assert.That(_task.TestFilter, Is.EqualTo(TestFilter));
+            task.TestFilter = TestFilter;
+            Assert.That(task.TestFilter, Is.EqualTo(TestFilter));
         }
 
         [Test]
         public void ExecutionTimeoutMillisecondsProperty()
         {
-            _task.ExecutionTimeoutMilliseconds = ExecutionTimeoutMilliseconds;
-            Assert.That(_task.ExecutionTimeoutMilliseconds, Is.EqualTo(ExecutionTimeoutMilliseconds));
+            task.ExecutionTimeoutMilliseconds = ExecutionTimeoutMilliseconds;
+            Assert.That(task.ExecutionTimeoutMilliseconds, Is.EqualTo(ExecutionTimeoutMilliseconds));
         }
     }
 }

@@ -11,9 +11,9 @@ namespace MSBuild.TeamCity.Tasks.Messages
     /// </summary>
     public class ImportDataMessageBuilder
     {
-        private readonly string _tool;
-        private readonly string _path;
-        private readonly string _type;
+        private readonly string tool;
+        private readonly string path;
+        private readonly string type;
 
         ///<summary>
         /// Initializes a new instance of the <see cref="ImportDataMessageBuilder"/> class
@@ -23,9 +23,9 @@ namespace MSBuild.TeamCity.Tasks.Messages
         ///<param name="type">imported data type.</param>
         public ImportDataMessageBuilder(string tool, string path, string type)
         {
-            _tool = tool;
-            _path = path;
-            _type = type;
+            this.tool = tool;
+            this.path = path;
+            this.type = type;
         }
 
         /// <summary>
@@ -34,11 +34,11 @@ namespace MSBuild.TeamCity.Tasks.Messages
         /// <returns>The new instance of <see cref="TeamCityMessage"/> class</returns>
         public TeamCityMessage BuildMessage()
         {
-            return string.IsNullOrEmpty(_tool)
-                       ? new ImportDataTeamCityMessage(_type, _path)
+            return string.IsNullOrEmpty(tool)
+                       ? new ImportDataTeamCityMessage(type, path)
                        : new ImportDataTeamCityMessage(ImportType.DotNetCoverage,
-                                                       _path,
-                                                       _tool.ToDotNetCoverateTool());
+                                                       path,
+                                                       tool.ToDotNetCoverateTool());
         }
     }
 }

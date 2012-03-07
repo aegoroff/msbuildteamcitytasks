@@ -16,7 +16,7 @@ namespace MSBuild.TeamCity.Tasks.Internal
     public class GoogleTestXmlReader : IDisposable
     {
         private const string Failure = "failure";
-        private readonly XmlReader _reader;
+        private readonly XmlReader reader;
 
         ///<summary>
         /// Initializes a new instance of the <see cref="GoogleTestXmlReader"/> class using whole XML text read into string specified.
@@ -24,7 +24,7 @@ namespace MSBuild.TeamCity.Tasks.Internal
         ///<param name="xmlTextReader">The <see cref="TextReader"/> from which to read the XML data.</param>
         public GoogleTestXmlReader(TextReader xmlTextReader)
         {
-            _reader = XmlReader.Create(xmlTextReader);
+            reader = XmlReader.Create(xmlTextReader);
         }
 
         ///<summary>
@@ -33,7 +33,7 @@ namespace MSBuild.TeamCity.Tasks.Internal
         ///<param name="path">The URI for the file containing the XML data.</param>
         public GoogleTestXmlReader(string path)
         {
-            _reader = XmlReader.Create(path);
+            reader = XmlReader.Create(path);
         }
 
         ///<summary>
@@ -46,8 +46,8 @@ namespace MSBuild.TeamCity.Tasks.Internal
         ///</summary>
         public void Read()
         {
-            _reader.MoveToContent();
-            while (_reader.ReadToFollowing(Failure))
+            reader.MoveToContent();
+            while (reader.ReadToFollowing(Failure))
             {
                 ++FailuresCount;
             }
@@ -71,7 +71,7 @@ namespace MSBuild.TeamCity.Tasks.Internal
         {
             if (disposing)
             {
-                _reader.Close();
+                reader.Close();
             }
         }
     }

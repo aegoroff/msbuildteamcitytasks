@@ -16,10 +16,10 @@ namespace Tests
     [TestFixture]
     public class TPartCoverReport : TTask
     {
-        private ITaskItem _item1;
-        private ITaskItem _item2;
+        private ITaskItem item1;
+        private ITaskItem item2;
         private const string ItemSpec = "ItemSpec";
-        private PartCoverReport _task;
+        private PartCoverReport task;
         private const string XmlReportPth = "path";
 
 
@@ -27,42 +27,42 @@ namespace Tests
         public void ThisSetup()
         {
             Setup();
-            _item1 = Mockery.NewMock<ITaskItem>();
-            _item2 = Mockery.NewMock<ITaskItem>();
-            _task = new PartCoverReport(Logger);
+            item1 = Mockery.NewMock<ITaskItem>();
+            item2 = Mockery.NewMock<ITaskItem>();
+            task = new PartCoverReport(Logger);
         }
 
         [Test]
         public void OnlyRequired()
         {
             Expect.Once.On(Logger).Method(TTeamCityTaskImplementation.LogMessage).WithAnyArguments();
-            _task.XmlReportPath = XmlReportPth;
-            Assert.That(_task.Execute());
+            task.XmlReportPath = XmlReportPth;
+            Assert.That(task.Execute());
         }
 
         [Test]
         public void All()
         {
             Expect.Exactly(2).On(Logger).Method(TTeamCityTaskImplementation.LogMessage).WithAnyArguments();
-            Expect.Exactly(2).On(_item1).GetProperty(ItemSpec).Will(Return.Value("a"));
-            Expect.Exactly(2).On(_item2).GetProperty(ItemSpec).Will(Return.Value("b"));
-            _task.XmlReportPath = XmlReportPth;
-            _task.ReportXslts = new[] { _item1, _item2 };
-            Assert.That(_task.Execute());
+            Expect.Exactly(2).On(item1).GetProperty(ItemSpec).Will(Return.Value("a"));
+            Expect.Exactly(2).On(item2).GetProperty(ItemSpec).Will(Return.Value("b"));
+            task.XmlReportPath = XmlReportPth;
+            task.ReportXslts = new[] { item1, item2 };
+            Assert.That(task.Execute());
         }
 
         [Test]
         public void XmlReportPath()
         {
-            _task.XmlReportPath = XmlReportPth;
-            Assert.That(_task.XmlReportPath, Is.EqualTo(XmlReportPth));
+            task.XmlReportPath = XmlReportPth;
+            Assert.That(task.XmlReportPath, Is.EqualTo(XmlReportPth));
         }
 
         [Test]
         public void ReportXslts()
         {
-            _task.ReportXslts = new[] { _item1, _item2 };
-            Assert.That(_task.ReportXslts, Is.EquivalentTo(new[] { _item1, _item2 }));
+            task.ReportXslts = new[] { item1, item2 };
+            Assert.That(task.ReportXslts, Is.EquivalentTo(new[] { item1, item2 }));
         }
     }
 }

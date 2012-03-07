@@ -18,7 +18,7 @@ namespace MSBuild.TeamCity.Tasks
     /// </summary>
     public abstract class TeamCityTask : Task
     {
-        private TeamCityTaskImplementation _implementation;
+        private TeamCityTaskImplementation implementation;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TeamCityTask"/> class
@@ -83,7 +83,7 @@ namespace MSBuild.TeamCity.Tasks
         {
             try
             {
-                return _implementation.Execute(ExecutionResult, IsAddTimestamp, FlowId);
+                return implementation.Execute(ExecutionResult, IsAddTimestamp, FlowId);
             }
             catch (Exception e)
             {
@@ -104,7 +104,7 @@ namespace MSBuild.TeamCity.Tasks
         private void Initialize(ILogger logger)
         {
             Logger = logger;
-            _implementation = new TeamCityTaskImplementation(logger);
+            implementation = new TeamCityTaskImplementation(logger);
         }
     }
 }

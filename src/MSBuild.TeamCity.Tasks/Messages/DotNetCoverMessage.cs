@@ -22,7 +22,7 @@ namespace MSBuild.TeamCity.Tasks.Messages
         internal const string NCoverExplorerReportOrderKey = "ncover_explorer_report_order";
         internal const string PartcoverReportXsltsKey = "partcover_report_xslts";
 
-        private readonly Dictionary<string, int> _validKeys = new Dictionary<string, int>(CreateValidKeys());
+        private readonly Dictionary<string, int> validKeys = new Dictionary<string, int>(CreateValidKeys());
 
         ///<summary>
         /// Initializes a new instance of the <see cref="DotNetCoverMessage"/> class
@@ -34,7 +34,7 @@ namespace MSBuild.TeamCity.Tasks.Messages
         /// </exception>
         public DotNetCoverMessage(string key, string value)
         {
-            if (!_validKeys.ContainsKey(key))
+            if (!validKeys.ContainsKey(key))
             {
                 throw new ArgumentException("Invalid key name.", "key");
             }

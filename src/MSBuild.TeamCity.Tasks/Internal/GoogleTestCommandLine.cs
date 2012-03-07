@@ -14,9 +14,9 @@ namespace MSBuild.TeamCity.Tasks.Internal
     ///</summary>
     public sealed class GoogleTestCommandLine : CommandLine
     {
-        private readonly bool _catchExceptions;
-        private readonly bool _runDisabledTests;
-        private readonly string _filter;
+        private readonly bool catchExceptions;
+        private readonly bool runDisabledTests;
+        private readonly string filter;
         private const string OutputOpt = "gtest_output";
         private const string RunDisabledTestsOpt = "gtest_also_run_disabled_tests";
         private const string CatchExceptionsOpt = "gtest_catch_exceptions";
@@ -34,9 +34,9 @@ namespace MSBuild.TeamCity.Tasks.Internal
         /// </param>
         public GoogleTestCommandLine(bool catchExceptions, bool runDisabledTests, string filter)
         {
-            _catchExceptions = catchExceptions;
-            _runDisabledTests = runDisabledTests;
-            _filter = filter;
+            this.catchExceptions = catchExceptions;
+            this.runDisabledTests = runDisabledTests;
+            this.filter = filter;
         }
 
         /// <summary>
@@ -62,17 +62,17 @@ namespace MSBuild.TeamCity.Tasks.Internal
         protected override IEnumerable<DictionaryEntry> EnumerateOptions()
         {
             yield return new DictionaryEntry(OutputOpt, "xml:");
-            if (_runDisabledTests)
+            if (runDisabledTests)
             {
                 yield return new DictionaryEntry(RunDisabledTestsOpt, string.Empty);
             }
-            if (_catchExceptions)
+            if (catchExceptions)
             {
                 yield return new DictionaryEntry(CatchExceptionsOpt, string.Empty);
             }
-            if (!string.IsNullOrEmpty(_filter))
+            if (!string.IsNullOrEmpty(filter))
             {
-                yield return new DictionaryEntry(FilterOpt, _filter);
+                yield return new DictionaryEntry(FilterOpt, filter);
             }
         }
     }

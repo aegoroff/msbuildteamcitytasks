@@ -11,7 +11,7 @@ namespace MSBuild.TeamCity.Tasks.Messages
     ///</summary>
     public class AttributeLessMessage : TeamCityMessage
     {
-        private readonly string _message;
+        private readonly string message;
 
         ///<summary>
         /// Initializes a new instance of the <see cref="AttributeLessMessage"/> class using message name specified
@@ -19,7 +19,7 @@ namespace MSBuild.TeamCity.Tasks.Messages
         ///<param name="message">TeamCity message name</param>
         public AttributeLessMessage(string message)
         {
-            _message = message;
+            this.message = message;
         }
 
         /// <summary>
@@ -27,7 +27,7 @@ namespace MSBuild.TeamCity.Tasks.Messages
         /// </summary>
         protected override string Message
         {
-            get { return _message; }
+            get { return message; }
         }
     }
 }

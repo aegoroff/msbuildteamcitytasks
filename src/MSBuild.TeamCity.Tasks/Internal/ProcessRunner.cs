@@ -13,7 +13,7 @@ namespace MSBuild.TeamCity.Tasks.Internal
     ///</summary>
     internal sealed class ProcessRunner
     {
-        private readonly string _testExePath;
+        private readonly string testExePath;
 
         ///<summary>
         /// Initializes a new instance of the <see cref="ProcessRunner"/> class
@@ -21,7 +21,7 @@ namespace MSBuild.TeamCity.Tasks.Internal
         ///<param name="testExePath">Path to executable file</param>
         internal ProcessRunner(string testExePath)
         {
-            _testExePath = testExePath;
+            this.testExePath = testExePath;
         }
 
         /// <summary>
@@ -42,11 +42,11 @@ namespace MSBuild.TeamCity.Tasks.Internal
             {
                 app.StartInfo = new ProcessStartInfo
                                     {
-                                        FileName = _testExePath,
+                                        FileName = testExePath,
                                         Arguments = string.Join(" ", commandLine),
                                         UseShellExecute = false,
                                         RedirectStandardOutput = false,
-                                        WorkingDirectory = _testExePath.GetDirectoryName(),
+                                        WorkingDirectory = testExePath.GetDirectoryName(),
                                         CreateNoWindow = true
                                     };
                 app.Start();

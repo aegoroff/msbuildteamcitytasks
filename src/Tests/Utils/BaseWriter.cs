@@ -11,17 +11,17 @@ namespace Tests.Utils
 {
     public class BaseWriter : IDisposable
     {
-        private readonly XmlWriter _xw;
+        private readonly XmlWriter xw;
 
         protected BaseWriter(XmlWriter xw)
         {
-            _xw = xw;
+            this.xw = xw;
         }
 
         public void Dispose()
         {
-            _xw.WriteEndElement();
-            _xw.Flush();
+            xw.WriteEndElement();
+            xw.Flush();
         }
     }
 }

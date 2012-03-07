@@ -22,22 +22,22 @@ namespace Tests
         private static readonly string FailTestsPath = Environment.CurrentDirectory +
                                                        @"\..\..\..\External\GoogleTestsFailed.xml";
 
-        private Mockery _mockery;
-        private ILogger _logger;
+        private Mockery mockery;
+        private ILogger logger;
 
         [SetUp]
         public void Setup()
         {
-            _mockery = new Mockery();
-            _logger = _mockery.NewMock<ILogger>();
+            mockery = new Mockery();
+            logger = mockery.NewMock<ILogger>();
         }
 
         [Test]
         public void ReadSuccessTests()
         {
-            Expect.Once.On(_logger).GetProperty(TGoogleTestsRunner.HasLoggedErrors).Will(Return.Value(false));
+            Expect.Once.On(logger).GetProperty(TGoogleTestsRunner.HasLoggedErrors).Will(Return.Value(false));
 
-            GoogleTestsPlainImporter importer = new GoogleTestsPlainImporter(_logger, false, SuccessTestsPath);
+            GoogleTestsPlainImporter importer = new GoogleTestsPlainImporter(logger, false, SuccessTestsPath);
 
             ExecutionResult result = importer.Import();
 
@@ -48,9 +48,9 @@ namespace Tests
         [Test]
         public void ReadFailTests()
         {
-            Expect.Once.On(_logger).GetProperty(TGoogleTestsRunner.HasLoggedErrors).Will(Return.Value(false));
+            Expect.Once.On(logger).GetProperty(TGoogleTestsRunner.HasLoggedErrors).Will(Return.Value(false));
 
-            GoogleTestsPlainImporter importer = new GoogleTestsPlainImporter(_logger, false, FailTestsPath);
+            GoogleTestsPlainImporter importer = new GoogleTestsPlainImporter(logger, false, FailTestsPath);
 
             ExecutionResult result = importer.Import();
 
@@ -61,9 +61,9 @@ namespace Tests
         [Test]
         public void ReadFailTestsButContinueOnFailures()
         {
-            Expect.Once.On(_logger).GetProperty(TGoogleTestsRunner.HasLoggedErrors).Will(Return.Value(false));
+            Expect.Once.On(logger).GetProperty(TGoogleTestsRunner.HasLoggedErrors).Will(Return.Value(false));
 
-            GoogleTestsPlainImporter importer = new GoogleTestsPlainImporter(_logger, true, FailTestsPath);
+            GoogleTestsPlainImporter importer = new GoogleTestsPlainImporter(logger, true, FailTestsPath);
 
             ExecutionResult result = importer.Import();
 

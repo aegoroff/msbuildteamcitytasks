@@ -15,7 +15,7 @@ namespace Tests
     [TestFixture]
     public class TNCoverReport : TTask
     {
-        private NCoverReport _task;
+        private NCoverReport task;
         private const string NCoverExplorerPth = @"ncoverexplorer\path";
         private const string XmlReportPth = @"path\report";
         private const string Args = "a";
@@ -25,49 +25,49 @@ namespace Tests
         [SetUp]
         public void Init()
         {
-            _task = new NCoverReport(Logger);
+            task = new NCoverReport(Logger);
         }
 
         [Test]
         public void OnlyRequired()
         {
             Expect.Exactly(2).On(Logger).Method(TTeamCityTaskImplementation.LogMessage).WithAnyArguments();
-            _task.NCoverExplorerPath = NCoverExplorerPth;
-            _task.XmlReportPath = XmlReportPth;
-            Assert.That(_task.Execute());
+            task.NCoverExplorerPath = NCoverExplorerPth;
+            task.XmlReportPath = XmlReportPth;
+            Assert.That(task.Execute());
         }
 
         [Test]
         public void OnlyRequiredAndArguments()
         {
             Expect.Exactly(3).On(Logger).Method(TTeamCityTaskImplementation.LogMessage).WithAnyArguments();
-            _task.NCoverExplorerPath = NCoverExplorerPth;
-            _task.XmlReportPath = XmlReportPth;
-            _task.Arguments = Args;
-            Assert.That(_task.Execute());
+            task.NCoverExplorerPath = NCoverExplorerPth;
+            task.XmlReportPath = XmlReportPth;
+            task.Arguments = Args;
+            Assert.That(task.Execute());
         }
 
         [Test]
         public void OnlyRequiredAndArgumentsAndReportType()
         {
             Expect.Exactly(4).On(Logger).Method(TTeamCityTaskImplementation.LogMessage).WithAnyArguments();
-            _task.NCoverExplorerPath = NCoverExplorerPth;
-            _task.XmlReportPath = XmlReportPth;
-            _task.Arguments = Args;
-            _task.ReportType = RptType;
-            Assert.That(_task.Execute());
+            task.NCoverExplorerPath = NCoverExplorerPth;
+            task.XmlReportPath = XmlReportPth;
+            task.Arguments = Args;
+            task.ReportType = RptType;
+            Assert.That(task.Execute());
         }
 
         [Test]
         public void Full()
         {
             Expect.Exactly(5).On(Logger).Method(TTeamCityTaskImplementation.LogMessage).WithAnyArguments();
-            _task.NCoverExplorerPath = NCoverExplorerPth;
-            _task.XmlReportPath = XmlReportPth;
-            _task.Arguments = Args;
-            _task.ReportType = RptType;
-            _task.ReportOrder = RptOrder;
-            Assert.That(_task.Execute());
+            task.NCoverExplorerPath = NCoverExplorerPth;
+            task.XmlReportPath = XmlReportPth;
+            task.Arguments = Args;
+            task.ReportType = RptType;
+            task.ReportOrder = RptOrder;
+            Assert.That(task.Execute());
         }
 
         [Test]
@@ -75,44 +75,44 @@ namespace Tests
         {
             Expect.Once.On(Logger).Method(TTeamCityTaskImplementation.LogMessage).Will(Throw.Exception(new Exception()));
             Expect.Once.On(Logger).Method(TTeamCityTaskImplementation.LogError).WithAnyArguments();
-            _task.NCoverExplorerPath = NCoverExplorerPth;
-            _task.XmlReportPath = XmlReportPth;
-            Assert.That(_task.Execute(), Is.False);
+            task.NCoverExplorerPath = NCoverExplorerPth;
+            task.XmlReportPath = XmlReportPth;
+            Assert.That(task.Execute(), Is.False);
         }
 
         [Test]
         public void NCoverExplorerPath()
         {
-            _task.NCoverExplorerPath = NCoverExplorerPth;
-            Assert.That(_task.NCoverExplorerPath, Is.EqualTo(NCoverExplorerPth));
+            task.NCoverExplorerPath = NCoverExplorerPth;
+            Assert.That(task.NCoverExplorerPath, Is.EqualTo(NCoverExplorerPth));
         }
 
         [Test]
         public void XmlReportPath()
         {
-            _task.XmlReportPath = XmlReportPth;
-            Assert.That(_task.XmlReportPath, Is.EqualTo(XmlReportPth));
+            task.XmlReportPath = XmlReportPth;
+            Assert.That(task.XmlReportPath, Is.EqualTo(XmlReportPth));
         }
 
         [Test]
         public void Arguments()
         {
-            _task.Arguments = Args;
-            Assert.That(_task.Arguments, Is.EqualTo(Args));
+            task.Arguments = Args;
+            Assert.That(task.Arguments, Is.EqualTo(Args));
         }
 
         [Test]
         public void ReportType()
         {
-            _task.ReportType = RptType;
-            Assert.That(_task.ReportType, Is.EqualTo(RptType));
+            task.ReportType = RptType;
+            Assert.That(task.ReportType, Is.EqualTo(RptType));
         }
 
         [Test]
         public void ReportOrder()
         {
-            _task.ReportOrder = RptOrder;
-            Assert.That(_task.ReportOrder, Is.EqualTo(RptOrder));
+            task.ReportOrder = RptOrder;
+            Assert.That(task.ReportOrder, Is.EqualTo(RptOrder));
         }
     }
 }

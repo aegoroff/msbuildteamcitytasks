@@ -21,14 +21,14 @@ namespace Tests
 
         internal const string HasLoggedErrors = "HasLoggedErrors";
 
-        private Mockery _mockery;
-        private ILogger _logger;
+        private Mockery mockery;
+        private ILogger logger;
 
         [SetUp]
         public void Setup()
         {
-            _mockery = new Mockery();
-            _logger = _mockery.NewMock<ILogger>();
+            mockery = new Mockery();
+            logger = mockery.NewMock<ILogger>();
         }
 
         [TearDown]
@@ -60,9 +60,9 @@ namespace Tests
         [Test]
         public void CorrectExe()
         {
-            Expect.Once.On(_logger).GetProperty(HasLoggedErrors).Will(Return.Value(false));
+            Expect.Once.On(logger).GetProperty(HasLoggedErrors).Will(Return.Value(false));
 
-            GoogleTestsRunner runner = new GoogleTestsRunner(_logger, false, CorrectExePath);
+            GoogleTestsRunner runner = new GoogleTestsRunner(logger, false, CorrectExePath);
             ExecutionResult result = runner.Import();
 
             Assert.That(result.Status);
@@ -72,9 +72,9 @@ namespace Tests
         [Test]
         public void CorrectExeWithExistingFile()
         {
-            Expect.Exactly(2).On(_logger).GetProperty(HasLoggedErrors).Will(Return.Value(false));
+            Expect.Exactly(2).On(logger).GetProperty(HasLoggedErrors).Will(Return.Value(false));
 
-            GoogleTestsRunner runner = new GoogleTestsRunner(_logger, false, CorrectExePath);
+            GoogleTestsRunner runner = new GoogleTestsRunner(logger, false, CorrectExePath);
             runner.Import();
 
             Assert.That(File.Exists(TestResultPath));
@@ -88,9 +88,9 @@ namespace Tests
         [Test]
         public void CorrectExeUsingExecutionTimeout()
         {
-            Expect.Once.On(_logger).GetProperty(HasLoggedErrors).Will(Return.Value(false));
+            Expect.Once.On(logger).GetProperty(HasLoggedErrors).Will(Return.Value(false));
 
-            GoogleTestsRunner runner = new GoogleTestsRunner(_logger, false, CorrectExePath)
+            GoogleTestsRunner runner = new GoogleTestsRunner(logger, false, CorrectExePath)
                                            { ExecutionTimeoutMilliseconds = 200 };
             ExecutionResult result = runner.Import();
 
@@ -101,10 +101,10 @@ namespace Tests
         [Test]
         public void IncorrectExe()
         {
-            Expect.Once.On(_logger).GetProperty(HasLoggedErrors).Will(Return.Value(true));
-            Expect.Once.On(_logger).Method(TTeamCityTaskImplementation.LogError).WithAnyArguments();
+            Expect.Once.On(logger).GetProperty(HasLoggedErrors).Will(Return.Value(true));
+            Expect.Once.On(logger).Method(TTeamCityTaskImplementation.LogError).WithAnyArguments();
 
-            GoogleTestsRunner runner = new GoogleTestsRunner(_logger, false, "bad");
+            GoogleTestsRunner runner = new GoogleTestsRunner(logger, false, "bad");
             ExecutionResult result = runner.Import();
 
             Assert.That(result.Status, Is.False);

@@ -17,7 +17,7 @@ namespace Tests
         private const string Head = "(";
         private const string Trail = ")";
         private const string Separator = ",";
-        private readonly int[] _values = new[] { 1, 2 };
+        private readonly int[] values = new[] { 1, 2 };
 
         [TestCase(Filter, new[] { 1, 2 }, Head, Trail)]
         [TestCase("", new int[0], Head, Trail)]
@@ -40,7 +40,7 @@ namespace Tests
         [Test]
         public void SimplifiedConstructor()
         {
-            SequenceBuilder<int> builder = new SequenceBuilder<int>(_values, Separator);
+            SequenceBuilder<int> builder = new SequenceBuilder<int>(values, Separator);
             Assert.That(builder.ToString(), Is.EqualTo("1,2"));
         }
     }

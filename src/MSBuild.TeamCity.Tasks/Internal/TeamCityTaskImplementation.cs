@@ -16,7 +16,7 @@ namespace MSBuild.TeamCity.Tasks.Internal
     public class TeamCityTaskImplementation
     {
         private const string TeamcityDiscoveryEnvVariable = "TEAMCITY_PROJECT_NAME";
-        private readonly ILogger _logger;
+        private readonly ILogger logger;
 
         ///<summary>
         /// Initializes a new instance of the <see cref="TeamCityTaskImplementation"/> class using 
@@ -25,7 +25,7 @@ namespace MSBuild.TeamCity.Tasks.Internal
         ///<param name="logger"><see cref="ILogger"/> implementation</param>
         public TeamCityTaskImplementation(ILogger logger)
         {
-            _logger = logger;
+            this.logger = logger;
         }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace MSBuild.TeamCity.Tasks.Internal
             }
             if (!string.IsNullOrEmpty(Environment.GetEnvironmentVariable(TeamcityDiscoveryEnvVariable)))
             {
-                _logger.LogMessage(MessageImportance.High, message.ToString());
+                logger.LogMessage(MessageImportance.High, message.ToString());
             }
         }
 

@@ -11,9 +11,9 @@ namespace MSBuild.TeamCity.Tasks.Messages
     /// </summary>
     public class ReportMessageBuilder
     {
-        private readonly string _text;
-        private readonly string _status;
-        private readonly string _details;
+        private readonly string text;
+        private readonly string status;
+        private readonly string details;
 
         ///<summary>
         /// Initializes a new instance of the <see cref="ReportMessageBuilder"/> class
@@ -23,9 +23,9 @@ namespace MSBuild.TeamCity.Tasks.Messages
         ///<param name="details">error details text that is used only if status is ERROR</param>
         public ReportMessageBuilder(string text, string status, string details)
         {
-            _text = text;
-            _status = status;
-            _details = details;
+            this.text = text;
+            this.status = status;
+            this.details = details;
         }
 
         /// <summary>
@@ -34,15 +34,15 @@ namespace MSBuild.TeamCity.Tasks.Messages
         /// <returns>The new instance of <see cref="TeamCityMessage"/> class</returns>
         public TeamCityMessage BuildMessage()
         {
-            if (!string.IsNullOrEmpty(_status) && !string.IsNullOrEmpty(_details))
+            if (!string.IsNullOrEmpty(status) && !string.IsNullOrEmpty(details))
             {
-                return new ReportMessageTeamCityMessage(_text, _status, _details);
+                return new ReportMessageTeamCityMessage(text, status, details);
             }
-            if (!string.IsNullOrEmpty(_status))
+            if (!string.IsNullOrEmpty(status))
             {
-                return new ReportMessageTeamCityMessage(_text, _status);
+                return new ReportMessageTeamCityMessage(text, status);
             }
-            return new ReportMessageTeamCityMessage(_text);
+            return new ReportMessageTeamCityMessage(text);
         }
     }
 }

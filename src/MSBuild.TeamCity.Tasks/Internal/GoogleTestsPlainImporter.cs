@@ -11,7 +11,7 @@ namespace MSBuild.TeamCity.Tasks.Internal
     ///</summary>
     public class GoogleTestsPlainImporter : GoogleTestsImporter
     {
-        private readonly string _testResultsPath;
+        private readonly string testResultsPath;
 
         ///<summary>
         /// Initializes a new instance of the <see cref="GoogleTestsPlainImporter"/> class
@@ -22,7 +22,7 @@ namespace MSBuild.TeamCity.Tasks.Internal
         public GoogleTestsPlainImporter(ILogger logger, bool continueOnFailures, string testResultsPath)
             : base(logger, continueOnFailures)
         {
-            _testResultsPath = testResultsPath;
+            this.testResultsPath = testResultsPath;
         }
 
         /// <summary>
@@ -31,7 +31,7 @@ namespace MSBuild.TeamCity.Tasks.Internal
         /// <returns>Path to xml file to import</returns>
         protected override string CreateXmlImport()
         {
-            return _testResultsPath;
+            return testResultsPath;
         }
     }
 }

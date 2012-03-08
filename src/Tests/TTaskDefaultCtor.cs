@@ -31,6 +31,14 @@ namespace Tests
     [TestFixture(typeof(CompilationStarted))]
     [TestFixture(typeof(CompilationFinished))]
     [TestFixture(typeof(SetParameter))]
+    [TestFixture(typeof(TestFailed))]
+    [TestFixture(typeof(TestFinished))]
+    [TestFixture(typeof(TestIgnored))]
+    [TestFixture(typeof(TestStarted))]
+    [TestFixture(typeof(TestStdErr))]
+    [TestFixture(typeof(TestStdOut))]
+    [TestFixture(typeof(TestSuiteFinished))]
+    [TestFixture(typeof(TestSuiteStarted))]
     public class TTaskDefaultCtor<TTsk> where TTsk : TeamCityTask, new()
     {
         [Test]

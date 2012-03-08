@@ -12,7 +12,7 @@
 		<!-- Code configuration to build (Release or Debug) -->
 		<Configuration>Release</Configuration>
 		<!-- NUnit working path  -->
-		<NUnitPath>C:\Program Files\NUnit 2.5.7\bin\net-2.0</NUnitPath>
+		<NUnitPath>C:\Program Files (x86)\NUnit 2.6\bin</NUnitPath>
 		<PartCoverPath>C:\Program Files\Gubka Bob\PartCover .NET 2.3</PartCoverPath>
 		
 		<!-- Binaries zip  -->

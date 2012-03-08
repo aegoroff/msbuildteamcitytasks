@@ -79,7 +79,7 @@
 	<Target Name="UnitTesting" DependsOnTargets="Compile">
 		<!-- Managed tests -->
 		<Exec
-			Command='"$(NUnitPath)\nunit-console.exe" /xml:$(MSBuildProjectDirectory)\$(ManagedTestsReport) Tests\bin\$(Configuration)\Tests.dll /config=$(Configuration)'
+			Command='"$(NUnitPath)\nunit-console.exe" /xml:$(MSBuildProjectDirectory)\$(ManagedTestsReport) Tests\bin\$(Configuration)\Tests.dll /framework:net-4.0 /config=$(Configuration)'
 			IgnoreExitCode="true"
 		/>
 		<!-- Import into TeamCity mono tests -->
@@ -91,7 +91,7 @@
 			ToolPath='$(PartCoverPath)'
 			TargetPath='$(NUnitPath)\nunit-console.exe'
 			XmlReportPath='$(MSBuildProjectDirectory)\partcover.xml'
-			TargetArguments="$(MSBuildProjectDirectory)\Tests\bin\$(Configuration)\Tests.dll /framework:net-4.0"
+			TargetArguments="$(MSBuildProjectDirectory)\Tests\bin\$(Configuration)\Tests.dll /framework:net-4.0 /config=$(Configuration)"
 			Includes='[MSBuild.TeamCity.Tasks]*'
 			ReportXslts='$(MSBuildProjectDirectory)\External\Report By Class.xslt=>CoverageSummary.html'
 		/>

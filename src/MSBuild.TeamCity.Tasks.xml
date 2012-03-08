@@ -12,6 +12,8 @@
 		<!-- NUnit working path  -->
 		<NUnitPath>C:\Program Files (x86)\NUnit 2.6\bin</NUnitPath>
 		<PartCoverPath>C:\Program Files (x86)\PartCover\PartCover .NET 4.0</PartCoverPath>
+		<OpenCoverPath>C:\Program Files (x86)\OpenCover</OpenCoverPath>
+		<ReportGeneratorPath>D:\soft\Programming\NET tools\ReportGenerator_1.2.6.0</ReportGeneratorPath>
 		
 		<!-- Binaries zip  -->
 		<BinariesFile>Binaries.zip</BinariesFile>
@@ -79,33 +81,27 @@
 	<Target Name="UnitTesting" DependsOnTargets="Compile">
 		<!-- Managed tests -->
 		<Exec
-			Command='"$(NUnitPath)\nunit-console.exe" /xml:$(MSBuildProjectDirectory)\$(ManagedTestsReport) Tests\bin\$(Configuration)\Tests.dll /framework:net-4.0 /config=$(Configuration)'
+			Command='"$(OpenCoverPath)\opencover.console.exe" "-target:$(NUnitPath)\nunit-console.exe" "-targetargs:/xml:$(MSBuildProjectDirectory)\$(ManagedTestsReport) $(MSBuildProjectDirectory)\Tests\bin\$(Configuration)\Tests.dll /framework:net-4.0 /config=$(Configuration)" -filter:+MSBuild.TeamCity.Tasks]* "-targetdir:$(MSBuildProjectDirectory)\Tests\bin\$(Configuration)" -register:user "-output:$(MSBuildProjectDirectory)\OpenCoverageReport.xml"'
+			IgnoreExitCode="true"
+		/>
+		<Exec
+			Command='"$(ReportGeneratorPath)\bin\ReportGenerator.exe" "$(MSBuildProjectDirectory)\OpenCoverageReport.xml" "$(MSBuildProjectDirectory)\OpenCoverage" Html'
 			IgnoreExitCode="true"
 		/>
 		<!-- Import into TeamCity mono tests -->
 		<ImportData Type="nunit" Path="$(MSBuildProjectDirectory)\$(ManagedTestsReport)" />
 	</Target>
-	<!-- Running managed code coverage task -->
-	<Target Name="Coverage" DependsOnTargets="UnitTesting">
-		<RunPartCoverage
-			ToolPath='$(PartCoverPath)'
-			TargetPath='$(NUnitPath)\nunit-console.exe'
-			XmlReportPath='$(MSBuildProjectDirectory)\partcover.xml'
-			TargetArguments="$(MSBuildProjectDirectory)\Tests\bin\$(Configuration)\Tests.dll /framework:net-4.0 /config=$(Configuration)"
-			Includes='[MSBuild.TeamCity.Tasks]*'
-			ReportXslts='$(MSBuildProjectDirectory)\External\Report By Class.xslt=>CoverageSummary.html'
-		/>
-	</Target>
-	<!-- Report files' definition-->
-	<ItemGroup>
-		<ReportFile Include="TestResult.xml" />
-	</ItemGroup>
+	
 	<!-- Zipping build artefacts task -->
-	<Target Name="Zipping" DependsOnTargets="Coverage">
+	<Target Name="Zipping" DependsOnTargets="UnitTesting">
 		<ItemGroup>
 			<FileToZip Include="**\*.exe" />
 			<FileToZip Include="**\*.pdb" />
 			<FileToZip Include="**\*.dll" />
+		</ItemGroup>
+		<!-- Report files' definition-->
+		<ItemGroup>
+			<ReportFile Include="$(MSBuildProjectDirectory)\OpenCoverage\**\*.*" />
 		</ItemGroup>
 		<!-- Zipping binaries -->
 		<Zip
@@ -119,7 +115,6 @@
 		<Zip
 			Files="@(ReportFile)"
 			ZipFileName="$(ReportsFile)"
-			Flatten="true"
 			ZipLevel="9"
 			WorkingDirectory="$(MSBuildProjectDirectory)" 
 		/>

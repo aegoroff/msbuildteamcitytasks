@@ -15,7 +15,7 @@ namespace Tests
     [TestFixture]
     public class TRunPartCoverage : TTask
     {
-        private const string ValidPathToPartCover = @"C:\Program Files\Gubka Bob\PartCover .NET 2.3";
+        private const string ValidPathToPartCover = @"C:\Program Files (x86)\PartCover\PartCover .NET 4.0";
 
         private ITaskItem item1;
         private ITaskItem item2;

@@ -13,7 +13,7 @@
 		<Configuration>Release</Configuration>
 		<!-- NUnit working path  -->
 		<NUnitPath>C:\Program Files (x86)\NUnit 2.6\bin</NUnitPath>
-		<PartCoverPath>C:\Program Files\Gubka Bob\PartCover .NET 2.3</PartCoverPath>
+		<PartCoverPath>C:\Program Files (x86)\PartCover\PartCover .NET 4.0</PartCoverPath>
 		
 		<!-- Binaries zip  -->
 		<BinariesFile>Binaries.zip</BinariesFile>

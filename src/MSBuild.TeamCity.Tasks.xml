@@ -11,7 +11,6 @@
 		<Configuration>Release</Configuration>
 		<!-- NUnit working path  -->
 		<NUnitPath>C:\Program Files (x86)\NUnit 2.6\bin</NUnitPath>
-		<PartCoverPath>C:\Program Files (x86)\PartCover\PartCover .NET 4.0</PartCoverPath>
 		<OpenCoverPath>C:\Program Files (x86)\OpenCover</OpenCoverPath>
 		<ReportGeneratorPath>D:\soft\Programming\NET tools\ReportGenerator_1.2.6.0</ReportGeneratorPath>
 		

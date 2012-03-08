@@ -93,13 +93,10 @@ namespace MSBuild.TeamCity.Tasks
         }
 
         /// <summary>
-        /// Reads TeamCity messages. Empty by default (if not overriden)
+        /// Reads TeamCity messages.
         /// </summary>
-        /// <returns>TeamCity messages list</returns>
-        protected virtual IEnumerable<TeamCityMessage> ReadMessages()
-        {
-            return new List<TeamCityMessage>();
-        }
+        /// <returns>TeamCity messages enumeration</returns>
+        protected abstract IEnumerable<TeamCityMessage> ReadMessages();
 
         private void Initialize(ILogger logger)
         {

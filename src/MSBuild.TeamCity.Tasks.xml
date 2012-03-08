@@ -91,7 +91,7 @@
 			ToolPath='$(PartCoverPath)'
 			TargetPath='$(NUnitPath)\nunit-console.exe'
 			XmlReportPath='$(MSBuildProjectDirectory)\partcover.xml'
-			TargetArguments="$(MSBuildProjectDirectory)\Tests\bin\$(Configuration)\Tests.dll"
+			TargetArguments="$(MSBuildProjectDirectory)\Tests\bin\$(Configuration)\Tests.dll /framework:net-4.0"
 			Includes='[MSBuild.TeamCity.Tasks]*'
 			ReportXslts='$(MSBuildProjectDirectory)\External\Report By Class.xslt=>CoverageSummary.html'
 		/>

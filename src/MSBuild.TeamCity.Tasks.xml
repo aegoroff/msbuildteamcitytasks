@@ -80,9 +80,8 @@
 	<Target Name="UnitTesting" DependsOnTargets="Compile">
 		<!-- Managed tests -->
 		<Exec
-			Command='"$(OpenCoverPath)\opencover.console.exe" "-target:$(NUnitPath)\nunit-console.exe" "-targetargs:/xml:$(MSBuildProjectDirectory)\$(ManagedTestsReport) $(MSBuildProjectDirectory)\Tests\bin\$(Configuration)\Tests.dll /framework:net-4.0 /config=$(Configuration)" -filter:+[MSBuild.TeamCity.Tasks]* "-targetdir:$(MSBuildProjectDirectory)\Tests\bin\$(Configuration)" -register:user "-output:$(MSBuildProjectDirectory)\OpenCoverageReport.xml"'
+			Command='"$(OpenCoverPath)\opencover.console.exe" "-target:$(NUnitPath)\nunit-console.exe" "-targetargs:/xml:$(MSBuildProjectDirectory)\$(ManagedTestsReport) $(MSBuildProjectDirectory)\Tests\bin\$(Configuration)\Tests.dll /framework:net-4.0 /config=$(Configuration)" -filter:+[MSBuild.TeamCity.Tasks]* "-targetdir:$(MSBuildProjectDirectory)\Tests\bin\$(Configuration)" "-output:$(MSBuildProjectDirectory)\OpenCoverageReport.xml"'
 			IgnoreExitCode="true"
-			Timeout="30000"
 		/>
 		<Exec
 			Command='"$(ReportGeneratorPath)\bin\ReportGenerator.exe" "$(MSBuildProjectDirectory)\OpenCoverageReport.xml" "$(MSBuildProjectDirectory)\OpenCoverage" Html'

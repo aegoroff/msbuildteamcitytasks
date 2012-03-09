@@ -75,6 +75,7 @@
     <Compile Include="EnableServiceMessages.cs" />
     <Compile Include="Internal\CommandLine.cs" />
     <Compile Include="Internal\Extensions.cs" />
+    <Compile Include="Internal\OpenCoverCommandLine.cs" />
     <Compile Include="Messages\AttributeLessMessage.cs" />
     <Compile Include="Messages\BlockTeamCityMessage.cs" />
     <Compile Include="BuildNumber.cs" />

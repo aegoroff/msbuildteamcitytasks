@@ -1,7 +1,7 @@
-/*
+﻿/*
  * Created by: egr
- * Created at: 09.09.2010
- * � 2007-2012 Alexander Egorov
+ * Created at: 09.03.2012
+ * © 2007-2012 Alexander Egorov
  */
 
 using System.Collections.Generic;
@@ -11,38 +11,34 @@ using NUnit.Framework;
 namespace Tests
 {
     [TestFixture]
-    public class TPartCoverCommandLine
+    public class TOpenCoverCommandLine
     {
-        private PartCoverCommandLine commandLine;
+        private OpenCoverCommandLine commandLine;
 
         private const string Target = "t";
-        private const string TargetResult = "--target t";
+        private const string TargetResult = "-target:t";
 
         private const string TargetWorkDir = "d";
-        private const string TargetWorkDirResult = "--target-work-dir d";
+        private const string TargetWorkDirResult = "-targetdir:d";
 
         private const string TargetArguments = "a";
-        private const string TargetArgumentsResult = "--target-args a";
+        private const string TargetArgumentsResult = "-targetargs:a";
 
         private const string Output = "o";
-        private const string OutputResult = "--output o";
+        private const string OutputResult = "-output:o";
 
-        private const string Include = "i";
-        private const string IncludeResult = "--include i";
-
-        private const string Exclude = "e";
-        private const string ExcludeResult = "--exclude e";
+        private const string Filter = "+[*]*";
+        private const string FilterResult = "-filter:+[*]*";
         private const string Space = " ";
 
         [SetUp]
         public void Setup()
         {
-            commandLine = new PartCoverCommandLine();
+            commandLine = new OpenCoverCommandLine();
         }
 
-
         [TestCase(Target, TargetResult)]
-        [TestCase("t s", "--target \"t s\"")]
+        [TestCase("t s", "\"-target:t s\"")]
         public void TargetProperty(string target, string expected)
         {
             commandLine.Target = target;
@@ -69,35 +65,12 @@ namespace Tests
             commandLine.Output = Output;
             Assert.That(commandLine.ToString(), Is.EqualTo(OutputResult));
         }
-
+        
         [Test]
-        public void IncludesProperty()
+        public void FilterProperty()
         {
-            commandLine.Includes.Add(Include);
-            Assert.That(commandLine.ToString(), Is.EqualTo(IncludeResult));
-        }
-
-        [Test]
-        public void ManyIncludesProperty()
-        {
-            commandLine.Includes.Add(Include);
-            commandLine.Includes.Add(Include);
-            Assert.That(commandLine.ToString(), Is.EqualTo(IncludeResult + Space + IncludeResult));
-        }
-
-        [Test]
-        public void ExcludesProperty()
-        {
-            commandLine.Excludes.Add(Exclude);
-            Assert.That(commandLine.ToString(), Is.EqualTo(ExcludeResult));
-        }
-
-        [Test]
-        public void ManyExcludesProperty()
-        {
-            commandLine.Excludes.Add(Exclude);
-            commandLine.Excludes.Add(Exclude);
-            Assert.That(commandLine.ToString(), Is.EqualTo(ExcludeResult + Space + ExcludeResult));
+            commandLine.Filter = Filter;
+            Assert.That(commandLine.ToString(), Is.EqualTo(FilterResult));
         }
 
         [Test]
@@ -107,10 +80,7 @@ namespace Tests
             commandLine.TargetWorkDir = TargetWorkDir;
             commandLine.TargetArguments = TargetArguments;
             commandLine.Output = Output;
-            commandLine.Includes.Add(Include);
-            commandLine.Includes.Add(Include);
-            commandLine.Excludes.Add(Exclude);
-            commandLine.Excludes.Add(Exclude);
+            commandLine.Filter = Filter;
             Assert.That(commandLine.ToString(), Is.EqualTo(string.Join(Space, EnumerateAllResults())));
         }
 
@@ -120,10 +90,7 @@ namespace Tests
             yield return TargetWorkDirResult;
             yield return TargetArgumentsResult;
             yield return OutputResult;
-            yield return IncludeResult;
-            yield return IncludeResult;
-            yield return ExcludeResult;
-            yield return ExcludeResult;
+            yield return FilterResult;
         }
     }
 }

@@ -68,6 +68,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="TOpenCoverCommandLine.cs" />
     <Compile Include="Utils\TeamCityEnv.cs" />
     <Compile Include="TPartCoverReport.cs" />
     <Compile Include="TRunPartCoverage.cs" />

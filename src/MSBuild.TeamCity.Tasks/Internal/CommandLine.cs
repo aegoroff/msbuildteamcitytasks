@@ -53,7 +53,7 @@ namespace MSBuild.TeamCity.Tasks.Internal
         }
 
         /// <summary>
-        /// Gets option's value separator that separates oprion value from option itself
+        /// Gets option's value separator that separates option value from option itself
         /// </summary>
         protected abstract string OptionValueSeparator { get; }
 

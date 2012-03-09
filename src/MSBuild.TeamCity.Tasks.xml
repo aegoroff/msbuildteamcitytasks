@@ -79,10 +79,11 @@
 	<!-- Running server's and GUI's unit tests task -->
 	<Target Name="UnitTesting" DependsOnTargets="Compile">
 		<!-- Managed tests -->
-    <RunOpenCoverage
+		<RunOpenCoverage
 			ToolPath='$(OpenCoverPath)'
 			TargetPath='$(NUnitPath)\nunit-console.exe'
 			XmlReportPath='$(MSBuildProjectDirectory)\OpenCoverageReport.xml'
+      TargetWorkDir='$(MSBuildProjectDirectory)\Tests\bin\$(Configuration)'
 			TargetArguments="/xml:$(MSBuildProjectDirectory)\$(ManagedTestsReport) $(MSBuildProjectDirectory)\Tests\bin\$(Configuration)\Tests.dll /framework:net-4.0 /config=$(Configuration)"
 			Filter='+[MSBuild.TeamCity.Tasks]*'
 		/>

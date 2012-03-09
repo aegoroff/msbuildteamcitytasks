@@ -19,11 +19,11 @@ namespace MSBuild.TeamCity.Tasks.Internal
         #region Constants and Fields
 
         private static readonly Regex classRegex =
-            new Regex(@".*Visited\s+Classes\s+(\d+)\s+of\s+(\d+)\s+\((\d+(\.\d+)*)\)",
+            new Regex(@"^\s*Visited\s+Classes\s+(\d+)\s+of\s+(\d+)\s+\((\d+(\.\d+)*)\)",
                       RegexOptions.Compiled);
 
         private static readonly Regex methodRegex =
-            new Regex(@".*Visited\s+Methods\s+(\d+)\s+of\s+(\d+)\s+\((\d+(\.\d+)*)\)",
+            new Regex(@"^\s*Visited\s+Methods\s+(\d+)\s+of\s+(\d+)\s+\((\d+(\.\d+)*)\)",
                       RegexOptions.Compiled);
 
         #endregion

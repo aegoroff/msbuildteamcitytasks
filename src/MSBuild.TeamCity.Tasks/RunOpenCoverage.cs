@@ -5,9 +5,7 @@
  */
 
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
-using System.Text.RegularExpressions;
 using MSBuild.TeamCity.Tasks.Internal;
 using MSBuild.TeamCity.Tasks.Messages;
 using Microsoft.Build.Framework;
@@ -22,12 +20,6 @@ namespace MSBuild.TeamCity.Tasks
         #region Constants and Fields
 
         private const string OpenCoverConsole = "opencover.console.exe";
-
-        private static readonly Regex classRegex = new Regex(@".*Visited\s+Classes\s+(\d+)\s+of\s+(\d+)\s+\((\d+(\.\d+)*)\)",
-                                                    RegexOptions.Compiled);
-
-        private static readonly Regex methodRegex = new Regex(@".*Visited\s+Methods\s+(\d+)\s+of\s+(\d+)\s+\((\d+(\.\d+)*)\)",
-                                                    RegexOptions.Compiled);
 
         #endregion
 
@@ -116,29 +108,8 @@ namespace MSBuild.TeamCity.Tasks
             string openCoverExePath = Path.Combine(ToolPath, OpenCoverConsole);
             var runner = new ProcessRunner(openCoverExePath) {RedirectStandardOutput = true};
             IList<string> result = runner.Run(commandLine.ToString());
-            foreach (var line in result)
-            {
-                var classMatch = classRegex.Match(line);
-                if (classMatch.Success)
-                {
-                    var covered = classMatch.Groups[1].Value;
-                    var total = classMatch.Groups[2].Value;
-                    var percent = classMatch.Groups[3].Value;
-                    yield return new BuildStatisticTeamCityMessage("CodeCoverageAbsCCovered", float.Parse(covered, CultureInfo.InvariantCulture));
-                    yield return new BuildStatisticTeamCityMessage("CodeCoverageAbsCTotal", float.Parse(total, CultureInfo.InvariantCulture));
-                    yield return new BuildStatisticTeamCityMessage("CodeCoverageC", float.Parse(percent, CultureInfo.InvariantCulture));
-                }
-                var methodMatch = methodRegex.Match(line);
-                if (methodMatch.Success)
-                {
-                    var covered = methodMatch.Groups[1].Value;
-                    var total = methodMatch.Groups[2].Value;
-                    var percent = methodMatch.Groups[3].Value;
-                    yield return new BuildStatisticTeamCityMessage("CodeCoverageAbsMCovered", float.Parse(covered, CultureInfo.InvariantCulture));
-                    yield return new BuildStatisticTeamCityMessage("CodeCoverageAbsMTotal", float.Parse(total, CultureInfo.InvariantCulture));
-                    yield return new BuildStatisticTeamCityMessage("CodeCoverageM", float.Parse(percent, CultureInfo.InvariantCulture));
-                }
-            }
+            var parser = new OpenCoverStatisticParser();
+            return parser.Parse(result);
         }
 
         #endregion

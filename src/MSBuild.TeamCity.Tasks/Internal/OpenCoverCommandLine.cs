@@ -45,8 +45,7 @@ namespace MSBuild.TeamCity.Tasks.Internal
         /// Gets or sets path to output file for writing result xml
         /// </summary>
         public string Output { get; set; }
-        
-        
+
         /// <summary>
         /// Gets or sets coverage filter
         /// </summary>

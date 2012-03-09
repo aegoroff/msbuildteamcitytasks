@@ -4,6 +4,7 @@
  * © 2007-2012 Alexander Egorov
  */
 
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace MSBuild.TeamCity.Tasks.Internal
@@ -13,7 +14,13 @@ namespace MSBuild.TeamCity.Tasks.Internal
     ///</summary>
     internal sealed class ProcessRunner
     {
+        #region Constants and Fields
+
         private readonly string testExePath;
+
+        #endregion
+
+        #region Constructors and Destructors
 
         ///<summary>
         /// Initializes a new instance of the <see cref="ProcessRunner"/> class
@@ -24,6 +31,10 @@ namespace MSBuild.TeamCity.Tasks.Internal
             this.testExePath = testExePath;
         }
 
+        #endregion
+
+        #region Properties
+
         /// <summary>
         /// Gets or sets the time to wait the specified number of milliseconds for the test process to finish.
         /// By default waiting indefinitely.
@@ -31,13 +42,24 @@ namespace MSBuild.TeamCity.Tasks.Internal
         internal int ExecutionTimeoutMilliseconds { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether the output of an application is written to the StandardOutput stream.
+        /// </summary>
+        internal bool RedirectStandardOutput { get; set; }
+
+        #endregion
+
+        #region Methods
+
+        /// <summary>
         /// Runs executable
         /// </summary>
         /// <param name="commandLine">
         /// Command line
         /// </param>
-        internal void Run(params string[] commandLine)
+        /// <returns>Redirected standart output lines</returns>
+        internal IList<string> Run(params string[] commandLine)
         {
+            IList<string> result = null;
             using (var app = new Process())
             {
                 app.StartInfo = new ProcessStartInfo
@@ -45,11 +67,15 @@ namespace MSBuild.TeamCity.Tasks.Internal
                                         FileName = testExePath,
                                         Arguments = string.Join(" ", commandLine),
                                         UseShellExecute = false,
-                                        RedirectStandardOutput = false,
+                                        RedirectStandardOutput = RedirectStandardOutput,
                                         WorkingDirectory = testExePath.GetDirectoryName(),
                                         CreateNoWindow = true
                                     };
                 app.Start();
+                if (RedirectStandardOutput)
+                {
+                    result = app.StandardOutput.ReadLines();
+                }
                 if (ExecutionTimeoutMilliseconds > 0)
                 {
                     app.WaitForExit(ExecutionTimeoutMilliseconds);
@@ -59,6 +85,9 @@ namespace MSBuild.TeamCity.Tasks.Internal
                     app.WaitForExit();
                 }
             }
+            return result ?? new List<string>();
         }
+
+        #endregion
     }
 }

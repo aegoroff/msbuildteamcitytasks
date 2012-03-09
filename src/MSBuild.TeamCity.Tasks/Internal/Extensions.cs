@@ -53,5 +53,17 @@ namespace MSBuild.TeamCity.Tasks.Internal
         {
             return Path.GetDirectoryName(Path.GetFullPath(path));
         }
+
+        internal static IList<string> ReadLines(this StreamReader reader)
+        {
+            var result = new List<string>();
+
+            while (!reader.EndOfStream)
+            {
+                result.Add(reader.ReadLine());
+            }
+
+            return result;
+        }
     }
 }

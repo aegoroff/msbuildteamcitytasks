@@ -79,7 +79,7 @@
 	<!-- Running server's and GUI's unit tests task -->
 	<Target Name="UnitTesting" DependsOnTargets="Compile">
 		<!-- Managed tests -->
-		<RunPartCoverage
+    <RunOpenCoverage
 			ToolPath='$(OpenCoverPath)'
 			TargetPath='$(NUnitPath)\nunit-console.exe'
 			XmlReportPath='$(MSBuildProjectDirectory)\OpenCoverageReport.xml'

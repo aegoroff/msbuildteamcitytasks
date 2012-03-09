@@ -15,18 +15,26 @@ namespace MSBuild.TeamCity.Tasks.Internal
     /// </summary>
     public abstract class CommandLine
     {
+        #region Constants and Fields
+
         /// <summary>
         /// Space string
         /// </summary>
         protected const string Space = " ";
 
-        private const string OptionPrefix = "--";
         private const string EscapeSymbol = "\"";
 
+        #endregion
+
+        #region Properties
+
         /// <summary>
-        /// Gets option's value separator that separates oprion value from option itself
+        /// Gets a value indicating whether to escape parameter with the option itself. False by default
         /// </summary>
-        protected abstract string OptionValueSeparator { get; }
+        protected virtual bool EscapeWithTheOptionItself
+        {
+            get { return false; }
+        }
 
         /// <summary>
         /// Gets a value indicating whether to output option in case of value isn't presented
@@ -35,6 +43,23 @@ namespace MSBuild.TeamCity.Tasks.Internal
         {
             get { return false; }
         }
+
+        /// <summary>
+        /// Gets option's prefix
+        /// </summary>
+        protected virtual string OptionPrefix
+        {
+            get { return "--"; }
+        }
+
+        /// <summary>
+        /// Gets option's value separator that separates oprion value from option itself
+        /// </summary>
+        protected abstract string OptionValueSeparator { get; }
+
+        #endregion
+
+        #region Public Methods and Operators
 
         /// <summary>
         /// Returns a <see cref="T:System.String"/> that represents the current <see cref="T:System.Object"/>.
@@ -47,6 +72,10 @@ namespace MSBuild.TeamCity.Tasks.Internal
         {
             return string.Join(Space, CreateOptions());
         }
+
+        #endregion
+
+        #region Methods
 
         /// <summary>
         /// Enumerates all possible options
@@ -66,8 +95,15 @@ namespace MSBuild.TeamCity.Tasks.Internal
             {
                 return OptionPrefix + option;
             }
-            var v = value.Contains(Space) ? EscapeSymbol + value + EscapeSymbol : value;
-            return OptionPrefix + option + OptionValueSeparator + v;
+            if (!value.Contains(Space))
+            {
+                return OptionPrefix + option + OptionValueSeparator + value;
+            }
+            if (EscapeWithTheOptionItself)
+            {
+                return EscapeSymbol + OptionPrefix + option + OptionValueSeparator + value + EscapeSymbol;
+            }
+            return OptionPrefix + option + OptionValueSeparator + EscapeSymbol + value + EscapeSymbol;
         }
 
         private IEnumerable<string> CreateOptions()
@@ -79,5 +115,7 @@ namespace MSBuild.TeamCity.Tasks.Internal
                     IsOutputInCaseOfEmptyValue
                 select CreateOption(option.Key, option.Value as string);
         }
+
+        #endregion
     }
 }

@@ -23,7 +23,7 @@ namespace MSBuild.TeamCity.Tasks.Internal
         private const string TargetWorkDirOpt = "targetdir";
 
         ///<summary>
-        /// Initializes a new instance of the <see cref="PartCoverCommandLine"/> class
+        /// Initializes a new instance of the <see cref="OpenCoverCommandLine"/> class
         ///</summary>
         public OpenCoverCommandLine()
         {
@@ -55,7 +55,7 @@ namespace MSBuild.TeamCity.Tasks.Internal
         public string Output { get; set; }
 
         /// <summary>
-        /// Gets or sets coverage filter
+        /// Gets coverage filter
         /// </summary>
         /// <remarks>
         /// A list of filters to apply to selectively include or exclude assemblies and classes from coverage results. 

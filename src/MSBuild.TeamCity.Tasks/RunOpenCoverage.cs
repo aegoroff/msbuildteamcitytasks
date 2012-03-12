@@ -6,9 +6,9 @@
 
 using System.Collections.Generic;
 using System.IO;
+using Microsoft.Build.Framework;
 using MSBuild.TeamCity.Tasks.Internal;
 using MSBuild.TeamCity.Tasks.Messages;
-using Microsoft.Build.Framework;
 
 namespace MSBuild.TeamCity.Tasks
 {
@@ -106,7 +106,7 @@ namespace MSBuild.TeamCity.Tasks
             commandLine.Filter.AddRange(Filter);
 
             string openCoverExePath = Path.Combine(ToolPath, OpenCoverConsole);
-            var runner = new ProcessRunner(openCoverExePath) {RedirectStandardOutput = true};
+            var runner = new ProcessRunner(openCoverExePath) { RedirectStandardOutput = true };
             IList<string> result = runner.Run(commandLine.ToString());
             var parser = new OpenCoverStatisticParser();
             return parser.Parse(result);

@@ -40,11 +40,11 @@ namespace MSBuild.TeamCity.Tasks.Internal
             foreach (string line in input)
             {
                 foreach (
-                    TeamCityMessage teamCityMessage in
+                    var teamCityMessage in
                         TeamCityMessages(line, classRegex, "CodeCoverageAbsCCovered", "CodeCoverageAbsCTotal",
                                          "CodeCoverageC")) yield return teamCityMessage;
                 foreach (
-                    TeamCityMessage teamCityMessage in
+                    var teamCityMessage in
                         TeamCityMessages(line, methodRegex, "CodeCoverageAbsMCovered", "CodeCoverageAbsMTotal",
                                          "CodeCoverageM")) yield return teamCityMessage;
             }

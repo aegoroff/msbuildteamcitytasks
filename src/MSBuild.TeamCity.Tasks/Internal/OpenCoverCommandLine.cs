@@ -22,6 +22,14 @@ namespace MSBuild.TeamCity.Tasks.Internal
         private const string TargetOpt = "target";
         private const string TargetWorkDirOpt = "targetdir";
 
+        ///<summary>
+        /// Initializes a new instance of the <see cref="PartCoverCommandLine"/> class
+        ///</summary>
+        public OpenCoverCommandLine()
+        {
+            Filter = new List<string>();
+        }
+
         #endregion
 
         #region Public Properties
@@ -55,7 +63,7 @@ namespace MSBuild.TeamCity.Tasks.Internal
         /// If no filter(s) are supplied then a default include all filter is applied +[*]*. 
         /// As can be seen you can use an * as a wildcard. Also an exclusion filter (-) takes precedence over an inclusion filter (+).
         /// </remarks>
-        public string Filter { get; set; }
+        public IList<string> Filter { get; private set; }
 
         #endregion
 
@@ -99,7 +107,7 @@ namespace MSBuild.TeamCity.Tasks.Internal
             yield return new DictionaryEntry(TargetWorkDirOpt, TargetWorkDir);
             yield return new DictionaryEntry(TargetArgumentsOpt, TargetArguments);
             yield return new DictionaryEntry(OutputOpt, Output);
-            yield return new DictionaryEntry(FilterOpt, Filter);
+            yield return new DictionaryEntry(FilterOpt, Filter.Join(" "));
         }
 
         #endregion

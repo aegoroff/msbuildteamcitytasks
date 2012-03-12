@@ -69,8 +69,16 @@ namespace Tests
         [Test]
         public void FilterProperty()
         {
-            commandLine.Filter = Filter;
+            commandLine.Filter.Add(Filter);
             Assert.That(commandLine.ToString(), Is.EqualTo(FilterResult));
+        }
+        
+        [Test]
+        public void ManyFiltersProperty()
+        {
+            commandLine.Filter.Add(Filter);
+            commandLine.Filter.Add("-[System]*");
+            Assert.That(commandLine.ToString(), Is.EqualTo("\"-filter:+[*]* -[System]*\""));
         }
 
         [Test]
@@ -80,7 +88,7 @@ namespace Tests
             commandLine.TargetWorkDir = TargetWorkDir;
             commandLine.TargetArguments = TargetArguments;
             commandLine.Output = Output;
-            commandLine.Filter = Filter;
+            commandLine.Filter.Add(Filter);
             Assert.That(commandLine.ToString(), Is.EqualTo(string.Join(Space, EnumerateAllResults())));
         }
 

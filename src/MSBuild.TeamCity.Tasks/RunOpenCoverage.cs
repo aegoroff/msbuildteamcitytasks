@@ -55,7 +55,7 @@ namespace MSBuild.TeamCity.Tasks
         /// If no filter(s) are supplied then a default include all filter is applied +[*]*. 
         /// As can be seen you can use an * as a wildcard. Also an exclusion filter (-) takes precedence over an inclusion filter (+).
         /// </remarks>
-        public string Filter { get; set; }
+        public ITaskItem[] Filter { get; set; }
 
         /// <summary>
         /// Gets or sets arguments for target process
@@ -101,9 +101,9 @@ namespace MSBuild.TeamCity.Tasks
                                       Target = TargetPath,
                                       TargetWorkDir = TargetWorkDir,
                                       TargetArguments = TargetArguments,
-                                      Filter = Filter,
                                       Output = XmlReportPath,
                                   };
+            commandLine.Filter.AddRange(Filter);
 
             string openCoverExePath = Path.Combine(ToolPath, OpenCoverConsole);
             var runner = new ProcessRunner(openCoverExePath) {RedirectStandardOutput = true};

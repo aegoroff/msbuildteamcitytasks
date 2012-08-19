@@ -97,13 +97,18 @@ namespace MSBuild.TeamCity.Tasks.Internal
             }
             if (!value.Contains(Space))
             {
-                return OptionPrefix + option + OptionValueSeparator + value;
+                return CreatePlainValuedOption(option, value);
             }
             if (EscapeWithTheOptionItself)
             {
-                return EscapeSymbol + OptionPrefix + option + OptionValueSeparator + value + EscapeSymbol;
+                return EscapeSymbol + CreatePlainValuedOption(option, value) + EscapeSymbol;
             }
             return OptionPrefix + option + OptionValueSeparator + EscapeSymbol + value + EscapeSymbol;
+        }
+
+        private string CreatePlainValuedOption(object option, string value)
+        {
+            return OptionPrefix + option + OptionValueSeparator + value;
         }
 
         private IEnumerable<string> CreateOptions()

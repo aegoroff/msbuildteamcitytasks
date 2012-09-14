@@ -57,13 +57,16 @@ namespace MSBuild.TeamCity.Tasks.Internal
         internal static IList<string> ReadLines(this StreamReader reader)
         {
             var result = new List<string>();
-
+            reader.ReadLines(result);
+            return result;
+        }
+        
+        private static async void ReadLines(this StreamReader reader, List<string> result)
+        {
             while (!reader.EndOfStream)
             {
-                result.Add(reader.ReadLine());
+                result.Add(await reader.ReadLineAsync());
             }
-
-            return result;
         }
     }
 }

@@ -7,6 +7,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.Build.Framework;
 
 namespace MSBuild.TeamCity.Tasks.Internal
@@ -54,19 +55,14 @@ namespace MSBuild.TeamCity.Tasks.Internal
             return Path.GetDirectoryName(Path.GetFullPath(path));
         }
 
-        internal static IList<string> ReadLines(this StreamReader reader)
+        internal static async Task<IList<string>> ReadLines(this StreamReader reader)
         {
             var result = new List<string>();
-            reader.ReadLines(result);
-            return result;
-        }
-        
-        private static async void ReadLines(this StreamReader reader, List<string> result)
-        {
             while (!reader.EndOfStream)
             {
                 result.Add(await reader.ReadLineAsync());
             }
+            return result;
         }
     }
 }

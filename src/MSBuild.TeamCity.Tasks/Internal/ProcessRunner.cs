@@ -74,7 +74,7 @@ namespace MSBuild.TeamCity.Tasks.Internal
                 app.Start();
                 if (RedirectStandardOutput)
                 {
-                    result = app.StandardOutput.ReadLines();
+                    result = app.StandardOutput.ReadLines().Result;
                 }
                 if (ExecutionTimeoutMilliseconds > 0)
                 {

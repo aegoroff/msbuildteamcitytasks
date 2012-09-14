@@ -75,6 +75,7 @@
     <Compile Include="CompilationTask.cs" />
     <Compile Include="DisableServiceMessages.cs" />
     <Compile Include="EnableServiceMessages.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Internal\CommandLine.cs" />
     <Compile Include="Internal\Extensions.cs" />
     <Compile Include="Internal\OpenCoverCommandLine.cs" />

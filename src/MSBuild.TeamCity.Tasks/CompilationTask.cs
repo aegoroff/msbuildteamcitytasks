@@ -5,6 +5,7 @@
  */
 
 using System.Collections.Generic;
+using System.Diagnostics;
 using Microsoft.Build.Framework;
 using MSBuild.TeamCity.Tasks.Messages;
 
@@ -127,6 +128,7 @@ namespace MSBuild.TeamCity.Tasks
         /// </summary>
         protected override string CompilationMessage
         {
+            [DebuggerStepThrough]
             get { return "compilationStarted"; }
         }
     }

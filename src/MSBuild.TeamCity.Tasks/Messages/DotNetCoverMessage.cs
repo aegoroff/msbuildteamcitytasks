@@ -6,6 +6,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace MSBuild.TeamCity.Tasks.Messages
 {
@@ -58,6 +59,7 @@ namespace MSBuild.TeamCity.Tasks.Messages
         /// </summary>
         protected override string Message
         {
+            [DebuggerStepThrough]
             get { return "dotNetCoverage"; }
         }
 

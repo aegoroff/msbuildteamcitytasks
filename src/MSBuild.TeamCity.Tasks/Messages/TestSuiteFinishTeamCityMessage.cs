@@ -4,6 +4,8 @@
  * © 2007-2012 Alexander Egorov
  */
 
+using System.Diagnostics;
+
 namespace MSBuild.TeamCity.Tasks.Messages
 {
     ///<summary>
@@ -24,6 +26,7 @@ namespace MSBuild.TeamCity.Tasks.Messages
         /// </summary>
         protected override string Message
         {
+            [DebuggerStepThrough]
             get { return "testSuiteFinished"; }
         }
     }

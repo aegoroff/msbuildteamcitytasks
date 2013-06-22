@@ -6,6 +6,7 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace MSBuild.TeamCity.Tasks.Internal
 {
@@ -74,6 +75,7 @@ namespace MSBuild.TeamCity.Tasks.Internal
         /// </summary>
         protected override bool EscapeWithTheOptionItself
         {
+            [DebuggerStepThrough]
             get { return true; }
         }
 
@@ -82,6 +84,7 @@ namespace MSBuild.TeamCity.Tasks.Internal
         /// </summary>
         protected override string OptionPrefix
         {
+            [DebuggerStepThrough]
             get { return "-"; }
         }
 
@@ -90,6 +93,7 @@ namespace MSBuild.TeamCity.Tasks.Internal
         /// </summary>
         protected override string OptionValueSeparator
         {
+            [DebuggerStepThrough]
             get { return ":"; }
         }
 

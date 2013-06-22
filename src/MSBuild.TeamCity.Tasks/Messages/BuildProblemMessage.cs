@@ -4,6 +4,8 @@
  * © 2007-2013 Alexander Egorov
  */
 
+using System.Diagnostics;
+
 namespace MSBuild.TeamCity.Tasks.Messages
 {
     /// <summary>
@@ -36,6 +38,7 @@ namespace MSBuild.TeamCity.Tasks.Messages
         /// </summary>
         protected override string Message
         {
+            [DebuggerStepThrough]
             get { return "buildProblem"; }
         }
     }

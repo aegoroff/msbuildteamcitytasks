@@ -4,6 +4,7 @@
  * © 2007-2012 Alexander Egorov
  */
 
+using System.Diagnostics;
 using System.Globalization;
 
 namespace MSBuild.TeamCity.Tasks.Messages
@@ -41,6 +42,7 @@ namespace MSBuild.TeamCity.Tasks.Messages
         /// </summary>
         protected override string Message
         {
+            [DebuggerStepThrough]
             get { return "buildStatisticValue"; }
         }
     }

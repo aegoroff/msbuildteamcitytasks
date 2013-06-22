@@ -6,6 +6,7 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace MSBuild.TeamCity.Tasks.Internal
 {
@@ -44,6 +45,7 @@ namespace MSBuild.TeamCity.Tasks.Internal
         /// </summary>
         protected override string OptionValueSeparator
         {
+            [DebuggerStepThrough]
             get { return "="; }
         }
 
@@ -52,6 +54,7 @@ namespace MSBuild.TeamCity.Tasks.Internal
         /// </summary>
         protected override bool IsOutputInCaseOfEmptyValue
         {
+            [DebuggerStepThrough]
             get { return true; }
         }
 

@@ -58,21 +58,22 @@ namespace MSBuild.TeamCity.Tasks.Internal
                                                                      string totalParam, string percentParam)
         {
             var classMatch = rx.Match(line);
-            if (classMatch.Success)
+            if (!classMatch.Success)
             {
-                var covered = classMatch.Groups[1].Value;
-                var total = classMatch.Groups[2].Value;
-                var percent = classMatch.Groups[3].Value;
-                yield return
-                    new BuildStatisticTeamCityMessage(coveredParam,
-                                                      float.Parse(covered, CultureInfo.InvariantCulture));
-                yield return
-                    new BuildStatisticTeamCityMessage(totalParam,
-                                                      float.Parse(total, CultureInfo.InvariantCulture));
-                yield return
-                    new BuildStatisticTeamCityMessage(percentParam,
-                                                      float.Parse(percent, CultureInfo.InvariantCulture));
+                yield break;
             }
+            var covered = classMatch.Groups[1].Value;
+            var total = classMatch.Groups[2].Value;
+            var percent = classMatch.Groups[3].Value;
+            yield return
+                new BuildStatisticTeamCityMessage(coveredParam,
+                                                  float.Parse(covered, CultureInfo.InvariantCulture));
+            yield return
+                new BuildStatisticTeamCityMessage(totalParam,
+                                                  float.Parse(total, CultureInfo.InvariantCulture));
+            yield return
+                new BuildStatisticTeamCityMessage(percentParam,
+                                                  float.Parse(percent, CultureInfo.InvariantCulture));
         }
 
         #endregion

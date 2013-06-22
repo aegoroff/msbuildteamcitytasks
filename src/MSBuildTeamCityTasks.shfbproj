@@ -41,8 +41,8 @@
     </BuildLogFile>
     <FrameworkVersion>.NET 4.0.30319</FrameworkVersion>
     <HelpTitle>MSBuild TeamCity Tasks</HelpTitle>
-    <CopyrightHref>http://code.google.com/p/msbuildteamcitytasks/</CopyrightHref>
-    <CopyrightText>Alexander Egorov %28c%29 2009-2012</CopyrightText>
+    <CopyrightHref>https://github.com/aegoroff/msbuildteamcitytasks</CopyrightHref>
+    <CopyrightText>Alexander Egorov %28c%29 2009-2013</CopyrightText>
     <FeedbackEMailAddress>egoroff%40gmail.com</FeedbackEMailAddress>
     <HeaderText>MSBuild TeamCity Tasks</HeaderText>
     <PresentationStyle>vs2005</PresentationStyle>

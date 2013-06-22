@@ -10,7 +10,7 @@
 		<!-- Code configuration to build (Release or Debug) -->
 		<Configuration>Release</Configuration>
 		<!-- NUnit working path  -->
-		<NUnitPath>C:\Program Files (x86)\NUnit 2.6\bin</NUnitPath>
+		<NUnitPath>C:\Program Files (x86)\NUnit 2.6.1\bin</NUnitPath>
 		<OpenCoverPath>C:\Program Files (x86)\OpenCover</OpenCoverPath>
 		<ReportGeneratorPath>D:\soft\Programming\NET tools\ReportGenerator_1.2.6.0</ReportGeneratorPath>
 		

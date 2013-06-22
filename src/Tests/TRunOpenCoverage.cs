@@ -6,7 +6,7 @@
 
 using MSBuild.TeamCity.Tasks;
 using Microsoft.Build.Framework;
-using NMock2;
+using NMock;
 using NUnit.Framework;
 using Is = NUnit.Framework.Is;
 
@@ -19,9 +19,8 @@ namespace Tests
 
         private RunOpenCoverage task;
         private const string ValidPathToOpenCover = @"C:\Program Files (x86)\OpenCover";
-        private ITaskItem item1;
-        private ITaskItem item2;
-        private const string ItemSpec = "ItemSpec";
+        private Mock<ITaskItem> item1;
+        private Mock<ITaskItem> item2;
         private const string TargetArguments = "--help";
         private const string TargetWorkDir = ".";
 
@@ -33,15 +32,15 @@ namespace Tests
         public void ThisSetup()
         {
             Setup();
-            item1 = Mockery.NewMock<ITaskItem>();
-            item2 = Mockery.NewMock<ITaskItem>();
-            task = new RunOpenCoverage(Logger);
+            item1 = Mockery.CreateMock<ITaskItem>();
+            item2 = Mockery.CreateMock<ITaskItem>();
+            task = new RunOpenCoverage(Logger.MockObject);
         }
 
         [Test]
         public void ToolPath()
         {
-            Expect.Once.On(Logger).Method(TTeamCityTaskImplementation.LogMessage).WithAnyArguments();
+            Logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
             task.ToolPath = ValidPathToOpenCover;
             Assert.That(task.Execute());
         }
@@ -49,7 +48,7 @@ namespace Tests
         [Test]
         public void ToolPathInvalid()
         {
-            Expect.Once.On(Logger).Method(TTeamCityTaskImplementation.LogError).WithAnyArguments();
+            Logger.Expects.One.Method(_ => _.LogErrorFromException(null, true)).WithAnyArguments();
             task.ToolPath = "bad";
             Assert.That(task.Execute(), Is.False);
         }
@@ -57,7 +56,7 @@ namespace Tests
         [Test]
         public void ToolPathAndTargetPath()
         {
-            Expect.Once.On(Logger).Method(TTeamCityTaskImplementation.LogMessage).WithAnyArguments();
+            Logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
             task.ToolPath = ValidPathToOpenCover;
             task.TargetPath = TGoogleTestsRunner.CorrectExePath;
             Assert.That(task.Execute());
@@ -66,23 +65,23 @@ namespace Tests
         [Test]
         public void FilterProperty()
         {
-            task.Filter = new[] { item1 };
-            Assert.That(task.Filter, Is.EquivalentTo(new[] { item1 }));
+            task.Filter = new[] { item1.MockObject };
+            Assert.That(task.Filter, Is.EquivalentTo(new[] { item1.MockObject }));
         }
 
         [Test]
         public void AllProperties()
         {
-            Expect.Once.On(Logger).Method(TTeamCityTaskImplementation.LogMessage).WithAnyArguments();
+            Logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
 
-            Expect.Once.On(item1).GetProperty(ItemSpec).Will(Return.Value("a"));
-            Expect.Once.On(item2).GetProperty(ItemSpec).Will(Return.Value("b"));
+            item1.Expects.Exactly(2).GetProperty(_ => _.ItemSpec).Will(Return.Value("a"));
+            item2.Expects.Exactly(2).GetProperty(_ => _.ItemSpec).Will(Return.Value("b"));
 
             task.ToolPath = ValidPathToOpenCover;
             task.TargetPath = TGoogleTestsRunner.CorrectExePath;
             task.TargetArguments = TargetArguments;
             task.TargetWorkDir = TargetWorkDir;
-            task.Filter = new[] { item1, item2 };
+            task.Filter = new[] { item1.MockObject, item2.MockObject };
             Assert.That(task.Execute());
         }
 

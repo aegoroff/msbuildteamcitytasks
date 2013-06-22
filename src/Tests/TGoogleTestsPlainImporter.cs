@@ -7,7 +7,7 @@
 using System;
 using MSBuild.TeamCity.Tasks;
 using MSBuild.TeamCity.Tasks.Internal;
-using NMock2;
+using NMock;
 using NUnit.Framework;
 using Is = NUnit.Framework.Is;
 
@@ -22,22 +22,22 @@ namespace Tests
         private static readonly string FailTestsPath = Environment.CurrentDirectory +
                                                        @"\..\..\..\External\GoogleTestsFailed.xml";
 
-        private Mockery mockery;
-        private ILogger logger;
+        private MockFactory mockery;
+        private Mock<ILogger> logger;
 
         [SetUp]
         public void Setup()
         {
-            mockery = new Mockery();
-            logger = mockery.NewMock<ILogger>();
+            mockery = new MockFactory();
+            logger = mockery.CreateMock<ILogger>();
         }
 
         [Test]
         public void ReadSuccessTests()
         {
-            Expect.Once.On(logger).GetProperty(TGoogleTestsRunner.HasLoggedErrors).Will(Return.Value(false));
+            logger.Expects.One.GetProperty(_ => _.HasLoggedErrors).Will(Return.Value(false));
 
-            GoogleTestsPlainImporter importer = new GoogleTestsPlainImporter(logger, false, SuccessTestsPath);
+            GoogleTestsPlainImporter importer = new GoogleTestsPlainImporter(logger.MockObject, false, SuccessTestsPath);
 
             ExecutionResult result = importer.Import();
 
@@ -48,9 +48,9 @@ namespace Tests
         [Test]
         public void ReadFailTests()
         {
-            Expect.Once.On(logger).GetProperty(TGoogleTestsRunner.HasLoggedErrors).Will(Return.Value(false));
+            logger.Expects.One.GetProperty(_ => _.HasLoggedErrors).Will(Return.Value(false));
 
-            GoogleTestsPlainImporter importer = new GoogleTestsPlainImporter(logger, false, FailTestsPath);
+            GoogleTestsPlainImporter importer = new GoogleTestsPlainImporter(logger.MockObject, false, FailTestsPath);
 
             ExecutionResult result = importer.Import();
 
@@ -61,9 +61,9 @@ namespace Tests
         [Test]
         public void ReadFailTestsButContinueOnFailures()
         {
-            Expect.Once.On(logger).GetProperty(TGoogleTestsRunner.HasLoggedErrors).Will(Return.Value(false));
+            logger.Expects.One.GetProperty(_ => _.HasLoggedErrors).Will(Return.Value(false));
 
-            GoogleTestsPlainImporter importer = new GoogleTestsPlainImporter(logger, true, FailTestsPath);
+            GoogleTestsPlainImporter importer = new GoogleTestsPlainImporter(logger.MockObject, true, FailTestsPath);
 
             ExecutionResult result = importer.Import();
 

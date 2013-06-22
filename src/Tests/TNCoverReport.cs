@@ -6,7 +6,8 @@
 
 using System;
 using MSBuild.TeamCity.Tasks;
-using NMock2;
+using Microsoft.Build.Framework;
+using NMock;
 using NUnit.Framework;
 using Is = NUnit.Framework.Is;
 
@@ -25,13 +26,13 @@ namespace Tests
         [SetUp]
         public void Init()
         {
-            task = new NCoverReport(Logger);
+            task = new NCoverReport(Logger.MockObject);
         }
 
         [Test]
         public void OnlyRequired()
         {
-            Expect.Exactly(2).On(Logger).Method(TTeamCityTaskImplementation.LogMessage).WithAnyArguments();
+            Logger.Expects.Exactly(2).Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
             task.NCoverExplorerPath = NCoverExplorerPth;
             task.XmlReportPath = XmlReportPth;
             Assert.That(task.Execute());
@@ -40,7 +41,7 @@ namespace Tests
         [Test]
         public void OnlyRequiredAndArguments()
         {
-            Expect.Exactly(3).On(Logger).Method(TTeamCityTaskImplementation.LogMessage).WithAnyArguments();
+            Logger.Expects.Exactly(3).Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
             task.NCoverExplorerPath = NCoverExplorerPth;
             task.XmlReportPath = XmlReportPth;
             task.Arguments = Args;
@@ -50,7 +51,7 @@ namespace Tests
         [Test]
         public void OnlyRequiredAndArgumentsAndReportType()
         {
-            Expect.Exactly(4).On(Logger).Method(TTeamCityTaskImplementation.LogMessage).WithAnyArguments();
+            Logger.Expects.Exactly(4).Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
             task.NCoverExplorerPath = NCoverExplorerPth;
             task.XmlReportPath = XmlReportPth;
             task.Arguments = Args;
@@ -61,7 +62,7 @@ namespace Tests
         [Test]
         public void Full()
         {
-            Expect.Exactly(5).On(Logger).Method(TTeamCityTaskImplementation.LogMessage).WithAnyArguments();
+            Logger.Expects.Exactly(5).Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
             task.NCoverExplorerPath = NCoverExplorerPth;
             task.XmlReportPath = XmlReportPth;
             task.Arguments = Args;
@@ -73,8 +74,8 @@ namespace Tests
         [Test]
         public void WithException()
         {
-            Expect.Once.On(Logger).Method(TTeamCityTaskImplementation.LogMessage).Will(Throw.Exception(new Exception()));
-            Expect.Once.On(Logger).Method(TTeamCityTaskImplementation.LogError).WithAnyArguments();
+            Logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments().Will(Throw.Exception(new Exception()));
+            Logger.Expects.One.Method(_ => _.LogErrorFromException(null, true)).WithAnyArguments();
             task.NCoverExplorerPath = NCoverExplorerPth;
             task.XmlReportPath = XmlReportPth;
             Assert.That(task.Execute(), Is.False);

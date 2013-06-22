@@ -64,6 +64,13 @@ namespace MSBuild.TeamCity.Tasks
         /// <summary>
         ///     Gets or sets a unique problem instance id.
         /// </summary>
+        /// <remarks>
+        /// (optional) a unique problem instance id. 
+        /// Different problems should have different id, same problems - same id. 
+        /// Shouldn't change throughout builds if the same problem occurs, e.g. the same compilation error. 
+        /// Should be a valid Java id up to 60 characters. 
+        /// If omitted, identity is calculated based on description text.
+        /// </remarks>
         public string Identity { get; set; }
 
         /// <summary>

@@ -4,6 +4,8 @@
  * © 2007-2013 Alexander Egorov
  */
 
+using System.Collections.Generic;
+using MSBuild.TeamCity.Tasks.Messages;
 using Microsoft.Build.Framework;
 
 namespace MSBuild.TeamCity.Tasks
@@ -60,5 +62,14 @@ namespace MSBuild.TeamCity.Tasks
         /// Gets or sets a unique problem instance id.
         /// </summary>
         public string Identity { get; set; }
+
+        /// <summary>
+        /// Reads TeamCity messages
+        /// </summary>
+        /// <returns>TeamCity messages list</returns>
+        protected override IEnumerable<TeamCityMessage> ReadMessages()
+        {
+            return null;
+        }
     }
 }

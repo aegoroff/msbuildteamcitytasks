@@ -373,5 +373,18 @@ namespace Tests
             };
             Assert.That(task.Execute());
         }
+        
+        [Test]
+        public void BuildProblem()
+        {
+            Expect.Once.On(Logger).Method(TTeamCityTaskImplementation.LogMessage).WithAnyArguments();
+
+            BuildProblem task = new BuildProblem(Logger)
+            {
+                Description = "d",
+                Identity = "i"
+            };
+            Assert.That(task.Execute());
+        }
     }
 }

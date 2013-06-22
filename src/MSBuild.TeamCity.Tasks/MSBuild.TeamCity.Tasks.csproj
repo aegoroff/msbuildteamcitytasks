@@ -70,6 +70,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BlockTask.cs" />
+    <Compile Include="BuildProblem.cs" />
     <Compile Include="CompilationTask.cs" />
     <Compile Include="DisableServiceMessages.cs" />
     <Compile Include="EnableServiceMessages.cs" />

@@ -382,5 +382,19 @@ namespace Tests
             SetParameterTeamCityMessage message = new SetParameterTeamCityMessage(Name, Text);
             Assert.That(message.ToString(), Is.EqualTo("##teamcity[setParameter name='t1' value='t']"));
         }
+        
+        [Test]
+        public void BuildProblemMandatory()
+        {
+            BuildProblemMessage message = new BuildProblemMessage(Text);
+            Assert.That(message.ToString(), Is.EqualTo("##teamcity[buildProblem description='t']"));
+        }
+        
+        [Test]
+        public void BuildProblemAll()
+        {
+            BuildProblemMessage message = new BuildProblemMessage(Text, Name);
+            Assert.That(message.ToString(), Is.EqualTo("##teamcity[buildProblem description='t' identity='t1']"));
+        }
     }
 }

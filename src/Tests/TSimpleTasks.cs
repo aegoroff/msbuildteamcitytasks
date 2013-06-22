@@ -1,11 +1,12 @@
 /*
  * Created by: egr
  * Created at: 09.09.2010
- * © 2007-2012 Alexander Egorov
+ * © 2007-2013 Alexander Egorov
  */
 
 using MSBuild.TeamCity.Tasks;
-using NMock2;
+using Microsoft.Build.Framework;
+using NMock;
 using NUnit.Framework;
 using Is = NUnit.Framework.Is;
 
@@ -17,9 +18,9 @@ namespace Tests
         [Test]
         public void CommonPropertiesTest()
         {
-            Expect.Once.On(Logger).Method(TTeamCityTaskImplementation.LogMessage).WithAnyArguments();
+            Logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
 
-            BlockOpen task = new BlockOpen(Logger)
+            BlockOpen task = new BlockOpen(Logger.MockObject)
                                  {
                                      Name = "n",
                                      FlowId = "1",
@@ -31,9 +32,9 @@ namespace Tests
         [Test]
         public void BlockTaskNameProperty()
         {
-            Expect.Once.On(Logger).Method(TTeamCityTaskImplementation.LogMessage).WithAnyArguments();
+            Logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
 
-            BlockOpen task = new BlockOpen(Logger)
+            BlockOpen task = new BlockOpen(Logger.MockObject)
                                  {
                                      Name = "n"
                                  };
@@ -43,9 +44,9 @@ namespace Tests
         [Test]
         public void BlockOpen()
         {
-            Expect.Once.On(Logger).Method(TTeamCityTaskImplementation.LogMessage).WithAnyArguments();
+            Logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
 
-            BlockOpen task = new BlockOpen(Logger)
+            BlockOpen task = new BlockOpen(Logger.MockObject)
                                  {
                                      Name = "n"
                                  };
@@ -55,9 +56,9 @@ namespace Tests
         [Test]
         public void BlockClose()
         {
-            Expect.Once.On(Logger).Method(TTeamCityTaskImplementation.LogMessage).WithAnyArguments();
+            Logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
 
-            BlockClose task = new BlockClose(Logger)
+            BlockClose task = new BlockClose(Logger.MockObject)
                                   {
                                       Name = "n"
                                   };
@@ -67,9 +68,9 @@ namespace Tests
         [Test]
         public void BuildNumber()
         {
-            Expect.Once.On(Logger).Method(TTeamCityTaskImplementation.LogMessage).WithAnyArguments();
+            Logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
 
-            BuildNumber task = new BuildNumber(Logger)
+            BuildNumber task = new BuildNumber(Logger.MockObject)
                                    {
                                        Number = "1"
                                    };
@@ -80,9 +81,9 @@ namespace Tests
         [Test]
         public void BuildProgressStart()
         {
-            Expect.Once.On(Logger).Method(TTeamCityTaskImplementation.LogMessage).WithAnyArguments();
+            Logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
 
-            BuildProgressStart task = new BuildProgressStart(Logger)
+            BuildProgressStart task = new BuildProgressStart(Logger.MockObject)
                                           {
                                               Message = "m"
                                           };
@@ -93,9 +94,9 @@ namespace Tests
         [Test]
         public void BuildProgressMessage()
         {
-            Expect.Once.On(Logger).Method(TTeamCityTaskImplementation.LogMessage).WithAnyArguments();
+            Logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
 
-            BuildProgressMessage task = new BuildProgressMessage(Logger)
+            BuildProgressMessage task = new BuildProgressMessage(Logger.MockObject)
                                             {
                                                 Message = "m"
                                             };
@@ -106,9 +107,9 @@ namespace Tests
         [Test]
         public void BuildProgressFinish()
         {
-            Expect.Once.On(Logger).Method(TTeamCityTaskImplementation.LogMessage).WithAnyArguments();
+            Logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
 
-            BuildProgressFinish task = new BuildProgressFinish(Logger)
+            BuildProgressFinish task = new BuildProgressFinish(Logger.MockObject)
                                            {
                                                Message = "m"
                                            };
@@ -119,9 +120,9 @@ namespace Tests
         [Test]
         public void BuildStatus()
         {
-            Expect.Once.On(Logger).Method(TTeamCityTaskImplementation.LogMessage).WithAnyArguments();
+            Logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
 
-            BuildStatus task = new BuildStatus(Logger)
+            BuildStatus task = new BuildStatus(Logger.MockObject)
                                    {
                                        Status = "SUCCESS",
                                        Text = "t"
@@ -132,9 +133,9 @@ namespace Tests
         [Test]
         public void ReportMessage()
         {
-            Expect.Once.On(Logger).Method(TTeamCityTaskImplementation.LogMessage).WithAnyArguments();
+            Logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
 
-            ReportMessage task = new ReportMessage(Logger)
+            ReportMessage task = new ReportMessage(Logger.MockObject)
                                      {
                                          Status = "WARNING",
                                          Text = "t",
@@ -149,9 +150,9 @@ namespace Tests
         [Test]
         public void ReportBuildStatistic()
         {
-            Expect.Once.On(Logger).Method(TTeamCityTaskImplementation.LogMessage).WithAnyArguments();
+            Logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
 
-            ReportBuildStatistic task = new ReportBuildStatistic(Logger)
+            ReportBuildStatistic task = new ReportBuildStatistic(Logger.MockObject)
                                             {
                                                 Key = "k",
                                                 Value = 1
@@ -164,9 +165,9 @@ namespace Tests
         [Test]
         public void ImportData()
         {
-            Expect.Once.On(Logger).Method(TTeamCityTaskImplementation.LogMessage).WithAnyArguments();
+            Logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
 
-            ImportData task = new ImportData(Logger)
+            ImportData task = new ImportData(Logger.MockObject)
                                   {
                                       Path = "p",
                                       Type = "dotNetCoverage",
@@ -181,10 +182,10 @@ namespace Tests
         [Test]
         public void ImportGoogleTests()
         {
-            Expect.Once.On(Logger).Method(TTeamCityTaskImplementation.LogMessage).WithAnyArguments();
-            Expect.Once.On(Logger).GetProperty(TGoogleTestsRunner.HasLoggedErrors).Will(Return.Value(false));
+            Logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
+            Logger.Expects.One.GetProperty(_ => _.HasLoggedErrors).Will(Return.Value(false));
 
-            ImportGoogleTests task = new ImportGoogleTests(Logger)
+            ImportGoogleTests task = new ImportGoogleTests(Logger.MockObject)
                                          {
                                              ContinueOnFailures = true,
                                              TestResultsPath = TGoogleTestsPlainImporter.SuccessTestsPath,
@@ -197,45 +198,45 @@ namespace Tests
         [Test]
         public void EnableServiceMessages()
         {
-            Expect.Once.On(Logger).Method(TTeamCityTaskImplementation.LogMessage).WithAnyArguments();
+            Logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
 
-            EnableServiceMessages task = new EnableServiceMessages(Logger);
+            EnableServiceMessages task = new EnableServiceMessages(Logger.MockObject);
             Assert.That(task.Execute());
         }
 
         [Test]
         public void DisableServiceMessages()
         {
-            Expect.Once.On(Logger).Method(TTeamCityTaskImplementation.LogMessage).WithAnyArguments();
+            Logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
 
-            DisableServiceMessages task = new DisableServiceMessages(Logger);
+            DisableServiceMessages task = new DisableServiceMessages(Logger.MockObject);
             Assert.That(task.Execute());
         }
 
         [Test]
         public void CompilationStarted()
         {
-            Expect.Once.On(Logger).Method(TTeamCityTaskImplementation.LogMessage).WithAnyArguments();
+            Logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
 
-            CompilationStarted task = new CompilationStarted(Logger);
+            CompilationStarted task = new CompilationStarted(Logger.MockObject);
             Assert.That(task.Execute());
         }
 
         [Test]
         public void CompilationFinished()
         {
-            Expect.Once.On(Logger).Method(TTeamCityTaskImplementation.LogMessage).WithAnyArguments();
+            Logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
 
-            CompilationFinished task = new CompilationFinished(Logger);
+            CompilationFinished task = new CompilationFinished(Logger.MockObject);
             Assert.That(task.Execute());
         }
 
         [Test]
         public void TestSuiteStarted()
         {
-            Expect.Once.On(Logger).Method(TTeamCityTaskImplementation.LogMessage).WithAnyArguments();
+            Logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
 
-            TestSuiteStarted task = new TestSuiteStarted(Logger)
+            TestSuiteStarted task = new TestSuiteStarted(Logger.MockObject)
                                         {
                                             Name = "n"
                                         };
@@ -245,9 +246,9 @@ namespace Tests
         [Test]
         public void TestSuiteFinished()
         {
-            Expect.Once.On(Logger).Method(TTeamCityTaskImplementation.LogMessage).WithAnyArguments();
+            Logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
 
-            TestSuiteFinished task = new TestSuiteFinished(Logger)
+            TestSuiteFinished task = new TestSuiteFinished(Logger.MockObject)
                                          {
                                              Name = "n"
                                          };
@@ -257,9 +258,9 @@ namespace Tests
         [Test]
         public void TestStarted()
         {
-            Expect.Once.On(Logger).Method(TTeamCityTaskImplementation.LogMessage).WithAnyArguments();
+            Logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
 
-            TestStarted task = new TestStarted(Logger)
+            TestStarted task = new TestStarted(Logger.MockObject)
                                    {
                                        Name = "n"
                                    };
@@ -269,9 +270,9 @@ namespace Tests
         [Test]
         public void TestStartedCaptureStandardOutput()
         {
-            Expect.Once.On(Logger).Method(TTeamCityTaskImplementation.LogMessage).WithAnyArguments();
+            Logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
 
-            TestStarted task = new TestStarted(Logger)
+            TestStarted task = new TestStarted(Logger.MockObject)
                                    {
                                        Name = "n",
                                        CaptureStandardOutput = true
@@ -282,9 +283,9 @@ namespace Tests
         [Test]
         public void TestFinished()
         {
-            Expect.Once.On(Logger).Method(TTeamCityTaskImplementation.LogMessage).WithAnyArguments();
+            Logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
 
-            TestFinished task = new TestFinished(Logger)
+            TestFinished task = new TestFinished(Logger.MockObject)
                                     {
                                         Name = "n",
                                         Duration = 3.0
@@ -295,9 +296,9 @@ namespace Tests
         [Test]
         public void TestIgnored()
         {
-            Expect.Once.On(Logger).Method(TTeamCityTaskImplementation.LogMessage).WithAnyArguments();
+            Logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
 
-            TestIgnored task = new TestIgnored(Logger)
+            TestIgnored task = new TestIgnored(Logger.MockObject)
                                    {
                                        Name = "n",
                                        Message = "Comment"
@@ -308,9 +309,9 @@ namespace Tests
         [Test]
         public void TestStdOut()
         {
-            Expect.Once.On(Logger).Method(TTeamCityTaskImplementation.LogMessage).WithAnyArguments();
+            Logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
 
-            TestStdOut task = new TestStdOut(Logger)
+            TestStdOut task = new TestStdOut(Logger.MockObject)
                                   {
                                       Name = "n",
                                       Out = "out"
@@ -321,9 +322,9 @@ namespace Tests
         [Test]
         public void TestStdErr()
         {
-            Expect.Once.On(Logger).Method(TTeamCityTaskImplementation.LogMessage).WithAnyArguments();
+            Logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
 
-            TestStdErr task = new TestStdErr(Logger)
+            TestStdErr task = new TestStdErr(Logger.MockObject)
                                   {
                                       Name = "n",
                                       Out = "out"
@@ -334,9 +335,9 @@ namespace Tests
         [Test]
         public void TestFailedRequired()
         {
-            Expect.Once.On(Logger).Method(TTeamCityTaskImplementation.LogMessage).WithAnyArguments();
+            Logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
 
-            TestFailed task = new TestFailed(Logger)
+            TestFailed task = new TestFailed(Logger.MockObject)
                                   {
                                       Name = "n",
                                       Message = "m",
@@ -348,9 +349,9 @@ namespace Tests
         [Test]
         public void TestFailedAll()
         {
-            Expect.Once.On(Logger).Method(TTeamCityTaskImplementation.LogMessage).WithAnyArguments();
+            Logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
 
-            TestFailed task = new TestFailed(Logger)
+            TestFailed task = new TestFailed(Logger.MockObject)
                                   {
                                       Name = "n",
                                       Message = "m",
@@ -364,12 +365,25 @@ namespace Tests
         [Test]
         public void SetParameter()
         {
-            Expect.Once.On(Logger).Method(TTeamCityTaskImplementation.LogMessage).WithAnyArguments();
+            Logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
 
-            SetParameter task = new SetParameter(Logger)
+            SetParameter task = new SetParameter(Logger.MockObject)
             {
                 Name = "n",
                 Value = "v"
+            };
+            Assert.That(task.Execute());
+        }
+        
+        [Test]
+        public void BuildProblem()
+        {
+            Logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
+
+            BuildProblem task = new BuildProblem(Logger.MockObject)
+            {
+                Description = "d",
+                Identity = "i"
             };
             Assert.That(task.Execute());
         }

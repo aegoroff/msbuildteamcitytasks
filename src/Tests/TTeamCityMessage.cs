@@ -1,7 +1,7 @@
 /*
  * Created by: egr
  * Created at: 26.04.2009
- * © 2007-2012 Alexander Egorov
+ * © 2007-2013 Alexander Egorov
  */
 
 using System;
@@ -381,6 +381,20 @@ namespace Tests
         {
             SetParameterTeamCityMessage message = new SetParameterTeamCityMessage(Name, Text);
             Assert.That(message.ToString(), Is.EqualTo("##teamcity[setParameter name='t1' value='t']"));
+        }
+        
+        [Test]
+        public void BuildProblemMandatory()
+        {
+            BuildProblemMessage message = new BuildProblemMessage(Text);
+            Assert.That(message.ToString(), Is.EqualTo("##teamcity[buildProblem description='t']"));
+        }
+        
+        [Test]
+        public void BuildProblemAll()
+        {
+            BuildProblemMessage message = new BuildProblemMessage(Text, Name);
+            Assert.That(message.ToString(), Is.EqualTo("##teamcity[buildProblem description='t' identity='t1']"));
         }
     }
 }

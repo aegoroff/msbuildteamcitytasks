@@ -1,11 +1,12 @@
 /*
  * Created by: egr
  * Created at: 09.09.2010
- * © 2007-2012 Alexander Egorov
+ * © 2007-2013 Alexander Egorov
  */
 
 using MSBuild.TeamCity.Tasks;
-using NMock2;
+using Microsoft.Build.Framework;
+using NMock;
 using NUnit.Framework;
 using Is = NUnit.Framework.Is;
 
@@ -21,7 +22,7 @@ namespace Tests
         [SetUp]
         public void Init()
         {
-            task = new RunGoogleTests(Logger);
+            task = new RunGoogleTests(Logger.MockObject);
         }
 
         [TearDown]
@@ -34,8 +35,8 @@ namespace Tests
         [Test]
         public void OnlyRequired()
         {
-            Expect.Once.On(Logger).Method(TTeamCityTaskImplementation.LogMessage).WithAnyArguments();
-            Expect.Once.On(Logger).GetProperty(TGoogleTestsRunner.HasLoggedErrors).Will(Return.Value(false));
+            Logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
+            Logger.Expects.One.GetProperty(_=>_.HasLoggedErrors).Will(Return.Value(false));
 
             task.TestExePath = TGoogleTestsRunner.CorrectExePath;
             Assert.That(task.Execute());
@@ -44,8 +45,8 @@ namespace Tests
         [Test]
         public void BadPath()
         {
-            Expect.Once.On(Logger).Method(TTeamCityTaskImplementation.LogError).WithAnyArguments();
-            Expect.Once.On(Logger).GetProperty(TGoogleTestsRunner.HasLoggedErrors).Will(Return.Value(true));
+            Logger.Expects.One.Method(_ => _.LogErrorFromException(null, true)).WithAnyArguments();
+            Logger.Expects.One.GetProperty(_=>_.HasLoggedErrors).Will(Return.Value(true));
 
             task.TestExePath = "bad";
             Assert.That(task.Execute(), Is.False);
@@ -54,8 +55,8 @@ namespace Tests
         [Test]
         public void ContinueOnFailures()
         {
-            Expect.Once.On(Logger).Method(TTeamCityTaskImplementation.LogError).WithAnyArguments();
-            Expect.Once.On(Logger).GetProperty(TGoogleTestsRunner.HasLoggedErrors).Will(Return.Value(false));
+            Logger.Expects.One.Method(_ => _.LogErrorFromException(null, true)).WithAnyArguments();
+            Logger.Expects.One.GetProperty(_=>_.HasLoggedErrors).Will(Return.Value(false));
 
             task.TestExePath = "bad";
             task.ContinueOnFailures = true;
@@ -65,8 +66,8 @@ namespace Tests
         [Test]
         public void AllPropertiesSet()
         {
-            Expect.Once.On(Logger).Method(TTeamCityTaskImplementation.LogMessage).WithAnyArguments();
-            Expect.Once.On(Logger).GetProperty(TGoogleTestsRunner.HasLoggedErrors).Will(Return.Value(false));
+            Logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
+            Logger.Expects.One.GetProperty(_=>_.HasLoggedErrors).Will(Return.Value(false));
 
             task.TestExePath = TGoogleTestsRunner.CorrectExePath;
             task.ContinueOnFailures = false;

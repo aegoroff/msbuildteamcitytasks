@@ -1,13 +1,13 @@
 /*
  * Created by: egr
  * Created at: 09.09.2010
- * © 2007-2012 Alexander Egorov
+ * © 2007-2013 Alexander Egorov
  */
 
 
 using Microsoft.Build.Framework;
 using MSBuild.TeamCity.Tasks;
-using NMock2;
+using NMock;
 using NUnit.Framework;
 using Is = NUnit.Framework.Is;
 
@@ -16,9 +16,8 @@ namespace Tests
     [TestFixture]
     public class TPartCoverReport : TTask
     {
-        private ITaskItem item1;
-        private ITaskItem item2;
-        private const string ItemSpec = "ItemSpec";
+        private Mock<ITaskItem> item1;
+        private Mock<ITaskItem> item2;
         private PartCoverReport task;
         private const string XmlReportPth = "path";
 
@@ -27,15 +26,15 @@ namespace Tests
         public void ThisSetup()
         {
             Setup();
-            item1 = Mockery.NewMock<ITaskItem>();
-            item2 = Mockery.NewMock<ITaskItem>();
-            task = new PartCoverReport(Logger);
+            item1 = Mockery.CreateMock<ITaskItem>();
+            item2 = Mockery.CreateMock<ITaskItem>();
+            task = new PartCoverReport(Logger.MockObject);
         }
 
         [Test]
         public void OnlyRequired()
         {
-            Expect.Once.On(Logger).Method(TTeamCityTaskImplementation.LogMessage).WithAnyArguments();
+            Logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
             task.XmlReportPath = XmlReportPth;
             Assert.That(task.Execute());
         }
@@ -43,11 +42,11 @@ namespace Tests
         [Test]
         public void All()
         {
-            Expect.Exactly(2).On(Logger).Method(TTeamCityTaskImplementation.LogMessage).WithAnyArguments();
-            Expect.Exactly(2).On(item1).GetProperty(ItemSpec).Will(Return.Value("a"));
-            Expect.Exactly(2).On(item2).GetProperty(ItemSpec).Will(Return.Value("b"));
+            Logger.Expects.Exactly(2).Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
+            item1.Expects.Exactly(2).GetProperty(_=>_.ItemSpec).Will(Return.Value("a"));
+            item2.Expects.Exactly(2).GetProperty(_ => _.ItemSpec).Will(Return.Value("b"));
             task.XmlReportPath = XmlReportPth;
-            task.ReportXslts = new[] { item1, item2 };
+            task.ReportXslts = new[] { item1.MockObject, item2.MockObject };
             Assert.That(task.Execute());
         }
 
@@ -61,8 +60,8 @@ namespace Tests
         [Test]
         public void ReportXslts()
         {
-            task.ReportXslts = new[] { item1, item2 };
-            Assert.That(task.ReportXslts, Is.EquivalentTo(new[] { item1, item2 }));
+            task.ReportXslts = new[] { item1.MockObject, item2.MockObject };
+            Assert.That(task.ReportXslts, Is.EquivalentTo(new[] { item1.MockObject, item2.MockObject }));
         }
     }
 }

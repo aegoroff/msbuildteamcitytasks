@@ -10,7 +10,7 @@
 		<!-- Code configuration to build (Release or Debug) -->
 		<Configuration>Release</Configuration>
 		<!-- NUnit working path  -->
-		<NUnitPath>C:\Program Files (x86)\NUnit 2.6\bin</NUnitPath>
+		<NUnitPath>C:\Program Files (x86)\NUnit 2.6.1\bin</NUnitPath>
 		<OpenCoverPath>C:\Program Files (x86)\OpenCover</OpenCoverPath>
 		<ReportGeneratorPath>D:\soft\Programming\NET tools\ReportGenerator_1.2.6.0</ReportGeneratorPath>
 		
@@ -148,11 +148,6 @@
 			DestinationFiles="@(SetupDestinationFile)"
 		/>
 		<Delete Files="@(SetupFile)" />
-		<Exec
-			Command='python.exe $(MSBuildProjectDirectory)\googlecode_upload.py -p msbuildteamcitytasks -u $(GoogleLogin) -w $(GooglePassword) -s "Release $(Major).$(Minor) Build $(Build) $(Stage)" -l $(IsFeatured),Type-Installer,OpSys-Windows @(SetupDestinationFile)'
-			Timeout="90000"
-			Condition=" '$(IsUpload)'=='true' "
-		/>
 		<PublishArtifacts Artifacts="@(Artifact)"/>
 		<Message Text="Build $(Major).$(Minor).$(Build).$(Revision) Complete"/>
 	</Target>

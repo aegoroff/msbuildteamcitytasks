@@ -72,6 +72,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BlockTask.cs" />
+    <Compile Include="BuildProblem.cs" />
     <Compile Include="CompilationTask.cs" />
     <Compile Include="DisableServiceMessages.cs" />
     <Compile Include="EnableServiceMessages.cs" />
@@ -85,6 +86,7 @@
     <Compile Include="BuildNumber.cs" />
     <Compile Include="BuildProgressTask.cs" />
     <Compile Include="BuildStatus.cs" />
+    <Compile Include="Messages\BuildProblemMessage.cs" />
     <Compile Include="Messages\BuildStatusTeamCityMessage.cs" />
     <Compile Include="Messages\CompilationMessage.cs" />
     <Compile Include="Messages\DotNetCoverageTool.cs" />

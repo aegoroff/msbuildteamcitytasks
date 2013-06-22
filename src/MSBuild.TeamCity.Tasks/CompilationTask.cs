@@ -1,10 +1,11 @@
 /*
  * Created by: egr
  * Created at: 17.10.2010
- * © 2007-2012 Alexander Egorov
+ * © 2007-2013 Alexander Egorov
  */
 
 using System.Collections.Generic;
+using System.Diagnostics;
 using Microsoft.Build.Framework;
 using MSBuild.TeamCity.Tasks.Messages;
 
@@ -127,6 +128,7 @@ namespace MSBuild.TeamCity.Tasks
         /// </summary>
         protected override string CompilationMessage
         {
+            [DebuggerStepThrough]
             get { return "compilationStarted"; }
         }
     }

@@ -1,11 +1,11 @@
 /*
  * Created by: egr
  * Created at: 09.09.2010
- * © 2007-2012 Alexander Egorov
+ * © 2007-2013 Alexander Egorov
  */
 
 using MSBuild.TeamCity.Tasks;
-using NMock2;
+using Microsoft.Build.Framework;
 using NUnit.Framework;
 using Is = NUnit.Framework.Is;
 
@@ -22,13 +22,13 @@ namespace Tests
         [SetUp]
         public void Init()
         {
-            task = new NCover3Report(Logger);
+            task = new NCover3Report(Logger.MockObject);
         }
 
         [Test]
         public void OnlyRequired()
         {
-            Expect.Exactly(2).On(Logger).Method(TTeamCityTaskImplementation.LogMessage).WithAnyArguments();
+            Logger.Expects.Exactly(2).Method(_=>_.LogMessage(MessageImportance.High, null)).WithAnyArguments();
             task.ToolPath = ToolPth;
             task.XmlReportPath = XmlReportPth;
             Assert.That(task.Execute());
@@ -37,7 +37,7 @@ namespace Tests
         [Test]
         public void AllProperties()
         {
-            Expect.Exactly(3).On(Logger).Method(TTeamCityTaskImplementation.LogMessage).WithAnyArguments();
+            Logger.Expects.Exactly(3).Method(_=>_.LogMessage(MessageImportance.High, null)).WithAnyArguments();
             task.ToolPath = ToolPth;
             task.XmlReportPath = XmlReportPth;
             task.Arguments = Args;

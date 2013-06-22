@@ -1,9 +1,10 @@
 /*
  * Created by: egr
  * Created at: 26.04.2009
- * © 2007-2012 Alexander Egorov
+ * © 2007-2013 Alexander Egorov
  */
 
+using System.Diagnostics;
 using System.Globalization;
 
 namespace MSBuild.TeamCity.Tasks.Messages
@@ -41,6 +42,7 @@ namespace MSBuild.TeamCity.Tasks.Messages
         /// </summary>
         protected override string Message
         {
+            [DebuggerStepThrough]
             get { return "buildStatisticValue"; }
         }
     }

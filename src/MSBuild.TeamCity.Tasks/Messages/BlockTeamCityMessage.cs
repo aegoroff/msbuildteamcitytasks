@@ -1,8 +1,10 @@
 /*
  * Created by: egr
  * Created at: 02.05.2009
- * © 2007-2012 Alexander Egorov
+ * © 2007-2013 Alexander Egorov
  */
+
+using System.Diagnostics;
 
 namespace MSBuild.TeamCity.Tasks.Messages
 {
@@ -24,6 +26,7 @@ namespace MSBuild.TeamCity.Tasks.Messages
         /// </summary>
         protected override string Message
         {
+            [DebuggerStepThrough]
             get { return "blockOpened"; }
         }
     }
@@ -47,6 +50,7 @@ namespace MSBuild.TeamCity.Tasks.Messages
         /// </summary>
         protected override string Message
         {
+            [DebuggerStepThrough]
             get { return "blockClosed"; }
         }
     }

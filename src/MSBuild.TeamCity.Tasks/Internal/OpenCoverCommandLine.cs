@@ -1,11 +1,12 @@
 ﻿/*
  * Created by: egr
  * Created at: 09.03.2012
- * © 2007-2012 Alexander Egorov
+ * © 2007-2013 Alexander Egorov
  */
 
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace MSBuild.TeamCity.Tasks.Internal
 {
@@ -74,6 +75,7 @@ namespace MSBuild.TeamCity.Tasks.Internal
         /// </summary>
         protected override bool EscapeWithTheOptionItself
         {
+            [DebuggerStepThrough]
             get { return true; }
         }
 
@@ -82,6 +84,7 @@ namespace MSBuild.TeamCity.Tasks.Internal
         /// </summary>
         protected override string OptionPrefix
         {
+            [DebuggerStepThrough]
             get { return "-"; }
         }
 
@@ -90,6 +93,7 @@ namespace MSBuild.TeamCity.Tasks.Internal
         /// </summary>
         protected override string OptionValueSeparator
         {
+            [DebuggerStepThrough]
             get { return ":"; }
         }
 

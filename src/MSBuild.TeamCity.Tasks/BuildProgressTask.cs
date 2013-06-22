@@ -1,10 +1,11 @@
 /*
  * Created by: egr
  * Created at: 03.05.2009
- * © 2007-2012 Alexander Egorov
+ * © 2007-2013 Alexander Egorov
  */
 
 using System.Collections.Generic;
+using System.Diagnostics;
 using Microsoft.Build.Framework;
 using MSBuild.TeamCity.Tasks.Messages;
 
@@ -93,6 +94,7 @@ namespace MSBuild.TeamCity.Tasks
         /// </summary>
         protected override string MessageName
         {
+            [DebuggerStepThrough]
             get { return "progressStart"; }
         }
     }
@@ -137,6 +139,7 @@ namespace MSBuild.TeamCity.Tasks
         /// </summary>
         protected override string MessageName
         {
+            [DebuggerStepThrough]
             get { return "progressFinish"; }
         }
     }
@@ -181,6 +184,7 @@ namespace MSBuild.TeamCity.Tasks
         /// </summary>
         protected override string MessageName
         {
+            [DebuggerStepThrough]
             get { return "progressMessage"; }
         }
     }

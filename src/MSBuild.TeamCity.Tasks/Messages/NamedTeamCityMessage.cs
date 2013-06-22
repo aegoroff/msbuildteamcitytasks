@@ -1,7 +1,7 @@
 /*
  * Created by: egr
  * Created at: 09.05.2009
- * © 2007-2012 Alexander Egorov
+ * © 2007-2013 Alexander Egorov
  */
 
 namespace MSBuild.TeamCity.Tasks.Messages

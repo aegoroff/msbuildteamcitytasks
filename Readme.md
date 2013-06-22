@@ -38,7 +38,7 @@ So as to use these tasks you have to:
 
   * Download and install tasks using MSI installer
   * Include following line into your MSBuild script:
-```xml
+```
 <Import Project="$(MSBuildExtensionsPath)\MSBuildTeamCityTasks\MSBuild.TeamCity.Tasks.Targets"/>
 ```
 

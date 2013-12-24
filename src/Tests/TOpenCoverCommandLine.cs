@@ -16,19 +16,20 @@ namespace Tests
         private OpenCoverCommandLine commandLine;
 
         private const string Target = "t";
-        private const string TargetResult = "-target:t";
+        private const string RegisterUserResult = "-register:user ";
+        private const string TargetResult = RegisterUserResult + "-target:t";
 
         private const string TargetWorkDir = "d";
-        private const string TargetWorkDirResult = "-targetdir:d";
+        private const string TargetWorkDirResult = RegisterUserResult + "-targetdir:d";
 
         private const string TargetArguments = "a";
-        private const string TargetArgumentsResult = "-targetargs:a";
+        private const string TargetArgumentsResult = RegisterUserResult + "-targetargs:a";
 
         private const string Output = "o";
-        private const string OutputResult = "-output:o";
+        private const string OutputResult = RegisterUserResult + "-output:o";
 
         private const string Filter = "+[*]*";
-        private const string FilterResult = "-filter:+[*]*";
+        private const string FilterResult = RegisterUserResult + "-filter:+[*]*";
         private const string Space = " ";
 
         [SetUp]
@@ -38,7 +39,7 @@ namespace Tests
         }
 
         [TestCase(Target, TargetResult)]
-        [TestCase("t s", "\"-target:t s\"")]
+        [TestCase("t s", RegisterUserResult + "\"-target:t s\"")]
         public void TargetProperty(string target, string expected)
         {
             commandLine.Target = target;
@@ -78,7 +79,7 @@ namespace Tests
         {
             commandLine.Filter.Add(Filter);
             commandLine.Filter.Add("-[System]*");
-            Assert.That(commandLine.ToString(), Is.EqualTo("\"-filter:+[*]* -[System]*\""));
+            Assert.That(commandLine.ToString(), Is.EqualTo(RegisterUserResult + "\"-filter:+[*]* -[System]*\""));
         }
 
         [Test]
@@ -95,10 +96,10 @@ namespace Tests
         private static IEnumerable<string> EnumerateAllResults()
         {
             yield return TargetResult;
-            yield return TargetWorkDirResult;
-            yield return TargetArgumentsResult;
-            yield return OutputResult;
-            yield return FilterResult;
+            yield return TargetWorkDirResult.Replace(RegisterUserResult, string.Empty);
+            yield return TargetArgumentsResult.Replace(RegisterUserResult, string.Empty);
+            yield return OutputResult.Replace(RegisterUserResult, string.Empty);
+            yield return FilterResult.Replace(RegisterUserResult, string.Empty);
         }
     }
 }

@@ -12,7 +12,7 @@
 		<!-- NUnit working path  -->
 		<NUnitPath>C:\Program Files (x86)\NUnit 2.6.3\bin</NUnitPath>
 		<OpenCoverPath>C:\Program Files (x86)\OpenCover</OpenCoverPath>
-		<ReportGeneratorPath>D:\soft\Programming\NET tools\ReportGenerator_1.2.6.0</ReportGeneratorPath>
+		<ReportGeneratorPath>D:\soft\Programming\NET tools\ReportGenerator_1.9.1.0</ReportGeneratorPath>
 		
 		<!-- Binaries zip  -->
 		<BinariesFile>Binaries.zip</BinariesFile>

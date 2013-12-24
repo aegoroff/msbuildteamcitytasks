@@ -88,7 +88,7 @@
 			Filter='+[MSBuild.TeamCity.Tasks]*'
 		/>
 		<Exec
-			Command='"$(ReportGeneratorPath)\bin\ReportGenerator.exe" "$(MSBuildProjectDirectory)\OpenCoverageReport.xml" "$(MSBuildProjectDirectory)\OpenCoverage" Html'
+			Command='"$(ReportGeneratorPath)\ReportGenerator.exe" "$(MSBuildProjectDirectory)\OpenCoverageReport.xml" "$(MSBuildProjectDirectory)\OpenCoverage" Html'
 			IgnoreExitCode="true"
 		/>
 		<!-- Import into TeamCity mono tests -->

@@ -107,6 +107,7 @@ namespace MSBuild.TeamCity.Tasks.Internal
         /// <returns>All possible options' pairs</returns>
         protected override IEnumerable<DictionaryEntry> EnumerateOptions()
         {
+            yield return new DictionaryEntry("register", "user");
             yield return new DictionaryEntry(TargetOpt, Target);
             yield return new DictionaryEntry(TargetWorkDirOpt, TargetWorkDir);
             yield return new DictionaryEntry(TargetArgumentsOpt, TargetArguments);

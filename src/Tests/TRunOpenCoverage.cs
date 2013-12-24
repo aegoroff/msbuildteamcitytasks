@@ -18,7 +18,7 @@ namespace Tests
         #region Constants and Fields
 
         private RunOpenCoverage task;
-        private const string ValidPathToOpenCover = @"C:\Program Files (x86)\OpenCover";
+        private const string ValidPathToOpenCover = @"..\..\..\packages\OpenCover.4.5.2316";
         private Mock<ITaskItem> item1;
         private Mock<ITaskItem> item2;
         private const string TargetArguments = "--help";

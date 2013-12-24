@@ -10,8 +10,8 @@
 		<!-- Code configuration to build (Release or Debug) -->
 		<Configuration>Release</Configuration>
 		<!-- NUnit working path  -->
-		<NUnitPath>C:\Program Files (x86)\NUnit 2.6.3\bin</NUnitPath>
-		<OpenCoverPath>C:\Program Files (x86)\OpenCover</OpenCoverPath>
+		<NUnitPath>$(MSBuildProjectDirectory)\packages\NUnit.Runners.2.6.3\tools</NUnitPath>
+		<OpenCoverPath>$(MSBuildProjectDirectory)\packages\OpenCover.4.5.2316</OpenCoverPath>
 		<ReportGeneratorPath>$(MSBuildProjectDirectory)\packages\ReportGenerator.1.9.1.0</ReportGeneratorPath>
 		
 		<!-- Binaries zip  -->

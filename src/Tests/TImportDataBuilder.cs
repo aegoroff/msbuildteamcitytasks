@@ -13,15 +13,18 @@ namespace Tests
     [TestFixture]
     public class TImportDataBuilder
     {
-        [TestCase(null, "##teamcity[importData type='FxCop' path='p']", false)]
-        [TestCase("ncover", "##teamcity[importData type='dotNetCoverage' path='p' tool='ncover']", false)]
-        [TestCase("bad", null, false, ExpectedException = typeof(NotSupportedException))]
-        [TestCase(null, "##teamcity[importData type='FxCop' path='p' verbose='true']", true)]
-        public void Test(string tool, string expected, bool verbose)
+        [TestCase(null, "##teamcity[importData type='FxCop' path='p']", false, null)]
+        [TestCase("ncover", "##teamcity[importData type='dotNetCoverage' path='p' tool='ncover']", false, null)]
+        [TestCase("bad", null, false, null, ExpectedException = typeof(NotSupportedException))]
+        [TestCase(null, "##teamcity[importData type='FxCop' path='p' verbose='true']", true, null)]
+        [TestCase("ncover", "##teamcity[importData type='findBugs' path='p' findBugsHome='fb']", false, "fb")]
+        [TestCase("findBugs", "##teamcity[importData type='findBugs' path='p' findBugsHome='fb']", false, "fb")]
+        [TestCase(null, "##teamcity[importData type='findBugs' path='p' findBugsHome='fb']", false, "fb")]
+        public void Test(string tool, string expected, bool verbose, string findBugsHome)
         {
             const string type = "FxCop";
             const string path = "p";
-            ImportDataMessageBuilder builder = new ImportDataMessageBuilder(tool, path, type, verbose);
+            ImportDataMessageBuilder builder = new ImportDataMessageBuilder(tool, path, type, findBugsHome, verbose);
             Assert.That(builder.BuildMessage().ToString(), Is.EqualTo(expected));
         }
     }

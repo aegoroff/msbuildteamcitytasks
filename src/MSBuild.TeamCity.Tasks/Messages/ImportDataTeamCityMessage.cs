@@ -23,6 +23,27 @@ namespace MSBuild.TeamCity.Tasks.Messages
         public ImportDataTeamCityMessage(ImportType type, string path, bool verbose = false)
             : this(type.ImportTypeToString(), path, verbose)
         {
+            if (type == ImportType.FindBugs)
+            {
+                throw new NotSupportedException("You must user another constructor");
+            }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ImportDataTeamCityMessage"/> class for FindBugs report import
+        /// </summary>
+        /// <param name="type">Data type. Only FindBugs supportted</param>
+        /// <param name="path">Full path to file</param>
+        /// <param name="findBugsHome"></param>
+        /// <param name="verbose">Attribute will enable detailed logging into the build log.</param>
+        public ImportDataTeamCityMessage(ImportType type, string path, string findBugsHome, bool verbose = false)
+            : this(type.ImportTypeToString(), path, verbose)
+        {
+            if (type != ImportType.FindBugs)
+            {
+                throw new NotSupportedException();
+            }
+            Attributes.Add("findBugsHome", findBugsHome);
         }
 
         /// <summary>

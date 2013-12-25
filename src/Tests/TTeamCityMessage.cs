@@ -138,7 +138,7 @@ namespace Tests
         [TestCase(ImportType.Nunit, "##teamcity[importData type='nunit' path='p']")]
         [TestCase(ImportType.Surefire, "##teamcity[importData type='surefire' path='p']")]
         [TestCase(ImportType.Pmd, "##teamcity[importData type='pmd' path='p']")]
-        [TestCase(ImportType.FindBugs, "##teamcity[importData type='findBugs' path='p']")]
+        [TestCase(ImportType.FindBugs, null, ExpectedException = typeof(NotSupportedException))]
         [TestCase(ImportType.Mstest, "##teamcity[importData type='mstest' path='p']")]
         [TestCase(ImportType.Gtest, "##teamcity[importData type='gtest' path='p']")]
         [TestCase(ImportType.Jslint, "##teamcity[importData type='jslint' path='p']")]
@@ -166,6 +166,20 @@ namespace Tests
         public void ImportDataDotNetCoverageNotSupported()
         {
             new ImportDataTeamCityMessage(ImportType.Nunit, Path, DotNetCoverageTool.Ncover3);
+        }
+        
+        [Test]
+        [ExpectedException(typeof(NotSupportedException))]
+        public void ImportDataFindBugsNotSupported()
+        {
+            new ImportDataTeamCityMessage(ImportType.Nunit, Path, "p");
+        }
+        
+        [Test]
+        public void ImportDataFindBugs()
+        {
+            ImportDataTeamCityMessage message = new ImportDataTeamCityMessage(ImportType.FindBugs, Path, "h");
+            Assert.That(message.ToString(), Is.EqualTo("##teamcity[importData type='findBugs' path='p' findBugsHome='h']"));
         }
 
         [Test]

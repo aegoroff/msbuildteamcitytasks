@@ -43,6 +43,14 @@ namespace MSBuild.TeamCity.Tasks
     ///    Tool="ncover" 
     /// />
     /// ]]></code>
+    /// Imports data from FindBugs generated file
+    /// <code><![CDATA[
+    /// <ImportData
+    ///    Type="findBugs"
+    ///    Path="C:\fb report.xml" 
+    ///    FindBugsHome="c:\find bugs" 
+    /// />
+    /// ]]></code>
     /// </example>
     public class ImportData : TeamCityTask
     {
@@ -99,12 +107,17 @@ namespace MSBuild.TeamCity.Tasks
         public bool Verbose { get; set; }
 
         /// <summary>
+        /// Gets or sets the findBugsHome attribute specified pointing to the home directory oif installed FindBugs tool.
+        /// </summary>
+        public string FindBugsHome { get; set; }
+
+        /// <summary>
         /// Reads TeamCity messages
         /// </summary>
         /// <returns>TeamCity messages list</returns>
         protected override IEnumerable<TeamCityMessage> ReadMessages()
         {
-            yield return new ImportDataMessageBuilder(Tool, Path, Type, Verbose).BuildMessage();
+            yield return new ImportDataMessageBuilder(Tool, Path, Type, FindBugsHome, Verbose).BuildMessage();
         }
     }
 }

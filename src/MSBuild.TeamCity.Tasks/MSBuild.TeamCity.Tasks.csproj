@@ -116,7 +116,6 @@
     <Compile Include="Messages\ReportMessageBuilder.cs" />
     <Compile Include="RunGoogleTests.cs" />
     <Compile Include="RunOpenCoverage.cs" />
-    <Compile Include="RunPartCoverage.cs" />
     <Compile Include="Internal\SequenceBuilder.cs" />
     <Compile Include="Messages\SimpleTeamCityMessage.cs" />
     <Compile Include="Messages\BuildStatisticTeamCityMessage.cs" />

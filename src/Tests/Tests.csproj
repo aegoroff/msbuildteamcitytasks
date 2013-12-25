@@ -76,7 +76,6 @@
     <Compile Include="TRunOpenCoverage.cs" />
     <Compile Include="Utils\TeamCityEnv.cs" />
     <Compile Include="TPartCoverReport.cs" />
-    <Compile Include="TRunPartCoverage.cs" />
     <Compile Include="TSimpleTasks.cs" />
     <Compile Include="TGoogleTestArgumentsBuilder.cs" />
     <Compile Include="TGoogleTestsPlainImporter.cs" />

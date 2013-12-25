@@ -102,14 +102,26 @@ namespace MSBuild.TeamCity.Tasks
         public string Tool { get; set; }
 
         ///<summary>
-        /// Gets or sets attribute that will enable detailed logging into the build log.. False by default
+        /// Gets or sets whether enable detailed logging into the build log. False by default
         ///</summary>
         public bool Verbose { get; set; }
+        
+        /// <summary>
+        /// Gets or sets whether process all the files matching the path. Otherwise, only those updated during the build (is determined by 
+        /// last modification timestamp) are processed. False by default
+        /// </summary>
+        public bool ParseOutOfDate { get; set; }
 
         /// <summary>
         /// Gets or sets the findBugsHome attribute specified pointing to the home directory oif installed FindBugs tool.
         /// </summary>
         public string FindBugsHome { get; set; }
+        
+        /// <summary>
+        /// Gets or sets action that will change output level if no reports matching the path specified were found.<p/>
+        /// May take the following values: info (default), nothing, warning, error
+        /// </summary>
+        public string WhenNoDataPublished { get; set; }
 
         /// <summary>
         /// Reads TeamCity messages

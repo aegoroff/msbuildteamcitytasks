@@ -109,7 +109,6 @@
     <Compile Include="Messages\TestStdOutTeamCityMessage.cs" />
     <Compile Include="NCover3Report.cs" />
     <Compile Include="NCoverReport.cs" />
-    <Compile Include="Internal\PartCoverCommandLine.cs" />
     <Compile Include="PartCoverReport.cs" />
     <Compile Include="Internal\ProcessRunner.cs" />
     <Compile Include="ReportBuildStatistic.cs" />

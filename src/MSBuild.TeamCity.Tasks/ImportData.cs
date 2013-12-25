@@ -102,7 +102,7 @@ namespace MSBuild.TeamCity.Tasks
         public string Tool { get; set; }
 
         ///<summary>
-        /// Gets or sets whether enable detailed logging into the build log. False by default
+        /// Gets or sets a value indicating whether to enable detailed logging into the build log. False by default
         ///</summary>
         public bool Verbose { get; set; }
         

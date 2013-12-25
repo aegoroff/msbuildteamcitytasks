@@ -61,6 +61,11 @@ namespace MSBuild.TeamCity.Tasks
         public ITaskItem[] ReportXslts { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether to enable detailed logging into the build log. False by default
+        /// </summary>
+        public bool Verbose { get; set; }
+
+        /// <summary>
         /// Reads TeamCity messages
         /// </summary>
         /// <returns>TeamCity messages list</returns>
@@ -73,7 +78,7 @@ namespace MSBuild.TeamCity.Tasks
                                            ReportXslts.Select(report => report.ItemSpec).Join("\n"));
             }
             yield return
-                new ImportDataTeamCityMessage(ImportType.DotNetCoverage, XmlReportPath, DotNetCoverageTool.PartCover, false); // TODO: Introduce Verbose property
+                new ImportDataTeamCityMessage(ImportType.DotNetCoverage, XmlReportPath, DotNetCoverageTool.PartCover, Verbose);
         }
     }
 }

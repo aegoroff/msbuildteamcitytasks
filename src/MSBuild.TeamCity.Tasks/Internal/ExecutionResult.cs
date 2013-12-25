@@ -12,13 +12,12 @@ namespace MSBuild.TeamCity.Tasks.Internal
     ///<summary>
     /// Represents a task execution result
     ///</summary>
-    public struct ExecutionResult
+    public class ExecutionResult
     {
-        private readonly IList<TeamCityMessage> messages;
-        private bool status;
+        private readonly IList<TeamCityMessage> messages = new List<TeamCityMessage>();
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ExecutionResult"/> struct using 
+        /// Initializes a new instance of the <see cref="ExecutionResult"/> class using 
         /// status specified
         /// </summary>
         /// <param name="status">a value indicating whether the import was successful.
@@ -26,8 +25,7 @@ namespace MSBuild.TeamCity.Tasks.Internal
         /// otherwise false</param>
         public ExecutionResult(bool status)
         {
-            this.status = status;
-            this.messages = new List<TeamCityMessage>();
+            this.Status = status;
         }
 
         ///<summary>
@@ -43,10 +41,6 @@ namespace MSBuild.TeamCity.Tasks.Internal
         /// True if the operation was successful and there are no failing tests 
         /// otherwise false
         ///</summary>
-        public bool Status
-        {
-            get { return status; }
-            set { status = value; }
-        }
+        public bool Status { get; set; }
     }
 }

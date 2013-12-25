@@ -93,6 +93,11 @@ namespace MSBuild.TeamCity.Tasks
         /// Gets or sets a value indicating whether to run all disabled tests too. False by default
         /// </summary>
         public bool RunDisabledTests { get; set; }
+        
+        /// <summary>
+        /// Gets or sets a value indicating whether to enable detailed logging into the build log. False by default
+        /// </summary>
+        public bool Verbose { get; set; }
 
         /// <summary>
         /// Gets or sets full tests fiter. 
@@ -120,7 +125,8 @@ namespace MSBuild.TeamCity.Tasks
                                                    CatchGtestExceptions = CatchGtestExceptions,
                                                    ExecutionTimeoutMilliseconds = ExecutionTimeoutMilliseconds,
                                                    RunDisabledTests = RunDisabledTests,
-                                                   TestFilter = TestFilter
+                                                   TestFilter = TestFilter,
+                                                   Verbose = Verbose
                                                };
 
                 return runner.Import();

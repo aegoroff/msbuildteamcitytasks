@@ -98,7 +98,7 @@ namespace Tests
         {
             logger.Expects.No.Method(_=> _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
 
-            ExecutionResult result = new ExecutionResult { Status = true };
+            ExecutionResult result = new ExecutionResult(true);
             Assert.That(implementation.Execute(result), Is.True);
         }
 

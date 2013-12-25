@@ -5,7 +5,6 @@
  */
 
 using System;
-using System.Collections.Generic;
 using MSBuild.TeamCity.Tasks.Messages;
 
 namespace MSBuild.TeamCity.Tasks.Internal
@@ -30,6 +29,11 @@ namespace MSBuild.TeamCity.Tasks.Internal
         }
 
         /// <summary>
+        /// Gets or sets a value indicating whether to enable detailed logging into the build log. False by default
+        /// </summary>
+        public bool Verbose { get; set; }
+
+        /// <summary>
         /// Runs import
         /// </summary>
         /// <returns>
@@ -45,7 +49,7 @@ namespace MSBuild.TeamCity.Tasks.Internal
 
                 reader = new GoogleTestXmlReader(xmlPath);
                 reader.Read();
-                result.Messages.Add(new ImportDataTeamCityMessage(ImportType.Gtest, xmlPath, false)); // TODO: Introduce Verbose property
+                result.Messages.Add(new ImportDataTeamCityMessage(ImportType.Gtest, xmlPath, Verbose));
             }
             catch (Exception e)
             {

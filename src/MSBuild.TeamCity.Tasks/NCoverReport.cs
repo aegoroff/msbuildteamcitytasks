@@ -79,6 +79,11 @@ namespace MSBuild.TeamCity.Tasks
         public string ReportType { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether to enable detailed logging into the build log. False by default
+        /// </summary>
+        public bool Verbose { get; set; }
+
+        /// <summary>
         /// Gets or sets value for /sort: argument
         /// </summary>
         /// <remarks>
@@ -120,7 +125,7 @@ namespace MSBuild.TeamCity.Tasks
             yield return new ImportDataTeamCityMessage(ImportType.DotNetCoverage,
                                                        XmlReportPath,
                                                        DotNetCoverageTool.Ncover,
-                                                       false); // TODO: Introduce Verbose property
+                                                       Verbose);
         }
     }
 }

@@ -15,11 +15,14 @@ namespace Tests
     [TestFixture]
     public class TSimpleTasks : TTask
     {
+        protected override void AfterSetup()
+        {
+            Logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
+        }
+
         [Test]
         public void CommonPropertiesTest()
         {
-            Logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
-
             BlockOpen task = new BlockOpen(Logger.MockObject)
                                  {
                                      Name = "n",
@@ -32,8 +35,6 @@ namespace Tests
         [Test]
         public void BlockTaskNameProperty()
         {
-            Logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
-
             BlockOpen task = new BlockOpen(Logger.MockObject)
                                  {
                                      Name = "n"
@@ -44,8 +45,6 @@ namespace Tests
         [Test]
         public void BlockOpen()
         {
-            Logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
-
             BlockOpen task = new BlockOpen(Logger.MockObject)
                                  {
                                      Name = "n"
@@ -56,8 +55,6 @@ namespace Tests
         [Test]
         public void BlockClose()
         {
-            Logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
-
             BlockClose task = new BlockClose(Logger.MockObject)
                                   {
                                       Name = "n"
@@ -68,8 +65,6 @@ namespace Tests
         [Test]
         public void BuildNumber()
         {
-            Logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
-
             BuildNumber task = new BuildNumber(Logger.MockObject)
                                    {
                                        Number = "1"
@@ -81,8 +76,6 @@ namespace Tests
         [Test]
         public void BuildProgressStart()
         {
-            Logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
-
             BuildProgressStart task = new BuildProgressStart(Logger.MockObject)
                                           {
                                               Message = "m"
@@ -94,8 +87,6 @@ namespace Tests
         [Test]
         public void BuildProgressMessage()
         {
-            Logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
-
             BuildProgressMessage task = new BuildProgressMessage(Logger.MockObject)
                                             {
                                                 Message = "m"
@@ -107,8 +98,6 @@ namespace Tests
         [Test]
         public void BuildProgressFinish()
         {
-            Logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
-
             BuildProgressFinish task = new BuildProgressFinish(Logger.MockObject)
                                            {
                                                Message = "m"
@@ -120,8 +109,6 @@ namespace Tests
         [Test]
         public void BuildStatus()
         {
-            Logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
-
             BuildStatus task = new BuildStatus(Logger.MockObject)
                                    {
                                        Status = "SUCCESS",
@@ -133,8 +120,6 @@ namespace Tests
         [Test]
         public void ReportMessage()
         {
-            Logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
-
             ReportMessage task = new ReportMessage(Logger.MockObject)
                                      {
                                          Status = "WARNING",
@@ -150,8 +135,6 @@ namespace Tests
         [Test]
         public void ReportBuildStatistic()
         {
-            Logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
-
             ReportBuildStatistic task = new ReportBuildStatistic(Logger.MockObject)
                                             {
                                                 Key = "k",
@@ -165,8 +148,6 @@ namespace Tests
         [Test]
         public void ImportData()
         {
-            Logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
-
             ImportData task = new ImportData(Logger.MockObject)
                                   {
                                       Path = "p",
@@ -182,7 +163,6 @@ namespace Tests
         [Test]
         public void ImportGoogleTests()
         {
-            Logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
             Logger.Expects.One.GetProperty(_ => _.HasLoggedErrors).Will(Return.Value(false));
 
             ImportGoogleTests task = new ImportGoogleTests(Logger.MockObject)
@@ -198,8 +178,6 @@ namespace Tests
         [Test]
         public void EnableServiceMessages()
         {
-            Logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
-
             EnableServiceMessages task = new EnableServiceMessages(Logger.MockObject);
             Assert.That(task.Execute());
         }
@@ -207,8 +185,6 @@ namespace Tests
         [Test]
         public void DisableServiceMessages()
         {
-            Logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
-
             DisableServiceMessages task = new DisableServiceMessages(Logger.MockObject);
             Assert.That(task.Execute());
         }
@@ -216,8 +192,6 @@ namespace Tests
         [Test]
         public void CompilationStarted()
         {
-            Logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
-
             CompilationStarted task = new CompilationStarted(Logger.MockObject);
             Assert.That(task.Execute());
         }
@@ -225,8 +199,6 @@ namespace Tests
         [Test]
         public void CompilationFinished()
         {
-            Logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
-
             CompilationFinished task = new CompilationFinished(Logger.MockObject);
             Assert.That(task.Execute());
         }
@@ -234,8 +206,6 @@ namespace Tests
         [Test]
         public void TestSuiteStarted()
         {
-            Logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
-
             TestSuiteStarted task = new TestSuiteStarted(Logger.MockObject)
                                         {
                                             Name = "n"
@@ -246,8 +216,6 @@ namespace Tests
         [Test]
         public void TestSuiteFinished()
         {
-            Logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
-
             TestSuiteFinished task = new TestSuiteFinished(Logger.MockObject)
                                          {
                                              Name = "n"
@@ -258,8 +226,6 @@ namespace Tests
         [Test]
         public void TestStarted()
         {
-            Logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
-
             TestStarted task = new TestStarted(Logger.MockObject)
                                    {
                                        Name = "n"
@@ -270,8 +236,6 @@ namespace Tests
         [Test]
         public void TestStartedCaptureStandardOutput()
         {
-            Logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
-
             TestStarted task = new TestStarted(Logger.MockObject)
                                    {
                                        Name = "n",
@@ -283,8 +247,6 @@ namespace Tests
         [Test]
         public void TestFinished()
         {
-            Logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
-
             TestFinished task = new TestFinished(Logger.MockObject)
                                     {
                                         Name = "n",
@@ -296,8 +258,6 @@ namespace Tests
         [Test]
         public void TestIgnored()
         {
-            Logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
-
             TestIgnored task = new TestIgnored(Logger.MockObject)
                                    {
                                        Name = "n",
@@ -309,8 +269,6 @@ namespace Tests
         [Test]
         public void TestStdOut()
         {
-            Logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
-
             TestStdOut task = new TestStdOut(Logger.MockObject)
                                   {
                                       Name = "n",
@@ -322,8 +280,6 @@ namespace Tests
         [Test]
         public void TestStdErr()
         {
-            Logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
-
             TestStdErr task = new TestStdErr(Logger.MockObject)
                                   {
                                       Name = "n",
@@ -335,8 +291,6 @@ namespace Tests
         [Test]
         public void TestFailedRequired()
         {
-            Logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
-
             TestFailed task = new TestFailed(Logger.MockObject)
                                   {
                                       Name = "n",
@@ -349,8 +303,6 @@ namespace Tests
         [Test]
         public void TestFailedAll()
         {
-            Logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
-
             TestFailed task = new TestFailed(Logger.MockObject)
                                   {
                                       Name = "n",
@@ -365,8 +317,6 @@ namespace Tests
         [Test]
         public void SetParameter()
         {
-            Logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
-
             SetParameter task = new SetParameter(Logger.MockObject)
             {
                 Name = "n",
@@ -378,8 +328,6 @@ namespace Tests
         [Test]
         public void BuildProblem()
         {
-            Logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
-
             BuildProblem task = new BuildProblem(Logger.MockObject)
             {
                 Description = "d",

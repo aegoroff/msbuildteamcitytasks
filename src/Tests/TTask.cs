@@ -26,6 +26,11 @@ namespace Tests
             Environment.SetEnvironmentVariable(TeamCityEnv.TeamCityEnvVar,
                                                TeamCityEnv.TeamCityProject,
                                                EnvironmentVariableTarget.Process);
+            AfterSetup();
+        }
+
+        protected virtual void AfterSetup()
+        {
         }
 
         [TearDown]
@@ -33,6 +38,11 @@ namespace Tests
         {
             Environment.SetEnvironmentVariable(TeamCityEnv.TeamCityEnvVar, null,
                                                EnvironmentVariableTarget.Process);
+            AfterTeardown();
+        }
+
+        protected virtual void AfterTeardown()
+        {
         }
     }
 }

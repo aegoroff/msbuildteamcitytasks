@@ -28,10 +28,8 @@ namespace Tests
 
         #region Public Methods and Operators
 
-        [SetUp]
-        public void ThisSetup()
+        protected override void AfterSetup()
         {
-            Setup();
             item1 = Mockery.CreateMock<ITaskItem>();
             item2 = Mockery.CreateMock<ITaskItem>();
             task = new RunOpenCoverage(Logger.MockObject);

@@ -19,11 +19,8 @@ namespace Tests
         private Mock<ITaskItem> item2;
         private PublishArtifacts task;
 
-
-        [SetUp]
-        public void ThisSetup()
+        protected override void AfterSetup()
         {
-            Setup();
             item1 = Mockery.CreateMock<ITaskItem>();
             item2 = Mockery.CreateMock<ITaskItem>();
             task = new PublishArtifacts(Logger.MockObject);

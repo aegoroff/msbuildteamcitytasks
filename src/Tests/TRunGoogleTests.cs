@@ -25,10 +25,8 @@ namespace Tests
             task = new RunGoogleTests(Logger.MockObject);
         }
 
-        [TearDown]
-        public void ThisTeardown()
+        protected override void AfterTeardown()
         {
-            Teardown();
             TGoogleTestsRunner.DeleteResult();
         }
 

@@ -94,7 +94,7 @@ namespace MSBuild.TeamCity.Tasks
         /// <returns>TeamCity messages list</returns>
         protected virtual IEnumerable<TeamCityMessage> ReadMessages()
         {
-            return new List<TeamCityMessage>();
+            return new TeamCityMessage[0];
         }
 
         private void Initialize(ILogger logger)

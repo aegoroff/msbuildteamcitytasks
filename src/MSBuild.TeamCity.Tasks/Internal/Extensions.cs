@@ -39,10 +39,6 @@ namespace MSBuild.TeamCity.Tasks.Internal
 
         internal static void AddRange<T>(this IList<T> list, IEnumerable<T> items)
         {
-            if (items == null)
-            {
-                return;
-            }
             foreach (var include in items)
             {
                 list.Add(include);

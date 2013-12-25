@@ -4,6 +4,8 @@
  * © 2007-2013 Alexander Egorov
  */
 
+using System;
+
 namespace MSBuild.TeamCity.Tasks.Messages
 {
     /// <summary>
@@ -42,6 +44,10 @@ namespace MSBuild.TeamCity.Tasks.Messages
         {
             if (!string.IsNullOrEmpty(findBugsHome))
             {
+                if (type != ImportType.FindBugs.ImportTypeToString())
+                {
+                    throw new NotSupportedException();
+                }
                 return new ImportDataTeamCityMessage(ImportType.FindBugs, path, findBugsHome, verbose);
             }
             

@@ -175,10 +175,11 @@ namespace Tests
             new ImportDataTeamCityMessage(ImportType.Nunit, Path, "p");
         }
         
-        [Test]
-        public void ImportDataFindBugs()
+        [TestCase(ImportType.FindBugs)]
+        [TestCase(ImportType.Gtest, ExpectedException = typeof(NotSupportedException))]
+        public void ImportDataFindBugs(ImportType type)
         {
-            ImportDataTeamCityMessage message = new ImportDataTeamCityMessage(ImportType.FindBugs, Path, "h");
+            ImportDataTeamCityMessage message = new ImportDataTeamCityMessage(type, Path, "h");
             Assert.That(message.ToString(), Is.EqualTo("##teamcity[importData type='findBugs' path='p' findBugsHome='h']"));
         }
 

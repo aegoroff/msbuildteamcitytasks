@@ -129,7 +129,7 @@ namespace Tests
         public void ImportData()
         {
             const string type = "FxCop";
-            ImportDataTeamCityMessage message = new ImportDataTeamCityMessage(type, Path);
+            ImportDataTeamCityMessage message = new ImportDataTeamCityMessage(type, Path, false);
             Assert.That(message.ToString(), Is.EqualTo("##teamcity[importData type='FxCop' path='p']"));
         }
 
@@ -147,7 +147,7 @@ namespace Tests
         [TestCase(ImportType.ReSharperDupFinder, "##teamcity[importData type='ReSharperDupFinder' path='p']")]
         public void ImportData(ImportType type, string expected)
         {
-            ImportDataTeamCityMessage message = new ImportDataTeamCityMessage(type, Path);
+            ImportDataTeamCityMessage message = new ImportDataTeamCityMessage(type, Path, false);
             Assert.That(message.ToString(), Is.EqualTo(expected));
         }
 
@@ -157,7 +157,7 @@ namespace Tests
         [TestCase(DotNetCoverageTool.Ncover3, "##teamcity[importData type='dotNetCoverage' path='p' tool='ncover3']")]
         public void ImportDataDotNetCoverage(DotNetCoverageTool tool, string expected)
         {
-            ImportDataTeamCityMessage message = new ImportDataTeamCityMessage(ImportType.DotNetCoverage, Path, tool);
+            ImportDataTeamCityMessage message = new ImportDataTeamCityMessage(ImportType.DotNetCoverage, Path, tool, false);
             Assert.That(message.ToString(), Is.EqualTo(expected));
         }
 
@@ -165,21 +165,21 @@ namespace Tests
         [ExpectedException(typeof(NotSupportedException))]
         public void ImportDataDotNetCoverageNotSupported()
         {
-            new ImportDataTeamCityMessage(ImportType.Nunit, Path, DotNetCoverageTool.Ncover3);
+            new ImportDataTeamCityMessage(ImportType.Nunit, Path, DotNetCoverageTool.Ncover3, false);
         }
         
         [Test]
         [ExpectedException(typeof(NotSupportedException))]
         public void ImportDataFindBugsNotSupported()
         {
-            new ImportDataTeamCityMessage(ImportType.Nunit, Path, "p");
+            new ImportDataTeamCityMessage(ImportType.Nunit, Path, "p", false);
         }
         
         [TestCase(ImportType.FindBugs)]
         [TestCase(ImportType.Gtest, ExpectedException = typeof(NotSupportedException))]
         public void ImportDataFindBugs(ImportType type)
         {
-            ImportDataTeamCityMessage message = new ImportDataTeamCityMessage(type, Path, "h");
+            ImportDataTeamCityMessage message = new ImportDataTeamCityMessage(type, Path, "h", false);
             Assert.That(message.ToString(), Is.EqualTo("##teamcity[importData type='findBugs' path='p' findBugsHome='h']"));
         }
 

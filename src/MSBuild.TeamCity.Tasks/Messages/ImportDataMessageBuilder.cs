@@ -27,7 +27,7 @@ namespace MSBuild.TeamCity.Tasks.Messages
         /// <param name="type">imported data type.</param>
         /// <param name="findBugsHome">findBugsHome attribute specified pointing to the home directory oif installed FindBugs tool.</param>
         /// <param name="verbose">Attribute will enable detailed logging into the build log.</param>
-        public ImportDataMessageBuilder(string tool, string path, string type, string findBugsHome, bool verbose = false)
+        public ImportDataMessageBuilder(string tool, string path, string type, string findBugsHome, bool verbose)
         {
             this.tool = tool;
             this.path = path;

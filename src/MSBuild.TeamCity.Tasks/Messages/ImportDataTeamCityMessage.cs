@@ -20,7 +20,7 @@ namespace MSBuild.TeamCity.Tasks.Messages
         /// <param name="type">Data type. FxCop for example</param>
         /// <param name="path">Full path to file</param>
         /// <param name="verbose">Attribute will enable detailed logging into the build log.</param>
-        public ImportDataTeamCityMessage(ImportType type, string path, bool verbose = false)
+        public ImportDataTeamCityMessage(ImportType type, string path, bool verbose)
             : this(type.ImportTypeToString(), path, verbose)
         {
             if (type == ImportType.FindBugs)
@@ -36,7 +36,7 @@ namespace MSBuild.TeamCity.Tasks.Messages
         /// <param name="path">Full path to file</param>
         /// <param name="findBugsHome"></param>
         /// <param name="verbose">Attribute will enable detailed logging into the build log.</param>
-        public ImportDataTeamCityMessage(ImportType type, string path, string findBugsHome, bool verbose = false)
+        public ImportDataTeamCityMessage(ImportType type, string path, string findBugsHome, bool verbose)
             : this(type.ImportTypeToString(), path, verbose)
         {
             if (type != ImportType.FindBugs)
@@ -52,7 +52,7 @@ namespace MSBuild.TeamCity.Tasks.Messages
         /// <param name="type">Data type. FxCop for example</param>
         /// <param name="path">Full path to file</param>
         /// <param name="verbose">Attribute will enable detailed logging into the build log.</param>
-        public ImportDataTeamCityMessage(string type, string path, bool verbose = false)
+        public ImportDataTeamCityMessage(string type, string path, bool verbose)
         {
             Attributes.Add("type", type);
             Attributes.Add("path", path);
@@ -69,7 +69,7 @@ namespace MSBuild.TeamCity.Tasks.Messages
         /// <param name="path">Full path to file</param>
         /// <param name="tool">Here the tool name value can be partcover, ncover, or ncover3, depending on selected coverage tool in the coverage settings.</param>
         /// <param name="verbose">Attribute will enable detailed logging into the build log.</param>
-        public ImportDataTeamCityMessage(ImportType type, string path, DotNetCoverageTool tool, bool verbose = false)
+        public ImportDataTeamCityMessage(ImportType type, string path, DotNetCoverageTool tool, bool verbose)
             : this(type, path, verbose)
         {
             if (type != ImportType.DotNetCoverage)

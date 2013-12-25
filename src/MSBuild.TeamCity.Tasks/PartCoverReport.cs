@@ -73,7 +73,7 @@ namespace MSBuild.TeamCity.Tasks
                                            ReportXslts.Select(report => report.ItemSpec).Join("\n"));
             }
             yield return
-                new ImportDataTeamCityMessage(ImportType.DotNetCoverage, XmlReportPath, DotNetCoverageTool.PartCover);
+                new ImportDataTeamCityMessage(ImportType.DotNetCoverage, XmlReportPath, DotNetCoverageTool.PartCover, false); // TODO: Introduce Verbose property
         }
     }
 }

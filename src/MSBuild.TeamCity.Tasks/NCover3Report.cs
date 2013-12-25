@@ -79,7 +79,8 @@ namespace MSBuild.TeamCity.Tasks
             }
             yield return new ImportDataTeamCityMessage(ImportType.DotNetCoverage,
                                                        XmlReportPath,
-                                                       DotNetCoverageTool.Ncover3);
+                                                       DotNetCoverageTool.Ncover3,
+                                                       false); // TODO: Introduce Verbose property
         }
     }
 }

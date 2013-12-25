@@ -25,6 +25,7 @@ namespace Tests
     [TestFixture(typeof(ReportBuildStatistic))]
     [TestFixture(typeof(ReportMessage))]
     [TestFixture(typeof(RunGoogleTests))]
+    [TestFixture(typeof(RunOpenCoverage))]
     [TestFixture(typeof(EnableServiceMessages))]
     [TestFixture(typeof(DisableServiceMessages))]
     [TestFixture(typeof(CompilationStarted))]

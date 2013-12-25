@@ -42,21 +42,20 @@ namespace MSBuild.TeamCity.Tasks.Messages
         /// <returns>The new instance of <see cref="TeamCityMessage"/> class</returns>
         public TeamCityMessage BuildMessage()
         {
-            if (!string.IsNullOrEmpty(findBugsHome))
+            if (string.IsNullOrEmpty(findBugsHome))
             {
-                if (type != ImportType.FindBugs.ImportTypeToString())
-                {
-                    throw new NotSupportedException();
-                }
-                return new ImportDataTeamCityMessage(ImportType.FindBugs, path, findBugsHome, verbose);
+                return string.IsNullOrEmpty(tool)
+                    ? new ImportDataTeamCityMessage(type, path, verbose)
+                    : new ImportDataTeamCityMessage(ImportType.DotNetCoverage,
+                        path,
+                        tool.ToDotNetCoverateTool(),
+                        verbose);
             }
-            
-            return string.IsNullOrEmpty(tool)
-                       ? new ImportDataTeamCityMessage(type, path, this.verbose)
-                       : new ImportDataTeamCityMessage(ImportType.DotNetCoverage,
-                                                       path,
-                                                       tool.ToDotNetCoverateTool(),
-                                                       this.verbose);
+            if (type != ImportType.FindBugs.ImportTypeToString())
+            {
+                throw new NotSupportedException();
+            }
+            return new ImportDataTeamCityMessage(ImportType.FindBugs, path, findBugsHome, verbose);
         }
     }
 }

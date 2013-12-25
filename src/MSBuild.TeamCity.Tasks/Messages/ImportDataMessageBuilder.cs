@@ -14,18 +14,21 @@ namespace MSBuild.TeamCity.Tasks.Messages
         private readonly string tool;
         private readonly string path;
         private readonly string type;
+        private readonly bool verbose;
 
-        ///<summary>
-        /// Initializes a new instance of the <see cref="ImportDataMessageBuilder"/> class
-        ///</summary>
-        ///<param name="tool">the tool name value can be partcover, ncover, or ncover3, depending on selected coverage tool in the coverage settings.</param>
-        ///<param name="path">full path to data source file to import data from</param>
-        ///<param name="type">imported data type.</param>
-        public ImportDataMessageBuilder(string tool, string path, string type)
+        /// <summary>
+        ///  Initializes a new instance of the <see cref="ImportDataMessageBuilder"/> class
+        /// </summary>
+        /// <param name="tool">the tool name value can be partcover, ncover, or ncover3, depending on selected coverage tool in the coverage settings.</param>
+        /// <param name="path">full path to data source file to import data from</param>
+        /// <param name="type">imported data type.</param>
+        /// <param name="verbose">Attribute will enable detailed logging into the build log.</param>
+        public ImportDataMessageBuilder(string tool, string path, string type, bool verbose = false)
         {
             this.tool = tool;
             this.path = path;
             this.type = type;
+            this.verbose = verbose;
         }
 
         /// <summary>
@@ -35,10 +38,11 @@ namespace MSBuild.TeamCity.Tasks.Messages
         public TeamCityMessage BuildMessage()
         {
             return string.IsNullOrEmpty(tool)
-                       ? new ImportDataTeamCityMessage(type, path)
+                       ? new ImportDataTeamCityMessage(type, path, this.verbose)
                        : new ImportDataTeamCityMessage(ImportType.DotNetCoverage,
                                                        path,
-                                                       tool.ToDotNetCoverateTool());
+                                                       tool.ToDotNetCoverateTool(),
+                                                       this.verbose);
         }
     }
 }

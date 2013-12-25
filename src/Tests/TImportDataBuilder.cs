@@ -13,14 +13,15 @@ namespace Tests
     [TestFixture]
     public class TImportDataBuilder
     {
-        [TestCase(null, "##teamcity[importData type='FxCop' path='p']")]
-        [TestCase("ncover", "##teamcity[importData type='dotNetCoverage' path='p' tool='ncover']")]
-        [TestCase("bad", null, ExpectedException = typeof(NotSupportedException))]
-        public void Test(string tool, string expected)
+        [TestCase(null, "##teamcity[importData type='FxCop' path='p']", false)]
+        [TestCase("ncover", "##teamcity[importData type='dotNetCoverage' path='p' tool='ncover']", false)]
+        [TestCase("bad", null, false, ExpectedException = typeof(NotSupportedException))]
+        [TestCase(null, "##teamcity[importData type='FxCop' path='p' verbose='true']", true)]
+        public void Test(string tool, string expected, bool verbose)
         {
             const string type = "FxCop";
             const string path = "p";
-            ImportDataMessageBuilder builder = new ImportDataMessageBuilder(tool, path, type);
+            ImportDataMessageBuilder builder = new ImportDataMessageBuilder(tool, path, type, verbose);
             Assert.That(builder.BuildMessage().ToString(), Is.EqualTo(expected));
         }
     }

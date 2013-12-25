@@ -14,33 +14,42 @@ namespace MSBuild.TeamCity.Tasks.Messages
     ///</summary>
     public class ImportDataTeamCityMessage : TeamCityMessage
     {
-        ///<summary>
-        /// Initializes a new instance of the <see cref="ImportDataTeamCityMessage"/> class using <see cref="ImportType"/> value and path specified
-        ///</summary>
-        ///<param name="type">Data type. FxCop for example</param>
-        ///<param name="path">Full path to file</param>
-        public ImportDataTeamCityMessage(ImportType type, string path) : this(type.ImportTypeToString(), path)
+        /// <summary>
+        ///  Initializes a new instance of the <see cref="ImportDataTeamCityMessage"/> class using <see cref="ImportType"/> value and path specified
+        /// </summary>
+        /// <param name="type">Data type. FxCop for example</param>
+        /// <param name="path">Full path to file</param>
+        /// <param name="verbose">Attribute will enable detailed logging into the build log.</param>
+        public ImportDataTeamCityMessage(ImportType type, string path, bool verbose = false)
+            : this(type.ImportTypeToString(), path, verbose)
         {
         }
 
-        ///<summary>
-        /// Initializes a new instance of the <see cref="ImportDataTeamCityMessage"/> class using type and path specified
-        ///</summary>
-        ///<param name="type">Data type. FxCop for example</param>
-        ///<param name="path">Full path to file</param>
-        public ImportDataTeamCityMessage(string type, string path)
+        /// <summary>
+        ///  Initializes a new instance of the <see cref="ImportDataTeamCityMessage"/> class using type and path specified
+        /// </summary>
+        /// <param name="type">Data type. FxCop for example</param>
+        /// <param name="path">Full path to file</param>
+        /// <param name="verbose">Attribute will enable detailed logging into the build log.</param>
+        public ImportDataTeamCityMessage(string type, string path, bool verbose = false)
         {
             Attributes.Add("type", type);
             Attributes.Add("path", path);
+            if (verbose)
+            {
+                Attributes.Add("verbose", "true");
+            }
         }
 
-        ///<summary>
-        /// Initializes a new instance of the <see cref="ImportDataTeamCityMessage"/> class using type and path specified
-        ///</summary>
-        ///<param name="type">Data type. FxCop for example</param>
-        ///<param name="path">Full path to file</param>
-        ///<param name="tool">Here the tool name value can be partcover, ncover, or ncover3, depending on selected coverage tool in the coverage settings.</param>
-        public ImportDataTeamCityMessage(ImportType type, string path, DotNetCoverageTool tool) : this(type, path)
+        /// <summary>
+        ///  Initializes a new instance of the <see cref="ImportDataTeamCityMessage"/> class using type and path specified
+        /// </summary>
+        /// <param name="type">Data type. FxCop for example</param>
+        /// <param name="path">Full path to file</param>
+        /// <param name="tool">Here the tool name value can be partcover, ncover, or ncover3, depending on selected coverage tool in the coverage settings.</param>
+        /// <param name="verbose">Attribute will enable detailed logging into the build log.</param>
+        public ImportDataTeamCityMessage(ImportType type, string path, DotNetCoverageTool tool, bool verbose = false)
+            : this(type, path, verbose)
         {
             if (type != ImportType.DotNetCoverage)
             {

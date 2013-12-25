@@ -93,13 +93,18 @@ namespace MSBuild.TeamCity.Tasks
         /// </summary>
         public string Tool { get; set; }
 
+        ///<summary>
+        /// Gets or sets attribute that will enable detailed logging into the build log.. False by default
+        ///</summary>
+        public bool Verbose { get; set; }
+
         /// <summary>
         /// Reads TeamCity messages
         /// </summary>
         /// <returns>TeamCity messages list</returns>
         protected override IEnumerable<TeamCityMessage> ReadMessages()
         {
-            yield return new ImportDataMessageBuilder(Tool, Path, Type).BuildMessage();
+            yield return new ImportDataMessageBuilder(Tool, Path, Type, Verbose).BuildMessage();
         }
     }
 }

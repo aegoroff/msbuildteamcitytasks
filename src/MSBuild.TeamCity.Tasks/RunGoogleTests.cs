@@ -4,8 +4,10 @@
  * © 2007-2013 Alexander Egorov
  */
 
+using System.Collections.Generic;
 using Microsoft.Build.Framework;
 using MSBuild.TeamCity.Tasks.Internal;
+using MSBuild.TeamCity.Tasks.Messages;
 
 namespace MSBuild.TeamCity.Tasks
 {
@@ -57,6 +59,8 @@ namespace MSBuild.TeamCity.Tasks
     /// </example>
     public class RunGoogleTests : TeamCityTask
     {
+        private bool status;
+        
         ///<summary>
         /// Initializes a new instance of the <see cref="RunGoogleTests"/> class
         ///</summary>
@@ -114,23 +118,29 @@ namespace MSBuild.TeamCity.Tasks
         public int ExecutionTimeoutMilliseconds { get; set; }
 
         /// <summary>
+        /// Reads TeamCity messages.
+        /// </summary>
+        /// <returns>TeamCity messages list</returns>
+        protected override IEnumerable<TeamCityMessage> ReadMessages()
+        {
+            var runner = new GoogleTestsRunner(Logger, ContinueOnFailures, TestExePath)
+            {
+                CatchGtestExceptions = CatchGtestExceptions,
+                ExecutionTimeoutMilliseconds = ExecutionTimeoutMilliseconds,
+                RunDisabledTests = RunDisabledTests,
+                TestFilter = TestFilter,
+                Verbose = Verbose
+            };
+            status = runner.Import();
+            return runner.Messages;
+        }
+
+        /// <summary>
         /// Gets task execution result
         /// </summary>
-        protected override ExecutionResult ExecutionResult
+        protected override bool ExecutionStatus
         {
-            get
-            {
-                var runner = new GoogleTestsRunner(Logger, ContinueOnFailures, TestExePath)
-                                               {
-                                                   CatchGtestExceptions = CatchGtestExceptions,
-                                                   ExecutionTimeoutMilliseconds = ExecutionTimeoutMilliseconds,
-                                                   RunDisabledTests = RunDisabledTests,
-                                                   TestFilter = TestFilter,
-                                                   Verbose = Verbose
-                                               };
-
-                return runner.Import();
-            }
+            get { return status; }
         }
     }
 }

@@ -6,6 +6,7 @@
 
 using System;
 using System.IO;
+using System.Linq;
 using MSBuild.TeamCity.Tasks.Internal;
 using Microsoft.Build.Framework;
 using NMock;
@@ -64,10 +65,9 @@ namespace Tests
             logger.Expects.One.GetProperty(_=>_.HasLoggedErrors).Will(Return.Value(false));
 
             GoogleTestsRunner runner = new GoogleTestsRunner(logger.MockObject, false, CorrectExePath);
-            ExecutionResult result = runner.Import();
 
-            Assert.That(result.Status);
-            Assert.That(result.Messages.Count, Is.EqualTo(1));
+            Assert.That(runner.Import());
+            Assert.That(runner.Messages.Count, Is.EqualTo(1));
         }
 
         [Test]
@@ -79,11 +79,8 @@ namespace Tests
             runner.Import();
 
             Assert.That(File.Exists(TestResultPath));
-
-            ExecutionResult result = runner.Import();
-
-            Assert.That(result.Status);
-            Assert.That(result.Messages.Count, Is.EqualTo(1));
+            Assert.That(runner.Import());
+            Assert.That(runner.Messages.Count, Is.EqualTo(1));
         }
 
         [Test]
@@ -93,10 +90,8 @@ namespace Tests
 
             GoogleTestsRunner runner = new GoogleTestsRunner(logger.MockObject, false, CorrectExePath)
                                            { ExecutionTimeoutMilliseconds = 200 };
-            ExecutionResult result = runner.Import();
-
-            Assert.That(result.Status);
-            Assert.That(result.Messages.Count, Is.EqualTo(1));
+            Assert.That(runner.Import());
+            Assert.That(runner.Messages.Count, Is.EqualTo(1));
         }
 
         [Test]
@@ -106,10 +101,9 @@ namespace Tests
             logger.Expects.One.GetProperty(_ => _.HasLoggedErrors).Will(Return.Value(true));
 
             GoogleTestsRunner runner = new GoogleTestsRunner(logger.MockObject, false, "bad");
-            ExecutionResult result = runner.Import();
 
-            Assert.That(result.Status, Is.False);
-            Assert.That(result.Messages, Is.Empty);
+            Assert.That(runner.Import(), Is.False);
+            Assert.That(runner.Messages, Is.Empty);
         }
     }
 }

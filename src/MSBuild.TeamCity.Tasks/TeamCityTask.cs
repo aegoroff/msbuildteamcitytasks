@@ -57,19 +57,6 @@ namespace MSBuild.TeamCity.Tasks
         protected ILogger Logger { get; private set; }
 
         /// <summary>
-        /// Gets task execution result
-        /// </summary>
-        protected virtual ExecutionResult ExecutionResult
-        {
-            get
-            {
-                var result = new ExecutionResult(true);
-                result.Messages.AddRange(ReadMessages());
-                return result;
-            }
-        }
-
-        /// <summary>
         /// When overridden in a derived class, executes the task.
         /// </summary>
         /// <returns>
@@ -79,7 +66,10 @@ namespace MSBuild.TeamCity.Tasks
         {
             try
             {
-                return implementation.Execute(ExecutionResult, IsAddTimestamp, FlowId);
+                var messages = ReadMessages();
+                var result = new ExecutionResult(ExecutionStatus);
+                result.Messages.AddRange(messages);
+                return implementation.Execute(result, IsAddTimestamp, FlowId);
             }
             catch (Exception e)
             {
@@ -92,9 +82,14 @@ namespace MSBuild.TeamCity.Tasks
         /// Reads TeamCity messages. Empty by default (if not overriden)
         /// </summary>
         /// <returns>TeamCity messages list</returns>
-        protected virtual IEnumerable<TeamCityMessage> ReadMessages()
+        protected abstract IEnumerable<TeamCityMessage> ReadMessages();
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the operation status success or failure
+        /// </summary>
+        protected virtual bool ExecutionStatus
         {
-            return new TeamCityMessage[0];
+            get { return true; }
         }
 
         private void Initialize(ILogger logger)

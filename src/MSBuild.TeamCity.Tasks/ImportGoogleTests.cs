@@ -4,8 +4,10 @@
  * © 2007-2013 Alexander Egorov
  */
 
+using System.Collections.Generic;
 using Microsoft.Build.Framework;
 using MSBuild.TeamCity.Tasks.Internal;
+using MSBuild.TeamCity.Tasks.Messages;
 
 namespace MSBuild.TeamCity.Tasks
 {
@@ -39,6 +41,8 @@ namespace MSBuild.TeamCity.Tasks
     /// </example>
     public class ImportGoogleTests : TeamCityTask
     {
+        private bool status;
+        
         ///<summary>
         /// Initializes a new instance of the <see cref="ImportGoogleTests"/> class
         ///</summary>
@@ -70,9 +74,20 @@ namespace MSBuild.TeamCity.Tasks
         /// <summary>
         /// Gets task execution result
         /// </summary>
-        protected override ExecutionResult ExecutionResult
+        protected override bool ExecutionStatus
         {
-            get { return new GoogleTestsPlainImporter(Logger, ContinueOnFailures, TestResultsPath).Import(); }
+            get { return status; }
+        }
+
+        /// <summary>
+        /// Reads TeamCity messages.
+        /// </summary>
+        /// <returns>TeamCity messages list</returns>
+        protected override IEnumerable<TeamCityMessage> ReadMessages()
+        {
+            var importer = new GoogleTestsPlainImporter(Logger, ContinueOnFailures, TestResultsPath);
+            status = importer.Import();
+            return importer.Messages;
         }
     }
 }

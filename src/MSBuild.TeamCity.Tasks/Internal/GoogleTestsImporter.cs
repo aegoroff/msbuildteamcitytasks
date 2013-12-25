@@ -5,6 +5,7 @@
  */
 
 using System;
+using System.Collections.Generic;
 using MSBuild.TeamCity.Tasks.Messages;
 
 namespace MSBuild.TeamCity.Tasks.Internal
@@ -26,7 +27,13 @@ namespace MSBuild.TeamCity.Tasks.Internal
         {
             this.logger = logger;
             this.continueOnFailures = continueOnFailures;
+            Messages = new List<TeamCityMessage>();
         }
+
+        /// <summary>
+        /// Gets messages list
+        /// </summary>
+        public IList<TeamCityMessage> Messages { get; private set; } 
 
         /// <summary>
         /// Gets or sets a value indicating whether to enable detailed logging into the build log. False by default
@@ -39,17 +46,17 @@ namespace MSBuild.TeamCity.Tasks.Internal
         /// <returns>
         /// The new instance of <see cref="ExecutionResult"/> structure.
         /// </returns>
-        public ExecutionResult Import()
+        public bool Import()
         {
-            var result = new ExecutionResult(false);
+            Messages.Clear();
+            var result = false;
             GoogleTestXmlReader reader = null;
             try
             {
-                var xmlPath = CreateXmlImport();
-
-                reader = new GoogleTestXmlReader(xmlPath);
+                var reportPath = CreateXmlImport();
+                reader = new GoogleTestXmlReader(reportPath);
                 reader.Read();
-                result.Messages.Add(new ImportDataTeamCityMessage(ImportType.Gtest, xmlPath, Verbose));
+                Messages.Add(new ImportDataTeamCityMessage(ImportType.Gtest, reportPath, Verbose));
             }
             catch (Exception e)
             {
@@ -64,15 +71,14 @@ namespace MSBuild.TeamCity.Tasks.Internal
             }
             if (continueOnFailures)
             {
-                result.Status = !logger.HasLoggedErrors;
+                result = !logger.HasLoggedErrors;
             }
             else if (reader == null)
             {
-                result.Status = false;
             }
             else
             {
-                result.Status = reader.FailuresCount == 0 && !logger.HasLoggedErrors;
+                result = reader.FailuresCount == 0 && !logger.HasLoggedErrors;
             }
             return result;
         }

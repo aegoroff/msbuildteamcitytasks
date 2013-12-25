@@ -5,6 +5,7 @@
  */
 
 using System;
+using System.Linq;
 using MSBuild.TeamCity.Tasks;
 using MSBuild.TeamCity.Tasks.Internal;
 using NMock;
@@ -39,10 +40,8 @@ namespace Tests
 
             GoogleTestsPlainImporter importer = new GoogleTestsPlainImporter(logger.MockObject, false, SuccessTestsPath);
 
-            ExecutionResult result = importer.Import();
-
-            Assert.That(result.Status);
-            Assert.That(result.Messages.Count, Is.EqualTo(1));
+            Assert.That(importer.Import());
+            Assert.That(importer.Messages.Count, Is.EqualTo(1));
         }
 
         [Test]
@@ -52,10 +51,8 @@ namespace Tests
 
             GoogleTestsPlainImporter importer = new GoogleTestsPlainImporter(logger.MockObject, false, FailTestsPath);
 
-            ExecutionResult result = importer.Import();
-
-            Assert.That(result.Status, Is.False);
-            Assert.That(result.Messages.Count, Is.EqualTo(1));
+            Assert.That(importer.Import(), Is.False);
+            Assert.That(importer.Messages.Count, Is.EqualTo(1));
         }
 
         [Test]
@@ -65,10 +62,8 @@ namespace Tests
 
             GoogleTestsPlainImporter importer = new GoogleTestsPlainImporter(logger.MockObject, true, FailTestsPath);
 
-            ExecutionResult result = importer.Import();
-
-            Assert.That(result.Status);
-            Assert.That(result.Messages.Count, Is.EqualTo(1));
+            Assert.That(importer.Import());
+            Assert.That(importer.Messages.Count, Is.EqualTo(1));
         }
     }
 }

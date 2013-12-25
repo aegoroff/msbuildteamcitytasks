@@ -109,7 +109,7 @@ namespace Tests
             ExecutionResult result = runner.Import();
 
             Assert.That(result.Status, Is.False);
-            Assert.That(result.Messages, Is.Null);
+            Assert.That(result.Messages, Is.Empty);
         }
     }
 }

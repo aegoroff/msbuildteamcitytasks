@@ -37,7 +37,7 @@ namespace MSBuild.TeamCity.Tasks.Internal
         /// </returns>
         public ExecutionResult Import()
         {
-            var result = new ExecutionResult();
+            var result = new ExecutionResult(false);
             GoogleTestXmlReader reader = null;
             try
             {
@@ -45,10 +45,7 @@ namespace MSBuild.TeamCity.Tasks.Internal
 
                 reader = new GoogleTestXmlReader(xmlPath);
                 reader.Read();
-                result.Messages = new List<TeamCityMessage>
-                                      {
-                                          new ImportDataTeamCityMessage(ImportType.Gtest, xmlPath, false) // TODO: Introduce Verbose property
-                                      };
+                result.Messages.Add(new ImportDataTeamCityMessage(ImportType.Gtest, xmlPath, false)); // TODO: Introduce Verbose property
             }
             catch (Exception e)
             {

@@ -63,11 +63,7 @@ namespace MSBuild.TeamCity.Tasks
         {
             get
             {
-                var result = new ExecutionResult
-                                             {
-                                                 Status = true,
-                                                 Messages = new List<TeamCityMessage>()
-                                             };
+                var result = new ExecutionResult(true);
                 result.Messages.AddRange(ReadMessages());
                 return result;
             }

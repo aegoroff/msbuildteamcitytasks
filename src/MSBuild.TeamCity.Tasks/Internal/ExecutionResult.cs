@@ -5,6 +5,7 @@
  */
 
 using System.Collections.Generic;
+using System.Diagnostics;
 using MSBuild.TeamCity.Tasks.Messages;
 
 namespace MSBuild.TeamCity.Tasks.Internal
@@ -33,6 +34,7 @@ namespace MSBuild.TeamCity.Tasks.Internal
         ///</summary>
         public IList<TeamCityMessage> Messages
         {
+            [DebuggerStepThrough]
             get { return messages; }
         }
 

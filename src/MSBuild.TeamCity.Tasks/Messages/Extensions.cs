@@ -6,6 +6,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MSBuild.TeamCity.Tasks.Messages
 {
@@ -59,39 +60,49 @@ namespace MSBuild.TeamCity.Tasks.Messages
             }
         }
 
+        private static readonly Dictionary<string, ImportType> types = new Dictionary<string, ImportType>
+        {
+            {"junit", ImportType.Junit},
+            {"surefire", ImportType.Surefire},
+            {"nunit", ImportType.Nunit},
+            {"findBugs", ImportType.FindBugs},
+            {"pmd", ImportType.Pmd},
+            {"FxCop", ImportType.FxCop},
+            {"dotNetCoverage", ImportType.DotNetCoverage},
+            {"mstest", ImportType.Mstest},
+            {"gtest", ImportType.Gtest},
+            {"jslint", ImportType.Jslint},
+            {"checkstyle", ImportType.CheckStyle},
+            {"pmdCpd", ImportType.PmdCpd},
+            {"ReSharperDupFinder", ImportType.ReSharperDupFinder},
+        };
+
+        internal static ImportType ToImportType(this string type)
+        {
+            if (!types.ContainsKey(type))
+            {
+                throw new NotSupportedException();
+            }
+            return types[type];
+        }
+
+        private static TKey FindKeyByValue<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TValue value)
+        {
+            foreach (var pair in dictionary.Where(pair => value.Equals(pair.Value)))
+            {
+                return pair.Key;
+            }
+
+            throw new Exception("the value is not found in the dictionary");
+        }
+
         internal static string ImportTypeToString(this ImportType type)
         {
-            switch (type)
+            if (!types.ContainsValue(type))
             {
-                case ImportType.Junit:
-                    return "junit";
-                case ImportType.Surefire:
-                    return "surefire";
-                case ImportType.Nunit:
-                    return "nunit";
-                case ImportType.FindBugs:
-                    return "findBugs";
-                case ImportType.Pmd:
-                    return "pmd";
-                case ImportType.FxCop:
-                    return "FxCop";
-                case ImportType.DotNetCoverage:
-                    return "dotNetCoverage";
-                case ImportType.Mstest:
-                    return "mstest";
-                case ImportType.Gtest:
-                    return "gtest";
-                case ImportType.Jslint:
-                    return "jslint";
-                case ImportType.CheckStyle:
-                    return "checkstyle";
-                case ImportType.PmdCpd:
-                    return "pmdCpd";
-                case ImportType.ReSharperDupFinder:
-                    return "ReSharperDupFinder";
-                default:
-                    throw new NotSupportedException();
+                throw new NotSupportedException();
             }
+            return types.FindKeyByValue(type);
         }
     }
 }

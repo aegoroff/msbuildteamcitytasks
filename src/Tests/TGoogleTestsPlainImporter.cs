@@ -5,7 +5,6 @@
  */
 
 using System;
-using System.Linq;
 using MSBuild.TeamCity.Tasks;
 using MSBuild.TeamCity.Tasks.Internal;
 using NMock;

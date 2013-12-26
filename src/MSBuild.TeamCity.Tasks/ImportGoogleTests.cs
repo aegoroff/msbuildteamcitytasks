@@ -71,6 +71,17 @@ namespace MSBuild.TeamCity.Tasks
         ///</summary>
         public bool ContinueOnFailures { get; set; }
 
+        ///<summary>
+        /// Gets or sets a value indicating whether to enable detailed logging into the build log. False by default
+        ///</summary>
+        public bool Verbose { get; set; }
+
+        /// <summary>
+        /// Gets or sets action that will change output level if no reports matching the path specified were found.<p/>
+        /// May take the following values: info (default), nothing, warning, error
+        /// </summary>
+        public string WhenNoDataPublished { get; set; }
+
         /// <summary>
         /// Gets task execution result
         /// </summary>
@@ -85,7 +96,11 @@ namespace MSBuild.TeamCity.Tasks
         /// <returns>TeamCity messages list</returns>
         protected override IEnumerable<TeamCityMessage> ReadMessages()
         {
-            var importer = new GoogleTestsPlainImporter(Logger, ContinueOnFailures, TestResultsPath);
+            var importer = new GoogleTestsPlainImporter(Logger, ContinueOnFailures, TestResultsPath)
+            {
+                Verbose = Verbose,
+                WhenNoDataPublished = WhenNoDataPublished
+            };
             status = importer.Import();
             return importer.Messages;
         }

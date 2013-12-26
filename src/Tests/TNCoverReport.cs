@@ -68,6 +68,9 @@ namespace Tests
             task.Arguments = Args;
             task.ReportType = RptType;
             task.ReportOrder = RptOrder;
+            task.Verbose = true;
+            task.ParseOutOfDate = true;
+            task.WhenNoDataPublished = "info";
             Assert.That(task.Execute());
         }
 

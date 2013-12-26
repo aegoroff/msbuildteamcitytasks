@@ -44,6 +44,9 @@ namespace Tests
             item2.Expects.Exactly(2).GetProperty(_ => _.ItemSpec).Will(Return.Value("b"));
             task.XmlReportPath = XmlReportPth;
             task.ReportXslts = new[] { item1.MockObject, item2.MockObject };
+            task.Verbose = true;
+            task.ParseOutOfDate = true;
+            task.WhenNoDataPublished = "info";
             Assert.That(task.Execute());
         }
 

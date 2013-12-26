@@ -129,7 +129,15 @@ namespace MSBuild.TeamCity.Tasks
         /// <returns>TeamCity messages list</returns>
         protected override IEnumerable<TeamCityMessage> ReadMessages()
         {
-            yield return new ImportDataMessageBuilder(Tool, Path, Type, FindBugsHome, Verbose).BuildMessage();
+            var context = new ImportDataContext
+            {
+                ParseOutOfDate = ParseOutOfDate,
+                Verbose = Verbose,
+                Path = Path,
+                WhenNoDataPublished = WhenNoDataPublished,
+                Type = Type.ToImportType()
+            };
+            yield return new ImportDataMessageBuilder(Tool, context, FindBugsHome).BuildMessage();
         }
     }
 }

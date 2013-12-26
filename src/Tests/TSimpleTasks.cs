@@ -145,19 +145,33 @@ namespace Tests
             Assert.That(task.Value, Is.EqualTo(1));
         }
 
-        [Test]
-        public void ImportData()
+        [TestCase("dotNetCoverage", "ncover", false, false, null)]
+        [TestCase("bad", null, false, false, null, ExpectedException = typeof(UnexpectedInvocationException))]
+        [TestCase("mstest", "ncover", false, false, null, ExpectedException = typeof(UnexpectedInvocationException))]
+        [TestCase("mstest", null, false, false, null)]
+        [TestCase("dotNetCoverage", "ncover", true, false, null)]
+        [TestCase("dotNetCoverage", "ncover", false, true, null)]
+        [TestCase("dotNetCoverage", "ncover", true, true, null)]
+        [TestCase("mstest", null, false, false, "info")]
+        [TestCase("mstest", null, false, false, "nothing")]
+        [TestCase("mstest", null, false, false, "warning")]
+        [TestCase("mstest", null, false, false, "error")]
+        [TestCase("mstest", null, false, false, "bad", ExpectedException = typeof(UnexpectedInvocationException))]
+        public void ImportData(string type, string tool, bool verbose, bool parseOutOfDate, string whenNoDataPublished)
         {
             ImportData task = new ImportData(Logger.MockObject)
                                   {
                                       Path = "p",
-                                      Type = "dotNetCoverage",
-                                      Tool = "ncover",
+                                      Type = type,
+                                      Tool = tool,
+                                      Verbose = verbose,
+                                      ParseOutOfDate = parseOutOfDate,
+                                      WhenNoDataPublished = whenNoDataPublished
                                   };
             Assert.That(task.Execute());
             Assert.That(task.Path, Is.EqualTo("p"));
-            Assert.That(task.Type, Is.EqualTo("dotNetCoverage"));
-            Assert.That(task.Tool, Is.EqualTo("ncover"));
+            Assert.That(task.Type, Is.EqualTo(type));
+            Assert.That(task.Tool, Is.EqualTo(tool));
         }
 
         [Test]
@@ -169,6 +183,8 @@ namespace Tests
                                          {
                                              ContinueOnFailures = true,
                                              TestResultsPath = TGoogleTestsPlainImporter.SuccessTestsPath,
+                                             Verbose = true,
+                                             WhenNoDataPublished = "error"
                                          };
             Assert.That(task.Execute());
             Assert.That(task.ContinueOnFailures);

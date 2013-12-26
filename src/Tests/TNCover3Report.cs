@@ -41,6 +41,9 @@ namespace Tests
             task.ToolPath = ToolPth;
             task.XmlReportPath = XmlReportPth;
             task.Arguments = Args;
+            task.Verbose = true;
+            task.ParseOutOfDate = true;
+            task.WhenNoDataPublished = "info";
             Assert.That(task.Execute());
         }
 

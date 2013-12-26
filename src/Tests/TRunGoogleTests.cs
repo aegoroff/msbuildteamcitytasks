@@ -73,6 +73,8 @@ namespace Tests
             task.CatchGtestExceptions = true;
             task.TestFilter = TestFilter;
             task.ExecutionTimeoutMilliseconds = ExecutionTimeoutMilliseconds;
+            task.Verbose = true;
+            task.WhenNoDataPublished = "error";
             Assert.That(task.Execute());
         }
 

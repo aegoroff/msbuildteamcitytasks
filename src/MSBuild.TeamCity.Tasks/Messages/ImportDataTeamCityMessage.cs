@@ -15,31 +15,14 @@ namespace MSBuild.TeamCity.Tasks.Messages
     public class ImportDataTeamCityMessage : TeamCityMessage
     {
         /// <summary>
-        ///  Initializes a new instance of the <see cref="ImportDataTeamCityMessage"/> class using <see cref="ImportType"/> value and path specified
-        /// </summary>
-        /// <param name="type">Data type. FxCop for example</param>
-        /// <param name="path">Full path to file</param>
-        /// <param name="verbose">Attribute will enable detailed logging into the build log.</param>
-        public ImportDataTeamCityMessage(ImportType type, string path, bool verbose)
-            : this(type.ImportTypeToString(), path, verbose)
-        {
-            if (type == ImportType.FindBugs)
-            {
-                throw new NotSupportedException("You must user another constructor");
-            }
-        }
-        
-        /// <summary>
         /// Initializes a new instance of the <see cref="ImportDataTeamCityMessage"/> class for FindBugs report import
         /// </summary>
-        /// <param name="type">Data type. Only FindBugs supportted</param>
-        /// <param name="path">Full path to file</param>
+        /// <param name="context"></param>
         /// <param name="findBugsHome"></param>
-        /// <param name="verbose">Attribute will enable detailed logging into the build log.</param>
-        public ImportDataTeamCityMessage(ImportType type, string path, string findBugsHome, bool verbose)
-            : this(type.ImportTypeToString(), path, verbose)
+        public ImportDataTeamCityMessage(ImportDataContext context, string findBugsHome)
+            : this(context)
         {
-            if (type != ImportType.FindBugs)
+            if (context.Type != ImportType.FindBugs)
             {
                 throw new NotSupportedException();
             }
@@ -49,30 +32,34 @@ namespace MSBuild.TeamCity.Tasks.Messages
         /// <summary>
         ///  Initializes a new instance of the <see cref="ImportDataTeamCityMessage"/> class using type and path specified
         /// </summary>
-        /// <param name="type">Data type. FxCop for example</param>
-        /// <param name="path">Full path to file</param>
-        /// <param name="verbose">Attribute will enable detailed logging into the build log.</param>
-        public ImportDataTeamCityMessage(string type, string path, bool verbose)
+        /// <param name="context">Import context</param>
+        public ImportDataTeamCityMessage(ImportDataContext context)
         {
-            Attributes.Add("type", type);
-            Attributes.Add("path", path);
-            if (verbose)
+            Attributes.Add("type", context.Type.ImportTypeToString());
+            Attributes.Add("path", context.Path);
+            if (context.Verbose)
             {
                 Attributes.Add("verbose", "true");
+            }
+            if (context.ParseOutOfDate)
+            {
+                Attributes.Add("parseOutOfDate", "true");
+            }
+            if (!string.IsNullOrWhiteSpace(context.WhenNoDataPublished))
+            {
+                Attributes.Add("whenNoDataPublished", context.WhenNoDataPublished);
             }
         }
 
         /// <summary>
         ///  Initializes a new instance of the <see cref="ImportDataTeamCityMessage"/> class using type and path specified
         /// </summary>
-        /// <param name="type">Data type. FxCop for example</param>
-        /// <param name="path">Full path to file</param>
+        /// <param name="context"></param>
         /// <param name="tool">Here the tool name value can be partcover, ncover, or ncover3, depending on selected coverage tool in the coverage settings.</param>
-        /// <param name="verbose">Attribute will enable detailed logging into the build log.</param>
-        public ImportDataTeamCityMessage(ImportType type, string path, DotNetCoverageTool tool, bool verbose)
-            : this(type, path, verbose)
+        public ImportDataTeamCityMessage(ImportDataContext context, DotNetCoverageTool tool)
+            : this(context)
         {
-            if (type != ImportType.DotNetCoverage)
+            if (context.Type != ImportType.DotNetCoverage)
             {
                 throw new NotSupportedException();
             }

@@ -104,6 +104,12 @@ namespace MSBuild.TeamCity.Tasks
         public bool Verbose { get; set; }
 
         /// <summary>
+        /// Gets or sets action that will change output level if no reports matching the path specified were found.<p/>
+        /// May take the following values: info (default), nothing, warning, error
+        /// </summary>
+        public string WhenNoDataPublished { get; set; }
+
+        /// <summary>
         /// Gets or sets full tests fiter. 
         /// Run only the tests whose name matches one of the positive patterns but 
         /// none of the negative patterns. '?' matches any single character; '*' 
@@ -129,7 +135,8 @@ namespace MSBuild.TeamCity.Tasks
                 ExecutionTimeoutMilliseconds = ExecutionTimeoutMilliseconds,
                 RunDisabledTests = RunDisabledTests,
                 TestFilter = TestFilter,
-                Verbose = Verbose
+                Verbose = Verbose,
+                WhenNoDataPublished = WhenNoDataPublished
             };
             status = runner.Import();
             return runner.Messages;

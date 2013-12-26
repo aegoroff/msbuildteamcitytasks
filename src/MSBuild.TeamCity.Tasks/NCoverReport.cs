@@ -84,6 +84,18 @@ namespace MSBuild.TeamCity.Tasks
         public bool Verbose { get; set; }
 
         /// <summary>
+        /// Gets or sets action that will change output level if no reports matching the path specified were found.<p/>
+        /// May take the following values: info (default), nothing, warning, error
+        /// </summary>
+        public string WhenNoDataPublished { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether process all the files matching the path. Otherwise, only those updated during the build (is determined by 
+        /// last modification timestamp) are processed. False by default
+        /// </summary>
+        public bool ParseOutOfDate { get; set; }
+
+        /// <summary>
         /// Gets or sets value for /sort: argument
         /// </summary>
         /// <remarks>
@@ -122,10 +134,15 @@ namespace MSBuild.TeamCity.Tasks
             {
                 yield return new DotNetCoverMessage(DotNetCoverMessage.NCoverExplorerReportOrderKey, ReportOrder);
             }
-            yield return new ImportDataTeamCityMessage(ImportType.DotNetCoverage,
-                                                       XmlReportPath,
-                                                       DotNetCoverageTool.Ncover,
-                                                       Verbose);
+            var context = new ImportDataContext
+            {
+                Type = ImportType.DotNetCoverage,
+                Path = XmlReportPath,
+                Verbose = Verbose,
+                ParseOutOfDate = ParseOutOfDate,
+                WhenNoDataPublished = WhenNoDataPublished
+            };
+            yield return new ImportDataTeamCityMessage(context, DotNetCoverageTool.Ncover);
         }
     }
 }

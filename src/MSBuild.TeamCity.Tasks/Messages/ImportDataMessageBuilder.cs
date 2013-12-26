@@ -5,6 +5,7 @@
  */
 
 using System;
+using System.Collections.Generic;
 
 namespace MSBuild.TeamCity.Tasks.Messages
 {
@@ -14,26 +15,27 @@ namespace MSBuild.TeamCity.Tasks.Messages
     public class ImportDataMessageBuilder
     {
         private readonly string tool;
-        private readonly string path;
-        private readonly string type;
+        private readonly ImportDataContext context;
         private readonly string findBugsHome;
-        private readonly bool verbose;
+        static readonly HashSet<string> actionsWhenNoDataPublished = new HashSet<string>
+        {
+            "info",
+            "nothing",
+            "warning",
+            "error"
+        }; 
 
         /// <summary>
         ///  Initializes a new instance of the <see cref="ImportDataMessageBuilder"/> class
         /// </summary>
         /// <param name="tool">the tool name value can be partcover, ncover, or ncover3, depending on selected coverage tool in the coverage settings.</param>
-        /// <param name="path">full path to data source file to import data from</param>
-        /// <param name="type">imported data type.</param>
+        /// <param name="context">Import context</param>
         /// <param name="findBugsHome">findBugsHome attribute specified pointing to the home directory oif installed FindBugs tool.</param>
-        /// <param name="verbose">Attribute will enable detailed logging into the build log.</param>
-        public ImportDataMessageBuilder(string tool, string path, string type, string findBugsHome, bool verbose)
+        public ImportDataMessageBuilder(string tool, ImportDataContext context, string findBugsHome)
         {
             this.tool = tool;
-            this.path = path;
-            this.type = type;
+            this.context = context;
             this.findBugsHome = findBugsHome;
-            this.verbose = verbose;
         }
 
         /// <summary>
@@ -42,20 +44,21 @@ namespace MSBuild.TeamCity.Tasks.Messages
         /// <returns>The new instance of <see cref="TeamCityMessage"/> class</returns>
         public TeamCityMessage BuildMessage()
         {
+            if (!string.IsNullOrWhiteSpace(context.WhenNoDataPublished) && !actionsWhenNoDataPublished.Contains(context.WhenNoDataPublished))
+            {
+                throw new NotSupportedException("Action not supportted. Only " + string.Join(", ", actionsWhenNoDataPublished) + " actions allowed.");
+            }
             if (string.IsNullOrEmpty(findBugsHome))
             {
                 return string.IsNullOrEmpty(tool)
-                    ? new ImportDataTeamCityMessage(type, path, verbose)
-                    : new ImportDataTeamCityMessage(ImportType.DotNetCoverage,
-                        path,
-                        tool.ToDotNetCoverateTool(),
-                        verbose);
+                    ? new ImportDataTeamCityMessage(context)
+                    : new ImportDataTeamCityMessage(context, tool.ToDotNetCoverateTool());
             }
-            if (type != ImportType.FindBugs.ImportTypeToString())
+            if (context.Type != ImportType.FindBugs)
             {
                 throw new NotSupportedException();
             }
-            return new ImportDataTeamCityMessage(ImportType.FindBugs, path, findBugsHome, verbose);
+            return new ImportDataTeamCityMessage(context, findBugsHome);
         }
     }
 }

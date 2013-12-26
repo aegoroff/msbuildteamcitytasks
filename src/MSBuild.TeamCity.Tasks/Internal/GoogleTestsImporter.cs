@@ -41,6 +41,12 @@ namespace MSBuild.TeamCity.Tasks.Internal
         public bool Verbose { get; set; }
 
         /// <summary>
+        /// Gets or sets action that will change output level if no reports matching the path specified were found.<p/>
+        /// May take the following values: info (default), nothing, warning, error
+        /// </summary>
+        public string WhenNoDataPublished { get; set; }
+
+        /// <summary>
         /// Runs import
         /// </summary>
         /// <returns>
@@ -56,7 +62,14 @@ namespace MSBuild.TeamCity.Tasks.Internal
                 var reportPath = CreateXmlImport();
                 reader = new GoogleTestXmlReader(reportPath);
                 reader.Read();
-                Messages.Add(new ImportDataTeamCityMessage(ImportType.Gtest, reportPath, Verbose));
+                var context = new ImportDataContext
+                {
+                    Type = ImportType.Gtest,
+                    Path = reportPath,
+                    Verbose = Verbose,
+                    WhenNoDataPublished = WhenNoDataPublished
+                };
+                Messages.Add(new ImportDataTeamCityMessage(context));
             }
             catch (Exception e)
             {

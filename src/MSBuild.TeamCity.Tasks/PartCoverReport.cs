@@ -66,6 +66,18 @@ namespace MSBuild.TeamCity.Tasks
         public bool Verbose { get; set; }
 
         /// <summary>
+        /// Gets or sets action that will change output level if no reports matching the path specified were found.<p/>
+        /// May take the following values: info (default), nothing, warning, error
+        /// </summary>
+        public string WhenNoDataPublished { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether process all the files matching the path. Otherwise, only those updated during the build (is determined by 
+        /// last modification timestamp) are processed. False by default
+        /// </summary>
+        public bool ParseOutOfDate { get; set; }
+
+        /// <summary>
         /// Reads TeamCity messages
         /// </summary>
         /// <returns>TeamCity messages list</returns>
@@ -77,8 +89,16 @@ namespace MSBuild.TeamCity.Tasks
                     new DotNetCoverMessage(DotNetCoverMessage.PartcoverReportXsltsKey,
                                            ReportXslts.Select(report => report.ItemSpec).Join("\n"));
             }
+            var context = new ImportDataContext
+            {
+                Type = ImportType.DotNetCoverage,
+                Path = XmlReportPath,
+                Verbose = Verbose,
+                ParseOutOfDate = ParseOutOfDate,
+                WhenNoDataPublished = WhenNoDataPublished
+            };
             yield return
-                new ImportDataTeamCityMessage(ImportType.DotNetCoverage, XmlReportPath, DotNetCoverageTool.PartCover, Verbose);
+                new ImportDataTeamCityMessage(context, DotNetCoverageTool.PartCover);
         }
     }
 }

@@ -97,6 +97,7 @@
     <Compile Include="ILogger.cs" />
     <Compile Include="ImportData.cs" />
     <Compile Include="Messages\Extensions.cs" />
+    <Compile Include="Messages\ImportDataContext.cs" />
     <Compile Include="Messages\ImportDataMessageBuilder.cs" />
     <Compile Include="Messages\ImportDataTeamCityMessage.cs" />
     <Compile Include="ImportGoogleTests.cs" />

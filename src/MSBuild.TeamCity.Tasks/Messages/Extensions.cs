@@ -15,50 +15,13 @@ namespace MSBuild.TeamCity.Tasks.Messages
     /// </summary>
     internal static class Extensions
     {
-        private const string PartCover = "partcover";
-        private const string Ncover = "ncover";
-        private const string Ncover3 = "ncover3";
-
-        internal static void Add(this IList<MessageAttributeItem> list, string name, string value)
+        private static readonly Dictionary<string, DotNetCoverageTool> tools = new Dictionary
+            <string, DotNetCoverageTool>
         {
-            var item = new MessageAttributeItem(value, name);
-
-            if (list.Contains(item))
-            {
-                list.Remove(item);
-            }
-            list.Add(item);
-        }
-
-        internal static string ToolToString(this DotNetCoverageTool tool)
-        {
-            switch (tool)
-            {
-                case DotNetCoverageTool.PartCover:
-                    return PartCover;
-                case DotNetCoverageTool.Ncover:
-                    return Ncover;
-                case DotNetCoverageTool.Ncover3:
-                    return Ncover3;
-                default:
-                    throw new NotSupportedException();
-            }
-        }
-
-        internal static DotNetCoverageTool ToDotNetCoverateTool(this string str)
-        {
-            switch (str)
-            {
-                case PartCover:
-                    return DotNetCoverageTool.PartCover;
-                case Ncover:
-                    return DotNetCoverageTool.Ncover;
-                case Ncover3:
-                    return DotNetCoverageTool.Ncover3;
-                default:
-                    throw new NotSupportedException();
-            }
-        }
+            { "partcover", DotNetCoverageTool.PartCover },
+            { "ncover", DotNetCoverageTool.Ncover },
+            { "ncover3", DotNetCoverageTool.Ncover3 },
+        };
 
         private static readonly Dictionary<string, ImportType> types = new Dictionary<string, ImportType>
         {
@@ -76,6 +39,31 @@ namespace MSBuild.TeamCity.Tasks.Messages
             { "pmdCpd", ImportType.PmdCpd },
             { "ReSharperDupFinder", ImportType.ReSharperDupFinder },
         };
+
+        internal static void Add(this IList<MessageAttributeItem> list, string name, string value)
+        {
+            var item = new MessageAttributeItem(value, name);
+
+            if (list.Contains(item))
+            {
+                list.Remove(item);
+            }
+            list.Add(item);
+        }
+
+        internal static string ToolToString(this DotNetCoverageTool tool)
+        {
+            return tools.FindKeyByValue(tool);
+        }
+
+        internal static DotNetCoverageTool ToDotNetCoverateTool(this string str)
+        {
+            if (!tools.ContainsKey(str))
+            {
+                throw new NotSupportedException();
+            }
+            return tools[str];
+        }
 
         internal static ImportType ToImportType(this string type)
         {

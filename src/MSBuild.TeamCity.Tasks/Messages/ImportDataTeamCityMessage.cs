@@ -15,14 +15,14 @@ namespace MSBuild.TeamCity.Tasks.Messages
     ///</summary>
     public class ImportDataTeamCityMessage : TeamCityMessage
     {
-        static readonly HashSet<string> actionsWhenNoDataPublished = new HashSet<string>
+        private static readonly HashSet<string> actionsWhenNoDataPublished = new HashSet<string>
         {
             "info",
             "nothing",
             "warning",
             "error"
-        }; 
-        
+        };
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ImportDataTeamCityMessage"/> class for FindBugs report import
         /// </summary>
@@ -31,6 +31,10 @@ namespace MSBuild.TeamCity.Tasks.Messages
         public ImportDataTeamCityMessage(ImportDataContext context, string findBugsHome)
             : this(context)
         {
+            if (context == null)
+            {
+                throw new ArgumentNullException("context");
+            }
             if (context.Type != ImportType.FindBugs)
             {
                 throw new NotSupportedException();
@@ -44,6 +48,10 @@ namespace MSBuild.TeamCity.Tasks.Messages
         /// <param name="context">Import context</param>
         public ImportDataTeamCityMessage(ImportDataContext context)
         {
+            if (context == null)
+            {
+                throw new ArgumentNullException("context");
+            }
             Attributes.Add("type", context.Type.ImportTypeToString());
             Attributes.Add("path", context.Path);
             if (context.Verbose)
@@ -60,7 +68,8 @@ namespace MSBuild.TeamCity.Tasks.Messages
             }
             if (!actionsWhenNoDataPublished.Contains(context.WhenNoDataPublished))
             {
-                throw new NotSupportedException("Action not supportted. Only " + string.Join(", ", actionsWhenNoDataPublished) + " actions allowed.");
+                throw new NotSupportedException("Action not supportted. Only " +
+                                                string.Join(", ", actionsWhenNoDataPublished) + " actions allowed.");
             }
             Attributes.Add("whenNoDataPublished", context.WhenNoDataPublished);
         }
@@ -73,6 +82,10 @@ namespace MSBuild.TeamCity.Tasks.Messages
         public ImportDataTeamCityMessage(ImportDataContext context, DotNetCoverageTool tool)
             : this(context)
         {
+            if (context == null)
+            {
+                throw new ArgumentNullException("context");
+            }
             if (context.Type != ImportType.DotNetCoverage)
             {
                 throw new NotSupportedException();
@@ -85,8 +98,7 @@ namespace MSBuild.TeamCity.Tasks.Messages
         /// </summary>
         protected override string Message
         {
-            [DebuggerStepThrough]
-            get { return "importData"; }
+            [DebuggerStepThrough] get { return "importData"; }
         }
     }
 }

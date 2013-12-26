@@ -204,6 +204,27 @@ namespace Tests
             };
             new ImportDataTeamCityMessage(context, "p");
         }
+
+        [Test]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void ImportNullContext()
+        {
+            new ImportDataTeamCityMessage(null);
+        }
+        
+        [Test]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void ImportNullContextFindBugs()
+        {
+            new ImportDataTeamCityMessage(null, "p");
+        }
+        
+        [Test]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void ImportNullContextDotNetCoverageTool()
+        {
+            new ImportDataTeamCityMessage(null, DotNetCoverageTool.Ncover);
+        }
         
         [TestCase(ImportType.FindBugs)]
         [TestCase(ImportType.Gtest, ExpectedException = typeof(NotSupportedException))]

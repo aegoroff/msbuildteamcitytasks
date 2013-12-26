@@ -92,16 +92,11 @@ namespace MSBuild.TeamCity.Tasks.Messages
             {
                 return pair.Key;
             }
-
-            throw new Exception("the value is not found in the dictionary");
+            return default(TKey);
         }
 
         internal static string ImportTypeToString(this ImportType type)
         {
-            if (!types.ContainsValue(type))
-            {
-                throw new NotSupportedException();
-            }
             return types.FindKeyByValue(type);
         }
     }

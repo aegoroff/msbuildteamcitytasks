@@ -115,5 +115,12 @@ namespace Tests
             Assert.That(message.IsAddTimestamp);
             Assert.That(message.FlowId, Is.EqualTo(flowId));
         }
+
+        [Test]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void ExecuteNullResult()
+        {
+            Assert.That(implementation.Execute(null));
+        }
     }
 }

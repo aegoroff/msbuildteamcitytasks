@@ -67,6 +67,10 @@ namespace MSBuild.TeamCity.Tasks.Internal
         /// </returns>
         public bool Execute(ExecutionResult result, bool isAddTimestamp, string flowId)
         {
+            if (result == null)
+            {
+                throw new ArgumentNullException("result");
+            }
             if (result.Messages != null)
             {
                 foreach (var message in result.Messages)

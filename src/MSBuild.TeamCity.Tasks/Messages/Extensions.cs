@@ -62,19 +62,19 @@ namespace MSBuild.TeamCity.Tasks.Messages
 
         private static readonly Dictionary<string, ImportType> types = new Dictionary<string, ImportType>
         {
-            {"junit", ImportType.Junit},
-            {"surefire", ImportType.Surefire},
-            {"nunit", ImportType.Nunit},
-            {"findBugs", ImportType.FindBugs},
-            {"pmd", ImportType.Pmd},
-            {"FxCop", ImportType.FxCop},
-            {"dotNetCoverage", ImportType.DotNetCoverage},
-            {"mstest", ImportType.Mstest},
-            {"gtest", ImportType.Gtest},
-            {"jslint", ImportType.Jslint},
-            {"checkstyle", ImportType.CheckStyle},
-            {"pmdCpd", ImportType.PmdCpd},
-            {"ReSharperDupFinder", ImportType.ReSharperDupFinder},
+            { "junit", ImportType.Junit },
+            { "surefire", ImportType.Surefire },
+            { "nunit", ImportType.Nunit },
+            { "findBugs", ImportType.FindBugs },
+            { "pmd", ImportType.Pmd },
+            { "FxCop", ImportType.FxCop },
+            { "dotNetCoverage", ImportType.DotNetCoverage },
+            { "mstest", ImportType.Mstest },
+            { "gtest", ImportType.Gtest },
+            { "jslint", ImportType.Jslint },
+            { "checkstyle", ImportType.CheckStyle },
+            { "pmdCpd", ImportType.PmdCpd },
+            { "ReSharperDupFinder", ImportType.ReSharperDupFinder },
         };
 
         internal static ImportType ToImportType(this string type)

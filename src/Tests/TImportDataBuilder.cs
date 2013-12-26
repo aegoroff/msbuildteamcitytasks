@@ -17,6 +17,7 @@ namespace Tests
         [TestCase("ncover", "##teamcity[importData type='dotNetCoverage' path='p' tool='ncover']", false, null, ImportType.DotNetCoverage)]
         [TestCase("ncover3", "##teamcity[importData type='dotNetCoverage' path='p' tool='ncover3']", false, null, ImportType.DotNetCoverage)]
         [TestCase("partcover", "##teamcity[importData type='dotNetCoverage' path='p' tool='partcover']", false, null, ImportType.DotNetCoverage)]
+        [TestCase("bad", "##teamcity[importData type='dotNetCoverage' path='p' tool='partcover']", false, null, ImportType.DotNetCoverage)]
         [TestCase("ncover", "##teamcity[importData type='dotNetCoverage' path='p' tool='ncover']", false, null, ImportType.FxCop, ExpectedException = typeof(NotSupportedException))]
         [TestCase("bad", null, false, null, ImportType.FxCop, ExpectedException = typeof(NotSupportedException))]
         [TestCase(null, "##teamcity[importData type='FxCop' path='p' verbose='true']", true, null, ImportType.FxCop)]

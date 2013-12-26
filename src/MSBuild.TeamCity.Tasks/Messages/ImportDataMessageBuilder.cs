@@ -5,7 +5,6 @@
  */
 
 using System;
-using System.Collections.Generic;
 
 namespace MSBuild.TeamCity.Tasks.Messages
 {
@@ -17,13 +16,6 @@ namespace MSBuild.TeamCity.Tasks.Messages
         private readonly string tool;
         private readonly ImportDataContext context;
         private readonly string findBugsHome;
-        static readonly HashSet<string> actionsWhenNoDataPublished = new HashSet<string>
-        {
-            "info",
-            "nothing",
-            "warning",
-            "error"
-        }; 
 
         /// <summary>
         ///  Initializes a new instance of the <see cref="ImportDataMessageBuilder"/> class
@@ -44,10 +36,6 @@ namespace MSBuild.TeamCity.Tasks.Messages
         /// <returns>The new instance of <see cref="TeamCityMessage"/> class</returns>
         public TeamCityMessage BuildMessage()
         {
-            if (!string.IsNullOrWhiteSpace(context.WhenNoDataPublished) && !actionsWhenNoDataPublished.Contains(context.WhenNoDataPublished))
-            {
-                throw new NotSupportedException("Action not supportted. Only " + string.Join(", ", actionsWhenNoDataPublished) + " actions allowed.");
-            }
             if (string.IsNullOrEmpty(findBugsHome))
             {
                 return string.IsNullOrEmpty(tool)

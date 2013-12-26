@@ -5,6 +5,7 @@
  */
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace MSBuild.TeamCity.Tasks.Messages
@@ -14,6 +15,14 @@ namespace MSBuild.TeamCity.Tasks.Messages
     ///</summary>
     public class ImportDataTeamCityMessage : TeamCityMessage
     {
+        static readonly HashSet<string> actionsWhenNoDataPublished = new HashSet<string>
+        {
+            "info",
+            "nothing",
+            "warning",
+            "error"
+        }; 
+        
         /// <summary>
         /// Initializes a new instance of the <see cref="ImportDataTeamCityMessage"/> class for FindBugs report import
         /// </summary>
@@ -45,10 +54,15 @@ namespace MSBuild.TeamCity.Tasks.Messages
             {
                 Attributes.Add("parseOutOfDate", "true");
             }
-            if (!string.IsNullOrWhiteSpace(context.WhenNoDataPublished))
+            if (string.IsNullOrWhiteSpace(context.WhenNoDataPublished))
             {
-                Attributes.Add("whenNoDataPublished", context.WhenNoDataPublished);
+                return;
             }
+            if (!actionsWhenNoDataPublished.Contains(context.WhenNoDataPublished))
+            {
+                throw new NotSupportedException("Action not supportted. Only " + string.Join(", ", actionsWhenNoDataPublished) + " actions allowed.");
+            }
+            Attributes.Add("whenNoDataPublished", context.WhenNoDataPublished);
         }
 
         /// <summary>

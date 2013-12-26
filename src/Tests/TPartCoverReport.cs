@@ -63,5 +63,13 @@ namespace Tests
             task.ReportXslts = new[] { item1.MockObject, item2.MockObject };
             Assert.That(task.ReportXslts, Is.EquivalentTo(new[] { item1.MockObject, item2.MockObject }));
         }
+
+        [Test]
+        public void InvalidWhenNoDataPublished()
+        {
+            Logger.Expects.One.Method(_ => _.LogErrorFromException(null, false)).WithAnyArguments();
+            task.WhenNoDataPublished = "bad";
+            Assert.That(task.Execute(), Is.False);
+        }
     }
 }

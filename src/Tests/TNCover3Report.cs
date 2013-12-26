@@ -67,5 +67,13 @@ namespace Tests
             task.Arguments = Args;
             Assert.That(task.Arguments, Is.EqualTo(Args));
         }
+        
+        [Test]
+        public void InvalidWhenNoDataPublished()
+        {
+            Logger.Expects.One.Method(_ => _.LogErrorFromException(null, false)).WithAnyArguments();
+            task.WhenNoDataPublished = "bad";
+            Assert.That(task.Execute(), Is.False);
+        }
     }
 }

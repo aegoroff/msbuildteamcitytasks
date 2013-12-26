@@ -118,5 +118,13 @@ namespace Tests
             task.ReportOrder = RptOrder;
             Assert.That(task.ReportOrder, Is.EqualTo(RptOrder));
         }
+
+        [Test]
+        public void InvalidWhenNoDataPublished()
+        {
+            Logger.Expects.One.Method(_ => _.LogErrorFromException(null, false)).WithAnyArguments();
+            task.WhenNoDataPublished = "bad";
+            Assert.That(task.Execute(), Is.False);
+        }
     }
 }

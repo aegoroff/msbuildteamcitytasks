@@ -17,8 +17,8 @@ namespace MSBuild.TeamCity.Tasks.Messages
         /// <summary>
         /// Initializes a new instance of the <see cref="ImportDataTeamCityMessage"/> class for FindBugs report import
         /// </summary>
-        /// <param name="context"></param>
-        /// <param name="findBugsHome"></param>
+        /// <param name="context">Import context</param>
+        /// <param name="findBugsHome">findBugsHome attribute specified pointing to the home directory oif installed FindBugs tool.</param>
         public ImportDataTeamCityMessage(ImportDataContext context, string findBugsHome)
             : this(context)
         {
@@ -54,7 +54,7 @@ namespace MSBuild.TeamCity.Tasks.Messages
         /// <summary>
         ///  Initializes a new instance of the <see cref="ImportDataTeamCityMessage"/> class using type and path specified
         /// </summary>
-        /// <param name="context"></param>
+        /// <param name="context">Import context</param>
         /// <param name="tool">Here the tool name value can be partcover, ncover, or ncover3, depending on selected coverage tool in the coverage settings.</param>
         public ImportDataTeamCityMessage(ImportDataContext context, DotNetCoverageTool tool)
             : this(context)

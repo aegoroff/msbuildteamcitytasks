@@ -51,6 +51,15 @@ namespace MSBuild.TeamCity.Tasks
     ///    FindBugsHome="c:\find bugs" 
     /// />
     /// ]]></code>
+    /// Imports data using verbose output to log and user defined action on no data present
+    /// <code><![CDATA[
+    /// <ImportData
+    ///    Type="FxCop"
+    ///    Path="C:\FxCop.xml" 
+    ///    WhenNoDataPublished="error"
+    ///    Verbose="true"
+    /// />
+    /// ]]></code>
     /// </example>
     public class ImportData : TeamCityTask
     {

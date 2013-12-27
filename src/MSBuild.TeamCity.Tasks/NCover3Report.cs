@@ -29,6 +29,15 @@ namespace MSBuild.TeamCity.Tasks
     ///     Arguments="FullCoverageReport:Html:{teamcity.report.path}"
     /// />
     /// ]]></code>
+    /// Configures .NET coverage processing using NCover3 tool, verbose output to log and user defined action on no data present
+    /// <code><![CDATA[
+    /// <NCover3Report
+    ///    ToolPath="C:\Program Files\NCover3"
+    ///    XmlReportPath="D:\project\ncover3.xml"
+    ///    WhenNoDataPublished="error"
+    ///    Verbose="true"
+    /// />
+    /// ]]></code>
     /// </example>
     public class NCover3Report : TeamCityTask
     {

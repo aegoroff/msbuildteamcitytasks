@@ -29,6 +29,14 @@ namespace MSBuild.TeamCity.Tasks
     ///     XmlReportPath="D:\project\partcover.xml"
     /// />
     /// ]]></code>
+    /// Configures .NET coverage processing using PartCover tool, verbose output to log and user defined action on no data present
+    /// <code><![CDATA[
+    /// <PartCoverReport
+    ///    XmlReportPath="D:\project\partcover.xml"
+    ///    WhenNoDataPublished="error"
+    ///    Verbose="true"
+    /// />
+    /// ]]></code>
     /// </example>
     public class PartCoverReport : TeamCityTask
     {

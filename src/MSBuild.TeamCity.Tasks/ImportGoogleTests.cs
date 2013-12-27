@@ -38,6 +38,19 @@ namespace MSBuild.TeamCity.Tasks
     ///     TestResultsPath="$(MSBuildProjectDirectory)\TestExecutable.xml"
     /// />
     /// ]]></code>
+    /// Runs tests and imports test results into TC using verbose output to log and user defined action if no data present
+    /// <code><![CDATA[
+    /// <Exec
+    ///     Command="TestExecutable.exe --gtest_output=xml:"
+    ///     Timeout="30000"
+    ///     IgnoreExitCode="true"
+    /// />
+    /// <ImportGoogleTests
+    ///     TestResultsPath="$(MSBuildProjectDirectory)\TestExecutable.xml"
+    ///     WhenNoDataPublished="error"
+    ///     Verbose="true"
+    /// />
+    /// ]]></code>
     /// </example>
     public class ImportGoogleTests : TeamCityTask
     {

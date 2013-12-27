@@ -56,6 +56,14 @@ namespace MSBuild.TeamCity.Tasks
     ///     TestExePath="TestExecutable.exe"
     /// />
     /// ]]></code>
+    /// Runs tests and imports test results into TC using verbose output to log and user defined action if no data present
+    /// <code><![CDATA[
+    /// <RunGoogleTests
+    ///     TestExePath="TestExecutable.exe"
+    ///     WhenNoDataPublished="error"
+    ///     Verbose="true"
+    /// />
+    /// ]]></code>
     /// </example>
     public class RunGoogleTests : TeamCityTask
     {

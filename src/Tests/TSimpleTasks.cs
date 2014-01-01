@@ -184,7 +184,8 @@ namespace Tests
                                              ContinueOnFailures = true,
                                              TestResultsPath = TGoogleTestsPlainImporter.SuccessTestsPath,
                                              Verbose = true,
-                                             WhenNoDataPublished = "error"
+                                             WhenNoDataPublished = "error",
+                                             ParseOutOfDate = true
                                          };
             Assert.That(task.Execute());
             Assert.That(task.ContinueOnFailures);

@@ -96,6 +96,12 @@ namespace MSBuild.TeamCity.Tasks
         public string WhenNoDataPublished { get; set; }
 
         /// <summary>
+        /// Gets or sets whether process all the files matching the path. Otherwise, only those updated during the build (is determined by 
+        /// last modification timestamp) are processed. False by default
+        /// </summary>
+        public bool ParseOutOfDate { get; set; }
+
+        /// <summary>
         /// Gets task execution result
         /// </summary>
         protected override bool ExecutionStatus
@@ -112,7 +118,8 @@ namespace MSBuild.TeamCity.Tasks
             var importer = new GoogleTestsPlainImporter(Logger, ContinueOnFailures, TestResultsPath)
             {
                 Verbose = Verbose,
-                WhenNoDataPublished = WhenNoDataPublished
+                WhenNoDataPublished = WhenNoDataPublished,
+                ParseOutOfDate = ParseOutOfDate
             };
             status = importer.Import();
             return importer.Messages;

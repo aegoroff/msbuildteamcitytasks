@@ -47,6 +47,12 @@ namespace MSBuild.TeamCity.Tasks.Internal
         public string WhenNoDataPublished { get; set; }
 
         /// <summary>
+        /// Gets or sets whether process all the files matching the path. Otherwise, only those updated during the build (is determined by 
+        /// last modification timestamp) are processed. False by default
+        /// </summary>
+        public bool ParseOutOfDate { get; set; }
+
+        /// <summary>
         /// Runs import
         /// </summary>
         /// <returns>
@@ -67,7 +73,8 @@ namespace MSBuild.TeamCity.Tasks.Internal
                     Type = ImportType.Gtest,
                     Path = reportPath,
                     Verbose = Verbose,
-                    WhenNoDataPublished = WhenNoDataPublished
+                    WhenNoDataPublished = WhenNoDataPublished,
+                    ParseOutOfDate = ParseOutOfDate
                 };
                 Messages.Add(new ImportDataTeamCityMessage(context));
             }

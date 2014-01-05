@@ -75,6 +75,7 @@ namespace MSBuild.TeamCity.Tasks
         /// Reads TeamCity messages
         /// </summary>
         /// <returns>TeamCity messages list</returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1303:Do not pass literals as localized parameters", MessageId = "MSBuild.TeamCity.Tasks.Messages.SimpleTeamCityMessage.#ctor(System.String,System.String)")]
         protected override IEnumerable<TeamCityMessage> ReadMessages()
         {
             return

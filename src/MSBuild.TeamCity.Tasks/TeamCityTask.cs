@@ -62,6 +62,7 @@ namespace MSBuild.TeamCity.Tasks
         /// <returns>
         /// true if the task successfully executed; otherwise, false.
         /// </returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
         public override bool Execute()
         {
             try

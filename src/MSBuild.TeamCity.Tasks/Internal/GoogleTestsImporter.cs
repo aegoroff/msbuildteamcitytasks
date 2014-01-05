@@ -58,6 +58,7 @@ namespace MSBuild.TeamCity.Tasks.Internal
         /// <returns>
         /// The new instance of <see cref="ExecutionResult"/> structure.
         /// </returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
         public bool Import()
         {
             Messages.Clear();

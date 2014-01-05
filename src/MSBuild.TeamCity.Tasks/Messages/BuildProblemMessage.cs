@@ -24,6 +24,7 @@ namespace MSBuild.TeamCity.Tasks.Messages
         /// Shouldn't change throughout builds if the same problem occurs, e.g. the same compilation error. 
         /// Should be a valid Java id up to 60 characters. 
         /// If omitted, identity is calculated based on description text.</param>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed")]
         public BuildProblemMessage(string description, string identity = null)
         {
             Attributes.Add("description", description);

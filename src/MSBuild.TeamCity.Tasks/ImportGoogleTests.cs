@@ -38,7 +38,7 @@ namespace MSBuild.TeamCity.Tasks
     ///     TestResultsPath="$(MSBuildProjectDirectory)\TestExecutable.xml"
     /// />
     /// ]]></code>
-    /// Runs tests and imports test results into TC using verbose output to log and user defined action if no data present
+    /// Runs tests and imports test results into TC using verbose output into build log and user defined action if no data present
     /// <code><![CDATA[
     /// <Exec
     ///     Command="TestExecutable.exe --gtest_output=xml:"

@@ -5,6 +5,8 @@
     <version>1.0.0.0</version>
     <authors>Alexander Egorov</authors>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <projectUrl>https://github.com/aegoroff/msbuildteamcitytasks</projectUrl>
+    <tags>msbuild teamcity</tags>
     <description>MSBuild TeamCity Tasks Project provides useful tasks that can help to interact build script with JetBrains TeamCity. Some of these features include displaying real-time test results and customized statistics, changing the build status, and publishing artifacts before the build is finished.</description>
   </metadata>
   <files>

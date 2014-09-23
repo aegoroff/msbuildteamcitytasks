@@ -11,7 +11,7 @@
   </metadata>
   <files>
     <file src="Help\*.chm" target="docs" />
-    <file src="MSBuild.TeamCity.Tasks\bin\Release\MSBuild.TeamCity.Tasks.dll" target="lib" />
-    <file src="MSBuild.TeamCity.Tasks.Targets" target="lib" />
+    <file src="MSBuild.TeamCity.Tasks\bin\Release\MSBuild.TeamCity.Tasks.dll" target="tools" />
+    <file src="MSBuild.TeamCity.Tasks.Targets" target="tools" />
   </files>
 </package>

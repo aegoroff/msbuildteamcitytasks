@@ -10,6 +10,7 @@
     <description>MSBuild TeamCity Tasks Project provides useful tasks that can help to interact build script with JetBrains TeamCity. Some of these features include displaying real-time test results and customized statistics, changing the build status, and publishing artifacts before the build is finished.</description>
   </metadata>
   <files>
+    <file src="Help\*.chm" target="docs" />
     <file src="MSBuild.TeamCity.Tasks\bin\Release\MSBuild.TeamCity.Tasks.dll" target="lib" />
     <file src="MSBuild.TeamCity.Tasks.Targets" target="lib" />
   </files>

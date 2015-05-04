@@ -51,9 +51,12 @@ test:
     - Tests.dll
 
 after_test:
-    msbuild src\MSBuildTeamCityTasks.shfbproj /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll" /p:Configuration=%CONFIGURATION%
-    msbuild src\Setup\Setup.wixproj /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll" /p:Configuration=%CONFIGURATION%
-    nuget pack src\msbuildteamcitytasks.nuspec -BasePath src -OutputDirectory src\MSBuild.TeamCity.Tasks\bin\%CONFIGURATION% -Version %APPVEYOR_BUILD_VERSION%
+    - echo MSBuildTeamCityTasks.shfbproj
+    - cmd: msbuild src\MSBuildTeamCityTasks.shfbproj /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll" /p:Configuration=%CONFIGURATION%
+    - echo Setup.wixproj
+    - cmd: msbuild src\Setup\Setup.wixproj /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll" /p:Configuration=%CONFIGURATION%
+    - echo nuget
+    - cmd: nuget pack src\msbuildteamcitytasks.nuspec -BasePath src -OutputDirectory src\MSBuild.TeamCity.Tasks\bin\%CONFIGURATION% -Version %APPVEYOR_BUILD_VERSION%
 
 artifacts:
   - path: src\MSBuild.TeamCity.Tasks\bin\$(configuration)\*.nupkg

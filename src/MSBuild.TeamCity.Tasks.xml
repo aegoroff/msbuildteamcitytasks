@@ -2,6 +2,8 @@
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <!-- Importing MSBuild Community Tasks -->
     <Import Project="$(MSBuildExtensionsPath)\MSBuildCommunityTasks\MSBuild.Community.Tasks.Targets"/>
+    
+    <Import Project="WiX.msbuild"/>
 
     <!-- Importing MSBuild TeamCity Tasks -->
 	<Import Project="$(MSBuildExtensionsPath)\MSBuildTeamCityTasks\MSBuild.TeamCity.Tasks.Targets"/>
@@ -49,7 +51,7 @@
 		<AssemblyInfoFile Include="$(MSBuildProjectDirectory)\**\AssemblyInfo.cs" />
 	</ItemGroup>
 	<!-- Updating version and product code task -->
-	<Target Name="VersionUpdater" Condition=" '$(IsUpdateVersion)'=='true' ">
+	<Target Name="VersionUpdater" Condition=" '$(IsUpdateVersion)'=='true' " DependsOnTargets="WixVersionUpdater">
 		<!-- Updating AssemblyInfo.cs files -->
         <ItemGroup>
             <AssemblyInfoVersion Include="@(AssemblyInfoFile)">
@@ -142,10 +144,6 @@
 			<Project Include="Setup\Setup.wixproj" />
 		</ItemGroup>
 		<!-- Updating WiX files -->
-		<FileUpdate
-			Files="$(MSBuildProjectDirectory)\Setup\Product.wxs"
-			Regex='\$\(var\.SolutionDir\)'
-			ReplacementText='$(MSBuildProjectDirectory)\' />
 		<MSBuild
 			StopOnFirstFailure="true"
 			Projects="%(Project.Identity)"
@@ -159,43 +157,4 @@
 		<PublishArtifacts Artifacts="@(Artifact)"/>
 		<Message Text="Build $(Major).$(Minor).$(Build).$(Revision) Complete"/>
 	</Target>
-    
-  <UsingTask TaskName="RegexTransform" TaskFactory="CodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v4.0.dll">
-    <ParameterGroup>
-      <Items ParameterType="Microsoft.Build.Framework.ITaskItem[]" />
-    </ParameterGroup>
-    <Task>
-      <Using Namespace="System.IO" />
-      <Using Namespace="System.Text.RegularExpressions" />
-      <Using Namespace="Microsoft.Build.Framework" />
-      <Code Type="Fragment" Language="cs"><![CDATA[
-           foreach(var item in Items)
-           {
-             string fileName = item.GetMetadata("FullPath");
-             string find = item.GetMetadata("Find");
-             string replaceWith = item.GetMetadata("ReplaceWith");
-             string optionsValue = item.GetMetadata("Options") ?? "";
-     
-             var options = string.IsNullOrWhiteSpace(optionsValue) ?
-                 RegexOptions.None : (RegexOptions)Enum.Parse(typeof(RegexOptions), optionsValue.Replace('|', ','));
-     
-             if(!File.Exists(fileName))
-             {
-               Log.LogError("Could not find file: {0}", fileName);
-               return false;
-             }
-             string content = File.ReadAllText(fileName);
-             File.WriteAllText(
-               fileName,
-               Regex.Replace(
-                 content,
-                 find,
-                 replaceWith,
-                 options
-               )
-             );
-           }
-         ]]></Code>
-    </Task>
-  </UsingTask>
 </Project>

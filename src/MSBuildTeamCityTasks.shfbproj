@@ -20,10 +20,11 @@
     <Language>en-US</Language>
     <ApiFilter>
       <Filter entryType="Namespace" fullName="MSBuild.TeamCity.Tasks" isExposed="True">
-  <Filter entryType="Interface" fullName="MSBuild.TeamCity.Tasks.ILogger" filterName="ILogger" isExposed="False" />
-</Filter>
-<Filter entryType="Namespace" fullName="MSBuild.TeamCity.Tasks.Internal" isExposed="False" />
-<Filter entryType="Namespace" fullName="MSBuild.TeamCity.Tasks.Messages" isExposed="False" /></ApiFilter>
+        <Filter entryType="Interface" fullName="MSBuild.TeamCity.Tasks.ILogger" filterName="ILogger" isExposed="False" />
+      </Filter>
+      <Filter entryType="Namespace" fullName="MSBuild.TeamCity.Tasks.Internal" isExposed="False" />
+      <Filter entryType="Namespace" fullName="MSBuild.TeamCity.Tasks.Messages" isExposed="False" />
+    </ApiFilter>
     <ProjectSummary>
     </ProjectSummary>
     <MissingTags>Summary, Parameter, Returns, AutoDocumentCtors, TypeParameter</MissingTags>
@@ -41,17 +42,19 @@
     <FrameworkVersion>.NET Framework 4.0</FrameworkVersion>
     <HelpTitle>MSBuild TeamCity Tasks</HelpTitle>
     <CopyrightHref>https://github.com/aegoroff/msbuildteamcitytasks</CopyrightHref>
-    <CopyrightText>Alexander Egorov %28c%29 2009-2013</CopyrightText>
+    <CopyrightText>Alexander Egorov %28c%29 2009-2015</CopyrightText>
     <FeedbackEMailAddress>egoroff%40gmail.com</FeedbackEMailAddress>
     <HeaderText>MSBuild TeamCity Tasks</HeaderText>
-    <PresentationStyle>VS2010</PresentationStyle>
-    <SyntaxFilters>CSharp</SyntaxFilters>
+    <PresentationStyle>VS2013</PresentationStyle>
+    <SyntaxFilters>C#</SyntaxFilters>
     <DocumentationSources>
       <DocumentationSource sourceFile="MSBuild.TeamCity.Tasks\bin\Release\MSBuild.TeamCity.Tasks.dll" />
-<DocumentationSource sourceFile="MSBuild.TeamCity.Tasks\bin\Release\MSBuild.TeamCity.Tasks.XML" /></DocumentationSources>
+      <DocumentationSource sourceFile="MSBuild.TeamCity.Tasks\bin\Release\MSBuild.TeamCity.Tasks.XML" />
+    </DocumentationSources>
     <NamespaceSummaries>
       <NamespaceSummaryItem name="(global)" isDocumented="False" />
-<NamespaceSummaryItem name="MSBuild.TeamCity.Tasks" isDocumented="True" /></NamespaceSummaries>
+      <NamespaceSummaryItem name="MSBuild.TeamCity.Tasks" isDocumented="True" />
+    </NamespaceSummaries>
     <ComponentConfigurations />
     <HelpAttributes />
     <PlugInConfigurations />
@@ -61,6 +64,8 @@
     <NamingMethod>Guid</NamingMethod>
     <ContentPlacement>AboveNamespaces</ContentPlacement>
     <ComponentPath />
+    <MaximumGroupParts>2</MaximumGroupParts>
+    <NamespaceGrouping>False</NamespaceGrouping>
   </PropertyGroup>
   <!-- There are no properties for these groups.  AnyCPU needs to appear in
        order for Visual Studio to perform the build.  The others are optional

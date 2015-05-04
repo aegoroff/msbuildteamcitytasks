@@ -41,6 +41,7 @@
 		<GoogleLogin>1</GoogleLogin>
 		<GooglePassword>1</GooglePassword>
 		<IsUpload>false</IsUpload>
+		<Version>$(Major).$(Minor).$(Build).$(Revision)</Version>
 	</PropertyGroup>
 	<!-- Coverage report output file-->
 	<ItemGroup>

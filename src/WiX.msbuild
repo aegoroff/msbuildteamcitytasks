@@ -7,7 +7,7 @@
 	<ItemGroup>
       <RegexTransform Include="@(WixFile)">
         <Find><![CDATA[\$\(var\.SolutionDir\)]]></Find>
-        <ReplaceWith><![CDATA[$(MSBuildProjectDirectory)]]></ReplaceWith>
+        <ReplaceWith><![CDATA[$(MSBuildProjectDirectory)\]]></ReplaceWith>
         <Options>Singleline</Options>
       </RegexTransform>
     </ItemGroup>

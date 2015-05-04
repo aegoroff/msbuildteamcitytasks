@@ -1,12 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4980103F-534C-4099-ADCB-437D86DE4619}"
 	ProjectSection(SolutionItems) = preProject
 		MSBuild.TeamCity.Tasks.Targets = MSBuild.TeamCity.Tasks.Targets
 		MSBuild.TeamCity.Tasks.xml = MSBuild.TeamCity.Tasks.xml
+		WiX.msbuild = WiX.msbuild
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSBuild.TeamCity.Tasks", "MSBuild.TeamCity.Tasks\MSBuild.TeamCity.Tasks.csproj", "{236D2242-876D-4D94-BA8D-0DDAF1991EC4}"

@@ -53,6 +53,8 @@ test:
 after_test:
     - echo MSBuildTeamCityTasks.shfbproj
     - cmd: msbuild src\MSBuildTeamCityTasks.shfbproj /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll" /p:Configuration=%CONFIGURATION%
+    - echo WiX.msbuild
+    - cmd: msbuild src\WiX.msbuild /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll" /p:Configuration=%CONFIGURATION%;Version=%APPVEYOR_BUILD_VERSION%;IsUpdateVersion=true
     - echo Setup.wixproj
     - cmd: msbuild src\Setup\Setup.wixproj /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll" /p:Configuration=%CONFIGURATION%;Platform=x86
     - echo nuget

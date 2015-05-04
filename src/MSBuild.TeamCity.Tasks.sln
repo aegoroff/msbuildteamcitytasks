@@ -5,6 +5,7 @@ VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4980103F-534C-4099-ADCB-437D86DE4619}"
 	ProjectSection(SolutionItems) = preProject
+		..\appveyor.yml = ..\appveyor.yml
 		MSBuild.TeamCity.Tasks.Targets = MSBuild.TeamCity.Tasks.Targets
 		MSBuild.TeamCity.Tasks.xml = MSBuild.TeamCity.Tasks.xml
 		WiX.msbuild = WiX.msbuild

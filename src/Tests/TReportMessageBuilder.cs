@@ -20,7 +20,7 @@ namespace Tests
             const string error = "e";
             const string status = "ERROR";
 
-            ReportMessageBuilder builder = new ReportMessageBuilder(Text, status, error);
+            var builder = new ReportMessageBuilder(Text, status, error);
 
             Assert.That(builder.BuildMessage().ToString(),
                         Is.EqualTo("##teamcity[message text='t' status='ERROR' errorDetails='e']"));
@@ -31,7 +31,7 @@ namespace Tests
         {
             const string status = "WARNING";
 
-            ReportMessageBuilder builder = new ReportMessageBuilder(Text, status, null);
+            var builder = new ReportMessageBuilder(Text, status, null);
 
             Assert.That(builder.BuildMessage().ToString(), Is.EqualTo("##teamcity[message text='t' status='WARNING']"));
         }
@@ -39,7 +39,7 @@ namespace Tests
         [Test]
         public void OnlyText()
         {
-            ReportMessageBuilder builder = new ReportMessageBuilder(Text, null, null);
+            var builder = new ReportMessageBuilder(Text, null, null);
 
             Assert.That(builder.BuildMessage().ToString(), Is.EqualTo("##teamcity[message text='t']"));
         }
@@ -49,7 +49,7 @@ namespace Tests
         {
             const string error = "e";
 
-            ReportMessageBuilder builder = new ReportMessageBuilder(Text, null, error);
+            var builder = new ReportMessageBuilder(Text, null, error);
 
             Assert.That(builder.BuildMessage().ToString(), Is.EqualTo("##teamcity[message text='t']"));
         }

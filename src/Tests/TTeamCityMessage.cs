@@ -25,21 +25,21 @@ namespace Tests
         public void BuildStat()
         {
             const string key = "k";
-            BuildStatisticTeamCityMessage message = new BuildStatisticTeamCityMessage(key, 10);
+            var message = new BuildStatisticTeamCityMessage(key, 10);
             Assert.That(message.ToString(), Is.EqualTo("##teamcity[buildStatisticValue key='k' value='10.00']"));
         }
 
         [Test]
         public void Attributeless()
         {
-            AttributeLessMessage message = new AttributeLessMessage(EnableServiceMessages);
+            var message = new AttributeLessMessage(EnableServiceMessages);
             Assert.That(message.ToString(), Is.EqualTo("##teamcity[enableServiceMessages]"));
         }
 
         [Test]
         public void AttributelessWithTimestamp()
         {
-            AttributeLessMessage message = new AttributeLessMessage(EnableServiceMessages) { IsAddTimestamp = true };
+            var message = new AttributeLessMessage(EnableServiceMessages) { IsAddTimestamp = true };
             string expected = string.Format(@"##teamcity\[enableServiceMessages timestamp='{0}'\]", DateRegex);
             Assert.That(message.ToString(), Is.StringMatching(expected));
         }
@@ -47,7 +47,7 @@ namespace Tests
         [Test]
         public void SimpleMessage()
         {
-            SimpleTeamCityMessage message = new SimpleTeamCityMessage(BuildNumber, Number);
+            var message = new SimpleTeamCityMessage(BuildNumber, Number);
             Assert.That(message.ToString(), Is.EqualTo("##teamcity[buildNumber '1.0']"));
             Assert.That(message.MessageText, Is.EqualTo(Number));
         }
@@ -55,7 +55,7 @@ namespace Tests
         [Test]
         public void SimpleMessageAddTimeStamp()
         {
-            SimpleTeamCityMessage message = new SimpleTeamCityMessage(BuildNumber, Number) { IsAddTimestamp = true };
+            var message = new SimpleTeamCityMessage(BuildNumber, Number) { IsAddTimestamp = true };
             string expected = string.Format(@"##teamcity\[buildNumber '1\.0' timestamp='{0}'\]", DateRegex);
             Assert.That(message.ToString(), Is.StringMatching(expected));
         }
@@ -63,7 +63,7 @@ namespace Tests
         [Test]
         public void SimpleMessageFlowId()
         {
-            SimpleTeamCityMessage message = new SimpleTeamCityMessage(BuildNumber, Number)
+            var message = new SimpleTeamCityMessage(BuildNumber, Number)
                                                 { IsAddTimestamp = true, FlowId = "1" };
             string expected = string.Format(@"##teamcity\[buildNumber '1\.0' timestamp='{0}' flowId='1'\]", DateRegex);
             Assert.That(message.ToString(), Is.StringMatching(expected));
@@ -72,7 +72,7 @@ namespace Tests
         [Test]
         public void SimpleMessageFlowIdToStringTwice()
         {
-            SimpleTeamCityMessage message = new SimpleTeamCityMessage(BuildNumber, Number)
+            var message = new SimpleTeamCityMessage(BuildNumber, Number)
                                                 { IsAddTimestamp = true, FlowId = "1" };
             string expected = string.Format(@"##teamcity\[buildNumber '1\.0' timestamp='{0}' flowId='1'\]", DateRegex);
             Assert.That(message.ToString(), Is.StringMatching(expected));
@@ -82,14 +82,14 @@ namespace Tests
         [Test]
         public void BlockOpen()
         {
-            BlockOpenTeamCityMessage message = new BlockOpenTeamCityMessage(Name);
+            var message = new BlockOpenTeamCityMessage(Name);
             Assert.That(message.ToString(), Is.EqualTo("##teamcity[blockOpened name='t1']"));
         }
 
         [Test]
         public void BlockClose()
         {
-            BlockCloseTeamCityMessage message = new BlockCloseTeamCityMessage(Name);
+            var message = new BlockCloseTeamCityMessage(Name);
             Assert.That(message.ToString(), Is.EqualTo("##teamcity[blockClosed name='t1']"));
         }
 
@@ -98,7 +98,7 @@ namespace Tests
         {
             const string error = "e";
             const string status = "ERROR";
-            ReportMessageTeamCityMessage message = new ReportMessageTeamCityMessage(Text, status, error);
+            var message = new ReportMessageTeamCityMessage(Text, status, error);
             Assert.That(message.ToString(), Is.EqualTo("##teamcity[message text='t' status='ERROR' errorDetails='e']"));
         }
 
@@ -106,14 +106,14 @@ namespace Tests
         public void ReportMessageStatusAndText()
         {
             const string status = "WARNING";
-            ReportMessageTeamCityMessage message = new ReportMessageTeamCityMessage(Text, status);
+            var message = new ReportMessageTeamCityMessage(Text, status);
             Assert.That(message.ToString(), Is.EqualTo("##teamcity[message text='t' status='WARNING']"));
         }
 
         [Test]
         public void ReportMessageText()
         {
-            ReportMessageTeamCityMessage message = new ReportMessageTeamCityMessage(Text);
+            var message = new ReportMessageTeamCityMessage(Text);
             Assert.That(message.ToString(), Is.EqualTo("##teamcity[message text='t']"));
         }
 
@@ -121,7 +121,7 @@ namespace Tests
         public void BuildStatus()
         {
             const string status = "SUCCESS";
-            BuildStatusTeamCityMessage message = new BuildStatusTeamCityMessage(status, Text);
+            var message = new BuildStatusTeamCityMessage(status, Text);
             Assert.That(message.ToString(), Is.EqualTo("##teamcity[buildStatus status='SUCCESS' text='t']"));
         }
 
@@ -139,7 +139,7 @@ namespace Tests
                 Verbose = verbose
             };
 
-            ImportDataTeamCityMessage message = new ImportDataTeamCityMessage(context);
+            var message = new ImportDataTeamCityMessage(context);
             Assert.That(message.ToString(), Is.EqualTo(expected));
         }
 
@@ -162,7 +162,7 @@ namespace Tests
                 Type = type, 
                 Path = Path
             };
-            ImportDataTeamCityMessage message = new ImportDataTeamCityMessage(context);
+            var message = new ImportDataTeamCityMessage(context);
             Assert.That(message.ToString(), Is.EqualTo(expected));
         }
 
@@ -177,7 +177,7 @@ namespace Tests
                 Type = ImportType.DotNetCoverage,
                 Path = Path
             };
-            ImportDataTeamCityMessage message = new ImportDataTeamCityMessage(context, tool);
+            var message = new ImportDataTeamCityMessage(context, tool);
             Assert.That(message.ToString(), Is.EqualTo(expected));
         }
 
@@ -235,35 +235,35 @@ namespace Tests
                 Type = type,
                 Path = Path
             };
-            ImportDataTeamCityMessage message = new ImportDataTeamCityMessage(context, "h");
+            var message = new ImportDataTeamCityMessage(context, "h");
             Assert.That(message.ToString(), Is.EqualTo("##teamcity[importData type='findBugs' path='p' findBugsHome='h']"));
         }
 
         [Test]
         public void TestSuiteStart()
         {
-            TestSuiteStartTeamCityMessage message = new TestSuiteStartTeamCityMessage(Name);
+            var message = new TestSuiteStartTeamCityMessage(Name);
             Assert.That(message.ToString(), Is.EqualTo("##teamcity[testSuiteStarted name='t1']"));
         }
 
         [Test]
         public void TestSuiteFinish()
         {
-            TestSuiteFinishTeamCityMessage message = new TestSuiteFinishTeamCityMessage(Name);
+            var message = new TestSuiteFinishTeamCityMessage(Name);
             Assert.That(message.ToString(), Is.EqualTo("##teamcity[testSuiteFinished name='t1']"));
         }
 
         [Test]
         public void TestStart()
         {
-            TestStartTeamCityMessage message = new TestStartTeamCityMessage(Name, false);
+            var message = new TestStartTeamCityMessage(Name, false);
             Assert.That(message.ToString(), Is.EqualTo("##teamcity[testStarted name='t1']"));
         }
 
         [Test]
         public void TestStartCaptureStandardOutput()
         {
-            TestStartTeamCityMessage message = new TestStartTeamCityMessage(Name, true);
+            var message = new TestStartTeamCityMessage(Name, true);
             Assert.That(message.ToString(), Is.EqualTo("##teamcity[testStarted name='t1' captureStandardOutput='true']"));
         }
 
@@ -271,7 +271,7 @@ namespace Tests
         public void TestFinish()
         {
             const double duration = 0.016;
-            TestFinishTeamCityMessage message = new TestFinishTeamCityMessage(Name, duration);
+            var message = new TestFinishTeamCityMessage(Name, duration);
             Assert.That(message.ToString(), Is.EqualTo("##teamcity[testFinished name='t1' duration='16']"));
         }
 
@@ -280,7 +280,7 @@ namespace Tests
         {
             const string msg = "m1";
             const string details = "d1";
-            TestFailedTeamCityMessage message = new TestFailedTeamCityMessage(Name, msg, details);
+            var message = new TestFailedTeamCityMessage(Name, msg, details);
             Assert.That(message.ToString(), Is.EqualTo("##teamcity[testFailed name='t1' message='m1' details='d1']"));
         }
 
@@ -289,9 +289,7 @@ namespace Tests
         {
             const string msg = "m1";
             const string details = "d1";
-            TestFailedTeamCityMessage message = new TestFailedTeamCityMessage(Name, msg, details);
-            message.Expected = "e";
-            message.Actual = "a";
+            var message = new TestFailedTeamCityMessage(Name, msg, details) { Expected = "e", Actual = "a" };
             Assert.That(message.ToString(),
                         Is.EqualTo(
                             "##teamcity[testFailed type='comparisonFailure' name='t1' message='m1' details='d1' expected='e' actual='a']"));
@@ -302,9 +300,11 @@ namespace Tests
         {
             const string msg = "m1";
             const string details = "d1";
-            TestFailedTeamCityMessage message = new TestFailedTeamCityMessage(Name, msg, details);
-            message.Expected = string.Empty;
-            message.Actual = string.Empty;
+            var message = new TestFailedTeamCityMessage(Name, msg, details)
+            {
+                Expected = string.Empty,
+                Actual = string.Empty
+            };
             Assert.That(message.ToString(), Is.EqualTo("##teamcity[testFailed name='t1' message='m1' details='d1']"));
         }
 
@@ -313,9 +313,7 @@ namespace Tests
         {
             const string msg = "m1";
             const string details = "d1";
-            TestFailedTeamCityMessage message = new TestFailedTeamCityMessage(Name, msg, details);
-            message.Expected = string.Empty;
-            message.Actual = "a";
+            var message = new TestFailedTeamCityMessage(Name, msg, details) { Expected = string.Empty, Actual = "a" };
             Assert.That(message.ToString(),
                         Is.EqualTo(
                             "##teamcity[testFailed type='comparisonFailure' name='t1' message='m1' details='d1' actual='a']"));
@@ -326,9 +324,7 @@ namespace Tests
         {
             const string msg = "m1";
             const string details = "d1";
-            TestFailedTeamCityMessage message = new TestFailedTeamCityMessage(Name, msg, details);
-            message.Expected = "e";
-            message.Actual = string.Empty;
+            var message = new TestFailedTeamCityMessage(Name, msg, details) { Expected = "e", Actual = string.Empty };
             Assert.That(message.ToString(),
                         Is.EqualTo(
                             "##teamcity[testFailed type='comparisonFailure' name='t1' message='m1' details='d1' expected='e']"));
@@ -339,7 +335,7 @@ namespace Tests
         {
             const string msg = "m1";
             const string details = "d1";
-            TestFailedTeamCityMessage message = new TestFailedTeamCityMessage(Name, msg, details);
+            var message = new TestFailedTeamCityMessage(Name, msg, details);
             Assert.That(message.Expected, Is.Empty);
         }
 
@@ -348,7 +344,7 @@ namespace Tests
         {
             const string msg = "m1";
             const string details = "d1";
-            TestFailedTeamCityMessage message = new TestFailedTeamCityMessage(Name, msg, details) { Expected = "e" };
+            var message = new TestFailedTeamCityMessage(Name, msg, details) { Expected = "e" };
             Assert.That(message.ToString(),
                         Is.EqualTo(
                             "##teamcity[testFailed type='comparisonFailure' name='t1' message='m1' details='d1' expected='e']"));
@@ -359,7 +355,7 @@ namespace Tests
         {
             const string msg = "m1";
             const string details = "d1";
-            TestFailedTeamCityMessage message = new TestFailedTeamCityMessage(Name, msg, details) { Expected = "e" };
+            var message = new TestFailedTeamCityMessage(Name, msg, details) { Expected = "e" };
             message.Expected = "o";
             Assert.That(message.ToString(),
                         Is.EqualTo(
@@ -371,7 +367,7 @@ namespace Tests
         {
             const string msg = "m1";
             const string details = "d1";
-            TestFailedTeamCityMessage message = new TestFailedTeamCityMessage(Name, msg, details);
+            var message = new TestFailedTeamCityMessage(Name, msg, details);
             Assert.That(message.Actual, Is.Empty);
         }
 
@@ -380,7 +376,7 @@ namespace Tests
         {
             const string msg = "m1";
             const string details = "d1";
-            TestFailedTeamCityMessage message = new TestFailedTeamCityMessage(Name, msg, details) { Actual = "e" };
+            var message = new TestFailedTeamCityMessage(Name, msg, details) { Actual = "e" };
             Assert.That(message.ToString(),
                         Is.EqualTo(
                             "##teamcity[testFailed type='comparisonFailure' name='t1' message='m1' details='d1' actual='e']"));
@@ -391,7 +387,7 @@ namespace Tests
         {
             const string msg = "m1";
             const string details = "d1";
-            TestFailedTeamCityMessage message = new TestFailedTeamCityMessage(Name, msg, details) { Actual = "e" };
+            var message = new TestFailedTeamCityMessage(Name, msg, details) { Actual = "e" };
             message.Actual = "o";
             Assert.That(message.ToString(),
                         Is.EqualTo(
@@ -402,7 +398,7 @@ namespace Tests
         public void TestIgnored()
         {
             const string msg = "m1";
-            TestIgnoredTeamCityMessage message = new TestIgnoredTeamCityMessage(Name, msg);
+            var message = new TestIgnoredTeamCityMessage(Name, msg);
             Assert.That(message.ToString(), Is.EqualTo("##teamcity[testIgnored name='t1' message='m1']"));
         }
 
@@ -410,7 +406,7 @@ namespace Tests
         public void TestStdOut()
         {
             const string output = "m1";
-            TestStdOutTeamCityMessage message = new TestStdOutTeamCityMessage(Name, output);
+            var message = new TestStdOutTeamCityMessage(Name, output);
             Assert.That(message.ToString(), Is.EqualTo("##teamcity[testStdOut name='t1' out='m1']"));
         }
 
@@ -418,7 +414,7 @@ namespace Tests
         public void TestStdErr()
         {
             const string output = "m1";
-            TestStdErrTeamCityMessage message = new TestStdErrTeamCityMessage(Name, output);
+            var message = new TestStdErrTeamCityMessage(Name, output);
             Assert.That(message.ToString(), Is.EqualTo("##teamcity[testStdErr name='t1' out='m1']"));
         }
 
@@ -434,7 +430,7 @@ namespace Tests
         {
             const string key = "ncover3_home";
             const string value = "v";
-            DotNetCoverMessage message = new DotNetCoverMessage(key, value);
+            var message = new DotNetCoverMessage(key, value);
             Assert.That(message.ToString(), Is.EqualTo("##teamcity[dotNetCoverage ncover3_home='v']"));
         }
 
@@ -443,28 +439,28 @@ namespace Tests
         public void Compilation(string msg, string expected)
         {
             const string compiler = "c";
-            CompilationMessage message = new CompilationMessage(compiler, msg);
+            var message = new CompilationMessage(compiler, msg);
             Assert.That(message.ToString(), Is.EqualTo(expected));
         }
 
         [Test]
         public void SetParameter()
         {
-            SetParameterTeamCityMessage message = new SetParameterTeamCityMessage(Name, Text);
+            var message = new SetParameterTeamCityMessage(Name, Text);
             Assert.That(message.ToString(), Is.EqualTo("##teamcity[setParameter name='t1' value='t']"));
         }
         
         [Test]
         public void BuildProblemMandatory()
         {
-            BuildProblemMessage message = new BuildProblemMessage(Text);
+            var message = new BuildProblemMessage(Text);
             Assert.That(message.ToString(), Is.EqualTo("##teamcity[buildProblem description='t']"));
         }
         
         [Test]
         public void BuildProblemAll()
         {
-            BuildProblemMessage message = new BuildProblemMessage(Text, Name);
+            var message = new BuildProblemMessage(Text, Name);
             Assert.That(message.ToString(), Is.EqualTo("##teamcity[buildProblem description='t' identity='t1']"));
         }
     }

@@ -135,7 +135,7 @@ namespace Tests
 
         private void AssertFailures(int expected)
         {
-            GoogleTestXmlReader reader = new GoogleTestXmlReader(new StringReader(sb.ToString()));
+            var reader = new GoogleTestXmlReader(new StringReader(sb.ToString()));
             reader.Read();
             Assert.That(reader.FailuresCount, Is.EqualTo(expected));
         }

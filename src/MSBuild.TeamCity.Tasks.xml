@@ -131,14 +131,15 @@
 	</ItemGroup>
 	<!-- Setting next build version and finish build process -->
 	<Target Name="Build" DependsOnTargets="Zipping">
-		<ItemGroup>
-			<Project Include="MSBuildTeamCityTasks.shfbproj" />
-			<Project Include="Setup\Setup.wixproj" />
-		</ItemGroup>
 		<MSBuild
 			StopOnFirstFailure="true"
-			Projects="%(Project.Identity)"
+			Projects="MSBuildTeamCityTasks.shfbproj"
 			Properties="Configuration=$(Configuration)" 
+		/>
+		<MSBuild
+			StopOnFirstFailure="true"
+			Projects="Setup\Setup.wixproj"
+			Properties="Configuration=$(Configuration);Platform=x86" 
 		/>
 		<Copy
 			SourceFiles="@(SetupFile)"

@@ -144,7 +144,6 @@
 			<Project Include="MSBuildTeamCityTasks.shfbproj" />
 			<Project Include="Setup\Setup.wixproj" />
 		</ItemGroup>
-		<!-- Updating WiX files -->
 		<MSBuild
 			StopOnFirstFailure="true"
 			Projects="%(Project.Identity)"

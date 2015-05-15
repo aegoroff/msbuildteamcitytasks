@@ -5,7 +5,6 @@
  */
 
 using System;
-using System.Collections.Generic;
 using MSBuild.TeamCity.Tasks.Internal;
 using MSBuild.TeamCity.Tasks.Messages;
 using Microsoft.Build.Framework;
@@ -78,7 +77,7 @@ namespace Tests
         {
             logger.Expects.One.Method(_=> _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
 
-            ExecutionResult result = new ExecutionResult(true);
+            var result = new ExecutionResult(true);
             result.Messages.Add(message);
             Assert.That(implementation.Execute(result));
         }
@@ -88,7 +87,7 @@ namespace Tests
         {
             logger.Expects.One.Method(_=> _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
 
-            ExecutionResult result = new ExecutionResult(false);
+            var result = new ExecutionResult(false);
             result.Messages.Add(message);
             Assert.That(implementation.Execute(result), Is.False);
         }
@@ -98,7 +97,7 @@ namespace Tests
         {
             logger.Expects.No.Method(_=> _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
 
-            ExecutionResult result = new ExecutionResult(true);
+            var result = new ExecutionResult(true);
             Assert.That(implementation.Execute(result), Is.True);
         }
 
@@ -108,7 +107,7 @@ namespace Tests
             const string flowId = "1";
             logger.Expects.One.Method(_=> _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
 
-            ExecutionResult result = new ExecutionResult(true);
+            var result = new ExecutionResult(true);
             result.Messages.Add(message);
 
             Assert.That(implementation.Execute(result, true, flowId));

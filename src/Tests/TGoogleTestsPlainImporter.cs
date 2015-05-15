@@ -37,7 +37,7 @@ namespace Tests
         {
             logger.Expects.One.GetProperty(_ => _.HasLoggedErrors).Will(Return.Value(false));
 
-            GoogleTestsPlainImporter importer = new GoogleTestsPlainImporter(logger.MockObject, false, SuccessTestsPath);
+            var importer = new GoogleTestsPlainImporter(logger.MockObject, false, SuccessTestsPath);
 
             Assert.That(importer.Import());
             Assert.That(importer.Messages.Count, Is.EqualTo(1));
@@ -48,7 +48,7 @@ namespace Tests
         {
             logger.Expects.One.GetProperty(_ => _.HasLoggedErrors).Will(Return.Value(false));
 
-            GoogleTestsPlainImporter importer = new GoogleTestsPlainImporter(logger.MockObject, false, FailTestsPath);
+            var importer = new GoogleTestsPlainImporter(logger.MockObject, false, FailTestsPath);
 
             Assert.That(importer.Import(), Is.False);
             Assert.That(importer.Messages.Count, Is.EqualTo(1));
@@ -59,7 +59,7 @@ namespace Tests
         {
             logger.Expects.One.GetProperty(_ => _.HasLoggedErrors).Will(Return.Value(false));
 
-            GoogleTestsPlainImporter importer = new GoogleTestsPlainImporter(logger.MockObject, true, FailTestsPath);
+            var importer = new GoogleTestsPlainImporter(logger.MockObject, true, FailTestsPath);
 
             Assert.That(importer.Import());
             Assert.That(importer.Messages.Count, Is.EqualTo(1));

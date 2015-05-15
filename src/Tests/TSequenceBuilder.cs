@@ -24,7 +24,7 @@ namespace Tests
         [TestCase("1,2", new[] { 1, 2 }, null, null)]
         public void OneCall(string expected, IEnumerable<int> enumerator, string head, string trail)
         {
-            SequenceBuilder<int> builder = new SequenceBuilder<int>(enumerator, Separator, head, trail);
+            var builder = new SequenceBuilder<int>(enumerator, Separator, head, trail);
             Assert.That(builder.ToString(), Is.EqualTo(expected));
         }
 
@@ -32,7 +32,7 @@ namespace Tests
         [TestCase("", new int[0])]
         public void ManyCalls(string expected, IEnumerable<int> enumerator)
         {
-            SequenceBuilder<int> builder = new SequenceBuilder<int>(enumerator, Separator, Head, Trail);
+            var builder = new SequenceBuilder<int>(enumerator, Separator, Head, Trail);
             Assert.That(builder.ToString(), Is.EqualTo(expected));
             Assert.That(builder.ToString(), Is.EqualTo(expected));
         }
@@ -40,7 +40,7 @@ namespace Tests
         [Test]
         public void SimplifiedConstructor()
         {
-            SequenceBuilder<int> builder = new SequenceBuilder<int>(values, Separator);
+            var builder = new SequenceBuilder<int>(values, Separator);
             Assert.That(builder.ToString(), Is.EqualTo("1,2"));
         }
     }

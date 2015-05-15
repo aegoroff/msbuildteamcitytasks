@@ -31,7 +31,7 @@ namespace Tests
                 Verbose = verbose,
                 Path = "p"
             };
-            ImportDataMessageBuilder builder = new ImportDataMessageBuilder(tool, context, findBugsHome);
+            var builder = new ImportDataMessageBuilder(tool, context, findBugsHome);
             Assert.That(builder.BuildMessage().ToString(), Is.EqualTo(expected));
         }
     }

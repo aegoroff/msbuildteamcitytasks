@@ -61,15 +61,6 @@
                 <Options>Singleline</Options>
             </AssemblyInfoVersion>
         </ItemGroup>
-		<!-- Updating WiX files -->
-        <ItemGroup>
-            <WixVersion Include="$(MSBuildProjectDirectory)\Setup\Product.wxs">
-                <Find><![CDATA[define Version = "(\d+)\.(\d+)\.(\d+).(\d+)"]]></Find>
-                <ReplaceWith><![CDATA[define Version = "$(Major).$(Minor).$(Build).$(Revision)"]]></ReplaceWith>
-                <Options>Singleline</Options>
-            </WixVersion>
-        </ItemGroup>
-        <RegexTransform Items="@(WixVersion)" />
         <RegexTransform Items="@(AssemblyInfoVersion)" />
 	</Target>
 	<ItemGroup>

@@ -17,7 +17,7 @@ namespace Tests
         private const string Head = "(";
         private const string Trail = ")";
         private const string Separator = ",";
-        private readonly int[] values = new[] { 1, 2 };
+        private readonly int[] values = { 1, 2 };
 
         [TestCase(Filter, new[] { 1, 2 }, Head, Trail)]
         [TestCase("", new int[0], Head, Trail)]

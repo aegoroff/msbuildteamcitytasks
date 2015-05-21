@@ -13,7 +13,7 @@
 		<!-- Code configuration to build (Release or Debug) -->
 		<Configuration>Release</Configuration>
 		<!-- NUnit working path  -->
-		<NUnitPath>$(MSBuildProjectDirectory)\packages\NUnit.Runners.2.6.3\tools</NUnitPath>
+		<NUnitPath>$(MSBuildProjectDirectory)\packages\NUnit.Runners.2.6.4\tools</NUnitPath>
 		<OpenCoverPath>$(MSBuildProjectDirectory)\packages\OpenCover.4.5.2316</OpenCoverPath>
 		<ReportGeneratorPath>$(MSBuildProjectDirectory)\packages\ReportGenerator.1.9.1.0</ReportGeneratorPath>
 		

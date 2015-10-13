@@ -17,6 +17,8 @@ namespace MSBuild.TeamCity.Tasks.Internal
     {
         #region Constants and Fields
 
+        private const string ExcludeByfileOpt = "excludebyfile";
+        private const string HideSkippedeOpt = "hideskipped";
         private const string FilterOpt = "filter";
         private const string OutputOpt = "output";
         private const string TargetArgumentsOpt = "targetargs";
@@ -66,6 +68,26 @@ namespace MSBuild.TeamCity.Tasks.Internal
         /// </remarks>
         public IList<string> Filter { get; private set; }
 
+        /// <summary>
+        /// Gets or sets exclude by flie filter
+        /// </summary>
+        /// <remarks>
+        /// Exclude a class (or methods) by filter(s) that match the filenames. An * can be used as a wildcard.
+        /// </remarks>
+        public string ExcludeByfile { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether to remove information from output file
+        /// </summary>
+        /// <summary>
+        /// File|Filter|Attribute|MissingPdb| MissingPdb |All [;File|Filter|Attribute|MissingPdb| MissingPdb |All
+        /// </summary>
+        /// <remarks>
+        /// Remove information from output file (-output:) that relates to classes/modules that have been skipped (filtered) 
+        /// due to the use of the following switches –excludebyfile:,  excludebyattribute: and –filter: or where the PDB is missing.
+        /// </remarks>
+        public string HideSkipped { get; set; }
+
         #endregion
 
         #region Properties
@@ -113,6 +135,8 @@ namespace MSBuild.TeamCity.Tasks.Internal
             yield return new DictionaryEntry(TargetArgumentsOpt, TargetArguments);
             yield return new DictionaryEntry(OutputOpt, Output);
             yield return new DictionaryEntry(FilterOpt, Filter.Join(" "));
+            yield return new DictionaryEntry(HideSkippedeOpt, HideSkipped);
+            yield return new DictionaryEntry(ExcludeByfileOpt, ExcludeByfile);
         }
 
         #endregion

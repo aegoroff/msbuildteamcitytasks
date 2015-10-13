@@ -31,6 +31,7 @@ namespace MSBuild.TeamCity.Tasks.Internal
             yield return new DictionaryEntry(FilterOpt, this.Filter.Join(" "));
             yield return new DictionaryEntry(HideSkippedeOpt, this.HideSkipped);
             yield return new DictionaryEntry(ExcludeByfileOpt, this.ExcludeByfile);
+            yield return new DictionaryEntry(SkipAutoPropsOpt, this.SkipAutoProps);
         }
 
         #endregion
@@ -39,6 +40,7 @@ namespace MSBuild.TeamCity.Tasks.Internal
 
         private const string ExcludeByfileOpt = "excludebyfile";
         private const string HideSkippedeOpt = "hideskipped";
+        private const string SkipAutoPropsOpt = "skipautoprops";
         private const string FilterOpt = "filter";
         private const string OutputOpt = "output";
         private const string TargetArgumentsOpt = "targetargs";
@@ -109,6 +111,11 @@ namespace MSBuild.TeamCity.Tasks.Internal
         ///     missing.
         /// </remarks>
         public string HideSkipped { get; set; }
+
+        /// <summary>
+        /// Gets or set whether to Neither track nor record Auto-Implemented properties.
+        /// </summary>
+        public bool SkipAutoProps { get; set; }
 
         #endregion
 

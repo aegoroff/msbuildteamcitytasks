@@ -38,7 +38,8 @@ namespace MSBuild.TeamCity.Tasks
                 TargetArguments = this.TargetArguments,
                 Output = this.XmlReportPath,
                 HideSkipped = this.HideSkipped,
-                ExcludeByfile = this.ExcludeByfile
+                ExcludeByfile = this.ExcludeByfile,
+                SkipAutoProps = this.SkipAutoProps
             };
             commandLine.Filter.AddRange(this.Filter);
 
@@ -106,6 +107,17 @@ namespace MSBuild.TeamCity.Tasks
         ///     missing.
         /// </remarks>
         public string HideSkipped { get; set; }
+
+        /// <summary>
+        ///     Gets or set whether to Neither track nor record Auto-Implemented properties.
+        /// </summary>
+        /// <remarks>
+        /// i.e. skip getters and setters like these
+        /// <code><![CDATA[
+        /// public bool Service { get; set; }
+        /// ]]></code>
+        /// </remarks>
+        public bool SkipAutoProps { get; set; }
 
         /// <summary>
         ///     Gets or sets arguments for target process

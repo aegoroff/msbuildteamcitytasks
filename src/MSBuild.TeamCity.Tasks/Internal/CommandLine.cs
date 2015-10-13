@@ -108,7 +108,7 @@ namespace MSBuild.TeamCity.Tasks.Internal
                 from option in this.EnumerateOptions()
                 where
                     (!string.IsNullOrEmpty(option.Value as string) && !this.IsOutputInCaseOfEmptyValue) ||
-                    this.IsOutputInCaseOfEmptyValue
+                    this.IsOutputInCaseOfEmptyValue || option.Value is bool && (bool)option.Value
                 select this.CreateOption(option.Key, option.Value as string);
         }
 

@@ -56,6 +56,26 @@ namespace MSBuild.TeamCity.Tasks
         /// As can be seen you can use an * as a wildcard. Also an exclusion filter (-) takes precedence over an inclusion filter (+).
         /// </remarks>
         public ITaskItem[] Filter { get; set; }
+        
+        /// <summary>
+        /// Gets or sets exclude by flie filter
+        /// </summary>
+        /// <remarks>
+        /// Exclude a class (or methods) by filter(s) that match the filenames. An * can be used as a wildcard.
+        /// </remarks>
+        public string ExcludeByfile { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether to remove information from output file
+        /// </summary>
+        /// <summary>
+        /// File|Filter|Attribute|MissingPdb| MissingPdb |All [;File|Filter|Attribute|MissingPdb| MissingPdb |All
+        /// </summary>
+        /// <remarks>
+        /// Remove information from output file (-output:) that relates to classes/modules that have been skipped (filtered) 
+        /// due to the use of the following switches –excludebyfile:,  excludebyattribute: and –filter: or where the PDB is missing.
+        /// </remarks>
+        public string HideSkipped { get; set; }
 
         /// <summary>
         /// Gets or sets arguments for target process
@@ -102,6 +122,8 @@ namespace MSBuild.TeamCity.Tasks
                                       TargetWorkDir = TargetWorkDir,
                                       TargetArguments = TargetArguments,
                                       Output = XmlReportPath,
+                                      HideSkipped = HideSkipped,
+                                      ExcludeByfile = ExcludeByfile
                                   };
             commandLine.Filter.AddRange(Filter);
 

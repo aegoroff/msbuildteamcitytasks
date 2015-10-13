@@ -89,6 +89,8 @@ namespace Tests
             commandLine.TargetWorkDir = TargetWorkDir;
             commandLine.TargetArguments = TargetArguments;
             commandLine.Output = Output;
+            commandLine.HideSkipped = "all";
+            commandLine.ExcludeByfile = "*.Generated.cs";
             commandLine.Filter.Add(Filter);
             Assert.That(commandLine.ToString(), Is.EqualTo(string.Join(Space, EnumerateAllResults())));
         }
@@ -100,6 +102,8 @@ namespace Tests
             yield return TargetArgumentsResult.Replace(RegisterUserResult, string.Empty);
             yield return OutputResult.Replace(RegisterUserResult, string.Empty);
             yield return FilterResult.Replace(RegisterUserResult, string.Empty);
+            yield return "-hideskipped:all";
+            yield return "-excludebyfile:*.Generated.cs";
         }
     }
 }

@@ -9,9 +9,9 @@ using System.Diagnostics;
 
 namespace MSBuild.TeamCity.Tasks.Internal
 {
-    ///<summary>
-    /// Represents an executable file run wrapper
-    ///</summary>
+    /// <summary>
+    ///     Represents an executable file run wrapper
+    /// </summary>
     internal sealed class ProcessRunner
     {
         #region Constants and Fields
@@ -22,10 +22,10 @@ namespace MSBuild.TeamCity.Tasks.Internal
 
         #region Constructors and Destructors
 
-        ///<summary>
-        /// Initializes a new instance of the <see cref="ProcessRunner"/> class
-        ///</summary>
-        ///<param name="testExePath">Path to executable file</param>
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="ProcessRunner" /> class
+        /// </summary>
+        /// <param name="testExePath">Path to executable file</param>
         internal ProcessRunner(string testExePath)
         {
             this.testExePath = testExePath;
@@ -33,28 +33,13 @@ namespace MSBuild.TeamCity.Tasks.Internal
 
         #endregion
 
-        #region Properties
-
-        /// <summary>
-        /// Gets or sets the time to wait the specified number of milliseconds for the test process to finish.
-        /// By default waiting indefinitely.
-        /// </summary>
-        internal int ExecutionTimeoutMilliseconds { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the output of an application is written to the StandardOutput stream.
-        /// </summary>
-        internal bool RedirectStandardOutput { get; set; }
-
-        #endregion
-
         #region Methods
 
         /// <summary>
-        /// Runs executable
+        ///     Runs executable
         /// </summary>
         /// <param name="commandLine">
-        /// Command line
+        ///     Command line
         /// </param>
         /// <returns>Redirected standart output lines</returns>
         internal IList<string> Run(params string[] commandLine)
@@ -63,22 +48,22 @@ namespace MSBuild.TeamCity.Tasks.Internal
             using (var app = new Process())
             {
                 app.StartInfo = new ProcessStartInfo
-                                    {
-                                        FileName = testExePath,
-                                        Arguments = string.Join(" ", commandLine),
-                                        UseShellExecute = false,
-                                        RedirectStandardOutput = RedirectStandardOutput,
-                                        WorkingDirectory = testExePath.GetDirectoryName(),
-                                        CreateNoWindow = true
-                                    };
+                {
+                    FileName = this.testExePath,
+                    Arguments = string.Join(" ", commandLine),
+                    UseShellExecute = false,
+                    RedirectStandardOutput = this.RedirectStandardOutput,
+                    WorkingDirectory = this.testExePath.GetDirectoryName(),
+                    CreateNoWindow = true
+                };
                 app.Start();
-                if (RedirectStandardOutput)
+                if (this.RedirectStandardOutput)
                 {
                     result = app.StandardOutput.ReadLines();
                 }
-                if (ExecutionTimeoutMilliseconds > 0)
+                if (this.ExecutionTimeoutMilliseconds > 0)
                 {
-                    app.WaitForExit(ExecutionTimeoutMilliseconds);
+                    app.WaitForExit(this.ExecutionTimeoutMilliseconds);
                 }
                 else
                 {
@@ -87,6 +72,21 @@ namespace MSBuild.TeamCity.Tasks.Internal
             }
             return result ?? new List<string>();
         }
+
+        #endregion
+
+        #region Properties
+
+        /// <summary>
+        ///     Gets or sets the time to wait the specified number of milliseconds for the test process to finish.
+        ///     By default waiting indefinitely.
+        /// </summary>
+        internal int ExecutionTimeoutMilliseconds { get; set; }
+
+        /// <summary>
+        ///     Gets or sets a value indicating whether the output of an application is written to the StandardOutput stream.
+        /// </summary>
+        internal bool RedirectStandardOutput { get; set; }
 
         #endregion
     }

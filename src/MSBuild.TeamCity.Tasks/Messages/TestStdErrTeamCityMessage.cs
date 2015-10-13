@@ -8,29 +8,28 @@ using System.Diagnostics;
 
 namespace MSBuild.TeamCity.Tasks.Messages
 {
-    ///<summary>
-    /// Represents test output reporting TC message
-    ///</summary>
+    /// <summary>
+    ///     Represents test output reporting TC message
+    /// </summary>
     public class TestStdErrTeamCityMessage : NamedTeamCityMessage
     {
-        ///<summary>
-        /// Initializes a new instance of the <see cref="TestStdErrTeamCityMessage"/> class
-        ///</summary>
-        ///<param name="name">Test's name</param>
-        ///<param name="output">Test output</param>
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="TestStdErrTeamCityMessage" /> class
+        /// </summary>
+        /// <param name="name">Test's name</param>
+        /// <param name="output">Test output</param>
         public TestStdErrTeamCityMessage(string name, string output)
             : base(name)
         {
-            Attributes.Add("out", output);
+            this.Attributes.Add("out", output);
         }
 
         /// <summary>
-        /// Gets message name
+        ///     Gets message name
         /// </summary>
         protected override string Message
         {
-            [DebuggerStepThrough]
-            get { return "testStdErr"; }
+            [DebuggerStepThrough] get { return "testStdErr"; }
         }
     }
 }

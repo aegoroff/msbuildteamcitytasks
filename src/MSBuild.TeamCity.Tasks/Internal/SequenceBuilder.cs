@@ -5,17 +5,18 @@
  */
 
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace MSBuild.TeamCity.Tasks.Internal
 {
     /// <summary>
-    /// Builds strings of values separated by an element (comma) 
-    /// using all values of an IEnumerable&lt;T&gt; item.
+    ///     Builds strings of values separated by an element (comma)
+    ///     using all values of an IEnumerable&lt;T&gt; item.
     /// </summary>
     /// <typeparam name="T">The type of sequence element</typeparam>
     /// <example>
-    /// <code>
+    ///     <code>
     /// void Example()
     /// {
     ///     int[] values = new int[] { 1, 2 }
@@ -30,18 +31,18 @@ namespace MSBuild.TeamCity.Tasks.Internal
     public class SequenceBuilder<T>
     {
         private readonly IEnumerable<T> enumerator;
-        private readonly string separator;
         private readonly string head;
+        private readonly string separator;
         private readonly string trail;
 
         /// <summary>
-        /// Initializes a new instance of the SequenceBuilder class
+        ///     Initializes a new instance of the SequenceBuilder class
         /// </summary>
         /// <param name="enumerator">Enumerator that yields values in desired sequence</param>
         /// <param name="separator">Separator string beetwen values</param>
         /// <param name="head">Sequence's header</param>
         /// <param name="trail">Sequence's trail</param>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed", Justification = "By design")]
+        [SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed", Justification = "By design")]
         public SequenceBuilder(IEnumerable<T> enumerator, string separator, string head = null, string trail = null)
         {
             this.enumerator = enumerator;
@@ -51,22 +52,22 @@ namespace MSBuild.TeamCity.Tasks.Internal
         }
 
         /// <summary>
-        /// Converts value of the instance into string.
+        ///     Converts value of the instance into string.
         /// </summary>
         /// <returns>
-        /// Filter string constructed from sequence of values or string.Empty if
-        /// the sequence is empty.
+        ///     Filter string constructed from sequence of values or string.Empty if
+        ///     the sequence is empty.
         /// </returns>
         public override string ToString()
         {
-            if (!enumerator.Any())
+            if (!this.enumerator.Any())
             {
                 return string.Empty;
             }
-            var strings = from T item in enumerator
-                                          where !string.IsNullOrEmpty(item.ToString())
-                                          select item.ToString();
-            return head + strings.Join(separator) + trail;
+            var strings = from T item in this.enumerator
+                where !string.IsNullOrEmpty(item.ToString())
+                select item.ToString();
+            return this.head + strings.Join(this.separator) + this.trail;
         }
     }
 }

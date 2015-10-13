@@ -5,8 +5,8 @@
  */
 
 using System.Collections.Generic;
-using MSBuild.TeamCity.Tasks.Messages;
 using Microsoft.Build.Framework;
+using MSBuild.TeamCity.Tasks.Messages;
 
 namespace MSBuild.TeamCity.Tasks
 {
@@ -65,11 +65,11 @@ namespace MSBuild.TeamCity.Tasks
         ///     Gets or sets a unique problem instance id.
         /// </summary>
         /// <remarks>
-        /// (optional) a unique problem instance id. 
-        /// Different problems should have different id, same problems - same id. 
-        /// Shouldn't change throughout builds if the same problem occurs, e.g. the same compilation error. 
-        /// Should be a valid Java id up to 60 characters. 
-        /// If omitted, identity is calculated based on description text.
+        ///     (optional) a unique problem instance id.
+        ///     Different problems should have different id, same problems - same id.
+        ///     Shouldn't change throughout builds if the same problem occurs, e.g. the same compilation error.
+        ///     Should be a valid Java id up to 60 characters.
+        ///     If omitted, identity is calculated based on description text.
         /// </remarks>
         public string Identity { get; set; }
 
@@ -79,7 +79,7 @@ namespace MSBuild.TeamCity.Tasks
         /// <returns>TeamCity messages list</returns>
         protected override IEnumerable<TeamCityMessage> ReadMessages()
         {
-            yield return new BuildProblemMessage(Description, Identity);
+            yield return new BuildProblemMessage(this.Description, this.Identity);
         }
     }
 }

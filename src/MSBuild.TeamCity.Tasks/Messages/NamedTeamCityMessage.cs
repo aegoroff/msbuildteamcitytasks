@@ -7,17 +7,17 @@
 namespace MSBuild.TeamCity.Tasks.Messages
 {
     /// <summary>
-    /// Represenst base class of all TeamCity messages that have name attribute.
+    ///     Represenst base class of all TeamCity messages that have name attribute.
     /// </summary>
     public abstract class NamedTeamCityMessage : TeamCityMessage
     {
-        ///<summary>
-        /// Initializes a new instance of the <see cref="NamedTeamCityMessage"/> class
-        ///</summary>
-        ///<param name="name">Name attribute value</param>
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="NamedTeamCityMessage" /> class
+        /// </summary>
+        /// <param name="name">Name attribute value</param>
         protected NamedTeamCityMessage(string name)
         {
-            Attributes.Add("name", name);
+            this.Attributes.Add("name", name);
         }
     }
 }

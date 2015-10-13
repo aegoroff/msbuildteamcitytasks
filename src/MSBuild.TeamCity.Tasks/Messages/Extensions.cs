@@ -11,7 +11,7 @@ using System.Linq;
 namespace MSBuild.TeamCity.Tasks.Messages
 {
     /// <summary>
-    /// Represents messages useful extensions
+    ///     Represents messages useful extensions
     /// </summary>
     internal static class Extensions
     {
@@ -20,7 +20,7 @@ namespace MSBuild.TeamCity.Tasks.Messages
         {
             { "partcover", DotNetCoverageTool.PartCover },
             { "ncover", DotNetCoverageTool.Ncover },
-            { "ncover3", DotNetCoverageTool.Ncover3 },
+            { "ncover3", DotNetCoverageTool.Ncover3 }
         };
 
         private static readonly Dictionary<string, ImportType> types = new Dictionary<string, ImportType>
@@ -37,7 +37,7 @@ namespace MSBuild.TeamCity.Tasks.Messages
             { "jslint", ImportType.Jslint },
             { "checkstyle", ImportType.CheckStyle },
             { "pmdCpd", ImportType.PmdCpd },
-            { "ReSharperDupFinder", ImportType.ReSharperDupFinder },
+            { "ReSharperDupFinder", ImportType.ReSharperDupFinder }
         };
 
         internal static void Add(this IList<MessageAttributeItem> list, string name, string value)

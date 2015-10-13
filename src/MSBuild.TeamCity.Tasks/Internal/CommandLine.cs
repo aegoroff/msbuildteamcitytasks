@@ -11,14 +11,30 @@ using System.Linq;
 namespace MSBuild.TeamCity.Tasks.Internal
 {
     /// <summary>
-    /// Represents base class of all comand line builders
+    ///     Represents base class of all comand line builders
     /// </summary>
     public abstract class CommandLine
     {
+        #region Public Methods and Operators
+
+        /// <summary>
+        ///     Returns a <see cref="T:System.String" /> that represents the current <see cref="T:System.Object" />.
+        /// </summary>
+        /// <returns>
+        ///     A <see cref="T:System.String" /> that represents the current <see cref="T:System.Object" />.
+        /// </returns>
+        /// <filterpriority>2</filterpriority>
+        public override string ToString()
+        {
+            return string.Join(Space, this.CreateOptions());
+        }
+
+        #endregion
+
         #region Constants and Fields
 
         /// <summary>
-        /// Space string
+        ///     Space string
         /// </summary>
         protected const string Space = " ";
 
@@ -29,62 +45,37 @@ namespace MSBuild.TeamCity.Tasks.Internal
         #region Properties
 
         /// <summary>
-        /// Gets a value indicating whether to escape parameter with the option itself. False by default
+        ///     Gets a value indicating whether to escape parameter with the option itself. False by default
         /// </summary>
-        protected virtual bool EscapeWithTheOptionItself
-        {
-            get { return false; }
-        }
+        protected virtual bool EscapeWithTheOptionItself => false;
 
         /// <summary>
-        /// Gets a value indicating whether to output option in case of value isn't presented
+        ///     Gets a value indicating whether to output option in case of value isn't presented
         /// </summary>
-        protected virtual bool IsOutputInCaseOfEmptyValue
-        {
-            get { return false; }
-        }
+        protected virtual bool IsOutputInCaseOfEmptyValue => false;
 
         /// <summary>
-        /// Gets option's prefix
+        ///     Gets option's prefix
         /// </summary>
-        protected virtual string OptionPrefix
-        {
-            get { return "--"; }
-        }
+        protected virtual string OptionPrefix => "--";
 
         /// <summary>
-        /// Gets option's value separator that separates option value from option itself
+        ///     Gets option's value separator that separates option value from option itself
         /// </summary>
         protected abstract string OptionValueSeparator { get; }
-
-        #endregion
-
-        #region Public Methods and Operators
-
-        /// <summary>
-        /// Returns a <see cref="T:System.String"/> that represents the current <see cref="T:System.Object"/>.
-        /// </summary>
-        /// <returns>
-        /// A <see cref="T:System.String"/> that represents the current <see cref="T:System.Object"/>.
-        /// </returns>
-        /// <filterpriority>2</filterpriority>
-        public override string ToString()
-        {
-            return string.Join(Space, CreateOptions());
-        }
 
         #endregion
 
         #region Methods
 
         /// <summary>
-        /// Enumerates all possible options
+        ///     Enumerates all possible options
         /// </summary>
         /// <returns>All possible options' pairs</returns>
         protected abstract IEnumerable<DictionaryEntry> EnumerateOptions();
 
         /// <summary>
-        /// Creates properly escaped option to pass to an aplication
+        ///     Creates properly escaped option to pass to an aplication
         /// </summary>
         /// <param name="option">option name</param>
         /// <param name="value">option value</param>
@@ -93,32 +84,32 @@ namespace MSBuild.TeamCity.Tasks.Internal
         {
             if (string.IsNullOrEmpty(value))
             {
-                return OptionPrefix + option;
+                return this.OptionPrefix + option;
             }
             if (!value.Contains(Space))
             {
-                return CreatePlainValuedOption(option, value);
+                return this.CreatePlainValuedOption(option, value);
             }
-            if (EscapeWithTheOptionItself)
+            if (this.EscapeWithTheOptionItself)
             {
-                return EscapeSymbol + CreatePlainValuedOption(option, value) + EscapeSymbol;
+                return EscapeSymbol + this.CreatePlainValuedOption(option, value) + EscapeSymbol;
             }
-            return OptionPrefix + option + OptionValueSeparator + EscapeSymbol + value + EscapeSymbol;
+            return this.OptionPrefix + option + this.OptionValueSeparator + EscapeSymbol + value + EscapeSymbol;
         }
 
         private string CreatePlainValuedOption(object option, string value)
         {
-            return OptionPrefix + option + OptionValueSeparator + value;
+            return this.OptionPrefix + option + this.OptionValueSeparator + value;
         }
 
         private IEnumerable<string> CreateOptions()
         {
             return
-                from option in EnumerateOptions()
+                from option in this.EnumerateOptions()
                 where
-                    (!string.IsNullOrEmpty(option.Value as string) && !IsOutputInCaseOfEmptyValue) ||
-                    IsOutputInCaseOfEmptyValue
-                select CreateOption(option.Key, option.Value as string);
+                    (!string.IsNullOrEmpty(option.Value as string) && !this.IsOutputInCaseOfEmptyValue) ||
+                    this.IsOutputInCaseOfEmptyValue
+                select this.CreateOption(option.Key, option.Value as string);
         }
 
         #endregion

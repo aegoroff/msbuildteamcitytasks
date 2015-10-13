@@ -12,13 +12,13 @@ using Microsoft.Build.Framework;
 namespace MSBuild.TeamCity.Tasks.Internal
 {
     /// <summary>
-    /// Represents internal useful extensions
+    ///     Represents internal useful extensions
     /// </summary>
     internal static class Extensions
     {
         /// <summary>
-        /// Concatenates a specified separator between each element of a specified enumerable, 
-        /// yielding a single concatenated string. 
+        ///     Concatenates a specified separator between each element of a specified enumerable,
+        ///     yielding a single concatenated string.
         /// </summary>
         /// <param name="enumerable">Sequence to concatenate</param>
         /// <param name="separator">Separator between items</param>

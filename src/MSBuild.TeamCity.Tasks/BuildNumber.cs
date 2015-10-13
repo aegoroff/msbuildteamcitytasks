@@ -5,20 +5,22 @@
  */
 
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.Build.Framework;
 using MSBuild.TeamCity.Tasks.Messages;
 
 namespace MSBuild.TeamCity.Tasks
 {
     /// <summary>
-    /// Sets desired build number of a build configuration
+    ///     Sets desired build number of a build configuration
     /// </summary>
-    /// <example>Sets current build number
-    /// <code><![CDATA[
+    /// <example>
+    ///     Sets current build number
+    ///     <code><![CDATA[
     /// <BuildNumber Number="20.3" />
     /// ]]></code>
-    /// Sets current build number full example (with all optional attributes)
-    /// <code><![CDATA[
+    ///     Sets current build number full example (with all optional attributes)
+    ///     <code><![CDATA[
     /// <BuildNumber
     ///     IsAddTimestamp="true"
     ///     FlowId="1"
@@ -28,37 +30,38 @@ namespace MSBuild.TeamCity.Tasks
     /// </example>
     public class BuildNumber : TeamCityTask
     {
-        ///<summary>
-        /// Initializes a new instance of the <see cref="BuildNumber"/> class
-        ///</summary>
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="BuildNumber" /> class
+        /// </summary>
         public BuildNumber()
         {
         }
 
-        ///<summary>
-        /// Initializes a new instance of the <see cref="BuildNumber"/> class using 
-        /// logger specified
-        ///</summary>
-        ///<param name="logger"><see cref="ILogger"/> implementation</param>
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="BuildNumber" /> class using
+        ///     logger specified
+        /// </summary>
+        /// <param name="logger"><see cref="ILogger" /> implementation</param>
         public BuildNumber(ILogger logger)
             : base(logger)
         {
         }
 
         /// <summary>
-        /// Gets or sets build number value
+        ///     Gets or sets build number value
         /// </summary>
         [Required]
         public string Number { get; set; }
 
         /// <summary>
-        /// Reads TeamCity messages
+        ///     Reads TeamCity messages
         /// </summary>
         /// <returns>TeamCity messages list</returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1303:Do not pass literals as localized parameters", MessageId = "MSBuild.TeamCity.Tasks.Messages.SimpleTeamCityMessage.#ctor(System.String,System.String)")]
+        [SuppressMessage("Microsoft.Globalization", "CA1303:Do not pass literals as localized parameters",
+            MessageId = "MSBuild.TeamCity.Tasks.Messages.SimpleTeamCityMessage.#ctor(System.String,System.String)")]
         protected override IEnumerable<TeamCityMessage> ReadMessages()
         {
-            yield return new SimpleTeamCityMessage("buildNumber", Number);
+            yield return new SimpleTeamCityMessage("buildNumber", this.Number);
         }
     }
 }

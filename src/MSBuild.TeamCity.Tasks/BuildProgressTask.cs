@@ -11,58 +11,60 @@ using MSBuild.TeamCity.Tasks.Messages;
 
 namespace MSBuild.TeamCity.Tasks
 {
-    ///<summary>
-    /// Represent base class of all BuildProgress* tasks. Cannot be used directly in MSBuild script (because it's abstract).
-    ///</summary>
+    /// <summary>
+    ///     Represent base class of all BuildProgress* tasks. Cannot be used directly in MSBuild script (because it's
+    ///     abstract).
+    /// </summary>
     public abstract class BuildProgressTask : TeamCityTask
     {
-        ///<summary>
-        /// Initializes a new instance of the <see cref="MSBuild.TeamCity.Tasks.BuildProgressTask"/> class
-        ///</summary>
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="MSBuild.TeamCity.Tasks.BuildProgressTask" /> class
+        /// </summary>
         protected BuildProgressTask()
         {
         }
 
-        ///<summary>
-        /// Initializes a new instance of the <see cref="MSBuild.TeamCity.Tasks.BuildProgressTask"/> class using 
-        /// logger specified
-        ///</summary>
-        ///<param name="logger"><see cref="ILogger"/> implementation</param>
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="MSBuild.TeamCity.Tasks.BuildProgressTask" /> class using
+        ///     logger specified
+        /// </summary>
+        /// <param name="logger"><see cref="ILogger" /> implementation</param>
         protected BuildProgressTask(ILogger logger)
             : base(logger)
         {
         }
 
         /// <summary>
-        /// Gets or sets progress message text
+        ///     Gets or sets progress message text
         /// </summary>
         [Required]
         public string Message { get; set; }
 
         /// <summary>
-        /// Gets message name
+        ///     Gets message name
         /// </summary>
         protected abstract string MessageName { get; }
 
         /// <summary>
-        /// Reads TeamCity messages
+        ///     Reads TeamCity messages
         /// </summary>
         /// <returns>TeamCity messages list</returns>
         protected override IEnumerable<TeamCityMessage> ReadMessages()
         {
-            yield return new SimpleTeamCityMessage(MessageName, Message);
+            yield return new SimpleTeamCityMessage(this.MessageName, this.Message);
         }
     }
 
     /// <summary>
-    /// Writes progress start message into TeamCity log
+    ///     Writes progress start message into TeamCity log
     /// </summary>
-    /// <example>Writes progress start message into TeamCity log
-    /// <code><![CDATA[
+    /// <example>
+    ///     Writes progress start message into TeamCity log
+    ///     <code><![CDATA[
     /// <BuildProgressStart Message="Message text" />
     /// ]]></code>
-    /// Writes progress start message into TeamCity log full example (with all optional attributes)
-    /// <code><![CDATA[
+    ///     Writes progress start message into TeamCity log full example (with all optional attributes)
+    ///     <code><![CDATA[
     /// <BuildProgressStart
     ///     IsAddTimestamp="true"
     ///     FlowId="1"
@@ -72,42 +74,42 @@ namespace MSBuild.TeamCity.Tasks
     /// </example>
     public class BuildProgressStart : BuildProgressTask
     {
-        ///<summary>
-        /// Initializes a new instance of the <see cref="MSBuild.TeamCity.Tasks.BuildProgressStart"/> class
-        ///</summary>
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="MSBuild.TeamCity.Tasks.BuildProgressStart" /> class
+        /// </summary>
         public BuildProgressStart()
         {
         }
 
-        ///<summary>
-        /// Initializes a new instance of the <see cref="MSBuild.TeamCity.Tasks.BuildProgressStart"/> class using 
-        /// logger specified
-        ///</summary>
-        ///<param name="logger"><see cref="ILogger"/> implementation</param>
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="MSBuild.TeamCity.Tasks.BuildProgressStart" /> class using
+        ///     logger specified
+        /// </summary>
+        /// <param name="logger"><see cref="ILogger" /> implementation</param>
         public BuildProgressStart(ILogger logger)
             : base(logger)
         {
         }
 
         /// <summary>
-        /// Gets message name
+        ///     Gets message name
         /// </summary>
         protected override string MessageName
         {
-            [DebuggerStepThrough]
-            get { return "progressStart"; }
+            [DebuggerStepThrough] get { return "progressStart"; }
         }
     }
 
     /// <summary>
-    /// Writes progress finish message into TeamCity log
+    ///     Writes progress finish message into TeamCity log
     /// </summary>
-    /// <example>Writes progress finish message into TeamCity log
-    /// <code><![CDATA[
+    /// <example>
+    ///     Writes progress finish message into TeamCity log
+    ///     <code><![CDATA[
     /// <BuildProgressFinish Message="Message text" />
     /// ]]></code>
-    /// Writes progress finish message into TeamCity log full example (with all optional attributes)
-    /// <code><![CDATA[
+    ///     Writes progress finish message into TeamCity log full example (with all optional attributes)
+    ///     <code><![CDATA[
     /// <BuildProgressFinish
     ///     IsAddTimestamp="true"
     ///     FlowId="1"
@@ -117,42 +119,42 @@ namespace MSBuild.TeamCity.Tasks
     /// </example>
     public class BuildProgressFinish : BuildProgressTask
     {
-        ///<summary>
-        /// Initializes a new instance of the <see cref="BuildProgressFinish"/> class
-        ///</summary>
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="BuildProgressFinish" /> class
+        /// </summary>
         public BuildProgressFinish()
         {
         }
 
-        ///<summary>
-        /// Initializes a new instance of the <see cref="BuildProgressFinish"/> class using 
-        /// logger specified
-        ///</summary>
-        ///<param name="logger"><see cref="ILogger"/> implementation</param>
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="BuildProgressFinish" /> class using
+        ///     logger specified
+        /// </summary>
+        /// <param name="logger"><see cref="ILogger" /> implementation</param>
         public BuildProgressFinish(ILogger logger)
             : base(logger)
         {
         }
 
         /// <summary>
-        /// Gets message name
+        ///     Gets message name
         /// </summary>
         protected override string MessageName
         {
-            [DebuggerStepThrough]
-            get { return "progressFinish"; }
+            [DebuggerStepThrough] get { return "progressFinish"; }
         }
     }
 
     /// <summary>
-    /// Writes progress message into TeamCity log
+    ///     Writes progress message into TeamCity log
     /// </summary>
-    /// <example>Writes progress message into TeamCity log
-    /// <code><![CDATA[
+    /// <example>
+    ///     Writes progress message into TeamCity log
+    ///     <code><![CDATA[
     /// <BuildProgressMessage Message="Message text" />
     /// ]]></code>
-    /// Writes progress message into TeamCity log full example (with all optional attributes)
-    /// <code><![CDATA[
+    ///     Writes progress message into TeamCity log full example (with all optional attributes)
+    ///     <code><![CDATA[
     /// <BuildProgressMessage
     ///     IsAddTimestamp="true"
     ///     FlowId="1"
@@ -162,30 +164,29 @@ namespace MSBuild.TeamCity.Tasks
     /// </example>
     public class BuildProgressMessage : BuildProgressTask
     {
-        ///<summary>
-        /// Initializes a new instance of the <see cref="MSBuild.TeamCity.Tasks.BuildProgressMessage"/> class
-        ///</summary>
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="MSBuild.TeamCity.Tasks.BuildProgressMessage" /> class
+        /// </summary>
         public BuildProgressMessage()
         {
         }
 
-        ///<summary>
-        /// Initializes a new instance of the <see cref="MSBuild.TeamCity.Tasks.BuildProgressMessage"/> class using 
-        /// logger specified
-        ///</summary>
-        ///<param name="logger"><see cref="ILogger"/> implementation</param>
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="MSBuild.TeamCity.Tasks.BuildProgressMessage" /> class using
+        ///     logger specified
+        /// </summary>
+        /// <param name="logger"><see cref="ILogger" /> implementation</param>
         public BuildProgressMessage(ILogger logger)
             : base(logger)
         {
         }
 
         /// <summary>
-        /// Gets message name
+        ///     Gets message name
         /// </summary>
         protected override string MessageName
         {
-            [DebuggerStepThrough]
-            get { return "progressMessage"; }
+            [DebuggerStepThrough] get { return "progressMessage"; }
         }
     }
 }

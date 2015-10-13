@@ -36,11 +36,11 @@ namespace MSBuild.TeamCity.Tasks.Internal
         {
             if (message == null)
             {
-                throw new ArgumentNullException("message");
+                throw new ArgumentNullException(nameof(message));
             }
             if (!string.IsNullOrEmpty(Environment.GetEnvironmentVariable(TeamcityDiscoveryEnvVariable)))
             {
-                logger.LogMessage(MessageImportance.High, message.ToString());
+                this.logger.LogMessage(MessageImportance.High, message.ToString());
             }
         }
 
@@ -53,7 +53,7 @@ namespace MSBuild.TeamCity.Tasks.Internal
         /// </returns>
         public bool Execute(ExecutionResult result)
         {
-            return Execute(result, false, null);
+            return this.Execute(result, false, null);
         }
 
         /// <summary>
@@ -69,16 +69,17 @@ namespace MSBuild.TeamCity.Tasks.Internal
         {
             if (result == null)
             {
-                throw new ArgumentNullException("result");
+                throw new ArgumentNullException(nameof(result));
             }
-            if (result.Messages != null)
+            if (result.Messages == null)
             {
-                foreach (var message in result.Messages)
-                {
-                    message.FlowId = flowId;
-                    message.IsAddTimestamp = isAddTimestamp;
-                    Write(message);
-                }
+                return result.Status;
+            }
+            foreach (var message in result.Messages)
+            {
+                message.FlowId = flowId;
+                message.IsAddTimestamp = isAddTimestamp;
+                this.Write(message);
             }
             return result.Status;
         }

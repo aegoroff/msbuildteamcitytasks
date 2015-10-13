@@ -17,7 +17,7 @@ environment:
   SignTool: C:\Program Files (x86)\Microsoft SDKs\Windows\v7.1A\Bin\signtool.exe
   KeyFile: C:\projects\msbuildteamcitytasks\msbuildteamcitytasks.pfx
   SandCastleZipFile: C:\projects\msbuildteamcitytasks\SHFBInstaller.zip
-  SandCastleUri: https://github.com/EWSoftware/SHFB/releases/download/v2015.5.2.0/SHFBInstaller_v2015.5.2.0.zip
+  SandCastleUri: https://github.com/EWSoftware/SHFB/releases/download/v2015.10.10.0/SHFBInstaller_v2015.10.10.0.zip
   # this is how to set encrypted variable. Go to "Encrypt data" page in account menu to encrypt data.
   CertPassword:
     secure: QDWBD+3IIAYVFCfHFY7YCw==

@@ -31,6 +31,7 @@ namespace Tests
         private const string Filter = "+[*]*";
         private const string FilterResult = RegisterUserResult + "-filter:+[*]*";
         private const string Space = " ";
+        private const string SkipAutoPropsResult = RegisterUserResult + "-skipautoprops";
 
         [SetUp]
         public void Setup()
@@ -73,6 +74,20 @@ namespace Tests
             commandLine.Filter.Add(Filter);
             Assert.That(commandLine.ToString(), Is.EqualTo(FilterResult));
         }
+
+        [Test]
+        public void SkipAutoPropsProperty()
+        {
+            commandLine.SkipAutoProps = true;
+            Assert.That(commandLine.ToString(), Is.EqualTo(SkipAutoPropsResult));
+        }
+
+        [Test]
+        public void SkipAutoPropsPropertyFalse()
+        {
+            commandLine.SkipAutoProps = false;
+            Assert.That(commandLine.ToString(), Is.EqualTo(RegisterUserResult.TrimEnd()));
+        }
         
         [Test]
         public void ManyFiltersProperty()
@@ -91,6 +106,7 @@ namespace Tests
             commandLine.Output = Output;
             commandLine.HideSkipped = "all";
             commandLine.ExcludeByfile = "*.Generated.cs";
+            commandLine.SkipAutoProps = true;
             commandLine.Filter.Add(Filter);
             Assert.That(commandLine.ToString(), Is.EqualTo(string.Join(Space, EnumerateAllResults())));
         }
@@ -104,6 +120,7 @@ namespace Tests
             yield return FilterResult.Replace(RegisterUserResult, string.Empty);
             yield return "-hideskipped:all";
             yield return "-excludebyfile:*.Generated.cs";
+            yield return SkipAutoPropsResult.Replace(RegisterUserResult, string.Empty);
         }
     }
 }

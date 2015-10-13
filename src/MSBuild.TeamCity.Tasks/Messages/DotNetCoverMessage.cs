@@ -11,7 +11,7 @@ using System.Diagnostics;
 namespace MSBuild.TeamCity.Tasks.Messages
 {
     /// <summary>
-    /// Represents dotNetCoverage TeamCity message
+    ///     Represents dotNetCoverage TeamCity message
     /// </summary>
     public class DotNetCoverMessage : TeamCityMessage
     {
@@ -25,56 +25,55 @@ namespace MSBuild.TeamCity.Tasks.Messages
 
         private readonly Dictionary<string, int> validKeys = new Dictionary<string, int>(CreateValidKeys());
 
-        ///<summary>
-        /// Initializes a new instance of the <see cref="DotNetCoverMessage"/> class
-        ///</summary>
-        ///<param name="key">Key's name</param>
-        ///<param name="value">Parameter value</param>
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="DotNetCoverMessage" /> class
+        /// </summary>
+        /// <param name="key">Key's name</param>
+        /// <param name="value">Parameter value</param>
         /// <exception cref="ArgumentException">
-        /// Occurs in case of invalid key name
+        ///     Occurs in case of invalid key name
         /// </exception>
         public DotNetCoverMessage(string key, string value)
         {
-            if (!validKeys.ContainsKey(key))
+            if (!this.validKeys.ContainsKey(key))
             {
-                throw new ArgumentException("Invalid key name.", "key");
+                throw new ArgumentException("Invalid key name.", nameof(key));
             }
-            Key = key;
-            Value = value;
-            Attributes.Add(Key, Value);
+            this.Key = key;
+            this.Value = value;
+            this.Attributes.Add(this.Key, this.Value);
         }
 
         /// <summary>
-        /// Gets parameter value
+        ///     Gets parameter value
         /// </summary>
-        public string Key { get; private set; }
+        public string Key { get; }
 
         /// <summary>
-        /// Gets parameter key name
+        ///     Gets parameter key name
         /// </summary>
-        public string Value { get; private set; }
+        public string Value { get; }
 
         /// <summary>
-        /// Gets message name
+        ///     Gets message name
         /// </summary>
         protected override string Message
         {
-            [DebuggerStepThrough]
-            get { return "dotNetCoverage"; }
+            [DebuggerStepThrough] get { return "dotNetCoverage"; }
         }
 
         private static Dictionary<string, int> CreateValidKeys()
         {
             var result = new Dictionary<string, int>
-                                                 {
-                                                     { NCover3HomeKey, 1 },
-                                                     { NCover3ReporterArgsKey, 1 },
-                                                     { NCoverExplorerToolKey, 1 },
-                                                     { NCoverExplorerToolArgsKey, 1 },
-                                                     { NCoverExplorerReportTypeKey, 1 },
-                                                     { NCoverExplorerReportOrderKey, 1 },
-                                                     { PartcoverReportXsltsKey, 1 }
-                                                 };
+            {
+                { NCover3HomeKey, 1 },
+                { NCover3ReporterArgsKey, 1 },
+                { NCoverExplorerToolKey, 1 },
+                { NCoverExplorerToolArgsKey, 1 },
+                { NCoverExplorerReportTypeKey, 1 },
+                { NCoverExplorerReportOrderKey, 1 },
+                { PartcoverReportXsltsKey, 1 }
+            };
             return result;
         }
     }

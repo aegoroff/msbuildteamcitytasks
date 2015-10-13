@@ -8,29 +8,23 @@ using System.Diagnostics;
 
 namespace MSBuild.TeamCity.Tasks.Messages
 {
-    ///<summary>
-    /// Represents simple single TeamCity Message without attributes
-    ///</summary>
+    /// <summary>
+    ///     Represents simple single TeamCity Message without attributes
+    /// </summary>
     public class AttributeLessMessage : TeamCityMessage
     {
-        private readonly string message;
-
-        ///<summary>
-        /// Initializes a new instance of the <see cref="AttributeLessMessage"/> class using message name specified
-        ///</summary>
-        ///<param name="message">TeamCity message name</param>
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="AttributeLessMessage" /> class using message name specified
+        /// </summary>
+        /// <param name="message">TeamCity message name</param>
         public AttributeLessMessage(string message)
         {
-            this.message = message;
+            this.Message = message;
         }
 
         /// <summary>
-        /// Gets message name
+        ///     Gets message name
         /// </summary>
-        protected override string Message
-        {
-            [DebuggerStepThrough]
-            get { return message; }
-        }
+        protected override string Message { [DebuggerStepThrough] get; }
     }
 }

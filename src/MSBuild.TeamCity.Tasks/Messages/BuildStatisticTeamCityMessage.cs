@@ -10,40 +10,39 @@ using System.Globalization;
 namespace MSBuild.TeamCity.Tasks.Messages
 {
     /// <summary>
-    /// Represents TC build statistic message
+    ///     Represents TC build statistic message
     /// </summary>
     public class BuildStatisticTeamCityMessage : TeamCityMessage
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="BuildStatisticTeamCityMessage"/> class
+        ///     Initializes a new instance of the <see cref="BuildStatisticTeamCityMessage" /> class
         /// </summary>
         /// <param name="key">Parameter key</param>
         /// <param name="value">Parameter value</param>
         public BuildStatisticTeamCityMessage(string key, float value)
         {
-            Key = key;
-            Value = value;
-            Attributes.Add("key", Key);
-            Attributes.Add("value", string.Format(CultureInfo.InvariantCulture, "{0:F}", Value));
+            this.Key = key;
+            this.Value = value;
+            this.Attributes.Add("key", this.Key);
+            this.Attributes.Add("value", string.Format(CultureInfo.InvariantCulture, "{0:F}", this.Value));
         }
 
         /// <summary>
-        /// Gets parameter key
+        ///     Gets parameter key
         /// </summary>
-        public string Key { get; private set; }
+        public string Key { get; }
 
         /// <summary>
-        /// Gets parameter value
+        ///     Gets parameter value
         /// </summary>
-        public float Value { get; private set; }
+        public float Value { get; }
 
         /// <summary>
-        /// Gets message name
+        ///     Gets message name
         /// </summary>
         protected override string Message
         {
-            [DebuggerStepThrough]
-            get { return "buildStatisticValue"; }
+            [DebuggerStepThrough] get { return "buildStatisticValue"; }
         }
     }
 }

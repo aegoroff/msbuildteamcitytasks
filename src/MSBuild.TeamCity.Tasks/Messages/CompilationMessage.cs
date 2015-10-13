@@ -8,31 +8,25 @@ using System.Diagnostics;
 
 namespace MSBuild.TeamCity.Tasks.Messages
 {
-    ///<summary>
-    /// Represents compilationStarted TeamCity message
-    ///</summary>
+    /// <summary>
+    ///     Represents compilationStarted TeamCity message
+    /// </summary>
     public class CompilationMessage : TeamCityMessage
     {
-        private readonly string message;
-
-        ///<summary>
-        /// Initializes a new instance of the <see cref="CompilationMessage"/> class
-        ///</summary>
-        ///<param name="compiler">Compiler attribute value</param>
-        ///<param name="message">Compilation start/finish message</param>
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="CompilationMessage" /> class
+        /// </summary>
+        /// <param name="compiler">Compiler attribute value</param>
+        /// <param name="message">Compilation start/finish message</param>
         public CompilationMessage(string compiler, string message)
         {
-            this.message = message;
-            Attributes.Add("compiler", compiler);
+            this.Message = message;
+            this.Attributes.Add("compiler", compiler);
         }
 
         /// <summary>
-        /// Gets message name
+        ///     Gets message name
         /// </summary>
-        protected override string Message
-        {
-            [DebuggerStepThrough]
-            get { return message; }
-        }
+        protected override string Message { [DebuggerStepThrough] get; }
     }
 }

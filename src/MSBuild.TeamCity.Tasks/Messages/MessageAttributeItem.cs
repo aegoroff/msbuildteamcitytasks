@@ -4,77 +4,78 @@
  * © 2007-2013 Alexander Egorov
  */
 
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
 namespace MSBuild.TeamCity.Tasks.Messages
 {
     /// <summary>
-    /// Represents TeamCity message attribute
+    ///     Represents TeamCity message attribute
     /// </summary>
     public class MessageAttributeItem
     {
         private const char ValueSeparator = '\'';
 
-        ///<summary>
-        /// Initializes a new instance of the <see cref="MessageAttributeItem"/> class
-        ///</summary>
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="MessageAttributeItem" /> class
+        /// </summary>
         public MessageAttributeItem()
         {
         }
 
-        ///<summary>
-        /// Initializes a new instance of the <see cref="MessageAttributeItem"/> class using name and value specified.
-        ///</summary>
-        ///<param name="value">Attribute value</param>
-        ///<param name="name">Attribute name</param>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed", Justification = "By design")]
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="MessageAttributeItem" /> class using name and value specified.
+        /// </summary>
+        /// <param name="value">Attribute value</param>
+        /// <param name="name">Attribute name</param>
+        [SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed", Justification = "By design")]
         public MessageAttributeItem(string value, string name = null)
         {
-            Name = name;
-            Value = value;
+            this.Name = name;
+            this.Value = value;
         }
 
         /// <summary>
-        /// Gets or sets attribute name
+        ///     Gets or sets attribute name
         /// </summary>
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets attribute value
+        ///     Gets or sets attribute value
         /// </summary>
         public string Value { get; set; }
 
         /// <summary>
-        /// Returns a <see cref="string"/> that represents the current <see cref="MessageAttributeItem"/>.
+        ///     Returns a <see cref="string" /> that represents the current <see cref="MessageAttributeItem" />.
         /// </summary>
         /// <returns>
-        /// A <see cref="System.String"/> that represents the current <see cref="MessageAttributeItem"/>.
+        ///     A <see cref="System.String" /> that represents the current <see cref="MessageAttributeItem" />.
         /// </returns>
         /// <filterpriority>2</filterpriority>
         public override string ToString()
         {
-            if (string.IsNullOrEmpty(Value))
+            if (string.IsNullOrEmpty(this.Value))
             {
                 return string.Empty;
             }
 
             var sb = new StringBuilder();
-            if (!string.IsNullOrEmpty(Name))
+            if (!string.IsNullOrEmpty(this.Name))
             {
-                sb.Append(Name).Append("=");
+                sb.Append(this.Name).Append("=");
             }
 
-            sb.Append(ValueSeparator).Append(EscapeValue()).Append(ValueSeparator);
+            sb.Append(ValueSeparator).Append(this.EscapeValue()).Append(ValueSeparator);
             return sb.ToString();
         }
 
-        ///<summary>
-        /// Overriden. Compares two instances of <see cref="MessageAttributeItem"/> class.
-        ///</summary>
-        ///<param name="item1">The first attribute to compare</param>
-        ///<param name="item2">The second attribute to compare</param>
-        ///<returns>
-        /// true if item1 is the same instance as item2 or if item1.Equals(item2) returns true; otherwise, false.
+        /// <summary>
+        ///     Overriden. Compares two instances of <see cref="MessageAttributeItem" /> class.
+        /// </summary>
+        /// <param name="item1">The first attribute to compare</param>
+        /// <param name="item2">The second attribute to compare</param>
+        /// <returns>
+        ///     true if item1 is the same instance as item2 or if item1.Equals(item2) returns true; otherwise, false.
         /// </returns>
         public static bool operator ==(MessageAttributeItem item1, MessageAttributeItem item2)
         {
@@ -93,25 +94,30 @@ namespace MSBuild.TeamCity.Tasks.Messages
             return item1.Name == item2.Name;
         }
 
-        ///<summary>
-        /// Overriden. Compares two instances of <see cref="MessageAttributeItem"/> class.
-        ///</summary>
-        ///<param name="item1">The first attribute to compare</param>
-        ///<param name="item2">The second attribute to compare</param>
-        ///<returns>
-        /// true if item1 is not the same instance as item2 or if item1.Equals(item2) returns false; otherwise, true.
+        /// <summary>
+        ///     Overriden. Compares two instances of <see cref="MessageAttributeItem" /> class.
+        /// </summary>
+        /// <param name="item1">The first attribute to compare</param>
+        /// <param name="item2">The second attribute to compare</param>
+        /// <returns>
+        ///     true if item1 is not the same instance as item2 or if item1.Equals(item2) returns false; otherwise, true.
         /// </returns>
         public static bool operator !=(MessageAttributeItem item1, MessageAttributeItem item2)
         {
             return !(item1 == item2);
         }
 
-        ///<summary>
-        /// Determines whether the specified <see cref="MessageAttributeItem"/> is equal to the current <see cref="MessageAttributeItem"/>.
-        ///</summary>
-        ///<param name="other">The <see cref="MessageAttributeItem"/> to compare with the current <see cref="MessageAttributeItem"/>.</param>
-        ///<returns>
-        /// true if the specified <see cref="MessageAttributeItem"/> is equal to the current <see cref="MessageAttributeItem"/>; otherwise, false.
+        /// <summary>
+        ///     Determines whether the specified <see cref="MessageAttributeItem" /> is equal to the current
+        ///     <see cref="MessageAttributeItem" />.
+        /// </summary>
+        /// <param name="other">
+        ///     The <see cref="MessageAttributeItem" /> to compare with the current
+        ///     <see cref="MessageAttributeItem" />.
+        /// </param>
+        /// <returns>
+        ///     true if the specified <see cref="MessageAttributeItem" /> is equal to the current
+        ///     <see cref="MessageAttributeItem" />; otherwise, false.
         /// </returns>
         public bool Equals(MessageAttributeItem other)
         {
@@ -123,17 +129,20 @@ namespace MSBuild.TeamCity.Tasks.Messages
             {
                 return true;
             }
-            return Equals(other.Name, Name);
+            return Equals(other.Name, this.Name);
         }
 
         /// <summary>
-        /// Determines whether the specified <see cref="System.Object"/> is equal to the current <see cref="MessageAttributeItem"/>.
+        ///     Determines whether the specified <see cref="System.Object" /> is equal to the current
+        ///     <see cref="MessageAttributeItem" />.
         /// </summary>
         /// <returns>
-        /// true if the specified <see cref="System.Object"/> is equal to the current <see cref="MessageAttributeItem"/>; otherwise, false.
+        ///     true if the specified <see cref="System.Object" /> is equal to the current <see cref="MessageAttributeItem" />;
+        ///     otherwise, false.
         /// </returns>
-        /// <param name="obj">The <see cref="System.Object"/> to compare with the current <see cref="MessageAttributeItem"/>. 
-        ///                 </param>
+        /// <param name="obj">
+        ///     The <see cref="System.Object" /> to compare with the current <see cref="MessageAttributeItem" />.
+        /// </param>
         /// <filterpriority>2</filterpriority>
         public override bool Equals(object obj)
         {
@@ -145,35 +154,36 @@ namespace MSBuild.TeamCity.Tasks.Messages
             {
                 return true;
             }
-            if (obj.GetType() != typeof(MessageAttributeItem))
+            if (obj.GetType() != typeof (MessageAttributeItem))
             {
                 return false;
             }
-            return Equals((MessageAttributeItem) obj);
+            return this.Equals((MessageAttributeItem) obj);
         }
 
         /// <summary>
-        /// Serves as a hash function for a particular type. 
+        ///     Serves as a hash function for a particular type.
         /// </summary>
         /// <returns>
-        /// A hash code for the current <see cref="MessageAttributeItem"/>.
+        ///     A hash code for the current <see cref="MessageAttributeItem" />.
         /// </returns>
         /// <filterpriority>2</filterpriority>
         public override int GetHashCode()
         {
-            return Name != null ? Name.GetHashCode() : 0;
+            return this.Name != null ? this.Name.GetHashCode() : 0;
         }
 
         /// <summary>
-        /// Escapes input string by replacing special symbols that cannot be unescaped in attribute value
+        ///     Escapes input string by replacing special symbols that cannot be unescaped in attribute value
         /// </summary>
         /// <returns>Properly escaped string</returns>
         /// <remarks>
-        /// For more info about escaping see http://www.jetbrains.net/confluence/display/TCD4/Build+Script+Interaction+with+TeamCity
+        ///     For more info about escaping see
+        ///     http://www.jetbrains.net/confluence/display/TCD4/Build+Script+Interaction+with+TeamCity
         /// </remarks>
         private string EscapeValue()
         {
-            var sb = new StringBuilder(Value);
+            var sb = new StringBuilder(this.Value);
             sb.Replace("|", "||").Replace("'", "|'").Replace("]", "|]").Replace("\n", "|n").Replace("\r", "|r");
             return sb.ToString();
         }

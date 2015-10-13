@@ -7,22 +7,22 @@
 namespace MSBuild.TeamCity.Tasks.Messages
 {
     /// <summary>
-    /// Represents all possible dot net coverage tools
+    ///     Represents all possible dot net coverage tools
     /// </summary>
     public enum DotNetCoverageTool
     {
         /// <summary>
-        /// PartCover tool
+        ///     PartCover tool
         /// </summary>
         PartCover,
 
         /// <summary>
-        /// NCover 1.5.x tool
+        ///     NCover 1.5.x tool
         /// </summary>
         Ncover,
 
         /// <summary>
-        /// NCover 3.x tool
+        ///     NCover 3.x tool
         /// </summary>
         Ncover3
     }

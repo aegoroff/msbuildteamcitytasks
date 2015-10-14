@@ -34,7 +34,8 @@ namespace Tests
         [Test]
         public void RealRun()
         {
-            this.Logger.Expects.Exactly(6).Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
+            this.Logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.Normal, null)).WithAnyArguments();
+            this.Logger.Expects.Exactly(9).Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
 
             this.item1.Expects.Exactly(2).GetProperty(_ => _.ItemSpec).Will(Return.Value("+[MSBuild.TeamCity.Tasks]*ImportData"));
             this.item2.Expects.Exactly(2).GetProperty(_ => _.ItemSpec).Will(Return.Value("-[System]*"));

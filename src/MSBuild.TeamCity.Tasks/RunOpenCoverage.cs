@@ -4,6 +4,7 @@
  * © 2007-2013 Alexander Egorov
  */
 
+using System;
 using System.Collections.Generic;
 using System.IO;
 using Microsoft.Build.Framework;
@@ -46,8 +47,13 @@ namespace MSBuild.TeamCity.Tasks
             var openCoverExePath = Path.Combine(this.ToolPath, OpenCoverConsole);
             var runner = new ProcessRunner(openCoverExePath) { RedirectStandardOutput = true };
             var result = runner.Run(commandLine.ToString());
+            this.Logger.LogMessage(MessageImportance.Normal, string.Join(Environment.NewLine, result));
+            if (!File.Exists(this.XmlReportPath))
+            {
+                return new TeamCityMessage[0];
+            }
             var parser = new OpenCoverStatisticParser();
-            return parser.Parse(result);
+            return parser.Parse(this.XmlReportPath);
         }
 
         #endregion

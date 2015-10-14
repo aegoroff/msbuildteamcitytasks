@@ -4,6 +4,7 @@
  * © 2007-2013 Alexander Egorov
  */
 
+using System;
 using System.Collections.Generic;
 using System.IO;
 using Microsoft.Build.Framework;
@@ -15,6 +16,22 @@ namespace MSBuild.TeamCity.Tasks
     /// <summary>
     ///     Runs code coverage using OpenCover tool (https://github.com/sawilde/opencover) and exports results into TC.
     /// </summary>
+    /// <example>
+    ///     Full example
+    ///     <code><![CDATA[
+    /// <RunOpenCoverage
+    ///         ToolPath = '$(OpenCoverPath)'
+    ///         TargetPath='$(NUnitToolPath)\nunit-console-x86.exe'
+    ///         XmlReportPath='OpenCoverageReport.xml'
+    ///         HideSkipped='All'
+    ///         SkipAutoProps='True'
+    ///         ExcludeByfile='*\*Generated.cs'
+    ///         TargetWorkDir='Test.Unit\bin'
+    ///         TargetArguments="/nologo /noshadow Tests.Unit.dll /framework:net-4.0"
+    ///         Filter='+[App.Core]* +[App]* -[*App.Tests.Unit]*'
+    /// />
+    /// ]]></code>
+    /// </example>
     public class RunOpenCoverage : TeamCityTask
     {
         #region Constants and Fields
@@ -46,8 +63,13 @@ namespace MSBuild.TeamCity.Tasks
             var openCoverExePath = Path.Combine(this.ToolPath, OpenCoverConsole);
             var runner = new ProcessRunner(openCoverExePath) { RedirectStandardOutput = true };
             var result = runner.Run(commandLine.ToString());
+            this.Logger.LogMessage(MessageImportance.Normal, string.Join(Environment.NewLine, result));
+            if (!File.Exists(this.XmlReportPath))
+            {
+                return new TeamCityMessage[0];
+            }
             var parser = new OpenCoverStatisticParser();
-            return parser.Parse(result);
+            return parser.Parse(this.XmlReportPath);
         }
 
         #endregion
@@ -112,8 +134,8 @@ namespace MSBuild.TeamCity.Tasks
         ///     Gets or set whether to Neither track nor record Auto-Implemented properties.
         /// </summary>
         /// <remarks>
-        /// i.e. skip getters and setters like these
-        /// <code><![CDATA[
+        ///     i.e. skip getters and setters like these
+        ///     <code><![CDATA[
         /// public bool Service { get; set; }
         /// ]]></code>
         /// </remarks>
@@ -137,7 +159,7 @@ namespace MSBuild.TeamCity.Tasks
         public string TargetWorkDir { get; set; }
 
         /// <summary>
-        ///     Gets or sets full path to PartCover installation folder
+        ///     Gets or sets full path to OpenCover installation folder
         /// </summary>
         [Required]
         public string ToolPath { get; set; }

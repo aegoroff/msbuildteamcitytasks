@@ -4,6 +4,8 @@
  * © 2007-2013 Alexander Egorov
  */
 
+using System;
+using System.IO;
 using Microsoft.Build.Framework;
 using MSBuild.TeamCity.Tasks;
 using NMock;
@@ -17,9 +19,9 @@ namespace Tests
     {
         private RunOpenCoverage task;
         private const string ValidPathToOpenCover = @"..\..\..\packages\OpenCover.4.6.166\tools";
+        private const string NUnitPath = @"..\..\..\packages\NUnit.Runners.2.6.4\tools\nunit-console-x86.exe";
         private Mock<ITaskItem> item1;
         private Mock<ITaskItem> item2;
-        private const string TargetArguments = "--help";
         private const string TargetWorkDir = ".";
 
         protected override void AfterSetup()
@@ -30,20 +32,24 @@ namespace Tests
         }
 
         [Test]
-        public void AllProperties()
+        public void RealRun()
         {
-            this.Logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
+            this.Logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.Normal, null)).WithAnyArguments();
+            this.Logger.Expects.Exactly(9).Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
 
-            this.item1.Expects.Exactly(2).GetProperty(_ => _.ItemSpec).Will(Return.Value("a"));
-            this.item2.Expects.Exactly(2).GetProperty(_ => _.ItemSpec).Will(Return.Value("b"));
+            this.item1.Expects.Exactly(2).GetProperty(_ => _.ItemSpec).Will(Return.Value("+[MSBuild.TeamCity.Tasks]*ImportData"));
+            this.item2.Expects.Exactly(2).GetProperty(_ => _.ItemSpec).Will(Return.Value("-[System]*"));
 
             this.task.ToolPath = ValidPathToOpenCover;
-            this.task.TargetPath = TGoogleTestsRunner.CorrectExePath;
-            this.task.TargetArguments = TargetArguments;
+            this.task.TargetPath = NUnitPath;
+            var path = new Uri(this.GetType().Assembly.CodeBase).LocalPath;
+            this.task.TargetArguments = $"/nologo /noshadow {path} /framework:net-4.0 /run=TGoogleTestArgumentsBuilder";
             this.task.TargetWorkDir = TargetWorkDir;
             this.task.ExcludeByfile = "*.Gen.cs";
             this.task.HideSkipped = "All";
             this.task.SkipAutoProps = true;
+            this.task.XmlReportPath = Path.Combine(Path.GetDirectoryName(path), "opencover.xml");
+
             this.task.Filter = new[] { this.item1.MockObject, this.item2.MockObject };
             Assert.That(this.task.Execute());
         }

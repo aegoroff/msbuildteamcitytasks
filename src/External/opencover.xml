@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CoverageSession xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Summary numSequencePoints="6" visitedSequencePoints="0" numBranchPoints="2" visitedBranchPoints="0" sequenceCoverage="0" branchCoverage="0" maxCyclomaticComplexity="1" minCyclomaticComplexity="1" visitedClasses="0" numClasses="1" visitedMethods="0" numMethods="2" />
+  <Modules>
+    <Module hash="DE-B5-C8-58-59-B8-E1-4A-52-64-5B-A3-A2-61-08-FA-35-4B-42-F5">
+      <Summary numSequencePoints="6" visitedSequencePoints="0" numBranchPoints="2" visitedBranchPoints="0" sequenceCoverage="0" branchCoverage="0" maxCyclomaticComplexity="1" minCyclomaticComplexity="1" visitedClasses="0" numClasses="1" visitedMethods="0" numMethods="2" />
+      <FullName>D:\prj\msbuildteamcitytasks\src\Tests\bin\Debug\MSBuild.TeamCity.Tasks.dll</FullName>
+      <ModuleName>MSBuild.TeamCity.Tasks</ModuleName>
+      <Files>
+        <File uid="1" fullPath="D:\prj\msbuildteamcitytasks\src\MSBuild.TeamCity.Tasks\ImportData.cs" />
+      </Files>
+      <Classes>
+        <Class>
+          <Summary numSequencePoints="6" visitedSequencePoints="0" numBranchPoints="2" visitedBranchPoints="0" sequenceCoverage="0" branchCoverage="0" maxCyclomaticComplexity="1" minCyclomaticComplexity="1" visitedClasses="0" numClasses="1" visitedMethods="0" numMethods="2" />
+          <FullName>MSBuild.TeamCity.Tasks.ImportData</FullName>
+          <Methods>
+            <Method skippedDueTo="AutoImplementedProperty" visited="false" cyclomaticComplexity="1" sequenceCoverage="0" branchCoverage="0" isConstructor="false" isStatic="false" isGetter="true" isSetter="false">
+              <MetadataToken>100663364</MetadataToken>
+              <Name>System.String MSBuild.TeamCity.Tasks.ImportData::get_Type()</Name>
+              <FileRef uid="1" />
+            </Method>
+            <Method skippedDueTo="AutoImplementedProperty" visited="false" cyclomaticComplexity="1" sequenceCoverage="0" branchCoverage="0" isConstructor="false" isStatic="false" isGetter="false" isSetter="true">
+              <MetadataToken>100663365</MetadataToken>
+              <Name>System.Void MSBuild.TeamCity.Tasks.ImportData::set_Type(System.String)</Name>
+              <FileRef uid="1" />
+            </Method>
+            <Method skippedDueTo="AutoImplementedProperty" visited="false" cyclomaticComplexity="1" sequenceCoverage="0" branchCoverage="0" isConstructor="false" isStatic="false" isGetter="true" isSetter="false">
+              <MetadataToken>100663366</MetadataToken>
+              <Name>System.String MSBuild.TeamCity.Tasks.ImportData::get_Path()</Name>
+              <FileRef uid="1" />
+            </Method>
+            <Method skippedDueTo="AutoImplementedProperty" visited="false" cyclomaticComplexity="1" sequenceCoverage="0" branchCoverage="0" isConstructor="false" isStatic="false" isGetter="false" isSetter="true">
+              <MetadataToken>100663367</MetadataToken>
+              <Name>System.Void MSBuild.TeamCity.Tasks.ImportData::set_Path(System.String)</Name>
+              <FileRef uid="1" />
+            </Method>
+            <Method skippedDueTo="AutoImplementedProperty" visited="false" cyclomaticComplexity="1" sequenceCoverage="0" branchCoverage="0" isConstructor="false" isStatic="false" isGetter="true" isSetter="false">
+              <MetadataToken>100663368</MetadataToken>
+              <Name>System.String MSBuild.TeamCity.Tasks.ImportData::get_Tool()</Name>
+              <FileRef uid="1" />
+            </Method>
+            <Method skippedDueTo="AutoImplementedProperty" visited="false" cyclomaticComplexity="1" sequenceCoverage="0" branchCoverage="0" isConstructor="false" isStatic="false" isGetter="false" isSetter="true">
+              <MetadataToken>100663369</MetadataToken>
+              <Name>System.Void MSBuild.TeamCity.Tasks.ImportData::set_Tool(System.String)</Name>
+              <FileRef uid="1" />
+            </Method>
+            <Method skippedDueTo="AutoImplementedProperty" visited="false" cyclomaticComplexity="1" sequenceCoverage="0" branchCoverage="0" isConstructor="false" isStatic="false" isGetter="true" isSetter="false">
+              <MetadataToken>100663370</MetadataToken>
+              <Name>System.Boolean MSBuild.TeamCity.Tasks.ImportData::get_Verbose()</Name>
+              <FileRef uid="1" />
+            </Method>
+            <Method skippedDueTo="AutoImplementedProperty" visited="false" cyclomaticComplexity="1" sequenceCoverage="0" branchCoverage="0" isConstructor="false" isStatic="false" isGetter="false" isSetter="true">
+              <MetadataToken>100663371</MetadataToken>
+              <Name>System.Void MSBuild.TeamCity.Tasks.ImportData::set_Verbose(System.Boolean)</Name>
+              <FileRef uid="1" />
+            </Method>
+            <Method skippedDueTo="AutoImplementedProperty" visited="false" cyclomaticComplexity="1" sequenceCoverage="0" branchCoverage="0" isConstructor="false" isStatic="false" isGetter="true" isSetter="false">
+              <MetadataToken>100663372</MetadataToken>
+              <Name>System.Boolean MSBuild.TeamCity.Tasks.ImportData::get_ParseOutOfDate()</Name>
+              <FileRef uid="1" />
+            </Method>
+            <Method skippedDueTo="AutoImplementedProperty" visited="false" cyclomaticComplexity="1" sequenceCoverage="0" branchCoverage="0" isConstructor="false" isStatic="false" isGetter="false" isSetter="true">
+              <MetadataToken>100663373</MetadataToken>
+              <Name>System.Void MSBuild.TeamCity.Tasks.ImportData::set_ParseOutOfDate(System.Boolean)</Name>
+              <FileRef uid="1" />
+            </Method>
+            <Method skippedDueTo="AutoImplementedProperty" visited="false" cyclomaticComplexity="1" sequenceCoverage="0" branchCoverage="0" isConstructor="false" isStatic="false" isGetter="true" isSetter="false">
+              <MetadataToken>100663374</MetadataToken>
+              <Name>System.String MSBuild.TeamCity.Tasks.ImportData::get_FindBugsHome()</Name>
+              <FileRef uid="1" />
+            </Method>
+            <Method skippedDueTo="AutoImplementedProperty" visited="false" cyclomaticComplexity="1" sequenceCoverage="0" branchCoverage="0" isConstructor="false" isStatic="false" isGetter="false" isSetter="true">
+              <MetadataToken>100663375</MetadataToken>
+              <Name>System.Void MSBuild.TeamCity.Tasks.ImportData::set_FindBugsHome(System.String)</Name>
+              <FileRef uid="1" />
+            </Method>
+            <Method skippedDueTo="AutoImplementedProperty" visited="false" cyclomaticComplexity="1" sequenceCoverage="0" branchCoverage="0" isConstructor="false" isStatic="false" isGetter="true" isSetter="false">
+              <MetadataToken>100663376</MetadataToken>
+              <Name>System.String MSBuild.TeamCity.Tasks.ImportData::get_WhenNoDataPublished()</Name>
+              <FileRef uid="1" />
+            </Method>
+            <Method skippedDueTo="AutoImplementedProperty" visited="false" cyclomaticComplexity="1" sequenceCoverage="0" branchCoverage="0" isConstructor="false" isStatic="false" isGetter="false" isSetter="true">
+              <MetadataToken>100663377</MetadataToken>
+              <Name>System.Void MSBuild.TeamCity.Tasks.ImportData::set_WhenNoDataPublished(System.String)</Name>
+              <FileRef uid="1" />
+            </Method>
+            <Method visited="false" cyclomaticComplexity="1" sequenceCoverage="0" branchCoverage="0" isConstructor="true" isStatic="false" isGetter="false" isSetter="false">
+              <Summary numSequencePoints="3" visitedSequencePoints="0" numBranchPoints="1" visitedBranchPoints="0" sequenceCoverage="0" branchCoverage="0" maxCyclomaticComplexity="1" minCyclomaticComplexity="1" visitedClasses="0" numClasses="0" visitedMethods="0" numMethods="1" />
+              <MetadataToken>100663362</MetadataToken>
+              <Name>System.Void MSBuild.TeamCity.Tasks.ImportData::.ctor()</Name>
+              <FileRef uid="1" />
+              <SequencePoints>
+                <SequencePoint vc="0" uspid="1" ordinal="0" offset="0" sl="71" sc="9" el="71" ec="28" bec="0" bev="0" fileid="1" />
+                <SequencePoint vc="0" uspid="2" ordinal="1" offset="7" sl="72" sc="9" el="72" ec="10" bec="0" bev="0" fileid="1" />
+                <SequencePoint vc="0" uspid="3" ordinal="2" offset="8" sl="73" sc="9" el="73" ec="10" bec="0" bev="0" fileid="1" />
+              </SequencePoints>
+              <BranchPoints />
+              <MethodPoint xsi:type="SequencePoint" vc="0" uspid="1" ordinal="0" offset="0" sl="71" sc="9" el="71" ec="28" bec="0" bev="0" fileid="1" />
+            </Method>
+            <Method visited="false" cyclomaticComplexity="1" sequenceCoverage="0" branchCoverage="0" isConstructor="true" isStatic="false" isGetter="false" isSetter="false">
+              <Summary numSequencePoints="3" visitedSequencePoints="0" numBranchPoints="1" visitedBranchPoints="0" sequenceCoverage="0" branchCoverage="0" maxCyclomaticComplexity="1" minCyclomaticComplexity="1" visitedClasses="0" numClasses="0" visitedMethods="0" numMethods="1" />
+              <MetadataToken>100663363</MetadataToken>
+              <Name>System.Void MSBuild.TeamCity.Tasks.ImportData::.ctor(MSBuild.TeamCity.Tasks.ILogger)</Name>
+              <FileRef uid="1" />
+              <SequencePoints>
+                <SequencePoint vc="0" uspid="4" ordinal="0" offset="0" sl="81" sc="15" el="81" ec="27" bec="0" bev="0" fileid="1" />
+                <SequencePoint vc="0" uspid="5" ordinal="1" offset="8" sl="82" sc="9" el="82" ec="10" bec="0" bev="0" fileid="1" />
+                <SequencePoint vc="0" uspid="6" ordinal="2" offset="9" sl="83" sc="9" el="83" ec="10" bec="0" bev="0" fileid="1" />
+              </SequencePoints>
+              <BranchPoints />
+              <MethodPoint xsi:type="SequencePoint" vc="0" uspid="4" ordinal="0" offset="0" sl="81" sc="15" el="81" ec="27" bec="0" bev="0" fileid="1" />
+            </Method>
+            <Method visited="false" cyclomaticComplexity="1" sequenceCoverage="0" branchCoverage="0" isConstructor="false" isStatic="false" isGetter="false" isSetter="false">
+              <Summary numSequencePoints="0" visitedSequencePoints="0" numBranchPoints="0" visitedBranchPoints="0" sequenceCoverage="0" branchCoverage="0" maxCyclomaticComplexity="1" minCyclomaticComplexity="1" visitedClasses="0" numClasses="0" visitedMethods="0" numMethods="0" />
+              <MetadataToken>100663378</MetadataToken>
+              <Name>System.Collections.Generic.IEnumerable`1&lt;MSBuild.TeamCity.Tasks.Messages.TeamCityMessage&gt; MSBuild.TeamCity.Tasks.ImportData::ReadMessages()</Name>
+              <SequencePoints />
+              <BranchPoints />
+              <MethodPoint vc="0" uspid="7" ordinal="0" offset="0" />
+            </Method>
+          </Methods>
+        </Class>
+      </Classes>
+    </Module>
+  </Modules>
+</CoverageSession>

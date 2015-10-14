@@ -14,8 +14,8 @@
 		<Configuration>Release</Configuration>
 		<!-- NUnit working path  -->
 		<NUnitPath>$(MSBuildProjectDirectory)\packages\NUnit.Runners.2.6.4\tools</NUnitPath>
-		<OpenCoverPath>$(MSBuildProjectDirectory)\packages\OpenCover.4.5.2316</OpenCoverPath>
-		<ReportGeneratorPath>$(MSBuildProjectDirectory)\packages\ReportGenerator.1.9.1.0</ReportGeneratorPath>
+		<OpenCoverPath>$(MSBuildProjectDirectory)\packages\OpenCover.4.6.166\tools</OpenCoverPath>
+		<ReportGeneratorPath>$(MSBuildProjectDirectory)\packages\ReportGenerator.2.3.2.0\tools</ReportGeneratorPath>
 		
 		<!-- Binaries zip  -->
 		<BinariesFile>Binaries.zip</BinariesFile>

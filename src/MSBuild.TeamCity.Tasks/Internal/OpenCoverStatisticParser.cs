@@ -7,7 +7,6 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.IO;
 using System.Xml;
 using MSBuild.TeamCity.Tasks.Messages;
 
@@ -18,13 +17,6 @@ namespace MSBuild.TeamCity.Tasks.Internal
     /// </summary>
     public class OpenCoverStatisticParser
     {
-        private const string VisitedClassesAttr = "visitedClasses";
-        private const string TotalClassesAttr = "numClasses";
-        private const string VisitedMethodsAttr = "visitedMethods";
-        private const string TotalMethodsAttr = "numMethods";
-        private const string VisitedPointsAttr = "visitedSequencePoints";
-        private const string TotalPointsAttr = "numSequencePoints";
-
         #region Public Methods and Operators
 
         /// <summary>
@@ -78,19 +70,18 @@ namespace MSBuild.TeamCity.Tasks.Internal
 
         private static void ReadStatisticIntoSummary(XmlReader reader, Summary summary)
         {
-            CreateMessage(reader, VisitedClassesAttr, l => summary.VisitedClasses = l);
-            CreateMessage(reader, TotalClassesAttr, l => summary.NumClasses = l);
-            CreateMessage(reader, VisitedMethodsAttr, l => summary.VisitedMethods = l);
-            CreateMessage(reader, TotalMethodsAttr, l => summary.NumMethods = l);
-            CreateMessage(reader, VisitedPointsAttr, l => summary.VisitedSequencePoints = l);
-            CreateMessage(reader, TotalPointsAttr, l => summary.NumSequencePoints = l);
-        }
-
-        private static void CreateMessage(XmlReader reader, string attribute, Action<long> ifSuccess)
-        {
-            if (reader.Name == attribute)
+            var actions = new Dictionary<string, Action<long>>
             {
-                ifSuccess(long.Parse(reader.Value, CultureInfo.InvariantCulture));
+                { "visitedClasses", l => summary.VisitedClasses = l },
+                { "numClasses", l => summary.NumClasses = l },
+                { "visitedMethods", l => summary.VisitedMethods = l },
+                { "numMethods", l => summary.NumMethods = l },
+                { "visitedSequencePoints", l => summary.VisitedSequencePoints = l },
+                { "numSequencePoints", l => summary.NumSequencePoints = l }
+            };
+            if (actions.ContainsKey(reader.Name))
+            {
+                actions[reader.Name](long.Parse(reader.Value, CultureInfo.InvariantCulture));
             }
         }
 

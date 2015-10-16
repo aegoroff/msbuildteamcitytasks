@@ -6,9 +6,9 @@
 
 using System;
 using FluentAssertions;
+using Moq;
 using MSBuild.TeamCity.Tasks;
 using MSBuild.TeamCity.Tasks.Internal;
-using NMock;
 using Xunit;
 
 namespace Tests
@@ -25,16 +25,16 @@ namespace Tests
 
         public TGoogleTestsPlainImporter()
         {
-            var mockery = new MockFactory();
-            this.logger = mockery.CreateMock<ILogger>();
+            this.logger = new Mock<ILogger>();
         }
 
         [Fact]
         public void ReadSuccessTests()
         {
-            this.logger.Expects.One.GetProperty(_ => _.HasLoggedErrors).Will(Return.Value(false));
+            //this.logger.Expects.One.GetProperty(_ => _.HasLoggedErrors).Will(Return.Value(false));
+            this.logger.SetupGet(_ => _.HasLoggedErrors).Returns(false);
 
-            var importer = new GoogleTestsPlainImporter(this.logger.MockObject, false, successTestsPath);
+            var importer = new GoogleTestsPlainImporter(this.logger.Object, false, successTestsPath);
 
             importer.Import().Should().BeTrue();
             importer.Messages.Count.Should().Be(1);
@@ -43,9 +43,10 @@ namespace Tests
         [Fact]
         public void ReadFailTests()
         {
-            this.logger.Expects.One.GetProperty(_ => _.HasLoggedErrors).Will(Return.Value(false));
+            //this.logger.Expects.One.GetProperty(_ => _.HasLoggedErrors).Will(Return.Value(false));
+            this.logger.SetupGet(_ => _.HasLoggedErrors).Returns(false);
 
-            var importer = new GoogleTestsPlainImporter(this.logger.MockObject, false, failTestsPath);
+            var importer = new GoogleTestsPlainImporter(this.logger.Object, false, failTestsPath);
 
             importer.Import().Should().BeFalse();
             importer.Messages.Count.Should().Be(1);
@@ -54,9 +55,10 @@ namespace Tests
         [Fact]
         public void ReadFailTestsButContinueOnFailures()
         {
-            this.logger.Expects.One.GetProperty(_ => _.HasLoggedErrors).Will(Return.Value(false));
+            //this.logger.Expects.One.GetProperty(_ => _.HasLoggedErrors).Will(Return.Value(false));
+            this.logger.SetupGet(_ => _.HasLoggedErrors).Returns(false);
 
-            var importer = new GoogleTestsPlainImporter(this.logger.MockObject, true, failTestsPath);
+            var importer = new GoogleTestsPlainImporter(this.logger.Object, true, failTestsPath);
 
             importer.Import().Should().BeTrue();
             importer.Messages.Count.Should().Be(1);

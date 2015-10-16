@@ -7,16 +7,16 @@
 using System;
 using FluentAssertions;
 using Microsoft.Build.Framework;
+using Moq;
 using MSBuild.TeamCity.Tasks.Internal;
 using MSBuild.TeamCity.Tasks.Messages;
-using NMock;
 using Tests.Utils;
 using Xunit;
 using ILogger = MSBuild.TeamCity.Tasks.ILogger;
 
 namespace Tests
 {
-    [Collection("SerialTests")]
+
     public class TTeamCityTaskImplementation
     {
         private const string BuildNumber = "buildNumber";
@@ -26,12 +26,11 @@ namespace Tests
 
         public TTeamCityTaskImplementation()
         {
-            var mockery = new MockFactory();
-            this.logger = mockery.CreateMock<ILogger>();
+            this.logger = new Mock<ILogger>();
 
             const string number = "1.0";
             this.message = new SimpleTeamCityMessage(BuildNumber, number);
-            this.implementation = new TeamCityTaskImplementation(this.logger.MockObject);
+            this.implementation = new TeamCityTaskImplementation(this.logger.Object);
         }
 
         [Fact]
@@ -44,14 +43,14 @@ namespace Tests
         [Fact]
         public void WriteMessageOutsideTeamCityEnvironment()
         {
-            this.logger.Expects.No.Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
+            this.logger.Setup(_ => _.LogMessage(MessageImportance.High, It.IsAny<string>()));
             this.implementation.Write(this.message);
         }
 
         [Fact]
         public void WriteMessageInsideTeamCityEnvironment()
         {
-            this.logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
+            this.logger.Setup(_ => _.LogMessage(MessageImportance.High, It.IsAny<string>()));
             using (new TeamCityEnv())
             {
                 this.implementation.Write(this.message);
@@ -64,20 +63,19 @@ namespace Tests
             Assert.Throws<Exception>(
                 delegate
                 {
-                    logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.High, null))
-                        .WithAnyArguments()
-                        .Will(Throw.Exception(new Exception()));
+                    logger.Setup(_ => _.LogMessage(MessageImportance.High, It.IsAny<string>())).Throws<Exception>();
                     using (new TeamCityEnv())
                     {
                         implementation.Write(message);
                     }
+                    logger.Verify();
                 });
         }
 
         [Fact]
         public void ExecuteTrue()
         {
-            this.logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
+            this.logger.Setup(_ => _.LogMessage(MessageImportance.High, It.IsAny<string>()));
 
             var result = new ExecutionResult(true);
             result.Messages.Add(this.message);
@@ -87,7 +85,8 @@ namespace Tests
         [Fact]
         public void ExecuteFalse()
         {
-            this.logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
+            //this.logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
+            this.logger.Setup(_ => _.LogMessage(MessageImportance.High, It.IsAny<string>()));
 
             var result = new ExecutionResult(false);
             result.Messages.Add(this.message);
@@ -97,17 +96,20 @@ namespace Tests
         [Fact]
         public void ExecuteNoMessage()
         {
-            this.logger.Expects.No.Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
+            this.logger.Setup(_ => _.LogMessage(MessageImportance.High, It.IsAny<string>()));
 
             var result = new ExecutionResult(true);
             this.implementation.Execute(result).Should().BeTrue();
+
+            this.logger.Verify(_ => _.LogMessage(MessageImportance.High, It.IsAny<string>()), Times.Never());
         }
 
         [Fact]
         public void ExecuteFull()
         {
             const string flowId = "1";
-            this.logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
+            //this.logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
+            this.logger.Setup(_ => _.LogMessage(MessageImportance.High, It.IsAny<string>()));
 
             var result = new ExecutionResult(true);
             result.Messages.Add(this.message);

@@ -6,40 +6,45 @@
 
 using System;
 using System.IO;
+using FluentAssertions;
+using MSBuild.TeamCity.Tasks;
 using MSBuild.TeamCity.Tasks.Internal;
 using NMock;
-using NUnit.Framework;
-using ILogger = MSBuild.TeamCity.Tasks.ILogger;
-using Is = NUnit.Framework.Is;
+using Xunit;
 
 namespace Tests
 {
-    [TestFixture]
-    public class TGoogleTestsRunner
+    [Collection("SerialTests")]
+    public class TGoogleTestsRunner : IDisposable
     {
-        internal static readonly string CorrectExePath = Environment.CurrentDirectory + @"\..\..\..\External\_tst.exe";
-
         internal const string HasLoggedErrors = "HasLoggedErrors";
+        internal static readonly string correctExePath = Environment.CurrentDirectory + @"\..\..\..\External\_tst.exe";
+        private readonly Mock<ILogger> logger;
 
-        private MockFactory mockery;
-        private Mock<ILogger> logger;
-
-        [SetUp]
-        public void Setup()
+        public TGoogleTestsRunner()
         {
-            mockery = new MockFactory();
-            logger = mockery.CreateMock<ILogger>();
+            var mockery = new MockFactory();
+            this.logger = mockery.CreateMock<ILogger>();
         }
 
-        [TearDown]
-        public void TearDown()
+        private static string TestResultPath
+        {
+            get
+            {
+                var file = Path.GetFileNameWithoutExtension(correctExePath);
+                var dir = Path.GetDirectoryName(Path.GetFullPath(correctExePath));
+                return dir + @"\" + file + ".xml";
+            }
+        }
+
+        public void Dispose()
         {
             DeleteResult();
         }
 
         internal static void DeleteResult()
         {
-            string xmlPath = TestResultPath;
+            var xmlPath = TestResultPath;
 
             if (File.Exists(xmlPath))
             {
@@ -47,61 +52,51 @@ namespace Tests
             }
         }
 
-        private static string TestResultPath
-        {
-            get
-            {
-                string file = Path.GetFileNameWithoutExtension(CorrectExePath);
-                string dir = Path.GetDirectoryName(Path.GetFullPath(CorrectExePath));
-                return dir + @"\" + file + ".xml";
-            }
-        }
-
-        [Test]
+        [Fact]
         public void CorrectExe()
         {
-            logger.Expects.One.GetProperty(_=>_.HasLoggedErrors).Will(Return.Value(false));
+            this.logger.Expects.One.GetProperty(_ => _.HasLoggedErrors).Will(Return.Value(false));
 
-            var runner = new GoogleTestsRunner(logger.MockObject, false, CorrectExePath);
+            var runner = new GoogleTestsRunner(this.logger.MockObject, false, correctExePath);
 
-            Assert.That(runner.Import());
-            Assert.That(runner.Messages.Count, Is.EqualTo(1));
+            runner.Import().Should().BeTrue();
+            runner.Messages.Count.Should().Be(1);
         }
 
-        [Test]
+        [Fact]
         public void CorrectExeWithExistingFile()
         {
-            logger.Expects.Exactly(2).GetProperty(_ => _.HasLoggedErrors).Will(Return.Value(false));
+            this.logger.Expects.Exactly(2).GetProperty(_ => _.HasLoggedErrors).Will(Return.Value(false));
 
-            var runner = new GoogleTestsRunner(logger.MockObject, false, CorrectExePath);
+            var runner = new GoogleTestsRunner(this.logger.MockObject, false, correctExePath);
             runner.Import();
 
-            Assert.That(File.Exists(TestResultPath));
-            Assert.That(runner.Import());
-            Assert.That(runner.Messages.Count, Is.EqualTo(1));
+            File.Exists(TestResultPath).Should().BeTrue();
+            runner.Import().Should().BeTrue();
+            runner.Messages.Count.Should().Be(1);
         }
 
-        [Test]
+        [Fact]
         public void CorrectExeUsingExecutionTimeout()
         {
-            logger.Expects.One.GetProperty(_=>_.HasLoggedErrors).Will(Return.Value(false));
+            this.logger.Expects.One.GetProperty(_ => _.HasLoggedErrors).Will(Return.Value(false));
 
-            var runner = new GoogleTestsRunner(logger.MockObject, false, CorrectExePath)
-                                           { ExecutionTimeoutMilliseconds = 200 };
-            Assert.That(runner.Import());
-            Assert.That(runner.Messages.Count, Is.EqualTo(1));
+            var runner = new GoogleTestsRunner(this.logger.MockObject, false, correctExePath)
+            { ExecutionTimeoutMilliseconds = 200 };
+            runner.Import().Should().BeTrue();
+            runner.Messages.Count.Should().Be(1);
         }
 
-        [Test]
+        [Fact]
         public void IncorrectExe()
         {
-            logger.Expects.One.Method(_ => _.LogErrorFromException(null, true)).WithAnyArguments();
-            logger.Expects.One.GetProperty(_ => _.HasLoggedErrors).Will(Return.Value(true));
+            this.logger.Expects.One.Method(_ => _.LogErrorFromException(null, true)).WithAnyArguments();
+            this.logger.Expects.One.GetProperty(_ => _.HasLoggedErrors).Will(Return.Value(true));
 
-            var runner = new GoogleTestsRunner(logger.MockObject, false, "bad");
+            var runner = new GoogleTestsRunner(this.logger.MockObject, false, "bad");
 
-            Assert.That(runner.Import(), Is.False);
-            Assert.That(runner.Messages, Is.Empty);
+            runner.Import().Should().BeFalse();
+            runner.Messages.Should().BeEmpty();
         }
     }
 }

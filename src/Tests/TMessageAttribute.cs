@@ -4,204 +4,205 @@
  * © 2007-2015 Alexander Egorov
  */
 
+using FluentAssertions;
 using MSBuild.TeamCity.Tasks.Messages;
-using NUnit.Framework;
+using Xunit;
 
 namespace Tests
 {
-    [TestFixture]
     public class TMessageAttribute
     {
         private const string Name = "n";
         private const string Value = "v";
 
-        [Test]
+        [Fact]
         public void NoNameAndValueDefined()
         {
             var attributeItem = new MessageAttributeItem();
-            Assert.That(attributeItem.ToString(), Is.Empty);
+            attributeItem.ToString().Should().BeEmpty();
         }
 
-        [Test]
+        [Fact]
         public void NameProperty()
         {
             var attributeItem = new MessageAttributeItem { Name = Name };
-            Assert.That(attributeItem.Name, Is.EqualTo(Name));
+            attributeItem.Name.Should().Be(Name);
         }
 
-        [Test]
+        [Fact]
         public void ValueProperty()
         {
             var attributeItem = new MessageAttributeItem { Value = Value };
-            Assert.That(attributeItem.Value, Is.EqualTo(Value));
+            attributeItem.Value.Should().Be(Value);
         }
 
-        [Test]
+        [Fact]
         public void NameAndValueDefined()
         {
             var attributeItem = new MessageAttributeItem(Value, Name);
-            Assert.That(attributeItem.ToString(), Is.EqualTo("n='v'"));
+            attributeItem.ToString().Should().Be("n='v'");
         }
 
-        [TestCase(Value, "'v'")]
-        [TestCase(Value + "'", "'v|''")]
-        [TestCase(Value + "]", "'v|]'")]
-        [TestCase(Value + "|", "'v||'")]
-        [TestCase(Value + "\n", "'v|n'")]
-        [TestCase(Value + "\r", "'v|r'")]
-        [TestCase(Value + "\r\n|']", "'v|r|n|||'|]'")]
-        [TestCase(null, "")]
+        [Theory]
+        [InlineData(Value, "'v'")]
+        [InlineData(Value + "'", "'v|''")]
+        [InlineData(Value + "]", "'v|]'")]
+        [InlineData(Value + "|", "'v||'")]
+        [InlineData(Value + "\n", "'v|n'")]
+        [InlineData(Value + "\r", "'v|r'")]
+        [InlineData(Value + "\r\n|']", "'v|r|n|||'|]'")]
+        [InlineData(null, "")]
         public void OnlyValueTest(string value, string expected)
         {
             var attributeItem = new MessageAttributeItem { Value = value };
-            Assert.That(attributeItem.ToString(), Is.EqualTo(expected));
+            attributeItem.ToString().Should().Be(expected);
         }
 
-        [Test]
+        [Fact]
         public void EqOperator()
         {
             var a1 = new MessageAttributeItem(Value + 1, Name);
             var a2 = new MessageAttributeItem(Value + 2, Name);
-            Assert.That(a1 == a2);
+            (a1 == a2).Should().BeTrue();
         }
 
-        [Test]
+        [Fact]
         public void EqOperatorEmptyObjects()
         {
             var a1 = new MessageAttributeItem();
             var a2 = new MessageAttributeItem();
-            Assert.That(a1 == a2);
+            (a1 == a2).Should().BeTrue();
         }
 
-        [Test]
+        [Fact]
         public void EqOperatorSameObject()
         {
             var a1 = new MessageAttributeItem(Value, Name);
             MessageAttributeItem a2 = a1;
-            Assert.That(a1 == a2);
+            (a1 == a2).Should().BeTrue();
         }
 
-        [Test]
+        [Fact]
         public void EqOperatorNullFirst()
         {
             var a1 = new MessageAttributeItem(Value, Name);
-            Assert.That(null == a1, Is.False);
+            (null == a1).Should().BeFalse();
         }
 
-        [Test]
+        [Fact]
         public void EqOperatorNullSecond()
         {
             var a1 = new MessageAttributeItem(Value, Name);
-            Assert.That(a1 == null, Is.False);
+            (a1 == null).Should().BeFalse();
         }
 
-        [Test]
+        [Fact]
         public void NeOperator()
         {
             var a1 = new MessageAttributeItem(Value, Name + 1);
             var a2 = new MessageAttributeItem(Value, Name + 2);
-            Assert.That(a1 != a2);
+            (a1 != a2).Should().BeTrue();
         }
 
-        [Test]
+        [Fact]
         public void NeOperatorFalse()
         {
             var a1 = new MessageAttributeItem(Value, Name + 1);
             MessageAttributeItem a2 = a1;
-            Assert.That(a1 != a2, Is.False);
+            (a1 != a2).Should().BeFalse();
         }
 
-        [Test]
+        [Fact]
         public void EqualsMethod()
         {
             var a1 = new MessageAttributeItem(Value + 1, Name);
             var a2 = new MessageAttributeItem(Value + 2, Name);
-            Assert.That(a1.Equals(a2));
+            a1.Equals(a2).Should().BeTrue();
         }
 
-        [Test]
+        [Fact]
         public void EqualsMethodFalse()
         {
             var a1 = new MessageAttributeItem(Value, Name + 1);
             var a2 = new MessageAttributeItem(Value, Name + 2);
-            Assert.That(a1.Equals(a2), Is.False);
+            a1.Equals(a2).Should().BeFalse();
         }
 
-        [Test]
+        [Fact]
         public void EqualsMethodSameObject()
         {
             var a1 = new MessageAttributeItem(Value, Name);
             MessageAttributeItem a2 = a1;
-            Assert.That(a1.Equals(a2));
+            a1.Equals(a2).Should().BeTrue();
         }
 
-        [Test]
+        [Fact]
         public void EqualsMethodEmptyObjects()
         {
             var a1 = new MessageAttributeItem();
             var a2 = new MessageAttributeItem();
-            Assert.That(a1.Equals(a2));
+            a1.Equals(a2).Should().BeTrue();
         }
 
-        [Test]
+        [Fact]
         public void EqualsMethodNullOther()
         {
             var a1 = new MessageAttributeItem(Value, Name);
             const MessageAttributeItem a2 = null;
-            Assert.That(a1.Equals(a2), Is.False);
+            a1.Equals(a2).Should().BeFalse();
         }
 
-        [Test]
+        [Fact]
         public void EqualsObjMethod()
         {
             var a1 = new MessageAttributeItem(Value + 1, Name);
             object a2 = new MessageAttributeItem(Value + 2, Name);
-            Assert.That(a1.Equals(a2));
+            a1.Equals(a2).Should().BeTrue();
         }
 
-        [Test]
+        [Fact]
         public void EqualsObjMethodSameObject()
         {
             var a1 = new MessageAttributeItem(Value + 1, Name);
             object a2 = a1;
-            Assert.That(a1.Equals(a2));
+            a1.Equals(a2).Should().BeTrue();
         }
 
-        [Test]
+        [Fact]
         public void EqualsObjMethodFalse()
         {
             var a1 = new MessageAttributeItem(Value, Name + 1);
             object a2 = new MessageAttributeItem(Value, Name + 2);
-            Assert.That(a1.Equals(a2), Is.False);
+            a1.Equals(a2).Should().BeFalse();
         }
 
-        [Test]
+        [Fact]
         public void EqualsObjMethodNullOther()
         {
             var a1 = new MessageAttributeItem(Value, Name);
             const object a2 = null;
-            Assert.That(a1.Equals(a2), Is.False);
+            a1.Equals(a2).Should().BeFalse();
         }
 
-        [Test]
+        [Fact]
         public void EqualsObjMethodDifferentType()
         {
             var a1 = new MessageAttributeItem(Value, Name);
-            Assert.That(a1.Equals(Name), Is.False);
+            a1.Equals(Name).Should().BeFalse();
         }
 
-        [Test]
+        [Fact]
         public void GetHashCodeT()
         {
             var a1 = new MessageAttributeItem(Value, Name);
-            Assert.That(a1.GetHashCode(), Is.EqualTo(Name.GetHashCode()));
+            a1.GetHashCode().Should().Be(Name.GetHashCode());
         }
 
-        [Test]
+        [Fact]
         public void GetHashCodeEmptyObject()
         {
             var a1 = new MessageAttributeItem();
-            Assert.That(a1.GetHashCode(), Is.EqualTo(0));
+            a1.GetHashCode().Should().Be(0);
         }
     }
 }

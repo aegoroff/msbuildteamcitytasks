@@ -6,22 +6,22 @@
 
 using System;
 using System.Linq;
+using FluentAssertions;
 using MSBuild.TeamCity.Tasks.Internal;
-using NUnit.Framework;
+using Xunit;
 
 namespace Tests
 {
-    [TestFixture]
     public class TOpenCoverXmlReportStatisticParser
     {
-        private static readonly string ReportPath = Environment.CurrentDirectory + @"\..\..\..\External\opencover.xml";
+        private static readonly string reportPath = Environment.CurrentDirectory + @"\..\..\..\External\opencover.xml";
 
-        [Test]
+        [Fact]
         public void Parse()
         {
             var parser = new OpenCoverXmlReportStatisticParser();
-            var result = parser.Parse(ReportPath);
-            Assert.That(result.Count(), Is.EqualTo(9));
+            var result = parser.Parse(reportPath);
+            result.Count().Should().Be(9);
         }
     }
 }

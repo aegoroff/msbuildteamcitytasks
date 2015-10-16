@@ -5,12 +5,12 @@
  */
 
 using System;
+using FluentAssertions;
 using MSBuild.TeamCity.Tasks.Messages;
-using NUnit.Framework;
+using Xunit;
 
 namespace Tests
 {
-    [TestFixture]
     public class TTeamCityMessage
     {
         private const string BuildNumber = "buildNumber";
@@ -21,114 +21,115 @@ namespace Tests
         private const string Name = "t1";
         private const string DateRegex = @"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}\+\d{2}:\d{2}";
 
-        [Test]
+        [Fact]
         public void BuildStat()
         {
             const string key = "k";
             var message = new BuildStatisticTeamCityMessage(key, 10);
-            Assert.That(message.ToString(), Is.EqualTo("##teamcity[buildStatisticValue key='k' value='10.00']"));
+            message.ToString().Should().Be("##teamcity[buildStatisticValue key='k' value='10.00']");
         }
 
-        [Test]
+        [Fact]
         public void Attributeless()
         {
             var message = new AttributeLessMessage(EnableServiceMessages);
-            Assert.That(message.ToString(), Is.EqualTo("##teamcity[enableServiceMessages]"));
+            message.ToString().Should().Be("##teamcity[enableServiceMessages]");
         }
 
-        [Test]
+        [Fact]
         public void AttributelessWithTimestamp()
         {
             var message = new AttributeLessMessage(EnableServiceMessages) { IsAddTimestamp = true };
             string expected = $@"##teamcity\[enableServiceMessages timestamp='{DateRegex}'\]";
-            Assert.That(message.ToString(), Is.StringMatching(expected));
+            message.ToString().Should().MatchRegex(expected);
         }
 
-        [Test]
+        [Fact]
         public void SimpleMessage()
         {
             var message = new SimpleTeamCityMessage(BuildNumber, Number);
-            Assert.That(message.ToString(), Is.EqualTo("##teamcity[buildNumber '1.0']"));
-            Assert.That(message.MessageText, Is.EqualTo(Number));
+            message.ToString().Should().Be("##teamcity[buildNumber '1.0']");
+            message.MessageText.Should().Be(Number);
         }
 
-        [Test]
+        [Fact]
         public void SimpleMessageAddTimeStamp()
         {
             var message = new SimpleTeamCityMessage(BuildNumber, Number) { IsAddTimestamp = true };
             string expected = $@"##teamcity\[buildNumber '1\.0' timestamp='{DateRegex}'\]";
-            Assert.That(message.ToString(), Is.StringMatching(expected));
+            message.ToString().Should().MatchRegex(expected);
         }
 
-        [Test]
+        [Fact]
         public void SimpleMessageFlowId()
         {
             var message = new SimpleTeamCityMessage(BuildNumber, Number)
-                                                { IsAddTimestamp = true, FlowId = "1" };
+            { IsAddTimestamp = true, FlowId = "1" };
             string expected = $@"##teamcity\[buildNumber '1\.0' timestamp='{DateRegex}' flowId='1'\]";
-            Assert.That(message.ToString(), Is.StringMatching(expected));
+            message.ToString().Should().MatchRegex(expected);
         }
 
-        [Test]
+        [Fact]
         public void SimpleMessageFlowIdToStringTwice()
         {
             var message = new SimpleTeamCityMessage(BuildNumber, Number)
-                                                { IsAddTimestamp = true, FlowId = "1" };
+            { IsAddTimestamp = true, FlowId = "1" };
             string expected = $@"##teamcity\[buildNumber '1\.0' timestamp='{DateRegex}' flowId='1'\]";
-            Assert.That(message.ToString(), Is.StringMatching(expected));
-            Assert.That(message.ToString(), Is.StringMatching(expected));
+            message.ToString().Should().MatchRegex(expected);
+            message.ToString().Should().MatchRegex(expected);
         }
 
-        [Test]
+        [Fact]
         public void BlockOpen()
         {
             var message = new BlockOpenTeamCityMessage(Name);
-            Assert.That(message.ToString(), Is.EqualTo("##teamcity[blockOpened name='t1']"));
+            message.ToString().Should().Be("##teamcity[blockOpened name='t1']");
         }
 
-        [Test]
+        [Fact]
         public void BlockClose()
         {
             var message = new BlockCloseTeamCityMessage(Name);
-            Assert.That(message.ToString(), Is.EqualTo("##teamcity[blockClosed name='t1']"));
+            message.ToString().Should().Be("##teamcity[blockClosed name='t1']");
         }
 
-        [Test]
+        [Fact]
         public void ReportMessageFull()
         {
             const string error = "e";
             const string status = "ERROR";
             var message = new ReportMessageTeamCityMessage(Text, status, error);
-            Assert.That(message.ToString(), Is.EqualTo("##teamcity[message text='t' status='ERROR' errorDetails='e']"));
+            message.ToString().Should().Be("##teamcity[message text='t' status='ERROR' errorDetails='e']");
         }
 
-        [Test]
+        [Fact]
         public void ReportMessageStatusAndText()
         {
             const string status = "WARNING";
             var message = new ReportMessageTeamCityMessage(Text, status);
-            Assert.That(message.ToString(), Is.EqualTo("##teamcity[message text='t' status='WARNING']"));
+            message.ToString().Should().Be("##teamcity[message text='t' status='WARNING']");
         }
 
-        [Test]
+        [Fact]
         public void ReportMessageText()
         {
             var message = new ReportMessageTeamCityMessage(Text);
-            Assert.That(message.ToString(), Is.EqualTo("##teamcity[message text='t']"));
+            message.ToString().Should().Be("##teamcity[message text='t']");
         }
 
-        [Test]
+        [Fact]
         public void BuildStatus()
         {
             const string status = "SUCCESS";
             var message = new BuildStatusTeamCityMessage(status, Text);
-            Assert.That(message.ToString(), Is.EqualTo("##teamcity[buildStatus status='SUCCESS' text='t']"));
+            message.ToString().Should().Be("##teamcity[buildStatus status='SUCCESS' text='t']");
         }
 
-        [TestCase("##teamcity[importData type='FxCop' path='p' parseOutOfDate='true']", true, false)]
-        [TestCase("##teamcity[importData type='FxCop' path='p']", false, false)]
-        [TestCase("##teamcity[importData type='FxCop' path='p' verbose='true' parseOutOfDate='true']", true, true)]
-        [TestCase("##teamcity[importData type='FxCop' path='p' verbose='true']", false, true)]
+        [Theory]
+        [InlineData("##teamcity[importData type='FxCop' path='p' parseOutOfDate='true']", true, false)]
+        [InlineData("##teamcity[importData type='FxCop' path='p']", false, false)]
+        [InlineData("##teamcity[importData type='FxCop' path='p' verbose='true' parseOutOfDate='true']", true, true)]
+        [InlineData("##teamcity[importData type='FxCop' path='p' verbose='true']", false, true)]
         public void ImportDataContextTest(string expected, bool parseOutOfDate, bool verbose)
         {
             var context = new ImportDataContext
@@ -140,36 +141,38 @@ namespace Tests
             };
 
             var message = new ImportDataTeamCityMessage(context);
-            Assert.That(message.ToString(), Is.EqualTo(expected));
+            message.ToString().Should().Be(expected);
         }
 
-        [TestCase(ImportType.FxCop, "##teamcity[importData type='FxCop' path='p']")]
-        [TestCase(ImportType.Junit, "##teamcity[importData type='junit' path='p']")]
-        [TestCase(ImportType.Nunit, "##teamcity[importData type='nunit' path='p']")]
-        [TestCase(ImportType.Surefire, "##teamcity[importData type='surefire' path='p']")]
-        [TestCase(ImportType.Pmd, "##teamcity[importData type='pmd' path='p']")]
-        [TestCase(ImportType.FindBugs, "##teamcity[importData type='findBugs' path='p']")]
-        [TestCase(ImportType.Mstest, "##teamcity[importData type='mstest' path='p']")]
-        [TestCase(ImportType.Gtest, "##teamcity[importData type='gtest' path='p']")]
-        [TestCase(ImportType.Jslint, "##teamcity[importData type='jslint' path='p']")]
-        [TestCase(ImportType.CheckStyle, "##teamcity[importData type='checkstyle' path='p']")]
-        [TestCase(ImportType.PmdCpd, "##teamcity[importData type='pmdCpd' path='p']")]
-        [TestCase(ImportType.ReSharperDupFinder, "##teamcity[importData type='ReSharperDupFinder' path='p']")]
+        [Theory]
+        [InlineData(ImportType.FxCop, "##teamcity[importData type='FxCop' path='p']")]
+        [InlineData(ImportType.Junit, "##teamcity[importData type='junit' path='p']")]
+        [InlineData(ImportType.Nunit, "##teamcity[importData type='nunit' path='p']")]
+        [InlineData(ImportType.Surefire, "##teamcity[importData type='surefire' path='p']")]
+        [InlineData(ImportType.Pmd, "##teamcity[importData type='pmd' path='p']")]
+        [InlineData(ImportType.FindBugs, "##teamcity[importData type='findBugs' path='p']")]
+        [InlineData(ImportType.Mstest, "##teamcity[importData type='mstest' path='p']")]
+        [InlineData(ImportType.Gtest, "##teamcity[importData type='gtest' path='p']")]
+        [InlineData(ImportType.Jslint, "##teamcity[importData type='jslint' path='p']")]
+        [InlineData(ImportType.CheckStyle, "##teamcity[importData type='checkstyle' path='p']")]
+        [InlineData(ImportType.PmdCpd, "##teamcity[importData type='pmdCpd' path='p']")]
+        [InlineData(ImportType.ReSharperDupFinder, "##teamcity[importData type='ReSharperDupFinder' path='p']")]
         public void ImportData(ImportType type, string expected)
         {
             var context = new ImportDataContext
             {
-                Type = type, 
+                Type = type,
                 Path = Path
             };
             var message = new ImportDataTeamCityMessage(context);
-            Assert.That(message.ToString(), Is.EqualTo(expected));
+            message.ToString().Should().Be(expected);
         }
 
-        [TestCase(DotNetCoverageTool.PartCover,
+        [Theory]
+        [InlineData(DotNetCoverageTool.PartCover,
             "##teamcity[importData type='dotNetCoverage' path='p' tool='partcover']")]
-        [TestCase(DotNetCoverageTool.Ncover, "##teamcity[importData type='dotNetCoverage' path='p' tool='ncover']")]
-        [TestCase(DotNetCoverageTool.Ncover3, "##teamcity[importData type='dotNetCoverage' path='p' tool='ncover3']")]
+        [InlineData(DotNetCoverageTool.Ncover, "##teamcity[importData type='dotNetCoverage' path='p' tool='ncover']")]
+        [InlineData(DotNetCoverageTool.Ncover3, "##teamcity[importData type='dotNetCoverage' path='p' tool='ncover3']")]
         public void ImportDataDotNetCoverage(DotNetCoverageTool tool, string expected)
         {
             var context = new ImportDataContext
@@ -178,124 +181,142 @@ namespace Tests
                 Path = Path
             };
             var message = new ImportDataTeamCityMessage(context, tool);
-            Assert.That(message.ToString(), Is.EqualTo(expected));
+            message.ToString().Should().Be(expected);
         }
 
-        [Test]
-        [ExpectedException(typeof(NotSupportedException))]
+        [Fact]
         public void ImportDataDotNetCoverageNotSupported()
         {
-            var context = new ImportDataContext
+            Assert.Throws<NotSupportedException>(delegate
             {
-                Type = ImportType.Nunit,
-                Path = Path
-            };
-            new ImportDataTeamCityMessage(context, DotNetCoverageTool.Ncover3);
-        }
-        
-        [Test]
-        [ExpectedException(typeof(NotSupportedException))]
-        public void ImportDataFindBugsNotSupported()
-        {
-            var context = new ImportDataContext
-            {
-                Type = ImportType.Nunit,
-                Path = Path
-            };
-            new ImportDataTeamCityMessage(context, "p");
+                var context = new ImportDataContext
+                {
+                    Type = ImportType.Nunit,
+                    Path = Path
+                };
+                new ImportDataTeamCityMessage(context, DotNetCoverageTool.Ncover3);
+            });
         }
 
-        [Test]
-        [ExpectedException(typeof(ArgumentNullException))]
+        [Fact]
+        public void ImportDataFindBugsNotSupported()
+        {
+            Assert.Throws<NotSupportedException>(delegate
+            {
+                var context = new ImportDataContext
+                {
+                    Type = ImportType.Nunit,
+                    Path = Path
+                };
+                new ImportDataTeamCityMessage(context, "p");
+            });
+        }
+
+        [Fact]
         public void ImportNullContext()
         {
-            new ImportDataTeamCityMessage(null);
+            Assert.Throws<ArgumentNullException>(delegate { new ImportDataTeamCityMessage(null); });
         }
-        
-        [Test]
-        [ExpectedException(typeof(ArgumentNullException))]
+
+        [Fact]
         public void ImportNullContextFindBugs()
         {
-            new ImportDataTeamCityMessage(null, "p");
+            Assert.Throws<ArgumentNullException>(delegate { new ImportDataTeamCityMessage(null, "p"); });
         }
-        
-        [Test]
-        [ExpectedException(typeof(ArgumentNullException))]
+
+        [Fact]
         public void ImportNullContextDotNetCoverageTool()
         {
-            new ImportDataTeamCityMessage(null, DotNetCoverageTool.Ncover);
+            Assert.Throws<ArgumentNullException>(
+                delegate { new ImportDataTeamCityMessage(null, DotNetCoverageTool.Ncover); });
         }
-        
-        [TestCase(ImportType.FindBugs)]
-        [TestCase(ImportType.Gtest, ExpectedException = typeof(NotSupportedException))]
-        public void ImportDataFindBugs(ImportType type)
+
+        [Fact]
+        public void ImportDataFindBugs()
         {
             var context = new ImportDataContext
             {
-                Type = type,
+                Type = ImportType.FindBugs,
                 Path = Path
             };
             var message = new ImportDataTeamCityMessage(context, "h");
-            Assert.That(message.ToString(), Is.EqualTo("##teamcity[importData type='findBugs' path='p' findBugsHome='h']"));
+            message.ToString().Should().Be("##teamcity[importData type='findBugs' path='p' findBugsHome='h']");
+        }
+        
+        [Fact]
+        public void ImportDataFindBugsException()
+        {
+            Assert.Throws<NotSupportedException>(
+                delegate
+                {
+                    var context = new ImportDataContext
+                    {
+                        Type = ImportType.Gtest,
+                        Path = Path
+                    };
+                    var message = new ImportDataTeamCityMessage(context, "h");
+                    message.ToString().Should().Be("##teamcity[importData type='findBugs' path='p' findBugsHome='h']");
+                });
         }
 
-        [Test]
+        [Fact]
         public void TestSuiteStart()
         {
             var message = new TestSuiteStartTeamCityMessage(Name);
-            Assert.That(message.ToString(), Is.EqualTo("##teamcity[testSuiteStarted name='t1']"));
+            message.ToString().Should().Be("##teamcity[testSuiteStarted name='t1']");
         }
 
-        [Test]
+        [Fact]
         public void TestSuiteFinish()
         {
             var message = new TestSuiteFinishTeamCityMessage(Name);
-            Assert.That(message.ToString(), Is.EqualTo("##teamcity[testSuiteFinished name='t1']"));
+            message.ToString().Should().Be("##teamcity[testSuiteFinished name='t1']");
         }
 
-        [Test]
+        [Fact]
         public void TestStart()
         {
             var message = new TestStartTeamCityMessage(Name, false);
-            Assert.That(message.ToString(), Is.EqualTo("##teamcity[testStarted name='t1']"));
+            message.ToString().Should().Be("##teamcity[testStarted name='t1']");
         }
 
-        [Test]
+        [Fact]
         public void TestStartCaptureStandardOutput()
         {
             var message = new TestStartTeamCityMessage(Name, true);
-            Assert.That(message.ToString(), Is.EqualTo("##teamcity[testStarted name='t1' captureStandardOutput='true']"));
+            message.ToString().Should().Be("##teamcity[testStarted name='t1' captureStandardOutput='true']");
         }
 
-        [Test]
+        [Fact]
         public void TestFinish()
         {
             const double duration = 0.016;
             var message = new TestFinishTeamCityMessage(Name, duration);
-            Assert.That(message.ToString(), Is.EqualTo("##teamcity[testFinished name='t1' duration='16']"));
+            message.ToString().Should().Be("##teamcity[testFinished name='t1' duration='16']");
         }
 
-        [Test]
+        [Fact]
         public void TestFailed()
         {
             const string msg = "m1";
             const string details = "d1";
             var message = new TestFailedTeamCityMessage(Name, msg, details);
-            Assert.That(message.ToString(), Is.EqualTo("##teamcity[testFailed name='t1' message='m1' details='d1']"));
+            message.ToString().Should().Be("##teamcity[testFailed name='t1' message='m1' details='d1']");
         }
 
-        [Test]
+        [Fact]
         public void TestFailedFull()
         {
             const string msg = "m1";
             const string details = "d1";
             var message = new TestFailedTeamCityMessage(Name, msg, details) { Expected = "e", Actual = "a" };
-            Assert.That(message.ToString(),
-                        Is.EqualTo(
-                            "##teamcity[testFailed type='comparisonFailure' name='t1' message='m1' details='d1' expected='e' actual='a']"));
+            message.ToString()
+                .Should()
+                .Be(
+                    "##teamcity[testFailed type='comparisonFailure' name='t1' message='m1' details='d1' expected='e' actual='a']");
         }
 
-        [Test]
+        [Fact]
         public void TestFailedFullEmpty()
         {
             const string msg = "m1";
@@ -305,163 +326,163 @@ namespace Tests
                 Expected = string.Empty,
                 Actual = string.Empty
             };
-            Assert.That(message.ToString(), Is.EqualTo("##teamcity[testFailed name='t1' message='m1' details='d1']"));
+            message.ToString().Should().Be("##teamcity[testFailed name='t1' message='m1' details='d1']");
         }
 
-        [Test]
+        [Fact]
         public void TestFailedFullEmptyExpected()
         {
             const string msg = "m1";
             const string details = "d1";
             var message = new TestFailedTeamCityMessage(Name, msg, details) { Expected = string.Empty, Actual = "a" };
-            Assert.That(message.ToString(),
-                        Is.EqualTo(
-                            "##teamcity[testFailed type='comparisonFailure' name='t1' message='m1' details='d1' actual='a']"));
+            message.ToString()
+                .Should()
+                .Be("##teamcity[testFailed type='comparisonFailure' name='t1' message='m1' details='d1' actual='a']");
         }
 
-        [Test]
+        [Fact]
         public void TestFailedFullEmptyActual()
         {
             const string msg = "m1";
             const string details = "d1";
             var message = new TestFailedTeamCityMessage(Name, msg, details) { Expected = "e", Actual = string.Empty };
-            Assert.That(message.ToString(),
-                        Is.EqualTo(
-                            "##teamcity[testFailed type='comparisonFailure' name='t1' message='m1' details='d1' expected='e']"));
+            message.ToString()
+                .Should()
+                .Be("##teamcity[testFailed type='comparisonFailure' name='t1' message='m1' details='d1' expected='e']");
         }
 
-        [Test]
+        [Fact]
         public void TestFailedExpectedNotSet()
         {
             const string msg = "m1";
             const string details = "d1";
             var message = new TestFailedTeamCityMessage(Name, msg, details);
-            Assert.That(message.Expected, Is.Empty);
+            message.Expected.Should().BeEmpty();
         }
 
-        [Test]
+        [Fact]
         public void TestFailedWithExpectedAttr()
         {
             const string msg = "m1";
             const string details = "d1";
             var message = new TestFailedTeamCityMessage(Name, msg, details) { Expected = "e" };
-            Assert.That(message.ToString(),
-                        Is.EqualTo(
-                            "##teamcity[testFailed type='comparisonFailure' name='t1' message='m1' details='d1' expected='e']"));
+            message.ToString()
+                .Should()
+                .Be("##teamcity[testFailed type='comparisonFailure' name='t1' message='m1' details='d1' expected='e']");
         }
 
-        [Test]
+        [Fact]
         public void TestFailedWithExpectedAttrOverwrite()
         {
             const string msg = "m1";
             const string details = "d1";
             var message = new TestFailedTeamCityMessage(Name, msg, details) { Expected = "e" };
             message.Expected = "o";
-            Assert.That(message.ToString(),
-                        Is.EqualTo(
-                            "##teamcity[testFailed type='comparisonFailure' name='t1' message='m1' details='d1' expected='o']"));
+            message.ToString()
+                .Should()
+                .Be("##teamcity[testFailed type='comparisonFailure' name='t1' message='m1' details='d1' expected='o']");
         }
 
-        [Test]
+        [Fact]
         public void TestFailedActualNotSet()
         {
             const string msg = "m1";
             const string details = "d1";
             var message = new TestFailedTeamCityMessage(Name, msg, details);
-            Assert.That(message.Actual, Is.Empty);
+            message.Actual.Should().BeEmpty();
         }
 
-        [Test]
+        [Fact]
         public void TestFailedWithActualAttr()
         {
             const string msg = "m1";
             const string details = "d1";
             var message = new TestFailedTeamCityMessage(Name, msg, details) { Actual = "e" };
-            Assert.That(message.ToString(),
-                        Is.EqualTo(
-                            "##teamcity[testFailed type='comparisonFailure' name='t1' message='m1' details='d1' actual='e']"));
+            message.ToString()
+                .Should()
+                .Be("##teamcity[testFailed type='comparisonFailure' name='t1' message='m1' details='d1' actual='e']");
         }
 
-        [Test]
+        [Fact]
         public void TestFailedWithActualAttrOverwrite()
         {
             const string msg = "m1";
             const string details = "d1";
             var message = new TestFailedTeamCityMessage(Name, msg, details) { Actual = "e" };
             message.Actual = "o";
-            Assert.That(message.ToString(),
-                        Is.EqualTo(
-                            "##teamcity[testFailed type='comparisonFailure' name='t1' message='m1' details='d1' actual='o']"));
+            message.ToString()
+                .Should()
+                .Be("##teamcity[testFailed type='comparisonFailure' name='t1' message='m1' details='d1' actual='o']");
         }
 
-        [Test]
+        [Fact]
         public void TestIgnored()
         {
             const string msg = "m1";
             var message = new TestIgnoredTeamCityMessage(Name, msg);
-            Assert.That(message.ToString(), Is.EqualTo("##teamcity[testIgnored name='t1' message='m1']"));
+            message.ToString().Should().Be("##teamcity[testIgnored name='t1' message='m1']");
         }
 
-        [Test]
+        [Fact]
         public void TestStdOut()
         {
             const string output = "m1";
             var message = new TestStdOutTeamCityMessage(Name, output);
-            Assert.That(message.ToString(), Is.EqualTo("##teamcity[testStdOut name='t1' out='m1']"));
+            message.ToString().Should().Be("##teamcity[testStdOut name='t1' out='m1']");
         }
 
-        [Test]
+        [Fact]
         public void TestStdErr()
         {
             const string output = "m1";
             var message = new TestStdErrTeamCityMessage(Name, output);
-            Assert.That(message.ToString(), Is.EqualTo("##teamcity[testStdErr name='t1' out='m1']"));
+            message.ToString().Should().Be("##teamcity[testStdErr name='t1' out='m1']");
         }
 
-        [Test]
-        [ExpectedException(typeof(ArgumentException))]
+        [Fact]
         public void DotNetCoverageInvalidKey()
         {
-            new DotNetCoverMessage("i", "v");
+            Assert.Throws<ArgumentException>(delegate { new DotNetCoverMessage("i", "v"); });
         }
 
-        [Test]
+        [Fact]
         public void DotNetCoverageNcover3Home()
         {
             const string key = "ncover3_home";
             const string value = "v";
             var message = new DotNetCoverMessage(key, value);
-            Assert.That(message.ToString(), Is.EqualTo("##teamcity[dotNetCoverage ncover3_home='v']"));
+            message.ToString().Should().Be("##teamcity[dotNetCoverage ncover3_home='v']");
         }
 
-        [TestCase("compilationStarted", "##teamcity[compilationStarted compiler='c']")]
-        [TestCase("compilationFinished", "##teamcity[compilationFinished compiler='c']")]
+        [Theory]
+        [InlineData("compilationStarted", "##teamcity[compilationStarted compiler='c']")]
+        [InlineData("compilationFinished", "##teamcity[compilationFinished compiler='c']")]
         public void Compilation(string msg, string expected)
         {
             const string compiler = "c";
             var message = new CompilationMessage(compiler, msg);
-            Assert.That(message.ToString(), Is.EqualTo(expected));
+            message.ToString().Should().Be(expected);
         }
 
-        [Test]
+        [Fact]
         public void SetParameter()
         {
             var message = new SetParameterTeamCityMessage(Name, Text);
-            Assert.That(message.ToString(), Is.EqualTo("##teamcity[setParameter name='t1' value='t']"));
+            message.ToString().Should().Be("##teamcity[setParameter name='t1' value='t']");
         }
-        
-        [Test]
+
+        [Fact]
         public void BuildProblemMandatory()
         {
             var message = new BuildProblemMessage(Text);
-            Assert.That(message.ToString(), Is.EqualTo("##teamcity[buildProblem description='t']"));
+            message.ToString().Should().Be("##teamcity[buildProblem description='t']");
         }
-        
-        [Test]
+
+        [Fact]
         public void BuildProblemAll()
         {
             var message = new BuildProblemMessage(Text, Name);
-            Assert.That(message.ToString(), Is.EqualTo("##teamcity[buildProblem description='t' identity='t1']"));
+            message.ToString().Should().Be("##teamcity[buildProblem description='t' identity='t1']");
         }
     }
 }

@@ -5,121 +5,123 @@
  */
 
 using System;
+using FluentAssertions;
+using Microsoft.Build.Framework;
 using MSBuild.TeamCity.Tasks.Internal;
 using MSBuild.TeamCity.Tasks.Messages;
-using Microsoft.Build.Framework;
 using NMock;
-using NUnit.Framework;
 using Tests.Utils;
+using Xunit;
 using ILogger = MSBuild.TeamCity.Tasks.ILogger;
-using Is = NUnit.Framework.Is;
 
 namespace Tests
 {
-    [TestFixture]
+    [Collection("SerialTests")]
     public class TTeamCityTaskImplementation
     {
-        private MockFactory mockery;
-        private Mock<ILogger> logger;
-        private TeamCityMessage message;
-        private TeamCityTaskImplementation implementation;
-
         private const string BuildNumber = "buildNumber";
+        private readonly TeamCityTaskImplementation implementation;
+        private readonly Mock<ILogger> logger;
+        private readonly TeamCityMessage message;
 
-        [SetUp]
-        public void Setup()
+        public TTeamCityTaskImplementation()
         {
-            mockery = new MockFactory();
-            logger = mockery.CreateMock<ILogger>();
+            var mockery = new MockFactory();
+            this.logger = mockery.CreateMock<ILogger>();
 
             const string number = "1.0";
-            message = new SimpleTeamCityMessage(BuildNumber, number);
-            implementation = new TeamCityTaskImplementation(logger.MockObject);
+            this.message = new SimpleTeamCityMessage(BuildNumber, number);
+            this.implementation = new TeamCityTaskImplementation(this.logger.MockObject);
         }
 
-        [Test]
-        [ExpectedException(typeof(ArgumentNullException))]
+        [Fact]
         public void WriteNullMessage()
         {
-            implementation.Write(null);
+            Assert.Throws<ArgumentNullException>(
+                delegate { implementation.Write(null); });
         }
 
-        [Test]
+        [Fact]
         public void WriteMessageOutsideTeamCityEnvironment()
         {
-            logger.Expects.No.Method(_=> _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
-            implementation.Write(message);
+            this.logger.Expects.No.Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
+            this.implementation.Write(this.message);
         }
 
-        [Test]
+        [Fact]
         public void WriteMessageInsideTeamCityEnvironment()
         {
-            logger.Expects.One.Method(_=> _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
+            this.logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
             using (new TeamCityEnv())
             {
-                implementation.Write(message);
+                this.implementation.Write(this.message);
             }
         }
 
-        [Test]
-        [ExpectedException(typeof(Exception))]
+        [Fact]
         public void WriteMessageInsideTeamCityEnvironmentThrowException()
         {
-            logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments().Will(Throw.Exception(new Exception()));
-            using (new TeamCityEnv())
-            {
-                implementation.Write(message);
-            }
+            Assert.Throws<Exception>(
+                delegate
+                {
+                    logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.High, null))
+                        .WithAnyArguments()
+                        .Will(Throw.Exception(new Exception()));
+                    using (new TeamCityEnv())
+                    {
+                        implementation.Write(message);
+                    }
+                });
         }
 
-        [Test]
+        [Fact]
         public void ExecuteTrue()
         {
-            logger.Expects.One.Method(_=> _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
+            this.logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
 
             var result = new ExecutionResult(true);
-            result.Messages.Add(message);
-            Assert.That(implementation.Execute(result));
+            result.Messages.Add(this.message);
+            this.implementation.Execute(result).Should().BeTrue();
         }
 
-        [Test]
+        [Fact]
         public void ExecuteFalse()
         {
-            logger.Expects.One.Method(_=> _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
+            this.logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
 
             var result = new ExecutionResult(false);
-            result.Messages.Add(message);
-            Assert.That(implementation.Execute(result), Is.False);
+            result.Messages.Add(this.message);
+            this.implementation.Execute(result).Should().BeFalse();
         }
 
-        [Test]
+        [Fact]
         public void ExecuteNoMessage()
         {
-            logger.Expects.No.Method(_=> _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
+            this.logger.Expects.No.Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
 
             var result = new ExecutionResult(true);
-            Assert.That(implementation.Execute(result), Is.True);
+            this.implementation.Execute(result).Should().BeTrue();
         }
 
-        [Test]
+        [Fact]
         public void ExecuteFull()
         {
             const string flowId = "1";
-            logger.Expects.One.Method(_=> _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
+            this.logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
 
             var result = new ExecutionResult(true);
-            result.Messages.Add(message);
+            result.Messages.Add(this.message);
 
-            Assert.That(implementation.Execute(result, true, flowId));
-            Assert.That(message.IsAddTimestamp);
-            Assert.That(message.FlowId, Is.EqualTo(flowId));
+            this.implementation.Execute(result, true, flowId).Should().BeTrue();
+            this.message.IsAddTimestamp.Should().BeTrue();
+            this.message.FlowId.Should().Be(flowId);
         }
 
-        [Test]
-        [ExpectedException(typeof(ArgumentNullException))]
+        [Fact]
         public void ExecuteNullResult()
         {
-            Assert.That(implementation.Execute(null));
+            Assert.Throws<ArgumentNullException>(
+                delegate { implementation.Execute(null).Should().BeTrue(); });
         }
     }
 }

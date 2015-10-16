@@ -4,12 +4,12 @@
  * © 2007-2015 Alexander Egorov
  */
 
+using FluentAssertions;
 using MSBuild.TeamCity.Tasks.Internal;
-using NUnit.Framework;
+using Xunit;
 
 namespace Tests
 {
-    [TestFixture]
     public class TGoogleTestArgumentsBuilder
     {
         private const string OutputXml = "--gtest_output=xml:";
@@ -20,20 +20,21 @@ namespace Tests
         private const string Filter = "1";
         private const string Empty = "";
 
-        [TestCase(false, false, Empty, OutputXml)]
-        [TestCase(false, false, null, OutputXml)]
-        [TestCase(true, false, Empty, OutputXml + Space + CatchExceptionsCommand)]
-        [TestCase(false, true, Empty, OutputXml + Space + DisableTestsCommand)]
-        [TestCase(false, false, Filter, OutputXml + Space + FilterCommand)]
-        [TestCase(true, true, Empty, OutputXml + Space + DisableTestsCommand + Space + CatchExceptionsCommand)]
-        [TestCase(false, true, Filter, OutputXml + Space + DisableTestsCommand + Space + FilterCommand)]
-        [TestCase(true, false, Filter, OutputXml + Space + CatchExceptionsCommand + Space + FilterCommand)]
-        [TestCase(true, true, Filter,
+        [Theory]
+        [InlineData(false, false, Empty, OutputXml)]
+        [InlineData(false, false, null, OutputXml)]
+        [InlineData(true, false, Empty, OutputXml + Space + CatchExceptionsCommand)]
+        [InlineData(false, true, Empty, OutputXml + Space + DisableTestsCommand)]
+        [InlineData(false, false, Filter, OutputXml + Space + FilterCommand)]
+        [InlineData(true, true, Empty, OutputXml + Space + DisableTestsCommand + Space + CatchExceptionsCommand)]
+        [InlineData(false, true, Filter, OutputXml + Space + DisableTestsCommand + Space + FilterCommand)]
+        [InlineData(true, false, Filter, OutputXml + Space + CatchExceptionsCommand + Space + FilterCommand)]
+        [InlineData(true, true, Filter,
             OutputXml + Space + DisableTestsCommand + Space + CatchExceptionsCommand + Space + FilterCommand)]
         public void CreateCommandLine(bool catchExceptions, bool runDisabledTests, string filter, string expected)
         {
             var builder = new GoogleTestCommandLine(catchExceptions, runDisabledTests, filter);
-            Assert.That(builder.ToString(), Is.EqualTo(expected));
+            builder.ToString().Should().Be(expected);
         }
     }
 }

@@ -5,12 +5,12 @@
  */
 
 using System.Linq;
+using FluentAssertions;
 using MSBuild.TeamCity.Tasks.Internal;
-using NUnit.Framework;
+using Xunit;
 
 namespace Tests
 {
-    [TestFixture]
     public class TOpenCoverStatisticParser
     {
         private const string TestData = @"Visited Classes 97 of 97 (100)
@@ -20,12 +20,12 @@ namespace Tests
 Alternative Visited Classes 97 of 97 (100)
 Alternative Visited Methods 509 of 589 (86.4176570458404)";
 
-        [Test]
+        [Fact]
         public void Parse()
         {
             var parser = new OpenCoverOutputStatisticParser();
             var result = parser.Parse(TestData.Split('\n'));
-            Assert.That(result.Count(), Is.EqualTo(9));
+            result.Count().Should().Be(9);
         }
     }
 }

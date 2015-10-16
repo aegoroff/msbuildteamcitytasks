@@ -4,353 +4,375 @@
  * © 2007-2015 Alexander Egorov
  */
 
-using MSBuild.TeamCity.Tasks;
+using FluentAssertions;
 using Microsoft.Build.Framework;
+using MSBuild.TeamCity.Tasks;
 using NMock;
-using NUnit.Framework;
-using Is = NUnit.Framework.Is;
+using Xunit;
 
 namespace Tests
 {
-    [TestFixture]
     public class TSimpleTasks : TTask
     {
-        protected override void AfterSetup()
+        public TSimpleTasks()
         {
-            Logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
+            this.Logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
         }
 
-        [Test]
+        [Fact]
         public void CommonPropertiesTest()
         {
-            var task = new BlockOpen(Logger.MockObject)
-                                 {
-                                     Name = "n",
-                                     FlowId = "1",
-                                     IsAddTimestamp = true
-                                 };
-            Assert.That(task.Execute());
+            var task = new BlockOpen(this.Logger.MockObject)
+            {
+                Name = "n",
+                FlowId = "1",
+                IsAddTimestamp = true
+            };
+            task.Execute().Should().BeTrue();
         }
 
-        [Test]
+        [Fact]
         public void BlockTaskNameProperty()
         {
-            var task = new BlockOpen(Logger.MockObject)
-                                 {
-                                     Name = "n"
-                                 };
-            Assert.That(task.Name, Is.EqualTo("n"));
+            var task = new BlockOpen(this.Logger.MockObject)
+            {
+                Name = "n"
+            };
+            task.Name.Should().Be("n");
         }
 
-        [Test]
+        [Fact]
         public void BlockOpen()
         {
-            var task = new BlockOpen(Logger.MockObject)
-                                 {
-                                     Name = "n"
-                                 };
-            Assert.That(task.Execute());
+            var task = new BlockOpen(this.Logger.MockObject)
+            {
+                Name = "n"
+            };
+            task.Execute().Should().BeTrue();
         }
 
-        [Test]
+        [Fact]
         public void BlockClose()
         {
-            var task = new BlockClose(Logger.MockObject)
-                                  {
-                                      Name = "n"
-                                  };
-            Assert.That(task.Execute());
+            var task = new BlockClose(this.Logger.MockObject)
+            {
+                Name = "n"
+            };
+            task.Execute().Should().BeTrue();
         }
 
-        [Test]
+        [Fact]
         public void BuildNumber()
         {
-            var task = new BuildNumber(Logger.MockObject)
-                                   {
-                                       Number = "1"
-                                   };
-            Assert.That(task.Execute());
-            Assert.That(task.Number, Is.EqualTo("1"));
+            var task = new BuildNumber(this.Logger.MockObject)
+            {
+                Number = "1"
+            };
+            task.Execute().Should().BeTrue();
+            task.Number.Should().Be("1");
         }
 
-        [Test]
+        [Fact]
         public void BuildProgressStart()
         {
-            var task = new BuildProgressStart(Logger.MockObject)
-                                          {
-                                              Message = "m"
-                                          };
-            Assert.That(task.Execute());
-            Assert.That(task.Message, Is.EqualTo("m"));
+            var task = new BuildProgressStart(this.Logger.MockObject)
+            {
+                Message = "m"
+            };
+            task.Execute().Should().BeTrue();
+            task.Message.Should().Be("m");
         }
 
-        [Test]
+        [Fact]
         public void BuildProgressMessage()
         {
-            var task = new BuildProgressMessage(Logger.MockObject)
-                                            {
-                                                Message = "m"
-                                            };
-            Assert.That(task.Execute());
-            Assert.That(task.Message, Is.EqualTo("m"));
+            var task = new BuildProgressMessage(this.Logger.MockObject)
+            {
+                Message = "m"
+            };
+            task.Execute().Should().BeTrue();
+            task.Message.Should().Be("m");
         }
 
-        [Test]
+        [Fact]
         public void BuildProgressFinish()
         {
-            var task = new BuildProgressFinish(Logger.MockObject)
-                                           {
-                                               Message = "m"
-                                           };
-            Assert.That(task.Execute());
-            Assert.That(task.Message, Is.EqualTo("m"));
+            var task = new BuildProgressFinish(this.Logger.MockObject)
+            {
+                Message = "m"
+            };
+            task.Execute().Should().BeTrue();
+            task.Message.Should().Be("m");
         }
 
-        [Test]
+        [Fact]
         public void BuildStatus()
         {
-            var task = new BuildStatus(Logger.MockObject)
-                                   {
-                                       Status = "SUCCESS",
-                                       Text = "t"
-                                   };
-            Assert.That(task.Execute());
+            var task = new BuildStatus(this.Logger.MockObject)
+            {
+                Status = "SUCCESS",
+                Text = "t"
+            };
+            task.Execute().Should().BeTrue();
         }
 
-        [Test]
+        [Fact]
         public void ReportMessage()
         {
-            var task = new ReportMessage(Logger.MockObject)
-                                     {
-                                         Status = "WARNING",
-                                         Text = "t",
-                                         ErrorDetails = "ed"
-                                     };
-            Assert.That(task.Execute());
-            Assert.That(task.Status, Is.EqualTo("WARNING"));
-            Assert.That(task.Text, Is.EqualTo("t"));
-            Assert.That(task.ErrorDetails, Is.EqualTo("ed"));
+            var task = new ReportMessage(this.Logger.MockObject)
+            {
+                Status = "WARNING",
+                Text = "t",
+                ErrorDetails = "ed"
+            };
+            task.Execute().Should().BeTrue();
+            task.Status.Should().Be("WARNING");
+            task.Text.Should().Be("t");
+            task.ErrorDetails.Should().Be("ed");
         }
 
-        [Test]
+        [Fact]
         public void ReportBuildStatistic()
         {
-            var task = new ReportBuildStatistic(Logger.MockObject)
-                                            {
-                                                Key = "k",
-                                                Value = 1
-                                            };
-            Assert.That(task.Execute());
-            Assert.That(task.Key, Is.EqualTo("k"));
-            Assert.That(task.Value, Is.EqualTo(1));
+            var task = new ReportBuildStatistic(this.Logger.MockObject)
+            {
+                Key = "k",
+                Value = 1
+            };
+            task.Execute().Should().BeTrue();
+            task.Key.Should().Be("k");
+            task.Value.Should().Be(1);
         }
 
-        [TestCase("dotNetCoverage", "ncover", false, false, null)]
-        [TestCase("bad", null, false, false, null, ExpectedException = typeof(UnexpectedInvocationException))]
-        [TestCase("mstest", "ncover", false, false, null, ExpectedException = typeof(UnexpectedInvocationException))]
-        [TestCase("mstest", null, false, false, null)]
-        [TestCase("dotNetCoverage", "ncover", true, false, null)]
-        [TestCase("dotNetCoverage", "ncover", false, true, null)]
-        [TestCase("dotNetCoverage", "ncover", true, true, null)]
-        [TestCase("mstest", null, false, false, "info")]
-        [TestCase("mstest", null, false, false, "nothing")]
-        [TestCase("mstest", null, false, false, "warning")]
-        [TestCase("mstest", null, false, false, "error")]
-        [TestCase("mstest", null, false, false, "bad", ExpectedException = typeof(UnexpectedInvocationException))]
+        [Theory]
+        [InlineData("dotNetCoverage", "ncover", false, false, null)]
+        [InlineData("mstest", null, false, false, null)]
+        [InlineData("dotNetCoverage", "ncover", true, false, null)]
+        [InlineData("dotNetCoverage", "ncover", false, true, null)]
+        [InlineData("dotNetCoverage", "ncover", true, true, null)]
+        [InlineData("mstest", null, false, false, "info")]
+        [InlineData("mstest", null, false, false, "nothing")]
+        [InlineData("mstest", null, false, false, "warning")]
+        [InlineData("mstest", null, false, false, "error")]
         public void ImportData(string type, string tool, bool verbose, bool parseOutOfDate, string whenNoDataPublished)
         {
-            var task = new ImportData(Logger.MockObject)
-                                  {
-                                      Path = "p",
-                                      Type = type,
-                                      Tool = tool,
-                                      Verbose = verbose,
-                                      ParseOutOfDate = parseOutOfDate,
-                                      WhenNoDataPublished = whenNoDataPublished
-                                  };
-            Assert.That(task.Execute());
-            Assert.That(task.Path, Is.EqualTo("p"));
-            Assert.That(task.Type, Is.EqualTo(type));
-            Assert.That(task.Tool, Is.EqualTo(tool));
+            var task = new ImportData(this.Logger.MockObject)
+            {
+                Path = "p",
+                Type = type,
+                Tool = tool,
+                Verbose = verbose,
+                ParseOutOfDate = parseOutOfDate,
+                WhenNoDataPublished = whenNoDataPublished
+            };
+            task.Execute().Should().BeTrue();
+            task.Path.Should().Be("p");
+            task.Type.Should().Be(type);
+            task.Tool.Should().Be(tool);
         }
 
-        [Test]
+        [Theory]
+        [InlineData("bad", null, false, false, null)]
+        [InlineData("mstest", "ncover", false, false, "bad")]
+        [InlineData("mstest", null, false, false, "bad")]
+        public void ImportDataExceptions(string type, string tool, bool verbose, bool parseOutOfDate, string whenNoDataPublished)
+        {
+            Assert.Throws<UnexpectedInvocationException>(
+                delegate
+                {
+                    var task = new ImportData(this.Logger.MockObject)
+                    {
+                        Path = "p",
+                        Type = type,
+                        Tool = tool,
+                        Verbose = verbose,
+                        ParseOutOfDate = parseOutOfDate,
+                        WhenNoDataPublished = whenNoDataPublished
+                    };
+                    task.Execute().Should().BeTrue();
+                    task.Path.Should().Be("p");
+                    task.Type.Should().Be(type);
+                    task.Tool.Should().Be(tool);
+                });
+        }
+
+        [Fact]
         public void ImportGoogleTests()
         {
-            Logger.Expects.One.GetProperty(_ => _.HasLoggedErrors).Will(Return.Value(false));
+            this.Logger.Expects.One.GetProperty(_ => _.HasLoggedErrors).Will(Return.Value(false));
 
-            var task = new ImportGoogleTests(Logger.MockObject)
-                                         {
-                                             ContinueOnFailures = true,
-                                             TestResultsPath = TGoogleTestsPlainImporter.SuccessTestsPath,
-                                             Verbose = true,
-                                             WhenNoDataPublished = "error",
-                                             ParseOutOfDate = true
-                                         };
-            Assert.That(task.Execute());
-            Assert.That(task.ContinueOnFailures);
-            Assert.That(task.TestResultsPath, Is.EqualTo(TGoogleTestsPlainImporter.SuccessTestsPath));
+            var task = new ImportGoogleTests(this.Logger.MockObject)
+            {
+                ContinueOnFailures = true,
+                TestResultsPath = TGoogleTestsPlainImporter.successTestsPath,
+                Verbose = true,
+                WhenNoDataPublished = "error",
+                ParseOutOfDate = true
+            };
+            task.Execute().Should().BeTrue();
+            task.ContinueOnFailures.Should().BeTrue();
+            task.TestResultsPath.Should().Be(TGoogleTestsPlainImporter.successTestsPath);
         }
 
-        [Test]
+        [Fact]
         public void EnableServiceMessages()
         {
-            var task = new EnableServiceMessages(Logger.MockObject);
-            Assert.That(task.Execute());
+            var task = new EnableServiceMessages(this.Logger.MockObject);
+            task.Execute().Should().BeTrue();
         }
 
-        [Test]
+        [Fact]
         public void DisableServiceMessages()
         {
-            var task = new DisableServiceMessages(Logger.MockObject);
-            Assert.That(task.Execute());
+            var task = new DisableServiceMessages(this.Logger.MockObject);
+            task.Execute().Should().BeTrue();
         }
 
-        [Test]
+        [Fact]
         public void CompilationStarted()
         {
-            var task = new CompilationStarted(Logger.MockObject);
-            Assert.That(task.Execute());
+            var task = new CompilationStarted(this.Logger.MockObject);
+            task.Execute().Should().BeTrue();
         }
 
-        [Test]
+        [Fact]
         public void CompilationFinished()
         {
-            var task = new CompilationFinished(Logger.MockObject);
-            Assert.That(task.Execute());
+            var task = new CompilationFinished(this.Logger.MockObject);
+            task.Execute().Should().BeTrue();
         }
 
-        [Test]
+        [Fact]
         public void TestSuiteStarted()
         {
-            var task = new TestSuiteStarted(Logger.MockObject)
-                                        {
-                                            Name = "n"
-                                        };
-            Assert.That(task.Execute());
+            var task = new TestSuiteStarted(this.Logger.MockObject)
+            {
+                Name = "n"
+            };
+            task.Execute().Should().BeTrue();
         }
 
-        [Test]
+        [Fact]
         public void TestSuiteFinished()
         {
-            var task = new TestSuiteFinished(Logger.MockObject)
-                                         {
-                                             Name = "n"
-                                         };
-            Assert.That(task.Execute());
+            var task = new TestSuiteFinished(this.Logger.MockObject)
+            {
+                Name = "n"
+            };
+            task.Execute().Should().BeTrue();
         }
 
-        [Test]
+        [Fact]
         public void TestStarted()
         {
-            var task = new TestStarted(Logger.MockObject)
-                                   {
-                                       Name = "n"
-                                   };
-            Assert.That(task.Execute());
+            var task = new TestStarted(this.Logger.MockObject)
+            {
+                Name = "n"
+            };
+            task.Execute().Should().BeTrue();
         }
 
-        [Test]
+        [Fact]
         public void TestStartedCaptureStandardOutput()
         {
-            var task = new TestStarted(Logger.MockObject)
-                                   {
-                                       Name = "n",
-                                       CaptureStandardOutput = true
-                                   };
-            Assert.That(task.Execute());
+            var task = new TestStarted(this.Logger.MockObject)
+            {
+                Name = "n",
+                CaptureStandardOutput = true
+            };
+            task.Execute().Should().BeTrue();
         }
 
-        [Test]
+        [Fact]
         public void TestFinished()
         {
-            var task = new TestFinished(Logger.MockObject)
-                                    {
-                                        Name = "n",
-                                        Duration = 3.0
-                                    };
-            Assert.That(task.Execute());
+            var task = new TestFinished(this.Logger.MockObject)
+            {
+                Name = "n",
+                Duration = 3.0
+            };
+            task.Execute().Should().BeTrue();
         }
 
-        [Test]
+        [Fact]
         public void TestIgnored()
         {
-            var task = new TestIgnored(Logger.MockObject)
-                                   {
-                                       Name = "n",
-                                       Message = "Comment"
-                                   };
-            Assert.That(task.Execute());
+            var task = new TestIgnored(this.Logger.MockObject)
+            {
+                Name = "n",
+                Message = "Comment"
+            };
+            task.Execute().Should().BeTrue();
         }
 
-        [Test]
+        [Fact]
         public void TestStdOut()
         {
-            var task = new TestStdOut(Logger.MockObject)
-                                  {
-                                      Name = "n",
-                                      Out = "out"
-                                  };
-            Assert.That(task.Execute());
+            var task = new TestStdOut(this.Logger.MockObject)
+            {
+                Name = "n",
+                Out = "out"
+            };
+            task.Execute().Should().BeTrue();
         }
 
-        [Test]
+        [Fact]
         public void TestStdErr()
         {
-            var task = new TestStdErr(Logger.MockObject)
-                                  {
-                                      Name = "n",
-                                      Out = "out"
-                                  };
-            Assert.That(task.Execute());
+            var task = new TestStdErr(this.Logger.MockObject)
+            {
+                Name = "n",
+                Out = "out"
+            };
+            task.Execute().Should().BeTrue();
         }
 
-        [Test]
+        [Fact]
         public void TestFailedRequired()
         {
-            var task = new TestFailed(Logger.MockObject)
-                                  {
-                                      Name = "n",
-                                      Message = "m",
-                                      Details = "d"
-                                  };
-            Assert.That(task.Execute());
+            var task = new TestFailed(this.Logger.MockObject)
+            {
+                Name = "n",
+                Message = "m",
+                Details = "d"
+            };
+            task.Execute().Should().BeTrue();
         }
 
-        [Test]
+        [Fact]
         public void TestFailedAll()
         {
-            var task = new TestFailed(Logger.MockObject)
-                                  {
-                                      Name = "n",
-                                      Message = "m",
-                                      Details = "d",
-                                      Actual = "1",
-                                      Expected = "2",
-                                  };
-            Assert.That(task.Execute());
+            var task = new TestFailed(this.Logger.MockObject)
+            {
+                Name = "n",
+                Message = "m",
+                Details = "d",
+                Actual = "1",
+                Expected = "2"
+            };
+            task.Execute().Should().BeTrue();
         }
 
-        [Test]
+        [Fact]
         public void SetParameter()
         {
-            var task = new SetParameter(Logger.MockObject)
+            var task = new SetParameter(this.Logger.MockObject)
             {
                 Name = "n",
                 Value = "v"
             };
-            Assert.That(task.Execute());
+            task.Execute().Should().BeTrue();
         }
-        
-        [Test]
+
+        [Fact]
         public void BuildProblem()
         {
-            var task = new BuildProblem(Logger.MockObject)
+            var task = new BuildProblem(this.Logger.MockObject)
             {
                 Description = "d",
                 Identity = "i"
             };
-            Assert.That(task.Execute());
+            task.Execute().Should().BeTrue();
         }
     }
 }

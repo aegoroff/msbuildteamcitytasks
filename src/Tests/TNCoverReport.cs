@@ -5,126 +5,126 @@
  */
 
 using System;
-using MSBuild.TeamCity.Tasks;
+using FluentAssertions;
 using Microsoft.Build.Framework;
+using MSBuild.TeamCity.Tasks;
 using NMock;
-using NUnit.Framework;
-using Is = NUnit.Framework.Is;
+using Xunit;
 
 namespace Tests
 {
-    [TestFixture]
     public class TNCoverReport : TTask
     {
-        private NCoverReport task;
         private const string NCoverExplorerPth = @"ncoverexplorer\path";
         private const string XmlReportPth = @"path\report";
         private const string Args = "a";
         private const string RptType = "None";
         private const string RptOrder = "1";
+        private readonly NCoverReport task;
 
-        [SetUp]
-        public void Init()
+        public TNCoverReport()
         {
-            task = new NCoverReport(Logger.MockObject);
+            this.task = new NCoverReport(this.Logger.MockObject);
         }
 
-        [Test]
+        [Fact]
         public void OnlyRequired()
         {
-            Logger.Expects.Exactly(2).Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
-            task.NCoverExplorerPath = NCoverExplorerPth;
-            task.XmlReportPath = XmlReportPth;
-            Assert.That(task.Execute());
+            this.Logger.Expects.Exactly(2).Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
+            this.task.NCoverExplorerPath = NCoverExplorerPth;
+            this.task.XmlReportPath = XmlReportPth;
+            this.task.Execute().Should().BeTrue();
         }
 
-        [Test]
+        [Fact]
         public void OnlyRequiredAndArguments()
         {
-            Logger.Expects.Exactly(3).Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
-            task.NCoverExplorerPath = NCoverExplorerPth;
-            task.XmlReportPath = XmlReportPth;
-            task.Arguments = Args;
-            Assert.That(task.Execute());
+            this.Logger.Expects.Exactly(3).Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
+            this.task.NCoverExplorerPath = NCoverExplorerPth;
+            this.task.XmlReportPath = XmlReportPth;
+            this.task.Arguments = Args;
+            this.task.Execute().Should().BeTrue();
         }
 
-        [Test]
+        [Fact]
         public void OnlyRequiredAndArgumentsAndReportType()
         {
-            Logger.Expects.Exactly(4).Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
-            task.NCoverExplorerPath = NCoverExplorerPth;
-            task.XmlReportPath = XmlReportPth;
-            task.Arguments = Args;
-            task.ReportType = RptType;
-            Assert.That(task.Execute());
+            this.Logger.Expects.Exactly(4).Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
+            this.task.NCoverExplorerPath = NCoverExplorerPth;
+            this.task.XmlReportPath = XmlReportPth;
+            this.task.Arguments = Args;
+            this.task.ReportType = RptType;
+            this.task.Execute().Should().BeTrue();
         }
 
-        [Test]
+        [Fact]
         public void Full()
         {
-            Logger.Expects.Exactly(5).Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
-            task.NCoverExplorerPath = NCoverExplorerPth;
-            task.XmlReportPath = XmlReportPth;
-            task.Arguments = Args;
-            task.ReportType = RptType;
-            task.ReportOrder = RptOrder;
-            task.Verbose = true;
-            task.ParseOutOfDate = true;
-            task.WhenNoDataPublished = "info";
-            Assert.That(task.Execute());
+            this.Logger.Expects.Exactly(5).Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
+            this.task.NCoverExplorerPath = NCoverExplorerPth;
+            this.task.XmlReportPath = XmlReportPth;
+            this.task.Arguments = Args;
+            this.task.ReportType = RptType;
+            this.task.ReportOrder = RptOrder;
+            this.task.Verbose = true;
+            this.task.ParseOutOfDate = true;
+            this.task.WhenNoDataPublished = "info";
+            this.task.Execute().Should().BeTrue();
         }
 
-        [Test]
+        [Fact]
         public void WithException()
         {
-            Logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments().Will(Throw.Exception(new Exception()));
-            Logger.Expects.One.Method(_ => _.LogErrorFromException(null, true)).WithAnyArguments();
-            task.NCoverExplorerPath = NCoverExplorerPth;
-            task.XmlReportPath = XmlReportPth;
-            Assert.That(task.Execute(), Is.False);
+            this.Logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.High, null))
+                .WithAnyArguments()
+                .Will(Throw.Exception(new Exception()));
+            this.Logger.Expects.One.Method(_ => _.LogErrorFromException(null, true)).WithAnyArguments();
+            this.task.NCoverExplorerPath = NCoverExplorerPth;
+            this.task.XmlReportPath = XmlReportPth;
+            this.task.Execute().Should().BeFalse();
         }
 
-        [Test]
+        [Fact]
         public void NCoverExplorerPath()
         {
-            task.NCoverExplorerPath = NCoverExplorerPth;
-            Assert.That(task.NCoverExplorerPath, Is.EqualTo(NCoverExplorerPth));
+            this.task.NCoverExplorerPath = NCoverExplorerPth;
+            this.task.NCoverExplorerPath.Should().Be(NCoverExplorerPth);
         }
 
-        [Test]
+        [Fact]
         public void XmlReportPath()
         {
-            task.XmlReportPath = XmlReportPth;
-            Assert.That(task.XmlReportPath, Is.EqualTo(XmlReportPth));
+            this.task.XmlReportPath = XmlReportPth;
+            this.task.XmlReportPath.Should().Be(XmlReportPth);
         }
 
-        [Test]
+        [Fact]
         public void Arguments()
         {
-            task.Arguments = Args;
-            Assert.That(task.Arguments, Is.EqualTo(Args));
+            this.task.Arguments = Args;
+            this.task.Arguments.Should().Be(Args);
         }
 
-        [Test]
+        [Fact]
         public void ReportType()
         {
-            task.ReportType = RptType;
-            Assert.That(task.ReportType, Is.EqualTo(RptType));
+            this.task.ReportType = RptType;
+            this.task.ReportType.Should().Be(RptType);
         }
 
-        [Test]
+        [Fact]
         public void ReportOrder()
         {
-            task.ReportOrder = RptOrder;
-            Assert.That(task.ReportOrder, Is.EqualTo(RptOrder));
+            this.task.ReportOrder = RptOrder;
+            this.task.ReportOrder.Should().Be(RptOrder);
         }
 
-        [Test]
+        [Fact]
         public void InvalidWhenNoDataPublished()
         {
-            Logger.Expects.One.Method(_ => _.LogErrorFromException(null, false)).WithAnyArguments();
-            task.WhenNoDataPublished = "bad";
-            Assert.That(task.Execute(), Is.False);
+            this.Logger.Expects.One.Method(_ => _.LogErrorFromException(null, false)).WithAnyArguments();
+            this.task.WhenNoDataPublished = "bad";
+            this.task.Execute().Should().BeFalse();
         }
     }
 }

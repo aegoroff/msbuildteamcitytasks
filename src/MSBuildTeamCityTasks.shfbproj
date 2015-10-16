@@ -39,7 +39,7 @@
     </WorkingPath>
     <BuildLogFile>
     </BuildLogFile>
-    <FrameworkVersion>.NET Framework 4.0</FrameworkVersion>
+    <FrameworkVersion>.NET Framework 4.5</FrameworkVersion>
     <HelpTitle>MSBuild TeamCity Tasks</HelpTitle>
     <CopyrightHref>https://github.com/aegoroff/msbuildteamcitytasks</CopyrightHref>
     <CopyrightText>Alexander Egorov %28c%29 2009-2015</CopyrightText>

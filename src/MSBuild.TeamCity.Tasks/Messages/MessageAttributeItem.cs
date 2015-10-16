@@ -170,7 +170,7 @@ namespace MSBuild.TeamCity.Tasks.Messages
         /// <filterpriority>2</filterpriority>
         public override int GetHashCode()
         {
-            return this.Name != null ? this.Name.GetHashCode() : 0;
+            return this.Name?.GetHashCode() ?? 0;
         }
 
         /// <summary>

@@ -85,7 +85,9 @@
 			ToolPath='$(OpenCoverPath)'
 			TargetPath='$(NUnitPath)\nunit-console.exe'
 			XmlReportPath='$(MSBuildProjectDirectory)\OpenCoverageReport.xml'
-            TargetWorkDir='$(MSBuildProjectDirectory)\Tests\bin\$(Configuration)'
+      TargetWorkDir='$(MSBuildProjectDirectory)\Tests\bin\$(Configuration)'
+      SkipAutoProps='True'
+      HideSkipped='All'
 			TargetArguments="/nologo /noshadow /xml:$(MSBuildProjectDirectory)\$(ManagedTestsReport) $(MSBuildProjectDirectory)\Tests\bin\$(Configuration)\Tests.dll /framework:net-4.0 /config=$(Configuration)"
 			Filter='+[MSBuild.TeamCity.Tasks]*'
 		/>

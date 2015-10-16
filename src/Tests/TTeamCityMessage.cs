@@ -40,7 +40,7 @@ namespace Tests
         public void AttributelessWithTimestamp()
         {
             var message = new AttributeLessMessage(EnableServiceMessages) { IsAddTimestamp = true };
-            string expected = string.Format(@"##teamcity\[enableServiceMessages timestamp='{0}'\]", DateRegex);
+            string expected = $@"##teamcity\[enableServiceMessages timestamp='{DateRegex}'\]";
             Assert.That(message.ToString(), Is.StringMatching(expected));
         }
 
@@ -56,7 +56,7 @@ namespace Tests
         public void SimpleMessageAddTimeStamp()
         {
             var message = new SimpleTeamCityMessage(BuildNumber, Number) { IsAddTimestamp = true };
-            string expected = string.Format(@"##teamcity\[buildNumber '1\.0' timestamp='{0}'\]", DateRegex);
+            string expected = $@"##teamcity\[buildNumber '1\.0' timestamp='{DateRegex}'\]";
             Assert.That(message.ToString(), Is.StringMatching(expected));
         }
 
@@ -65,7 +65,7 @@ namespace Tests
         {
             var message = new SimpleTeamCityMessage(BuildNumber, Number)
                                                 { IsAddTimestamp = true, FlowId = "1" };
-            string expected = string.Format(@"##teamcity\[buildNumber '1\.0' timestamp='{0}' flowId='1'\]", DateRegex);
+            string expected = $@"##teamcity\[buildNumber '1\.0' timestamp='{DateRegex}' flowId='1'\]";
             Assert.That(message.ToString(), Is.StringMatching(expected));
         }
 
@@ -74,7 +74,7 @@ namespace Tests
         {
             var message = new SimpleTeamCityMessage(BuildNumber, Number)
                                                 { IsAddTimestamp = true, FlowId = "1" };
-            string expected = string.Format(@"##teamcity\[buildNumber '1\.0' timestamp='{0}' flowId='1'\]", DateRegex);
+            string expected = $@"##teamcity\[buildNumber '1\.0' timestamp='{DateRegex}' flowId='1'\]";
             Assert.That(message.ToString(), Is.StringMatching(expected));
             Assert.That(message.ToString(), Is.StringMatching(expected));
         }

@@ -76,6 +76,7 @@
   <ItemGroup>
     <Compile Include="TOpenCoverCommandLine.cs" />
     <Compile Include="TOpenCoverStatisticParser.cs" />
+    <Compile Include="TOpenCoverXmlReportStatisticParser.cs" />
     <Compile Include="TRunOpenCoverage.cs" />
     <Compile Include="Utils\TeamCityEnv.cs" />
     <Compile Include="TPartCoverReport.cs" />

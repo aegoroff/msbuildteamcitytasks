@@ -55,6 +55,28 @@ namespace Tests
         }
 
         [Test]
+        public void RealRunNoReport()
+        {
+            this.Logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.Normal, null)).WithAnyArguments();
+            this.Logger.Expects.Exactly(9).Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
+
+            this.item1.Expects.Exactly(2).GetProperty(_ => _.ItemSpec).Will(Return.Value("+[MSBuild.TeamCity.Tasks]*ImportData"));
+            this.item2.Expects.Exactly(2).GetProperty(_ => _.ItemSpec).Will(Return.Value("-[System]*"));
+
+            this.task.ToolPath = ValidPathToOpenCover;
+            this.task.TargetPath = NUnitPath;
+            var path = new Uri(this.GetType().Assembly.CodeBase).LocalPath;
+            this.task.TargetArguments = $"/nologo /noshadow {path} /framework:net-4.0 /run=TGoogleTestArgumentsBuilder";
+            this.task.TargetWorkDir = TargetWorkDir;
+            this.task.ExcludeByfile = "*.Gen.cs";
+            this.task.HideSkipped = "All";
+            this.task.SkipAutoProps = true;
+
+            this.task.Filter = new[] { this.item1.MockObject, this.item2.MockObject };
+            Assert.That(this.task.Execute());
+        }
+
+        [Test]
         public void FilterProperty()
         {
             this.task.Filter = new[] { this.item1.MockObject };

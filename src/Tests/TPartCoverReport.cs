@@ -74,6 +74,8 @@ namespace Tests
             this.Logger.Setup(_ => _.LogErrorFromException(It.IsAny<Exception>(), It.IsAny<bool>())); // 1
             this.task.WhenNoDataPublished = "bad";
             this.task.Execute().Should().BeFalse();
+
+            this.Logger.Verify(_ => _.LogErrorFromException(It.IsAny<Exception>(), It.IsAny<bool>()), Times.Once);
         }
     }
 }

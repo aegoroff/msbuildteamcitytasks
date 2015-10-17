@@ -33,7 +33,7 @@ namespace Tests
             this.task.XmlReportPath = XmlReportPth;
             this.task.Execute().Should().BeTrue();
 
-            this.Logger.Verify(_ => _.LogMessage(MessageImportance.High, It.IsAny<string>()), Times.Exactly(2));
+            this.Logger.Verify(_ => _.LogMessage(MessageImportance.High, It.IsAny<string>()), Times.AtMost(2));
         }
 
         [Fact]
@@ -48,7 +48,7 @@ namespace Tests
             this.task.WhenNoDataPublished = "info";
             this.task.Execute().Should().BeTrue();
 
-            this.Logger.Verify(_ => _.LogMessage(MessageImportance.High, It.IsAny<string>()), Times.Exactly(3));
+            this.Logger.Verify(_ => _.LogMessage(MessageImportance.High, It.IsAny<string>()), Times.AtMost(3));
         }
 
         [Fact]

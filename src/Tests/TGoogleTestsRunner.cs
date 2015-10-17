@@ -17,7 +17,6 @@ namespace Tests
     [Collection("SerialTests")]
     public class TGoogleTestsRunner : IDisposable
     {
-        internal const string HasLoggedErrors = "HasLoggedErrors";
         internal static readonly string correctExePath = Environment.CurrentDirectory + @"\..\..\..\External\_tst.exe";
         private readonly Mock<ILogger> logger;
 

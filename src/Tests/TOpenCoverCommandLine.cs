@@ -5,16 +5,14 @@
  */
 
 using System.Collections.Generic;
+using FluentAssertions;
 using MSBuild.TeamCity.Tasks.Internal;
-using NUnit.Framework;
+using Xunit;
 
 namespace Tests
 {
-    [TestFixture]
     public class TOpenCoverCommandLine
     {
-        private OpenCoverCommandLine commandLine;
-
         private const string Target = "t";
         private const string RegisterUserResult = "-register:user ";
         private const string TargetResult = RegisterUserResult + "-target:t";
@@ -32,83 +30,84 @@ namespace Tests
         private const string FilterResult = RegisterUserResult + "-filter:+[*]*";
         private const string Space = " ";
         private const string SkipAutoPropsResult = RegisterUserResult + "-skipautoprops";
+        private readonly OpenCoverCommandLine commandLine;
 
-        [SetUp]
-        public void Setup()
+        public TOpenCoverCommandLine()
         {
-            commandLine = new OpenCoverCommandLine();
+            this.commandLine = new OpenCoverCommandLine();
         }
 
-        [TestCase(Target, TargetResult)]
-        [TestCase("t s", RegisterUserResult + "\"-target:t s\"")]
+        [Theory]
+        [InlineData(Target, TargetResult)]
+        [InlineData("t s", RegisterUserResult + "\"-target:t s\"")]
         public void TargetProperty(string target, string expected)
         {
-            commandLine.Target = target;
-            Assert.That(commandLine.ToString(), Is.EqualTo(expected));
+            this.commandLine.Target = target;
+            this.commandLine.ToString().Should().Be(expected);
         }
 
-        [Test]
+        [Fact]
         public void TargetWorkDirProperty()
         {
-            commandLine.TargetWorkDir = TargetWorkDir;
-            Assert.That(commandLine.ToString(), Is.EqualTo(TargetWorkDirResult));
+            this.commandLine.TargetWorkDir = TargetWorkDir;
+            this.commandLine.ToString().Should().Be(TargetWorkDirResult);
         }
 
-        [Test]
+        [Fact]
         public void TargetArgumentsProperty()
         {
-            commandLine.TargetArguments = TargetArguments;
-            Assert.That(commandLine.ToString(), Is.EqualTo(TargetArgumentsResult));
+            this.commandLine.TargetArguments = TargetArguments;
+            this.commandLine.ToString().Should().Be(TargetArgumentsResult);
         }
 
-        [Test]
+        [Fact]
         public void OutputProperty()
         {
-            commandLine.Output = Output;
-            Assert.That(commandLine.ToString(), Is.EqualTo(OutputResult));
+            this.commandLine.Output = Output;
+            this.commandLine.ToString().Should().Be(OutputResult);
         }
-        
-        [Test]
+
+        [Fact]
         public void FilterProperty()
         {
-            commandLine.Filter.Add(Filter);
-            Assert.That(commandLine.ToString(), Is.EqualTo(FilterResult));
+            this.commandLine.Filter.Add(Filter);
+            this.commandLine.ToString().Should().Be(FilterResult);
         }
 
-        [Test]
+        [Fact]
         public void SkipAutoPropsProperty()
         {
-            commandLine.SkipAutoProps = true;
-            Assert.That(commandLine.ToString(), Is.EqualTo(SkipAutoPropsResult));
+            this.commandLine.SkipAutoProps = true;
+            this.commandLine.ToString().Should().Be(SkipAutoPropsResult);
         }
 
-        [Test]
+        [Fact]
         public void SkipAutoPropsPropertyFalse()
         {
-            commandLine.SkipAutoProps = false;
-            Assert.That(commandLine.ToString(), Is.EqualTo(RegisterUserResult.TrimEnd()));
-        }
-        
-        [Test]
-        public void ManyFiltersProperty()
-        {
-            commandLine.Filter.Add(Filter);
-            commandLine.Filter.Add("-[System]*");
-            Assert.That(commandLine.ToString(), Is.EqualTo(RegisterUserResult + "\"-filter:+[*]* -[System]*\""));
+            this.commandLine.SkipAutoProps = false;
+            this.commandLine.ToString().Should().Be(RegisterUserResult.TrimEnd());
         }
 
-        [Test]
+        [Fact]
+        public void ManyFiltersProperty()
+        {
+            this.commandLine.Filter.Add(Filter);
+            this.commandLine.Filter.Add("-[System]*");
+            this.commandLine.ToString().Should().Be(RegisterUserResult + "\"-filter:+[*]* -[System]*\"");
+        }
+
+        [Fact]
         public void AllProperties()
         {
-            commandLine.Target = Target;
-            commandLine.TargetWorkDir = TargetWorkDir;
-            commandLine.TargetArguments = TargetArguments;
-            commandLine.Output = Output;
-            commandLine.HideSkipped = "all";
-            commandLine.ExcludeByfile = "*.Generated.cs";
-            commandLine.SkipAutoProps = true;
-            commandLine.Filter.Add(Filter);
-            Assert.That(commandLine.ToString(), Is.EqualTo(string.Join(Space, EnumerateAllResults())));
+            this.commandLine.Target = Target;
+            this.commandLine.TargetWorkDir = TargetWorkDir;
+            this.commandLine.TargetArguments = TargetArguments;
+            this.commandLine.Output = Output;
+            this.commandLine.HideSkipped = "all";
+            this.commandLine.ExcludeByfile = "*.Generated.cs";
+            this.commandLine.SkipAutoProps = true;
+            this.commandLine.Filter.Add(Filter);
+            this.commandLine.ToString().Should().Be(string.Join(Space, EnumerateAllResults()));
         }
 
         private static IEnumerable<string> EnumerateAllResults()

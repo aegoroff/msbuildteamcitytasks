@@ -5,71 +5,70 @@
  */
 
 
+using FluentAssertions;
 using Microsoft.Build.Framework;
 using MSBuild.TeamCity.Tasks;
 using NMock;
-using NUnit.Framework;
-using Is = NUnit.Framework.Is;
+using Xunit;
 
 namespace Tests
 {
-    [TestFixture]
     public class TPartCoverReport : TTask
     {
-        private Mock<ITaskItem> item1;
-        private Mock<ITaskItem> item2;
-        private PartCoverReport task;
         private const string XmlReportPth = "path";
+        private readonly Mock<ITaskItem> item1;
+        private readonly Mock<ITaskItem> item2;
+        private readonly PartCoverReport task;
 
-        protected override void AfterSetup()
+        public TPartCoverReport()
         {
-            item1 = Mockery.CreateMock<ITaskItem>();
-            item2 = Mockery.CreateMock<ITaskItem>();
-            task = new PartCoverReport(Logger.MockObject);
+            this.item1 = this.Mockery.CreateMock<ITaskItem>();
+            this.item2 = this.Mockery.CreateMock<ITaskItem>();
+            this.task = new PartCoverReport(this.Logger.MockObject);
         }
 
-        [Test]
+        [Fact]
         public void OnlyRequired()
         {
-            Logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
-            task.XmlReportPath = XmlReportPth;
-            Assert.That(task.Execute());
+            this.Logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
+            this.task.XmlReportPath = XmlReportPth;
+            this.task.Execute().Should().BeTrue();
         }
 
-        [Test]
+        [Fact]
         public void All()
         {
-            Logger.Expects.Exactly(2).Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
-            item1.Expects.Exactly(2).GetProperty(_=>_.ItemSpec).Will(Return.Value("a"));
-            item2.Expects.Exactly(2).GetProperty(_ => _.ItemSpec).Will(Return.Value("b"));
-            task.XmlReportPath = XmlReportPth;
-            task.ReportXslts = new[] { item1.MockObject, item2.MockObject };
-            task.Verbose = true;
-            task.ParseOutOfDate = true;
-            task.WhenNoDataPublished = "info";
-            Assert.That(task.Execute());
+            this.Logger.Expects.Exactly(2).Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
+            this.item1.Expects.Exactly(2).GetProperty(_ => _.ItemSpec).Will(Return.Value("a"));
+            this.item2.Expects.Exactly(2).GetProperty(_ => _.ItemSpec).Will(Return.Value("b"));
+            this.task.XmlReportPath = XmlReportPth;
+            this.task.ReportXslts = new[] { this.item1.MockObject, this.item2.MockObject };
+            this.task.Verbose = true;
+            this.task.ParseOutOfDate = true;
+            this.task.WhenNoDataPublished = "info";
+            this.task.Execute().Should().BeTrue();
         }
 
-        [Test]
+        [Fact]
         public void XmlReportPath()
         {
-            task.XmlReportPath = XmlReportPth;
-            Assert.That(task.XmlReportPath, Is.EqualTo(XmlReportPth));
+            this.task.XmlReportPath = XmlReportPth;
+            this.task.XmlReportPath.Should().Be(XmlReportPth);
         }
 
-        [Test]
+        [Fact]
         public void ReportXslts()
         {
-            task.ReportXslts = new[] { item1.MockObject, item2.MockObject };
-            Assert.That(task.ReportXslts, Is.EquivalentTo(new[] { item1.MockObject, item2.MockObject }));
+            this.task.ReportXslts = new[] { this.item1.MockObject, this.item2.MockObject };
+            this.task.ReportXslts.ShouldBeEquivalentTo(new[] { this.item1.MockObject, this.item2.MockObject });
         }
 
-        [Test]
+        [Fact]
         public void InvalidWhenNoDataPublished()
         {
-            Logger.Expects.One.Method(_ => _.LogErrorFromException(null, false)).WithAnyArguments();
-            task.WhenNoDataPublished = "bad";
-            Assert.That(task.Execute(), Is.False);
+            this.Logger.Expects.One.Method(_ => _.LogErrorFromException(null, false)).WithAnyArguments();
+            this.task.WhenNoDataPublished = "bad";
+            this.task.Execute().Should().BeFalse();
         }
     }
 }

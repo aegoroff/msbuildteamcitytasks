@@ -183,19 +183,7 @@ namespace Tests
             Assert.Throws<XunitException>(
                 delegate
                 {
-                    var task = new ImportData(this.Logger.Object)
-                    {
-                        Path = "p",
-                        Type = type,
-                        Tool = tool,
-                        Verbose = verbose,
-                        ParseOutOfDate = parseOutOfDate,
-                        WhenNoDataPublished = whenNoDataPublished
-                    };
-                    task.Execute().Should().BeTrue();
-                    task.Path.Should().Be("p");
-                    task.Type.Should().Be(type);
-                    task.Tool.Should().Be(tool);
+                    ImportData(type, tool, verbose, parseOutOfDate, whenNoDataPublished);
                 });
         }
 

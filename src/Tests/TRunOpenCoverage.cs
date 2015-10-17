@@ -30,32 +30,13 @@ namespace Tests
             this.task = new RunOpenCoverage(this.Logger.Object);
         }
 
-        [Fact]
-        public void RealRun()
+        [Theory]
+        [InlineData("opencover.xml")]
+        [InlineData(null)]
+        [InlineData("bad")]
+        public void RealRun(string report)
         {
-            this.Logger.Setup(_ => _.LogMessage(MessageImportance.High, It.IsAny<string>())); // 10
-
-            this.item1.SetupGet(_ => _.ItemSpec).Returns("+[MSBuild.TeamCity.Tasks]*ImportData"); // 2
-            this.item2.SetupGet(_ => _.ItemSpec).Returns("-[System]*"); // 2
-
-            this.task.ToolPath = ValidPathToOpenCover;
-            this.task.TargetPath = XUnitPath;
-            var path = new Uri(this.GetType().Assembly.CodeBase).LocalPath;
-            this.task.TargetArguments = $"{path} -nologo -noshadow -class TGoogleTestArgumentsBuilder";
-            this.task.TargetWorkDir = TargetWorkDir;
-            this.task.ExcludeByfile = "*.Gen.cs";
-            this.task.HideSkipped = "All";
-            this.task.SkipAutoProps = true;
-            this.task.XmlReportPath = Path.Combine(Path.GetDirectoryName(path), "opencover.xml");
-
-            this.task.Filter = new[] { this.item1.Object, this.item2.Object };
-            this.task.Execute().Should().BeTrue();
-        }
-
-        [Fact]
-        public void RealRunNoReport()
-        {
-            this.Logger.Setup(_ => _.LogMessage(MessageImportance.High, It.IsAny<string>())); // 10
+            this.Logger.Setup(_ => _.LogMessage(MessageImportance.High, It.IsAny<string>()));
 
             this.item1.SetupGet(_ => _.ItemSpec).Returns("+[MSBuild.TeamCity.Tasks]*ImportData"); // 2
             this.item2.SetupGet(_ => _.ItemSpec).Returns("-[System]*"); // 2
@@ -69,8 +50,12 @@ namespace Tests
             this.task.HideSkipped = "All";
             this.task.SkipAutoProps = true;
 
+            this.task.XmlReportPath = report != null ? Path.Combine(Path.GetDirectoryName(path), "opencover.xml") : null;
+
             this.task.Filter = new[] { this.item1.Object, this.item2.Object };
             this.task.Execute().Should().BeTrue();
+
+            this.Logger.Verify(_ => _.LogMessage(MessageImportance.High, It.IsAny<string>()), Times.Exactly(9));
         }
 
         [Fact]

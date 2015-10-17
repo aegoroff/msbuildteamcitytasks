@@ -42,16 +42,22 @@ namespace Tests
 
             this.task.TestExePath = TGoogleTestsRunner.correctExePath;
             this.task.Execute().Should().BeTrue();
+
+            this.Logger.VerifyGet(_ => _.HasLoggedErrors, Times.Once);
+            this.Logger.Verify(_ => _.LogMessage(MessageImportance.High, It.IsAny<string>()), Times.Once);
         }
 
         [Fact]
         public void BadPath()
         {
             this.Logger.Setup(_ => _.LogErrorFromException(It.IsAny<Exception>(), true)); // 1
-            this.Logger.SetupGet(_ => _.HasLoggedErrors).Returns(true); // 1
+            this.Logger.SetupGet(_ => _.HasLoggedErrors).Returns(true); // 0
 
             this.task.TestExePath = "bad";
             this.task.Execute().Should().BeFalse();
+
+            this.Logger.VerifyGet(_ => _.HasLoggedErrors, Times.Never);
+            this.Logger.Verify(_ => _.LogErrorFromException(It.IsAny<Exception>(), true), Times.Once);
         }
 
         [Fact]
@@ -63,6 +69,9 @@ namespace Tests
             this.task.TestExePath = "bad";
             this.task.ContinueOnFailures = true;
             this.task.Execute().Should().BeTrue();
+
+            this.Logger.VerifyGet(_ => _.HasLoggedErrors, Times.Once);
+            this.Logger.Verify(_ => _.LogErrorFromException(It.IsAny<Exception>(), true), Times.Once);
         }
 
         [Fact]
@@ -80,6 +89,9 @@ namespace Tests
             this.task.Verbose = true;
             this.task.WhenNoDataPublished = "error";
             this.task.Execute().Should().BeTrue();
+
+            this.Logger.VerifyGet(_ => _.HasLoggedErrors, Times.Once);
+            this.Logger.Verify(_ => _.LogMessage(MessageImportance.High, It.IsAny<string>()), Times.Once);
         }
 
         [Fact]

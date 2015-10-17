@@ -7,8 +7,8 @@
 using System;
 using FluentAssertions;
 using Microsoft.Build.Framework;
+using Moq;
 using MSBuild.TeamCity.Tasks;
-using NMock;
 using Xunit;
 
 namespace Tests
@@ -24,43 +24,49 @@ namespace Tests
 
         public TNCoverReport()
         {
-            this.task = new NCoverReport(this.Logger.MockObject);
+            this.task = new NCoverReport(this.Logger.Object);
         }
 
         [Fact]
         public void OnlyRequired()
         {
-            this.Logger.Expects.Exactly(2).Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
+            this.Logger.Setup(_ => _.LogMessage(MessageImportance.High, It.IsAny<string>()));
             this.task.NCoverExplorerPath = NCoverExplorerPth;
             this.task.XmlReportPath = XmlReportPth;
             this.task.Execute().Should().BeTrue();
+
+            this.Logger.Verify(_ => _.LogMessage(MessageImportance.High, It.IsAny<string>()), Times.AtMost(2));
         }
 
         [Fact]
         public void OnlyRequiredAndArguments()
         {
-            this.Logger.Expects.Exactly(3).Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
+            this.Logger.Setup(_ => _.LogMessage(MessageImportance.High, It.IsAny<string>()));
             this.task.NCoverExplorerPath = NCoverExplorerPth;
             this.task.XmlReportPath = XmlReportPth;
             this.task.Arguments = Args;
             this.task.Execute().Should().BeTrue();
+
+            this.Logger.Verify(_ => _.LogMessage(MessageImportance.High, It.IsAny<string>()), Times.AtMost(3));
         }
 
         [Fact]
         public void OnlyRequiredAndArgumentsAndReportType()
         {
-            this.Logger.Expects.Exactly(4).Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
+            this.Logger.Setup(_ => _.LogMessage(MessageImportance.High, It.IsAny<string>()));
             this.task.NCoverExplorerPath = NCoverExplorerPth;
             this.task.XmlReportPath = XmlReportPth;
             this.task.Arguments = Args;
             this.task.ReportType = RptType;
             this.task.Execute().Should().BeTrue();
+
+            this.Logger.Verify(_ => _.LogMessage(MessageImportance.High, It.IsAny<string>()), Times.AtMost(4));
         }
 
         [Fact]
         public void Full()
         {
-            this.Logger.Expects.Exactly(5).Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
+            this.Logger.Setup(_ => _.LogMessage(MessageImportance.High, It.IsAny<string>()));
             this.task.NCoverExplorerPath = NCoverExplorerPth;
             this.task.XmlReportPath = XmlReportPth;
             this.task.Arguments = Args;
@@ -70,18 +76,20 @@ namespace Tests
             this.task.ParseOutOfDate = true;
             this.task.WhenNoDataPublished = "info";
             this.task.Execute().Should().BeTrue();
+
+            this.Logger.Verify(_ => _.LogMessage(MessageImportance.High, It.IsAny<string>()), Times.AtMost(5));
         }
 
         [Fact]
         public void WithException()
         {
-            this.Logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.High, null))
-                .WithAnyArguments()
-                .Will(Throw.Exception(new Exception()));
-            this.Logger.Expects.One.Method(_ => _.LogErrorFromException(null, true)).WithAnyArguments();
+            this.Logger.Setup(_ => _.LogMessage(MessageImportance.High, It.IsAny<string>())).Throws<Exception>();
+            this.Logger.Setup(_ => _.LogErrorFromException(It.IsAny<Exception>(), true));
             this.task.NCoverExplorerPath = NCoverExplorerPth;
             this.task.XmlReportPath = XmlReportPth;
             this.task.Execute().Should().BeFalse();
+
+            this.Logger.Verify(_ => _.LogErrorFromException(It.IsAny<Exception>(), true), Times.Once);
         }
 
         [Fact]
@@ -122,9 +130,11 @@ namespace Tests
         [Fact]
         public void InvalidWhenNoDataPublished()
         {
-            this.Logger.Expects.One.Method(_ => _.LogErrorFromException(null, false)).WithAnyArguments();
+            this.Logger.Setup(_ => _.LogErrorFromException(It.IsAny<Exception>(), false));
             this.task.WhenNoDataPublished = "bad";
             this.task.Execute().Should().BeFalse();
+
+            this.Logger.Verify(_ => _.LogErrorFromException(It.IsAny<Exception>(), false), Times.Never);
         }
     }
 }

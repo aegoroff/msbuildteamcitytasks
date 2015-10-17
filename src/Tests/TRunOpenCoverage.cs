@@ -8,8 +8,8 @@ using System;
 using System.IO;
 using FluentAssertions;
 using Microsoft.Build.Framework;
+using Moq;
 using MSBuild.TeamCity.Tasks;
-using NMock;
 using Xunit;
 
 namespace Tests
@@ -25,21 +25,18 @@ namespace Tests
 
         public TRunOpenCoverage()
         {
-            this.item1 = this.Mockery.CreateMock<ITaskItem>();
-            this.item2 = this.Mockery.CreateMock<ITaskItem>();
-            this.task = new RunOpenCoverage(this.Logger.MockObject);
+            this.item1 = new Mock<ITaskItem>();
+            this.item2 = new Mock<ITaskItem>();
+            this.task = new RunOpenCoverage(this.Logger.Object);
         }
 
         [Fact]
         public void RealRun()
         {
-            this.Logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.Normal, null)).WithAnyArguments();
-            this.Logger.Expects.Exactly(9).Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
+            this.Logger.Setup(_ => _.LogMessage(MessageImportance.High, It.IsAny<string>())); // 10
 
-            this.item1.Expects.Exactly(2)
-                .GetProperty(_ => _.ItemSpec)
-                .Will(Return.Value("+[MSBuild.TeamCity.Tasks]*ImportData"));
-            this.item2.Expects.Exactly(2).GetProperty(_ => _.ItemSpec).Will(Return.Value("-[System]*"));
+            this.item1.SetupGet(_ => _.ItemSpec).Returns("+[MSBuild.TeamCity.Tasks]*ImportData"); // 2
+            this.item2.SetupGet(_ => _.ItemSpec).Returns("-[System]*"); // 2
 
             this.task.ToolPath = ValidPathToOpenCover;
             this.task.TargetPath = XUnitPath;
@@ -51,20 +48,17 @@ namespace Tests
             this.task.SkipAutoProps = true;
             this.task.XmlReportPath = Path.Combine(Path.GetDirectoryName(path), "opencover.xml");
 
-            this.task.Filter = new[] { this.item1.MockObject, this.item2.MockObject };
+            this.task.Filter = new[] { this.item1.Object, this.item2.Object };
             this.task.Execute().Should().BeTrue();
         }
 
         [Fact]
         public void RealRunNoReport()
         {
-            this.Logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.Normal, null)).WithAnyArguments();
-            this.Logger.Expects.Exactly(9).Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
+            this.Logger.Setup(_ => _.LogMessage(MessageImportance.High, It.IsAny<string>())); // 10
 
-            this.item1.Expects.Exactly(2)
-                .GetProperty(_ => _.ItemSpec)
-                .Will(Return.Value("+[MSBuild.TeamCity.Tasks]*ImportData"));
-            this.item2.Expects.Exactly(2).GetProperty(_ => _.ItemSpec).Will(Return.Value("-[System]*"));
+            this.item1.SetupGet(_ => _.ItemSpec).Returns("+[MSBuild.TeamCity.Tasks]*ImportData"); // 2
+            this.item2.SetupGet(_ => _.ItemSpec).Returns("-[System]*"); // 2
 
             this.task.ToolPath = ValidPathToOpenCover;
             this.task.TargetPath = XUnitPath;
@@ -75,21 +69,21 @@ namespace Tests
             this.task.HideSkipped = "All";
             this.task.SkipAutoProps = true;
 
-            this.task.Filter = new[] { this.item1.MockObject, this.item2.MockObject };
+            this.task.Filter = new[] { this.item1.Object, this.item2.Object };
             this.task.Execute().Should().BeTrue();
         }
 
         [Fact]
         public void FilterProperty()
         {
-            this.task.Filter = new[] { this.item1.MockObject };
-            this.task.Filter.ShouldAllBeEquivalentTo(new[] { this.item1.MockObject });
+            this.task.Filter = new[] { this.item1.Object };
+            this.task.Filter.ShouldAllBeEquivalentTo(new[] { this.item1.Object });
         }
 
         [Fact]
         public void ToolPath()
         {
-            this.Logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
+            this.Logger.Setup(_ => _.LogMessage(MessageImportance.High, It.IsAny<string>())); // 1
             this.task.ToolPath = ValidPathToOpenCover;
             this.task.Execute().Should().BeTrue();
         }
@@ -97,7 +91,7 @@ namespace Tests
         [Fact]
         public void ToolPathAndTargetPath()
         {
-            this.Logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
+            this.Logger.Setup(_ => _.LogMessage(MessageImportance.High, It.IsAny<string>())); // 1
             this.task.ToolPath = ValidPathToOpenCover;
             this.task.TargetPath = TGoogleTestsRunner.correctExePath;
             this.task.Execute().Should().BeTrue();
@@ -106,7 +100,7 @@ namespace Tests
         [Fact]
         public void ToolPathInvalid()
         {
-            this.Logger.Expects.One.Method(_ => _.LogErrorFromException(null, true)).WithAnyArguments();
+            this.Logger.Setup(_ => _.LogErrorFromException(It.IsAny<Exception>(), true)); // 1
             this.task.ToolPath = "bad";
             this.task.Execute().Should().BeFalse();
         }

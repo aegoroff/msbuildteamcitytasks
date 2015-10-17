@@ -5,8 +5,8 @@
  */
 
 using System;
+using Moq;
 using MSBuild.TeamCity.Tasks;
-using NMock;
 using Tests.Utils;
 
 namespace Tests
@@ -15,16 +15,13 @@ namespace Tests
     {
         protected TTask()
         {
-            this.Mockery = new MockFactory();
-            this.Logger = this.Mockery.CreateMock<ILogger>();
+            this.Logger = new Mock<ILogger>();
             Environment.SetEnvironmentVariable(TeamCityEnv.TeamCityEnvVar,
                 TeamCityEnv.TeamCityProject,
                 EnvironmentVariableTarget.Process);
         }
 
         protected Mock<ILogger> Logger { get; private set; }
-
-        protected MockFactory Mockery { get; }
 
         public void Dispose()
         {

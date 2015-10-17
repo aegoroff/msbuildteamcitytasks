@@ -4,10 +4,11 @@
  * © 2007-2015 Alexander Egorov
  */
 
+using System;
 using FluentAssertions;
 using Microsoft.Build.Framework;
+using Moq;
 using MSBuild.TeamCity.Tasks;
-using NMock;
 using Xunit;
 
 namespace Tests
@@ -21,7 +22,7 @@ namespace Tests
 
         public TRunGoogleTests()
         {
-            this.task = new RunGoogleTests(this.Logger.MockObject);
+            this.task = new RunGoogleTests(this.Logger.Object);
         }
 
         protected override void AfterTeardown()
@@ -32,8 +33,8 @@ namespace Tests
         [Fact]
         public void OnlyRequired()
         {
-            this.Logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
-            this.Logger.Expects.One.GetProperty(_ => _.HasLoggedErrors).Will(Return.Value(false));
+            this.Logger.Setup(_ => _.LogMessage(MessageImportance.High, It.IsAny<string>())); // 1
+            this.Logger.SetupGet(_ => _.HasLoggedErrors).Returns(false); // 1
 
             this.task.TestExePath = TGoogleTestsRunner.correctExePath;
             this.task.Execute().Should().BeTrue();
@@ -42,8 +43,8 @@ namespace Tests
         [Fact]
         public void BadPath()
         {
-            this.Logger.Expects.One.Method(_ => _.LogErrorFromException(null, true)).WithAnyArguments();
-            this.Logger.Expects.One.GetProperty(_ => _.HasLoggedErrors).Will(Return.Value(true));
+            this.Logger.Setup(_ => _.LogErrorFromException(It.IsAny<Exception>(), true)); // 1
+            this.Logger.SetupGet(_ => _.HasLoggedErrors).Returns(true); // 1
 
             this.task.TestExePath = "bad";
             this.task.Execute().Should().BeFalse();
@@ -52,8 +53,8 @@ namespace Tests
         [Fact]
         public void ContinueOnFailures()
         {
-            this.Logger.Expects.One.Method(_ => _.LogErrorFromException(null, true)).WithAnyArguments();
-            this.Logger.Expects.One.GetProperty(_ => _.HasLoggedErrors).Will(Return.Value(false));
+            this.Logger.Setup(_ => _.LogErrorFromException(It.IsAny<Exception>(), true)); // 1
+            this.Logger.SetupGet(_ => _.HasLoggedErrors).Returns(false); // 1
 
             this.task.TestExePath = "bad";
             this.task.ContinueOnFailures = true;
@@ -63,8 +64,8 @@ namespace Tests
         [Fact]
         public void AllPropertiesSet()
         {
-            this.Logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
-            this.Logger.Expects.One.GetProperty(_ => _.HasLoggedErrors).Will(Return.Value(false));
+            this.Logger.Setup(_ => _.LogMessage(MessageImportance.High, It.IsAny<string>())); // 1
+            this.Logger.SetupGet(_ => _.HasLoggedErrors).Returns(false); // 1
 
             this.task.TestExePath = TGoogleTestsRunner.correctExePath;
             this.task.ContinueOnFailures = false;

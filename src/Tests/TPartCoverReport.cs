@@ -4,11 +4,11 @@
  * © 2007-2015 Alexander Egorov
  */
 
-
+using System;
 using FluentAssertions;
 using Microsoft.Build.Framework;
+using Moq;
 using MSBuild.TeamCity.Tasks;
-using NMock;
 using Xunit;
 
 namespace Tests
@@ -22,31 +22,36 @@ namespace Tests
 
         public TPartCoverReport()
         {
-            this.item1 = this.Mockery.CreateMock<ITaskItem>();
-            this.item2 = this.Mockery.CreateMock<ITaskItem>();
-            this.task = new PartCoverReport(this.Logger.MockObject);
+            this.item1 = new Mock<ITaskItem>();
+            this.item2 = new Mock<ITaskItem>();
+            this.task = new PartCoverReport(this.Logger.Object);
         }
 
         [Fact]
         public void OnlyRequired()
         {
-            this.Logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
+            this.Logger.Setup(_ => _.LogMessage(MessageImportance.High, It.IsAny<string>()));
             this.task.XmlReportPath = XmlReportPth;
             this.task.Execute().Should().BeTrue();
+            this.Logger.Verify(_ => _.LogMessage(MessageImportance.High, It.IsAny<string>()), Times.Once);
         }
 
         [Fact]
         public void All()
         {
-            this.Logger.Expects.Exactly(2).Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
-            this.item1.Expects.Exactly(2).GetProperty(_ => _.ItemSpec).Will(Return.Value("a"));
-            this.item2.Expects.Exactly(2).GetProperty(_ => _.ItemSpec).Will(Return.Value("b"));
+            this.Logger.Setup(_ => _.LogMessage(MessageImportance.High, It.IsAny<string>()));
+            this.item1.SetupGet(_ => _.ItemSpec).Returns("a");
+            this.item2.SetupGet(_ => _.ItemSpec).Returns("b");
             this.task.XmlReportPath = XmlReportPth;
-            this.task.ReportXslts = new[] { this.item1.MockObject, this.item2.MockObject };
+            this.task.ReportXslts = new[] { this.item1.Object, this.item2.Object };
             this.task.Verbose = true;
             this.task.ParseOutOfDate = true;
             this.task.WhenNoDataPublished = "info";
             this.task.Execute().Should().BeTrue();
+
+            this.item1.VerifyGet(_ => _.ItemSpec, Times.Once);
+            this.item2.VerifyGet(_ => _.ItemSpec, Times.Once);
+            this.Logger.Verify(_ => _.LogMessage(MessageImportance.High, It.IsAny<string>()), Times.AtMost(2));
         }
 
         [Fact]
@@ -59,14 +64,14 @@ namespace Tests
         [Fact]
         public void ReportXslts()
         {
-            this.task.ReportXslts = new[] { this.item1.MockObject, this.item2.MockObject };
-            this.task.ReportXslts.ShouldBeEquivalentTo(new[] { this.item1.MockObject, this.item2.MockObject });
+            this.task.ReportXslts = new[] { this.item1.Object, this.item2.Object };
+            this.task.ReportXslts.ShouldBeEquivalentTo(new[] { this.item1.Object, this.item2.Object });
         }
 
         [Fact]
         public void InvalidWhenNoDataPublished()
         {
-            this.Logger.Expects.One.Method(_ => _.LogErrorFromException(null, false)).WithAnyArguments();
+            this.Logger.Setup(_ => _.LogErrorFromException(It.IsAny<Exception>(), It.IsAny<bool>())); // 1
             this.task.WhenNoDataPublished = "bad";
             this.task.Execute().Should().BeFalse();
         }

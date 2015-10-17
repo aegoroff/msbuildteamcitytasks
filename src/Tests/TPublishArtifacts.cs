@@ -6,8 +6,8 @@
 
 using FluentAssertions;
 using Microsoft.Build.Framework;
+using Moq;
 using MSBuild.TeamCity.Tasks;
-using NMock;
 using Xunit;
 
 namespace Tests
@@ -20,37 +20,37 @@ namespace Tests
 
         public TPublishArtifacts()
         {
-            this.item1 = this.Mockery.CreateMock<ITaskItem>();
-            this.item2 = this.Mockery.CreateMock<ITaskItem>();
-            this.task = new PublishArtifacts(this.Logger.MockObject);
+            this.item1 = new Mock<ITaskItem>();
+            this.item2 = new Mock<ITaskItem>();
+            this.task = new PublishArtifacts(this.Logger.Object);
         }
 
         [Fact]
         public void OneArtifact()
         {
-            this.Logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
-            this.item1.Expects.One.GetProperty(_ => _.ItemSpec).Will(Return.Value("a"));
+            this.Logger.Setup(_ => _.LogMessage(MessageImportance.High, It.IsAny<string>()));
+            this.item1.SetupGet(_ => _.ItemSpec).Returns("a"); // 1
 
-            this.task.Artifacts = new[] { this.item1.MockObject };
+            this.task.Artifacts = new[] { this.item1.Object };
             this.task.Execute().Should().BeTrue();
         }
 
         [Fact]
         public void SeveralArtifacts()
         {
-            this.Logger.Expects.Exactly(2).Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
-            this.item1.Expects.One.GetProperty(_ => _.ItemSpec).Will(Return.Value("a"));
-            this.item2.Expects.One.GetProperty(_ => _.ItemSpec).Will(Return.Value("b"));
+            this.Logger.Setup(_ => _.LogMessage(MessageImportance.High, It.IsAny<string>())); // 2
+            this.item1.SetupGet(_ => _.ItemSpec).Returns("a");
+            this.item2.SetupGet(_ => _.ItemSpec).Returns("b");
 
-            this.task.Artifacts = new[] { this.item1.MockObject, this.item2.MockObject };
+            this.task.Artifacts = new[] { this.item1.Object, this.item2.Object };
             this.task.Execute().Should().BeTrue();
         }
 
         [Fact]
         public void ArtifactsProperty()
         {
-            this.task.Artifacts = new[] { this.item1.MockObject, this.item2.MockObject };
-            this.task.Artifacts.ShouldBeEquivalentTo(new[] { this.item1.MockObject, this.item2.MockObject });
+            this.task.Artifacts = new[] { this.item1.Object, this.item2.Object };
+            this.task.Artifacts.ShouldBeEquivalentTo(new[] { this.item1.Object, this.item2.Object });
         }
     }
 }

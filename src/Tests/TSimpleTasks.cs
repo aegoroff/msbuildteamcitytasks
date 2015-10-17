@@ -6,9 +6,12 @@
 
 using FluentAssertions;
 using Microsoft.Build.Framework;
+using Moq;
 using MSBuild.TeamCity.Tasks;
-using NMock;
 using Xunit;
+using Xunit.Sdk;
+using TestFailed = MSBuild.TeamCity.Tasks.TestFailed;
+using TestFinished = MSBuild.TeamCity.Tasks.TestFinished;
 
 namespace Tests
 {
@@ -16,13 +19,13 @@ namespace Tests
     {
         public TSimpleTasks()
         {
-            this.Logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
+            this.Logger.Setup(_ => _.LogMessage(MessageImportance.High, It.IsAny<string>())); // 1
         }
 
         [Fact]
         public void CommonPropertiesTest()
         {
-            var task = new BlockOpen(this.Logger.MockObject)
+            var task = new BlockOpen(this.Logger.Object)
             {
                 Name = "n",
                 FlowId = "1",
@@ -34,7 +37,7 @@ namespace Tests
         [Fact]
         public void BlockTaskNameProperty()
         {
-            var task = new BlockOpen(this.Logger.MockObject)
+            var task = new BlockOpen(this.Logger.Object)
             {
                 Name = "n"
             };
@@ -44,7 +47,7 @@ namespace Tests
         [Fact]
         public void BlockOpen()
         {
-            var task = new BlockOpen(this.Logger.MockObject)
+            var task = new BlockOpen(this.Logger.Object)
             {
                 Name = "n"
             };
@@ -54,7 +57,7 @@ namespace Tests
         [Fact]
         public void BlockClose()
         {
-            var task = new BlockClose(this.Logger.MockObject)
+            var task = new BlockClose(this.Logger.Object)
             {
                 Name = "n"
             };
@@ -64,7 +67,7 @@ namespace Tests
         [Fact]
         public void BuildNumber()
         {
-            var task = new BuildNumber(this.Logger.MockObject)
+            var task = new BuildNumber(this.Logger.Object)
             {
                 Number = "1"
             };
@@ -75,7 +78,7 @@ namespace Tests
         [Fact]
         public void BuildProgressStart()
         {
-            var task = new BuildProgressStart(this.Logger.MockObject)
+            var task = new BuildProgressStart(this.Logger.Object)
             {
                 Message = "m"
             };
@@ -86,7 +89,7 @@ namespace Tests
         [Fact]
         public void BuildProgressMessage()
         {
-            var task = new BuildProgressMessage(this.Logger.MockObject)
+            var task = new BuildProgressMessage(this.Logger.Object)
             {
                 Message = "m"
             };
@@ -97,7 +100,7 @@ namespace Tests
         [Fact]
         public void BuildProgressFinish()
         {
-            var task = new BuildProgressFinish(this.Logger.MockObject)
+            var task = new BuildProgressFinish(this.Logger.Object)
             {
                 Message = "m"
             };
@@ -108,7 +111,7 @@ namespace Tests
         [Fact]
         public void BuildStatus()
         {
-            var task = new BuildStatus(this.Logger.MockObject)
+            var task = new BuildStatus(this.Logger.Object)
             {
                 Status = "SUCCESS",
                 Text = "t"
@@ -119,7 +122,7 @@ namespace Tests
         [Fact]
         public void ReportMessage()
         {
-            var task = new ReportMessage(this.Logger.MockObject)
+            var task = new ReportMessage(this.Logger.Object)
             {
                 Status = "WARNING",
                 Text = "t",
@@ -134,7 +137,7 @@ namespace Tests
         [Fact]
         public void ReportBuildStatistic()
         {
-            var task = new ReportBuildStatistic(this.Logger.MockObject)
+            var task = new ReportBuildStatistic(this.Logger.Object)
             {
                 Key = "k",
                 Value = 1
@@ -156,7 +159,7 @@ namespace Tests
         [InlineData("mstest", null, false, false, "error")]
         public void ImportData(string type, string tool, bool verbose, bool parseOutOfDate, string whenNoDataPublished)
         {
-            var task = new ImportData(this.Logger.MockObject)
+            var task = new ImportData(this.Logger.Object)
             {
                 Path = "p",
                 Type = type,
@@ -177,10 +180,10 @@ namespace Tests
         [InlineData("mstest", null, false, false, "bad")]
         public void ImportDataExceptions(string type, string tool, bool verbose, bool parseOutOfDate, string whenNoDataPublished)
         {
-            Assert.Throws<UnexpectedInvocationException>(
+            Assert.Throws<XunitException>(
                 delegate
                 {
-                    var task = new ImportData(this.Logger.MockObject)
+                    var task = new ImportData(this.Logger.Object)
                     {
                         Path = "p",
                         Type = type,
@@ -199,9 +202,9 @@ namespace Tests
         [Fact]
         public void ImportGoogleTests()
         {
-            this.Logger.Expects.One.GetProperty(_ => _.HasLoggedErrors).Will(Return.Value(false));
+            this.Logger.SetupGet(_ => _.HasLoggedErrors).Returns(false); // 1
 
-            var task = new ImportGoogleTests(this.Logger.MockObject)
+            var task = new ImportGoogleTests(this.Logger.Object)
             {
                 ContinueOnFailures = true,
                 TestResultsPath = TGoogleTestsPlainImporter.successTestsPath,
@@ -217,35 +220,35 @@ namespace Tests
         [Fact]
         public void EnableServiceMessages()
         {
-            var task = new EnableServiceMessages(this.Logger.MockObject);
+            var task = new EnableServiceMessages(this.Logger.Object);
             task.Execute().Should().BeTrue();
         }
 
         [Fact]
         public void DisableServiceMessages()
         {
-            var task = new DisableServiceMessages(this.Logger.MockObject);
+            var task = new DisableServiceMessages(this.Logger.Object);
             task.Execute().Should().BeTrue();
         }
 
         [Fact]
         public void CompilationStarted()
         {
-            var task = new CompilationStarted(this.Logger.MockObject);
+            var task = new CompilationStarted(this.Logger.Object);
             task.Execute().Should().BeTrue();
         }
 
         [Fact]
         public void CompilationFinished()
         {
-            var task = new CompilationFinished(this.Logger.MockObject);
+            var task = new CompilationFinished(this.Logger.Object);
             task.Execute().Should().BeTrue();
         }
 
         [Fact]
         public void TestSuiteStarted()
         {
-            var task = new TestSuiteStarted(this.Logger.MockObject)
+            var task = new TestSuiteStarted(this.Logger.Object)
             {
                 Name = "n"
             };
@@ -255,7 +258,7 @@ namespace Tests
         [Fact]
         public void TestSuiteFinished()
         {
-            var task = new TestSuiteFinished(this.Logger.MockObject)
+            var task = new TestSuiteFinished(this.Logger.Object)
             {
                 Name = "n"
             };
@@ -265,7 +268,7 @@ namespace Tests
         [Fact]
         public void TestStarted()
         {
-            var task = new TestStarted(this.Logger.MockObject)
+            var task = new TestStarted(this.Logger.Object)
             {
                 Name = "n"
             };
@@ -275,7 +278,7 @@ namespace Tests
         [Fact]
         public void TestStartedCaptureStandardOutput()
         {
-            var task = new TestStarted(this.Logger.MockObject)
+            var task = new TestStarted(this.Logger.Object)
             {
                 Name = "n",
                 CaptureStandardOutput = true
@@ -286,7 +289,7 @@ namespace Tests
         [Fact]
         public void TestFinished()
         {
-            var task = new TestFinished(this.Logger.MockObject)
+            var task = new TestFinished(this.Logger.Object)
             {
                 Name = "n",
                 Duration = 3.0
@@ -297,7 +300,7 @@ namespace Tests
         [Fact]
         public void TestIgnored()
         {
-            var task = new TestIgnored(this.Logger.MockObject)
+            var task = new TestIgnored(this.Logger.Object)
             {
                 Name = "n",
                 Message = "Comment"
@@ -308,7 +311,7 @@ namespace Tests
         [Fact]
         public void TestStdOut()
         {
-            var task = new TestStdOut(this.Logger.MockObject)
+            var task = new TestStdOut(this.Logger.Object)
             {
                 Name = "n",
                 Out = "out"
@@ -319,7 +322,7 @@ namespace Tests
         [Fact]
         public void TestStdErr()
         {
-            var task = new TestStdErr(this.Logger.MockObject)
+            var task = new TestStdErr(this.Logger.Object)
             {
                 Name = "n",
                 Out = "out"
@@ -330,7 +333,7 @@ namespace Tests
         [Fact]
         public void TestFailedRequired()
         {
-            var task = new TestFailed(this.Logger.MockObject)
+            var task = new TestFailed(this.Logger.Object)
             {
                 Name = "n",
                 Message = "m",
@@ -342,7 +345,7 @@ namespace Tests
         [Fact]
         public void TestFailedAll()
         {
-            var task = new TestFailed(this.Logger.MockObject)
+            var task = new TestFailed(this.Logger.Object)
             {
                 Name = "n",
                 Message = "m",
@@ -356,7 +359,7 @@ namespace Tests
         [Fact]
         public void SetParameter()
         {
-            var task = new SetParameter(this.Logger.MockObject)
+            var task = new SetParameter(this.Logger.Object)
             {
                 Name = "n",
                 Value = "v"
@@ -367,7 +370,7 @@ namespace Tests
         [Fact]
         public void BuildProblem()
         {
-            var task = new BuildProblem(this.Logger.MockObject)
+            var task = new BuildProblem(this.Logger.Object)
             {
                 Description = "d",
                 Identity = "i"

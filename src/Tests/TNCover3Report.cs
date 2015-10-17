@@ -4,8 +4,10 @@
  * © 2007-2015 Alexander Egorov
  */
 
+using System;
 using FluentAssertions;
 using Microsoft.Build.Framework;
+using Moq;
 using MSBuild.TeamCity.Tasks;
 using Xunit;
 
@@ -20,22 +22,24 @@ namespace Tests
 
         public TNCover3Report()
         {
-            this.task = new NCover3Report(this.Logger.MockObject);
+            this.task = new NCover3Report(this.Logger.Object);
         }
 
         [Fact]
         public void OnlyRequired()
         {
-            this.Logger.Expects.Exactly(2).Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
+            this.Logger.Setup(_ => _.LogMessage(MessageImportance.High, It.IsAny<string>()));
             this.task.ToolPath = ToolPth;
             this.task.XmlReportPath = XmlReportPth;
             this.task.Execute().Should().BeTrue();
+
+            this.Logger.Verify(_ => _.LogMessage(MessageImportance.High, It.IsAny<string>()), Times.Exactly(2));
         }
 
         [Fact]
         public void AllProperties()
         {
-            this.Logger.Expects.Exactly(3).Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
+            this.Logger.Setup(_ => _.LogMessage(MessageImportance.High, It.IsAny<string>()));
             this.task.ToolPath = ToolPth;
             this.task.XmlReportPath = XmlReportPth;
             this.task.Arguments = Args;
@@ -43,6 +47,8 @@ namespace Tests
             this.task.ParseOutOfDate = true;
             this.task.WhenNoDataPublished = "info";
             this.task.Execute().Should().BeTrue();
+
+            this.Logger.Verify(_ => _.LogMessage(MessageImportance.High, It.IsAny<string>()), Times.Exactly(3));
         }
 
         [Fact]
@@ -69,9 +75,10 @@ namespace Tests
         [Fact]
         public void InvalidWhenNoDataPublished()
         {
-            this.Logger.Expects.One.Method(_ => _.LogErrorFromException(null, false)).WithAnyArguments();
+            this.Logger.Setup(_ => _.LogErrorFromException(It.IsAny<Exception>(), false));
             this.task.WhenNoDataPublished = "bad";
             this.task.Execute().Should().BeFalse();
+            this.Logger.Verify(_ => _.LogErrorFromException(It.IsAny<Exception>(), false), Times.Never());
         }
     }
 }

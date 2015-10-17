@@ -7,9 +7,9 @@
 using System;
 using System.IO;
 using FluentAssertions;
+using Moq;
 using MSBuild.TeamCity.Tasks;
 using MSBuild.TeamCity.Tasks.Internal;
-using NMock;
 using Xunit;
 
 namespace Tests
@@ -23,8 +23,7 @@ namespace Tests
 
         public TGoogleTestsRunner()
         {
-            var mockery = new MockFactory();
-            this.logger = mockery.CreateMock<ILogger>();
+            this.logger = new Mock<ILogger>();
         }
 
         private static string TestResultPath
@@ -55,48 +54,56 @@ namespace Tests
         [Fact]
         public void CorrectExe()
         {
-            this.logger.Expects.One.GetProperty(_ => _.HasLoggedErrors).Will(Return.Value(false));
+            this.logger.SetupGet(_ => _.HasLoggedErrors).Returns(false); // 1
 
-            var runner = new GoogleTestsRunner(this.logger.MockObject, false, correctExePath);
+            var runner = new GoogleTestsRunner(this.logger.Object, false, correctExePath);
 
             runner.Import().Should().BeTrue();
             runner.Messages.Count.Should().Be(1);
+
+            this.logger.VerifyGet(_ => _.HasLoggedErrors, Times.Once);
         }
 
         [Fact]
         public void CorrectExeWithExistingFile()
         {
-            this.logger.Expects.Exactly(2).GetProperty(_ => _.HasLoggedErrors).Will(Return.Value(false));
+            this.logger.SetupGet(_ => _.HasLoggedErrors).Returns(false); // 2
 
-            var runner = new GoogleTestsRunner(this.logger.MockObject, false, correctExePath);
+            var runner = new GoogleTestsRunner(this.logger.Object, false, correctExePath);
             runner.Import();
 
             File.Exists(TestResultPath).Should().BeTrue();
             runner.Import().Should().BeTrue();
             runner.Messages.Count.Should().Be(1);
+
+            this.logger.VerifyGet(_ => _.HasLoggedErrors, Times.Exactly(2));
         }
 
         [Fact]
         public void CorrectExeUsingExecutionTimeout()
         {
-            this.logger.Expects.One.GetProperty(_ => _.HasLoggedErrors).Will(Return.Value(false));
+            this.logger.SetupGet(_ => _.HasLoggedErrors).Returns(false); // 1
 
-            var runner = new GoogleTestsRunner(this.logger.MockObject, false, correctExePath)
+            var runner = new GoogleTestsRunner(this.logger.Object, false, correctExePath)
             { ExecutionTimeoutMilliseconds = 200 };
             runner.Import().Should().BeTrue();
             runner.Messages.Count.Should().Be(1);
+
+            this.logger.VerifyGet(_ => _.HasLoggedErrors, Times.Once);
         }
 
         [Fact]
         public void IncorrectExe()
         {
-            this.logger.Expects.One.Method(_ => _.LogErrorFromException(null, true)).WithAnyArguments();
-            this.logger.Expects.One.GetProperty(_ => _.HasLoggedErrors).Will(Return.Value(true));
+            this.logger.Setup(_ => _.LogErrorFromException(It.IsAny<Exception>(), true)); // 1
+            this.logger.SetupGet(_ => _.HasLoggedErrors).Returns(true); // 0
 
-            var runner = new GoogleTestsRunner(this.logger.MockObject, false, "bad");
+            var runner = new GoogleTestsRunner(this.logger.Object, false, "bad");
 
             runner.Import().Should().BeFalse();
             runner.Messages.Should().BeEmpty();
+
+            this.logger.VerifyGet(_ => _.HasLoggedErrors, Times.Never);
         }
     }
 }

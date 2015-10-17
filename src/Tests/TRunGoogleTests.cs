@@ -25,9 +25,13 @@ namespace Tests
             this.task = new RunGoogleTests(this.Logger.Object);
         }
 
-        protected override void AfterTeardown()
+        protected override void Dispose(bool disposing)
         {
-            TGoogleTestsRunner.DeleteResult();
+            base.Dispose(true);
+            if (disposing)
+            {
+                TGoogleTestsRunner.DeleteResult();
+            }
         }
 
         [Fact]

@@ -25,13 +25,22 @@ namespace Tests
 
         public void Dispose()
         {
-            Environment.SetEnvironmentVariable(TeamCityEnv.TeamCityEnvVar, null,
-                EnvironmentVariableTarget.Process);
-            this.AfterTeardown();
+            this.Dispose(true);
+            GC.SuppressFinalize(this);
         }
 
-        protected virtual void AfterTeardown()
+        ~TTask()
         {
+            this.Dispose(false);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                Environment.SetEnvironmentVariable(TeamCityEnv.TeamCityEnvVar, null,
+                    EnvironmentVariableTarget.Process);
+            }
         }
     }
 }

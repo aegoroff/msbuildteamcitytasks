@@ -22,6 +22,15 @@ namespace Tests
             this.Logger.Setup(_ => _.LogMessage(MessageImportance.High, It.IsAny<string>())); // 1
         }
 
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(true);
+            if (disposing)
+            {
+                this.Logger.Verify(_ => _.LogMessage(MessageImportance.High, It.IsAny<string>()), Times.AtMostOnce);
+            }
+        }
+
         [Fact]
         public void CommonPropertiesTest()
         {
@@ -203,6 +212,8 @@ namespace Tests
             task.Execute().Should().BeTrue();
             task.ContinueOnFailures.Should().BeTrue();
             task.TestResultsPath.Should().Be(TGoogleTestsPlainImporter.successTestsPath);
+
+            this.Logger.VerifyGet(_ => _.HasLoggedErrors, Times.Once);
         }
 
         [Fact]

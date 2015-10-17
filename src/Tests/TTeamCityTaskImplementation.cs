@@ -43,18 +43,20 @@ namespace Tests
         [Fact]
         public void WriteMessageOutsideTeamCityEnvironment()
         {
-            this.logger.Setup(_ => _.LogMessage(MessageImportance.High, It.IsAny<string>()));
+            this.logger.Setup(_ => _.LogMessage(MessageImportance.High, It.IsAny<string>())); // 1
             this.implementation.Write(this.message);
+            this.logger.Verify(_ => _.LogMessage(MessageImportance.High, It.IsAny<string>()), Times.AtMostOnce);
         }
 
         [Fact]
         public void WriteMessageInsideTeamCityEnvironment()
         {
-            this.logger.Setup(_ => _.LogMessage(MessageImportance.High, It.IsAny<string>()));
+            this.logger.Setup(_ => _.LogMessage(MessageImportance.High, It.IsAny<string>())); // 1
             using (new TeamCityEnv())
             {
                 this.implementation.Write(this.message);
             }
+            this.logger.Verify(_ => _.LogMessage(MessageImportance.High, It.IsAny<string>()), Times.Once);
         }
 
         [Fact]
@@ -80,17 +82,20 @@ namespace Tests
             var result = new ExecutionResult(true);
             result.Messages.Add(this.message);
             this.implementation.Execute(result).Should().BeTrue();
+
+            this.logger.Verify(_ => _.LogMessage(MessageImportance.High, It.IsAny<string>()), Times.AtMostOnce);
         }
 
         [Fact]
         public void ExecuteFalse()
         {
-            //this.logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
             this.logger.Setup(_ => _.LogMessage(MessageImportance.High, It.IsAny<string>()));
 
             var result = new ExecutionResult(false);
             result.Messages.Add(this.message);
             this.implementation.Execute(result).Should().BeFalse();
+
+            this.logger.Verify(_ => _.LogMessage(MessageImportance.High, It.IsAny<string>()), Times.AtMostOnce);
         }
 
         [Fact]
@@ -101,14 +106,13 @@ namespace Tests
             var result = new ExecutionResult(true);
             this.implementation.Execute(result).Should().BeTrue();
 
-            this.logger.Verify(_ => _.LogMessage(MessageImportance.High, It.IsAny<string>()), Times.Never());
+            this.logger.Verify(_ => _.LogMessage(MessageImportance.High, It.IsAny<string>()), Times.Never);
         }
 
         [Fact]
         public void ExecuteFull()
         {
             const string flowId = "1";
-            //this.logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
             this.logger.Setup(_ => _.LogMessage(MessageImportance.High, It.IsAny<string>()));
 
             var result = new ExecutionResult(true);
@@ -117,6 +121,8 @@ namespace Tests
             this.implementation.Execute(result, true, flowId).Should().BeTrue();
             this.message.IsAddTimestamp.Should().BeTrue();
             this.message.FlowId.Should().Be(flowId);
+
+            this.logger.Verify(_ => _.LogMessage(MessageImportance.High, It.IsAny<string>()), Times.AtMostOnce);
         }
 
         [Fact]

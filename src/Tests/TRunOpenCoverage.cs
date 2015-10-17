@@ -39,8 +39,8 @@ namespace Tests
         {
             this.Logger.Setup(_ => _.LogMessage(MessageImportance.High, It.IsAny<string>()));
 
-            this.item1.SetupGet(_ => _.ItemSpec).Returns("+[MSBuild.TeamCity.Tasks]*ImportData"); // 2
-            this.item2.SetupGet(_ => _.ItemSpec).Returns("-[System]*"); // 2
+            this.item1.SetupGet(_ => _.ItemSpec).Returns("+[MSBuild.TeamCity.Tasks]*ImportData"); // 1
+            this.item2.SetupGet(_ => _.ItemSpec).Returns("-[System]*"); // 1
 
             this.task.ToolPath = ValidPathToOpenCover;
             this.task.TargetPath = XUnitPath;
@@ -56,6 +56,8 @@ namespace Tests
             this.task.Filter = new[] { this.item1.Object, this.item2.Object };
             this.task.Execute().Should().BeTrue();
 
+            this.item1.VerifyGet(_ => _.ItemSpec, Times.Once);
+            this.item2.VerifyGet(_ => _.ItemSpec, Times.Once);
             this.Logger.Verify(_ => _.LogMessage(MessageImportance.High, It.IsAny<string>()), Times.AtMost(9));
         }
 
@@ -69,18 +71,21 @@ namespace Tests
         [Fact]
         public void ToolPath()
         {
-            this.Logger.Setup(_ => _.LogMessage(MessageImportance.High, It.IsAny<string>())); // 1
+            this.Logger.Setup(_ => _.LogMessage(MessageImportance.High, It.IsAny<string>())); // 0
             this.task.ToolPath = ValidPathToOpenCover;
             this.task.Execute().Should().BeTrue();
+            this.Logger.Verify(_ => _.LogMessage(MessageImportance.High, It.IsAny<string>()), Times.Never);
         }
 
         [Fact]
         public void ToolPathAndTargetPath()
         {
-            this.Logger.Setup(_ => _.LogMessage(MessageImportance.High, It.IsAny<string>())); // 1
+            this.Logger.Setup(_ => _.LogMessage(MessageImportance.High, It.IsAny<string>())); // 0
             this.task.ToolPath = ValidPathToOpenCover;
             this.task.TargetPath = TGoogleTestsRunner.correctExePath;
             this.task.Execute().Should().BeTrue();
+
+            this.Logger.Verify(_ => _.LogMessage(MessageImportance.High, It.IsAny<string>()), Times.Never);
         }
 
         [Fact]
@@ -89,6 +94,8 @@ namespace Tests
             this.Logger.Setup(_ => _.LogErrorFromException(It.IsAny<Exception>(), true)); // 1
             this.task.ToolPath = "bad";
             this.task.Execute().Should().BeFalse();
+
+            this.Logger.Verify(_ => _.LogErrorFromException(It.IsAny<Exception>(), true), Times.Once);
         }
     }
 }

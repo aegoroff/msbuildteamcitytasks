@@ -88,7 +88,7 @@
       TargetWorkDir='$(MSBuildProjectDirectory)\Tests\bin\$(Configuration)'
       SkipAutoProps='True'
       HideSkipped='All'
-			TargetArguments="$(MSBuildProjectDirectory)\Tests\bin\$(Configuration)\Tests.dll -nologo -noshadow -teamcity"
+			TargetArguments="$(MSBuildProjectDirectory)\Tests\bin\$(Configuration)\Tests.dll -nologo -noshadow -teamcity -parallel none"
 			Filter='+[MSBuild.TeamCity.Tasks]*'
 		/>
 		<Exec

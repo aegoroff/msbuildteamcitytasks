@@ -31,37 +31,40 @@ namespace Tests
         [Fact]
         public void ReadSuccessTests()
         {
-            //this.logger.Expects.One.GetProperty(_ => _.HasLoggedErrors).Will(Return.Value(false));
             this.logger.SetupGet(_ => _.HasLoggedErrors).Returns(false);
 
             var importer = new GoogleTestsPlainImporter(this.logger.Object, false, successTestsPath);
 
             importer.Import().Should().BeTrue();
             importer.Messages.Count.Should().Be(1);
+
+            this.logger.VerifyGet(_ => _.HasLoggedErrors, Times.Once());
         }
 
         [Fact]
         public void ReadFailTests()
         {
-            //this.logger.Expects.One.GetProperty(_ => _.HasLoggedErrors).Will(Return.Value(false));
-            this.logger.SetupGet(_ => _.HasLoggedErrors).Returns(false);
+            this.logger.SetupGet(_ => _.HasLoggedErrors).Returns(It.IsAny<bool>());
 
             var importer = new GoogleTestsPlainImporter(this.logger.Object, false, failTestsPath);
 
             importer.Import().Should().BeFalse();
             importer.Messages.Count.Should().Be(1);
+
+            this.logger.VerifyGet(_ => _.HasLoggedErrors, Times.Never());
         }
 
         [Fact]
         public void ReadFailTestsButContinueOnFailures()
         {
-            //this.logger.Expects.One.GetProperty(_ => _.HasLoggedErrors).Will(Return.Value(false));
             this.logger.SetupGet(_ => _.HasLoggedErrors).Returns(false);
 
             var importer = new GoogleTestsPlainImporter(this.logger.Object, true, failTestsPath);
 
             importer.Import().Should().BeTrue();
             importer.Messages.Count.Should().Be(1);
+
+            this.logger.VerifyGet(_ => _.HasLoggedErrors, Times.Once());
         }
     }
 }

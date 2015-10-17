@@ -17,7 +17,7 @@ namespace Tests
     public class TRunOpenCoverage : TTask
     {
         private const string ValidPathToOpenCover = @"..\..\..\packages\OpenCover.4.6.166\tools";
-        private const string NUnitPath = @"..\..\..\packages\NUnit.Runners.2.6.4\tools\nunit-console-x86.exe";
+        private const string XUnitPath = @"..\..\..\packages\xunit.runner.console.2.1.0\tools\xunit.console.exe";
         private const string TargetWorkDir = ".";
         private readonly Mock<ITaskItem> item1;
         private readonly Mock<ITaskItem> item2;
@@ -42,9 +42,9 @@ namespace Tests
             this.item2.Expects.Exactly(2).GetProperty(_ => _.ItemSpec).Will(Return.Value("-[System]*"));
 
             this.task.ToolPath = ValidPathToOpenCover;
-            this.task.TargetPath = NUnitPath;
+            this.task.TargetPath = XUnitPath;
             var path = new Uri(this.GetType().Assembly.CodeBase).LocalPath;
-            this.task.TargetArguments = $"/nologo /noshadow {path} /framework:net-4.0 /run=TGoogleTestArgumentsBuilder";
+            this.task.TargetArguments = $"{path} -nologo -noshadow -class TGoogleTestArgumentsBuilder";
             this.task.TargetWorkDir = TargetWorkDir;
             this.task.ExcludeByfile = "*.Gen.cs";
             this.task.HideSkipped = "All";
@@ -67,9 +67,9 @@ namespace Tests
             this.item2.Expects.Exactly(2).GetProperty(_ => _.ItemSpec).Will(Return.Value("-[System]*"));
 
             this.task.ToolPath = ValidPathToOpenCover;
-            this.task.TargetPath = NUnitPath;
+            this.task.TargetPath = XUnitPath;
             var path = new Uri(this.GetType().Assembly.CodeBase).LocalPath;
-            this.task.TargetArguments = $"/nologo /noshadow {path} /framework:net-4.0 /run=TGoogleTestArgumentsBuilder";
+            this.task.TargetArguments = $"{path} -nologo -noshadow -class TGoogleTestArgumentsBuilder";
             this.task.TargetWorkDir = TargetWorkDir;
             this.task.ExcludeByfile = "*.Gen.cs";
             this.task.HideSkipped = "All";

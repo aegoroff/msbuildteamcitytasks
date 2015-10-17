@@ -14,6 +14,7 @@ using Xunit;
 
 namespace Tests
 {
+    [Collection("SerialTests")]
     public class TRunOpenCoverage : TTask
     {
         private const string ValidPathToOpenCover = @"..\..\..\packages\OpenCover.4.6.166\tools";
@@ -55,7 +56,7 @@ namespace Tests
             this.task.Filter = new[] { this.item1.Object, this.item2.Object };
             this.task.Execute().Should().BeTrue();
 
-            this.Logger.Verify(_ => _.LogMessage(MessageImportance.High, It.IsAny<string>()), Times.Exactly(9));
+            this.Logger.Verify(_ => _.LogMessage(MessageImportance.High, It.IsAny<string>()), Times.AtMost(9));
         }
 
         [Fact]

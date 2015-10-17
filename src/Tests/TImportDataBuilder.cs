@@ -48,14 +48,7 @@ namespace Tests
             Assert.Throws<NotSupportedException>(
                 delegate
                 {
-                    var context = new ImportDataContext
-                    {
-                        Type = type,
-                        Verbose = verbose,
-                        Path = "p"
-                    };
-                    var builder = new ImportDataMessageBuilder(tool, context, findBugsHome);
-                    builder.BuildMessage().ToString().Should().Be(expected);
+                    Test(tool, expected, verbose, findBugsHome, type);
                 });
         }
     }

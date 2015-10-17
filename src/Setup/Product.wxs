@@ -16,7 +16,7 @@
                  DowngradeErrorMessage="A later version of [ProductName] is already installed."/>
 		
 		<!--
-			Check for .NET 4.0 Full
+			Check for .NET 4.5 Full
 		-->
 		<PropertyRef Id="WIX_IS_NETFRAMEWORK_45_OR_LATER_INSTALLED"/>
 		<Condition Message="This setup requires the .NET Framework 4.5 full or higher.">

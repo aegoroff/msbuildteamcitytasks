@@ -4,8 +4,10 @@
  * © 2007-2015 Alexander Egorov
  */
 
+using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Text.RegularExpressions;
 using MSBuild.TeamCity.Tasks.Messages;
 
@@ -25,31 +27,30 @@ namespace MSBuild.TeamCity.Tasks.Internal
         /// <returns><see cref="TeamCityMessage" /> stream</returns>
         public IEnumerable<TeamCityMessage> Parse(IEnumerable<string> input)
         {
-            foreach (var line in input)
-            {
-                foreach (
-                    var teamCityMessage in
-                        TeamCityMessages(line, classRegex, TeamCityStatisticConstants.CodeCoverageClassesCovered, TeamCityStatisticConstants.CodeCoverageClassesTotal,
-                            TeamCityStatisticConstants.CodeCoverageClassesPercent))
-                {
-                    yield return teamCityMessage;
-                }
-                foreach (
-                    var teamCityMessage in
-                        TeamCityMessages(line, methodRegex, TeamCityStatisticConstants.CodeCoverageMethodsCovered, TeamCityStatisticConstants.CodeCoverageMethodsTotal,
-                            TeamCityStatisticConstants.CodeCoverageMethodsPercent))
-                {
-                    yield return teamCityMessage;
-                }
+            var classTuple = new Tuple<Regex, string, string, string>(classRegex,
+                TeamCityStatisticConstants.CodeCoverageClassesCovered,
+                TeamCityStatisticConstants.CodeCoverageClassesTotal,
+                TeamCityStatisticConstants.CodeCoverageClassesPercent);
 
-                foreach (
-                    var teamCityMessage in
-                        TeamCityMessages(line, pointsRegex, TeamCityStatisticConstants.CodeCoverageLinesCovered, TeamCityStatisticConstants.CodeCoverageLinesTotal,
-                            TeamCityStatisticConstants.CodeCoverageLinesPercent))
-                {
-                    yield return teamCityMessage;
-                }
-            }
+            var methodTuple = new Tuple<Regex, string, string, string>(methodRegex,
+                TeamCityStatisticConstants.CodeCoverageMethodsCovered,
+                TeamCityStatisticConstants.CodeCoverageMethodsTotal,
+                TeamCityStatisticConstants.CodeCoverageMethodsPercent);
+
+            var pointsTuple = new Tuple<Regex, string, string, string>(pointsRegex,
+                TeamCityStatisticConstants.CodeCoverageLinesCovered,
+                TeamCityStatisticConstants.CodeCoverageLinesTotal,
+                TeamCityStatisticConstants.CodeCoverageLinesPercent);
+
+            var parsingData = new[]
+            {
+                classTuple, methodTuple, pointsTuple
+            };
+
+            return from line in input
+                from tuple in parsingData
+                from teamCityMessage in TeamCityMessages(line, tuple.Item1, tuple.Item2, tuple.Item3, tuple.Item4)
+                select teamCityMessage;
         }
 
         #endregion

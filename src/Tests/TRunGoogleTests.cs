@@ -1,123 +1,139 @@
 /*
  * Created by: egr
  * Created at: 09.09.2010
- * © 2007-2013 Alexander Egorov
+ * © 2007-2015 Alexander Egorov
  */
 
-using MSBuild.TeamCity.Tasks;
+using System;
+using FluentAssertions;
 using Microsoft.Build.Framework;
-using NMock;
-using NUnit.Framework;
-using Is = NUnit.Framework.Is;
+using Moq;
+using MSBuild.TeamCity.Tasks;
+using Xunit;
 
 namespace Tests
 {
-    [TestFixture]
+    [Collection("SerialTests")]
     public class TRunGoogleTests : TTask
     {
         private const string TestFilter = "*";
         private const int ExecutionTimeoutMilliseconds = 200;
-        private RunGoogleTests task;
+        private readonly RunGoogleTests task;
 
-        [SetUp]
-        public void Init()
+        public TRunGoogleTests()
         {
-            task = new RunGoogleTests(Logger.MockObject);
+            this.task = new RunGoogleTests(this.Logger.Object);
         }
 
-        protected override void AfterTeardown()
+        protected override void Dispose(bool disposing)
         {
-            TGoogleTestsRunner.DeleteResult();
+            base.Dispose(true);
+            if (disposing)
+            {
+                TGoogleTestsRunner.DeleteResult();
+            }
         }
 
-        [Test]
+        [Fact]
         public void OnlyRequired()
         {
-            Logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
-            Logger.Expects.One.GetProperty(_=>_.HasLoggedErrors).Will(Return.Value(false));
+            this.Logger.Setup(_ => _.LogMessage(MessageImportance.High, It.IsAny<string>())); // 1
+            this.Logger.SetupGet(_ => _.HasLoggedErrors).Returns(false); // 1
 
-            task.TestExePath = TGoogleTestsRunner.CorrectExePath;
-            Assert.That(task.Execute());
+            this.task.TestExePath = TGoogleTestsRunner.correctExePath;
+            this.task.Execute().Should().BeTrue();
+
+            this.Logger.VerifyGet(_ => _.HasLoggedErrors, Times.Once);
+            this.Logger.Verify(_ => _.LogMessage(MessageImportance.High, It.IsAny<string>()), Times.Once);
         }
 
-        [Test]
+        [Fact]
         public void BadPath()
         {
-            Logger.Expects.One.Method(_ => _.LogErrorFromException(null, true)).WithAnyArguments();
-            Logger.Expects.One.GetProperty(_=>_.HasLoggedErrors).Will(Return.Value(true));
+            this.Logger.Setup(_ => _.LogErrorFromException(It.IsAny<Exception>(), true)); // 1
+            this.Logger.SetupGet(_ => _.HasLoggedErrors).Returns(true); // 0
 
-            task.TestExePath = "bad";
-            Assert.That(task.Execute(), Is.False);
+            this.task.TestExePath = "bad";
+            this.task.Execute().Should().BeFalse();
+
+            this.Logger.VerifyGet(_ => _.HasLoggedErrors, Times.Never);
+            this.Logger.Verify(_ => _.LogErrorFromException(It.IsAny<Exception>(), true), Times.Once);
         }
 
-        [Test]
+        [Fact]
         public void ContinueOnFailures()
         {
-            Logger.Expects.One.Method(_ => _.LogErrorFromException(null, true)).WithAnyArguments();
-            Logger.Expects.One.GetProperty(_=>_.HasLoggedErrors).Will(Return.Value(false));
+            this.Logger.Setup(_ => _.LogErrorFromException(It.IsAny<Exception>(), true)); // 1
+            this.Logger.SetupGet(_ => _.HasLoggedErrors).Returns(false); // 1
 
-            task.TestExePath = "bad";
-            task.ContinueOnFailures = true;
-            Assert.That(task.Execute());
+            this.task.TestExePath = "bad";
+            this.task.ContinueOnFailures = true;
+            this.task.Execute().Should().BeTrue();
+
+            this.Logger.VerifyGet(_ => _.HasLoggedErrors, Times.Once);
+            this.Logger.Verify(_ => _.LogErrorFromException(It.IsAny<Exception>(), true), Times.Once);
         }
 
-        [Test]
+        [Fact]
         public void AllPropertiesSet()
         {
-            Logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
-            Logger.Expects.One.GetProperty(_=>_.HasLoggedErrors).Will(Return.Value(false));
+            this.Logger.Setup(_ => _.LogMessage(MessageImportance.High, It.IsAny<string>())); // 1
+            this.Logger.SetupGet(_ => _.HasLoggedErrors).Returns(false); // 1
 
-            task.TestExePath = TGoogleTestsRunner.CorrectExePath;
-            task.ContinueOnFailures = false;
-            task.RunDisabledTests = true;
-            task.CatchGtestExceptions = true;
-            task.TestFilter = TestFilter;
-            task.ExecutionTimeoutMilliseconds = ExecutionTimeoutMilliseconds;
-            task.Verbose = true;
-            task.WhenNoDataPublished = "error";
-            Assert.That(task.Execute());
+            this.task.TestExePath = TGoogleTestsRunner.correctExePath;
+            this.task.ContinueOnFailures = false;
+            this.task.RunDisabledTests = true;
+            this.task.CatchGtestExceptions = true;
+            this.task.TestFilter = TestFilter;
+            this.task.ExecutionTimeoutMilliseconds = ExecutionTimeoutMilliseconds;
+            this.task.Verbose = true;
+            this.task.WhenNoDataPublished = "error";
+            this.task.Execute().Should().BeTrue();
+
+            this.Logger.VerifyGet(_ => _.HasLoggedErrors, Times.Once);
+            this.Logger.Verify(_ => _.LogMessage(MessageImportance.High, It.IsAny<string>()), Times.Once);
         }
 
-        [Test]
+        [Fact]
         public void TestExePathProperty()
         {
-            task.TestExePath = TGoogleTestsRunner.CorrectExePath;
-            Assert.That(task.TestExePath, Is.EqualTo(TGoogleTestsRunner.CorrectExePath));
+            this.task.TestExePath = TGoogleTestsRunner.correctExePath;
+            this.task.TestExePath.Should().Be(TGoogleTestsRunner.correctExePath);
         }
 
-        [Test]
+        [Fact]
         public void ContinueOnFailuresProperty()
         {
-            task.ContinueOnFailures = true;
-            Assert.That(task.ContinueOnFailures);
+            this.task.ContinueOnFailures = true;
+            this.task.ContinueOnFailures.Should().BeTrue();
         }
 
-        [Test]
+        [Fact]
         public void RunDisabledTestsProperty()
         {
-            task.RunDisabledTests = true;
-            Assert.That(task.RunDisabledTests);
+            this.task.RunDisabledTests = true;
+            this.task.RunDisabledTests.Should().BeTrue();
         }
 
-        [Test]
+        [Fact]
         public void CatchGtestExceptionsProperty()
         {
-            task.CatchGtestExceptions = true;
-            Assert.That(task.CatchGtestExceptions);
+            this.task.CatchGtestExceptions = true;
+            this.task.CatchGtestExceptions.Should().BeTrue();
         }
 
-        [Test]
+        [Fact]
         public void TestFilterProperty()
         {
-            task.TestFilter = TestFilter;
-            Assert.That(task.TestFilter, Is.EqualTo(TestFilter));
+            this.task.TestFilter = TestFilter;
+            this.task.TestFilter.Should().Be(TestFilter);
         }
 
-        [Test]
+        [Fact]
         public void ExecutionTimeoutMillisecondsProperty()
         {
-            task.ExecutionTimeoutMilliseconds = ExecutionTimeoutMilliseconds;
-            Assert.That(task.ExecutionTimeoutMilliseconds, Is.EqualTo(ExecutionTimeoutMilliseconds));
+            this.task.ExecutionTimeoutMilliseconds = ExecutionTimeoutMilliseconds;
+            this.task.ExecutionTimeoutMilliseconds.Should().Be(ExecutionTimeoutMilliseconds);
         }
     }
 }

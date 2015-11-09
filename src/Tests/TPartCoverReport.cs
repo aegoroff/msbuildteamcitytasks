@@ -1,75 +1,81 @@
 /*
  * Created by: egr
  * Created at: 09.09.2010
- * © 2007-2013 Alexander Egorov
+ * © 2007-2015 Alexander Egorov
  */
 
-
+using System;
+using FluentAssertions;
 using Microsoft.Build.Framework;
+using Moq;
 using MSBuild.TeamCity.Tasks;
-using NMock;
-using NUnit.Framework;
-using Is = NUnit.Framework.Is;
+using Xunit;
 
 namespace Tests
 {
-    [TestFixture]
     public class TPartCoverReport : TTask
     {
-        private Mock<ITaskItem> item1;
-        private Mock<ITaskItem> item2;
-        private PartCoverReport task;
         private const string XmlReportPth = "path";
+        private readonly Mock<ITaskItem> item1;
+        private readonly Mock<ITaskItem> item2;
+        private readonly PartCoverReport task;
 
-        protected override void AfterSetup()
+        public TPartCoverReport()
         {
-            item1 = Mockery.CreateMock<ITaskItem>();
-            item2 = Mockery.CreateMock<ITaskItem>();
-            task = new PartCoverReport(Logger.MockObject);
+            this.item1 = new Mock<ITaskItem>();
+            this.item2 = new Mock<ITaskItem>();
+            this.task = new PartCoverReport(this.Logger.Object);
         }
 
-        [Test]
+        [Fact]
         public void OnlyRequired()
         {
-            Logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
-            task.XmlReportPath = XmlReportPth;
-            Assert.That(task.Execute());
+            this.Logger.Setup(_ => _.LogMessage(MessageImportance.High, It.IsAny<string>()));
+            this.task.XmlReportPath = XmlReportPth;
+            this.task.Execute().Should().BeTrue();
+            this.Logger.Verify(_ => _.LogMessage(MessageImportance.High, It.IsAny<string>()), Times.Once);
         }
 
-        [Test]
+        [Fact]
         public void All()
         {
-            Logger.Expects.Exactly(2).Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
-            item1.Expects.Exactly(2).GetProperty(_=>_.ItemSpec).Will(Return.Value("a"));
-            item2.Expects.Exactly(2).GetProperty(_ => _.ItemSpec).Will(Return.Value("b"));
-            task.XmlReportPath = XmlReportPth;
-            task.ReportXslts = new[] { item1.MockObject, item2.MockObject };
-            task.Verbose = true;
-            task.ParseOutOfDate = true;
-            task.WhenNoDataPublished = "info";
-            Assert.That(task.Execute());
+            this.Logger.Setup(_ => _.LogMessage(MessageImportance.High, It.IsAny<string>()));
+            this.item1.SetupGet(_ => _.ItemSpec).Returns("a");
+            this.item2.SetupGet(_ => _.ItemSpec).Returns("b");
+            this.task.XmlReportPath = XmlReportPth;
+            this.task.ReportXslts = new[] { this.item1.Object, this.item2.Object };
+            this.task.Verbose = true;
+            this.task.ParseOutOfDate = true;
+            this.task.WhenNoDataPublished = "info";
+            this.task.Execute().Should().BeTrue();
+
+            this.item1.VerifyGet(_ => _.ItemSpec, Times.Once);
+            this.item2.VerifyGet(_ => _.ItemSpec, Times.Once);
+            this.Logger.Verify(_ => _.LogMessage(MessageImportance.High, It.IsAny<string>()), Times.AtMost(2));
         }
 
-        [Test]
+        [Fact]
         public void XmlReportPath()
         {
-            task.XmlReportPath = XmlReportPth;
-            Assert.That(task.XmlReportPath, Is.EqualTo(XmlReportPth));
+            this.task.XmlReportPath = XmlReportPth;
+            this.task.XmlReportPath.Should().Be(XmlReportPth);
         }
 
-        [Test]
+        [Fact]
         public void ReportXslts()
         {
-            task.ReportXslts = new[] { item1.MockObject, item2.MockObject };
-            Assert.That(task.ReportXslts, Is.EquivalentTo(new[] { item1.MockObject, item2.MockObject }));
+            this.task.ReportXslts = new[] { this.item1.Object, this.item2.Object };
+            this.task.ReportXslts.ShouldBeEquivalentTo(new[] { this.item1.Object, this.item2.Object });
         }
 
-        [Test]
+        [Fact]
         public void InvalidWhenNoDataPublished()
         {
-            Logger.Expects.One.Method(_ => _.LogErrorFromException(null, false)).WithAnyArguments();
-            task.WhenNoDataPublished = "bad";
-            Assert.That(task.Execute(), Is.False);
+            this.Logger.Setup(_ => _.LogErrorFromException(It.IsAny<Exception>(), It.IsAny<bool>())); // 1
+            this.task.WhenNoDataPublished = "bad";
+            this.task.Execute().Should().BeFalse();
+
+            this.Logger.Verify(_ => _.LogErrorFromException(It.IsAny<Exception>(), It.IsAny<bool>()), Times.Once);
         }
     }
 }

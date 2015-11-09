@@ -1,89 +1,101 @@
 ﻿/*
  * Created by: egr
  * Created at: 08.09.2010
- * © 2007-2013 Alexander Egorov
+ * © 2007-2015 Alexander Egorov
  */
 
 using System;
 using System.IO;
+using FluentAssertions;
 using Microsoft.Build.Framework;
+using Moq;
 using MSBuild.TeamCity.Tasks;
-using NMock;
-using NUnit.Framework;
-using Is = NUnit.Framework.Is;
+using Xunit;
 
 namespace Tests
 {
-    [TestFixture]
+    [Collection("SerialTests")]
     public class TRunOpenCoverage : TTask
     {
-        private RunOpenCoverage task;
         private const string ValidPathToOpenCover = @"..\..\..\packages\OpenCover.4.6.166\tools";
-        private const string NUnitPath = @"..\..\..\packages\NUnit.Runners.2.6.4\tools\nunit-console-x86.exe";
-        private Mock<ITaskItem> item1;
-        private Mock<ITaskItem> item2;
+        private const string XUnitPath = @"..\..\..\packages\xunit.runner.console.2.1.0\tools\xunit.console.exe";
         private const string TargetWorkDir = ".";
+        private readonly Mock<ITaskItem> item1;
+        private readonly Mock<ITaskItem> item2;
+        private readonly RunOpenCoverage task;
 
-        protected override void AfterSetup()
+        public TRunOpenCoverage()
         {
-            this.item1 = this.Mockery.CreateMock<ITaskItem>();
-            this.item2 = this.Mockery.CreateMock<ITaskItem>();
-            this.task = new RunOpenCoverage(this.Logger.MockObject);
+            this.item1 = new Mock<ITaskItem>();
+            this.item2 = new Mock<ITaskItem>();
+            this.task = new RunOpenCoverage(this.Logger.Object);
         }
 
-        [Test]
-        public void RealRun()
+        [Theory]
+        [InlineData("opencover.xml")]
+        [InlineData(null)]
+        [InlineData("bad")]
+        public void RealRun(string report)
         {
-            this.Logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.Normal, null)).WithAnyArguments();
-            this.Logger.Expects.Exactly(9).Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
+            this.Logger.Setup(_ => _.LogMessage(MessageImportance.High, It.IsAny<string>()));
 
-            this.item1.Expects.Exactly(2).GetProperty(_ => _.ItemSpec).Will(Return.Value("+[MSBuild.TeamCity.Tasks]*ImportData"));
-            this.item2.Expects.Exactly(2).GetProperty(_ => _.ItemSpec).Will(Return.Value("-[System]*"));
+            this.item1.SetupGet(_ => _.ItemSpec).Returns("+[MSBuild.TeamCity.Tasks]*ImportData"); // 1
+            this.item2.SetupGet(_ => _.ItemSpec).Returns("-[System]*"); // 1
 
             this.task.ToolPath = ValidPathToOpenCover;
-            this.task.TargetPath = NUnitPath;
+            this.task.TargetPath = XUnitPath;
             var path = new Uri(this.GetType().Assembly.CodeBase).LocalPath;
-            this.task.TargetArguments = $"/nologo /noshadow {path} /framework:net-4.0 /run=TGoogleTestArgumentsBuilder";
+            this.task.TargetArguments = $"{path} -nologo -noshadow -class TGoogleTestArgumentsBuilder";
             this.task.TargetWorkDir = TargetWorkDir;
             this.task.ExcludeByfile = "*.Gen.cs";
             this.task.HideSkipped = "All";
             this.task.SkipAutoProps = true;
-            this.task.XmlReportPath = Path.Combine(Path.GetDirectoryName(path), "opencover.xml");
 
-            this.task.Filter = new[] { this.item1.MockObject, this.item2.MockObject };
-            Assert.That(this.task.Execute());
+            this.task.XmlReportPath = report != null ? Path.Combine(Path.GetDirectoryName(path), "opencover.xml") : null;
+
+            this.task.Filter = new[] { this.item1.Object, this.item2.Object };
+            this.task.Execute().Should().BeTrue();
+
+            this.item1.VerifyGet(_ => _.ItemSpec, Times.Once);
+            this.item2.VerifyGet(_ => _.ItemSpec, Times.Once);
+            this.Logger.Verify(_ => _.LogMessage(MessageImportance.High, It.IsAny<string>()), Times.AtMost(9));
         }
 
-        [Test]
+        [Fact]
         public void FilterProperty()
         {
-            this.task.Filter = new[] { this.item1.MockObject };
-            Assert.That(this.task.Filter, Is.EquivalentTo(new[] { this.item1.MockObject }));
+            this.task.Filter = new[] { this.item1.Object };
+            this.task.Filter.ShouldAllBeEquivalentTo(new[] { this.item1.Object });
         }
 
-        [Test]
+        [Fact]
         public void ToolPath()
         {
-            this.Logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
+            this.Logger.Setup(_ => _.LogMessage(MessageImportance.High, It.IsAny<string>())); // 0
             this.task.ToolPath = ValidPathToOpenCover;
-            Assert.That(this.task.Execute());
+            this.task.Execute().Should().BeTrue();
+            this.Logger.Verify(_ => _.LogMessage(MessageImportance.High, It.IsAny<string>()), Times.Never);
         }
 
-        [Test]
+        [Fact]
         public void ToolPathAndTargetPath()
         {
-            this.Logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
+            this.Logger.Setup(_ => _.LogMessage(MessageImportance.High, It.IsAny<string>())); // 0
             this.task.ToolPath = ValidPathToOpenCover;
-            this.task.TargetPath = TGoogleTestsRunner.CorrectExePath;
-            Assert.That(this.task.Execute());
+            this.task.TargetPath = TGoogleTestsRunner.correctExePath;
+            this.task.Execute().Should().BeTrue();
+
+            this.Logger.Verify(_ => _.LogMessage(MessageImportance.High, It.IsAny<string>()), Times.Never);
         }
 
-        [Test]
+        [Fact]
         public void ToolPathInvalid()
         {
-            this.Logger.Expects.One.Method(_ => _.LogErrorFromException(null, true)).WithAnyArguments();
+            this.Logger.Setup(_ => _.LogErrorFromException(It.IsAny<Exception>(), true)); // 1
             this.task.ToolPath = "bad";
-            Assert.That(this.task.Execute(), Is.False);
+            this.task.Execute().Should().BeFalse();
+
+            this.Logger.Verify(_ => _.LogErrorFromException(It.IsAny<Exception>(), true), Times.Once);
         }
     }
 }

@@ -13,9 +13,9 @@
 		<!-- Code configuration to build (Release or Debug) -->
 		<Configuration>Release</Configuration>
 		<!-- NUnit working path  -->
-		<NUnitPath>$(MSBuildProjectDirectory)\packages\NUnit.Runners.2.6.4\tools</NUnitPath>
-		<OpenCoverPath>$(MSBuildProjectDirectory)\packages\OpenCover.4.5.2316</OpenCoverPath>
-		<ReportGeneratorPath>$(MSBuildProjectDirectory)\packages\ReportGenerator.1.9.1.0</ReportGeneratorPath>
+		<xUnitPath>$(MSBuildProjectDirectory)\packages\xunit.runner.console.2.1.0\tools</xUnitPath>
+		<OpenCoverPath>$(MSBuildProjectDirectory)\packages\OpenCover.4.6.166\tools</OpenCoverPath>
+		<ReportGeneratorPath>$(MSBuildProjectDirectory)\packages\ReportGenerator.2.3.2.0\tools</ReportGeneratorPath>
 		
 		<!-- Binaries zip  -->
 		<BinariesFile>Binaries.zip</BinariesFile>
@@ -83,18 +83,18 @@
 		<!-- Managed tests -->
 		<RunOpenCoverage
 			ToolPath='$(OpenCoverPath)'
-			TargetPath='$(NUnitPath)\nunit-console.exe'
+			TargetPath='$(xUnitPath)\xunit.console.exe'
 			XmlReportPath='$(MSBuildProjectDirectory)\OpenCoverageReport.xml'
-            TargetWorkDir='$(MSBuildProjectDirectory)\Tests\bin\$(Configuration)'
-			TargetArguments="/nologo /noshadow /xml:$(MSBuildProjectDirectory)\$(ManagedTestsReport) $(MSBuildProjectDirectory)\Tests\bin\$(Configuration)\Tests.dll /framework:net-4.0 /config=$(Configuration)"
+      TargetWorkDir='$(MSBuildProjectDirectory)\Tests\bin\$(Configuration)'
+      SkipAutoProps='True'
+      HideSkipped='All'
+			TargetArguments="$(MSBuildProjectDirectory)\Tests\bin\$(Configuration)\Tests.dll -nologo -noshadow -teamcity -parallel none"
 			Filter='+[MSBuild.TeamCity.Tasks]*'
 		/>
 		<Exec
 			Command='"$(ReportGeneratorPath)\ReportGenerator.exe" "$(MSBuildProjectDirectory)\OpenCoverageReport.xml" "$(MSBuildProjectDirectory)\OpenCoverage" Html'
 			IgnoreExitCode="true"
 		/>
-		<!-- Import into TeamCity mono tests -->
-		<ImportData Type="nunit" Path="$(MSBuildProjectDirectory)\$(ManagedTestsReport)" />
 	</Target>
 	
 	<!-- Zipping build artefacts task -->

@@ -1,57 +1,56 @@
 /*
  * Created by: egr
  * Created at: 09.09.2010
- * © 2007-2013 Alexander Egorov
+ * © 2007-2015 Alexander Egorov
  */
 
+using FluentAssertions;
 using Microsoft.Build.Framework;
+using Moq;
 using MSBuild.TeamCity.Tasks;
-using NMock;
-using NUnit.Framework;
-using Is = NUnit.Framework.Is;
+using Xunit;
 
 namespace Tests
 {
-    [TestFixture]
     public class TPublishArtifacts : TTask
     {
-        private Mock<ITaskItem> item1;
-        private Mock<ITaskItem> item2;
-        private PublishArtifacts task;
+        private readonly Mock<ITaskItem> item1;
+        private readonly Mock<ITaskItem> item2;
+        private readonly PublishArtifacts task;
 
-        protected override void AfterSetup()
+        public TPublishArtifacts()
         {
-            item1 = Mockery.CreateMock<ITaskItem>();
-            item2 = Mockery.CreateMock<ITaskItem>();
-            task = new PublishArtifacts(Logger.MockObject);
+            this.item1 = new Mock<ITaskItem>();
+            this.item2 = new Mock<ITaskItem>();
+            this.task = new PublishArtifacts(this.Logger.Object);
         }
 
-        [Test]
+        [Fact]
         public void OneArtifact()
         {
-            Logger.Expects.One.Method(_ => _.LogMessage(MessageImportance.High, null)).WithAnyArguments();
-            item1.Expects.One.GetProperty(_=>_.ItemSpec).Will(Return.Value("a"));
+            this.Logger.Setup(_ => _.LogMessage(MessageImportance.High, It.IsAny<string>()));
+            this.item1.SetupGet(_ => _.ItemSpec).Returns("a"); // 1
 
-            task.Artifacts = new[] { item1.MockObject };
-            Assert.That(task.Execute());
+            this.task.Artifacts = new[] { this.item1.Object };
+            this.task.Execute().Should().BeTrue();
         }
 
-        [Test]
+        [Fact]
         public void SeveralArtifacts()
         {
-            Logger.Expects.Exactly(2).Method(_=>_.LogMessage(MessageImportance.High, null)).WithAnyArguments();
-            item1.Expects.One.GetProperty(_ => _.ItemSpec).Will(Return.Value("a"));
-            item2.Expects.One.GetProperty(_ => _.ItemSpec).Will(Return.Value("b"));
+            this.Logger.Setup(_ => _.LogMessage(MessageImportance.High, It.IsAny<string>())); // 2
+            this.item1.SetupGet(_ => _.ItemSpec).Returns("a");
+            this.item2.SetupGet(_ => _.ItemSpec).Returns("b");
 
-            task.Artifacts = new[] { item1.MockObject, item2.MockObject };
-            Assert.That(task.Execute());
+            this.task.Artifacts = new[] { this.item1.Object, this.item2.Object };
+            this.task.Execute().Should().BeTrue();
         }
 
-        [Test]
+        [Fact]
         public void ArtifactsProperty()
         {
-            task.Artifacts = new[] { item1.MockObject, item2.MockObject };
-            Assert.That(task.Artifacts, Is.EquivalentTo(new[] { item1.MockObject, item2.MockObject }));
+            this.task.Artifacts = new[] { this.item1.Object, this.item2.Object };
+            this.task.Artifacts.ShouldBeEquivalentTo(new[] { this.item1.Object, this.item2.Object });
         }
     }
 }

@@ -1,79 +1,84 @@
 /*
  * Created by: egr
  * Created at: 09.09.2010
- * © 2007-2013 Alexander Egorov
+ * © 2007-2015 Alexander Egorov
  */
 
-using MSBuild.TeamCity.Tasks;
+using System;
+using FluentAssertions;
 using Microsoft.Build.Framework;
-using NUnit.Framework;
-using Is = NUnit.Framework.Is;
+using Moq;
+using MSBuild.TeamCity.Tasks;
+using Xunit;
 
 namespace Tests
 {
-    [TestFixture]
     public class TNCover3Report : TTask
     {
-        private NCover3Report task;
         private const string ToolPth = "p";
         private const string XmlReportPth = "path";
         private const string Args = "a";
+        private readonly NCover3Report task;
 
-        [SetUp]
-        public void Init()
+        public TNCover3Report()
         {
-            task = new NCover3Report(Logger.MockObject);
+            this.task = new NCover3Report(this.Logger.Object);
         }
 
-        [Test]
+        [Fact]
         public void OnlyRequired()
         {
-            Logger.Expects.Exactly(2).Method(_=>_.LogMessage(MessageImportance.High, null)).WithAnyArguments();
-            task.ToolPath = ToolPth;
-            task.XmlReportPath = XmlReportPth;
-            Assert.That(task.Execute());
+            this.Logger.Setup(_ => _.LogMessage(MessageImportance.High, It.IsAny<string>()));
+            this.task.ToolPath = ToolPth;
+            this.task.XmlReportPath = XmlReportPth;
+            this.task.Execute().Should().BeTrue();
+
+            this.Logger.Verify(_ => _.LogMessage(MessageImportance.High, It.IsAny<string>()), Times.AtMost(2));
         }
 
-        [Test]
+        [Fact]
         public void AllProperties()
         {
-            Logger.Expects.Exactly(3).Method(_=>_.LogMessage(MessageImportance.High, null)).WithAnyArguments();
-            task.ToolPath = ToolPth;
-            task.XmlReportPath = XmlReportPth;
-            task.Arguments = Args;
-            task.Verbose = true;
-            task.ParseOutOfDate = true;
-            task.WhenNoDataPublished = "info";
-            Assert.That(task.Execute());
+            this.Logger.Setup(_ => _.LogMessage(MessageImportance.High, It.IsAny<string>()));
+            this.task.ToolPath = ToolPth;
+            this.task.XmlReportPath = XmlReportPth;
+            this.task.Arguments = Args;
+            this.task.Verbose = true;
+            this.task.ParseOutOfDate = true;
+            this.task.WhenNoDataPublished = "info";
+            this.task.Execute().Should().BeTrue();
+
+            this.Logger.Verify(_ => _.LogMessage(MessageImportance.High, It.IsAny<string>()), Times.AtMost(3));
         }
 
-        [Test]
+        [Fact]
         public void ToolPath()
         {
-            task.ToolPath = ToolPth;
-            Assert.That(task.ToolPath, Is.EqualTo(ToolPth));
+            this.task.ToolPath = ToolPth;
+            this.task.ToolPath.Should().Be(ToolPth);
         }
 
-        [Test]
+        [Fact]
         public void XmlReportPath()
         {
-            task.XmlReportPath = XmlReportPth;
-            Assert.That(task.XmlReportPath, Is.EqualTo(XmlReportPth));
+            this.task.XmlReportPath = XmlReportPth;
+            this.task.XmlReportPath.Should().Be(XmlReportPth);
         }
 
-        [Test]
+        [Fact]
         public void Arguments()
         {
-            task.Arguments = Args;
-            Assert.That(task.Arguments, Is.EqualTo(Args));
+            this.task.Arguments = Args;
+            this.task.Arguments.Should().Be(Args);
         }
-        
-        [Test]
+
+        [Fact]
         public void InvalidWhenNoDataPublished()
         {
-            Logger.Expects.One.Method(_ => _.LogErrorFromException(null, false)).WithAnyArguments();
-            task.WhenNoDataPublished = "bad";
-            Assert.That(task.Execute(), Is.False);
+            this.Logger.Setup(_ => _.LogErrorFromException(It.IsAny<Exception>(), false));
+            this.task.WhenNoDataPublished = "bad";
+            this.task.Execute().Should().BeFalse();
+            this.Logger.Verify(_ => _.LogErrorFromException(It.IsAny<Exception>(), false), Times.Never());
         }
     }
 }

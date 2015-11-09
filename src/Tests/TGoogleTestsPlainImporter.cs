@@ -1,68 +1,70 @@
 /*
  * Created by: egr
  * Created at: 02.09.2010
- * © 2007-2013 Alexander Egorov
+ * © 2007-2015 Alexander Egorov
  */
 
 using System;
+using FluentAssertions;
+using Moq;
 using MSBuild.TeamCity.Tasks;
 using MSBuild.TeamCity.Tasks.Internal;
-using NMock;
-using NUnit.Framework;
-using Is = NUnit.Framework.Is;
+using Xunit;
 
 namespace Tests
 {
-    [TestFixture]
     public class TGoogleTestsPlainImporter
     {
-        internal static readonly string SuccessTestsPath = Environment.CurrentDirectory +
+        internal static readonly string successTestsPath = Environment.CurrentDirectory +
                                                            @"\..\..\..\External\GoogleTestsSuccess.xml";
 
-        private static readonly string FailTestsPath = Environment.CurrentDirectory +
+        private static readonly string failTestsPath = Environment.CurrentDirectory +
                                                        @"\..\..\..\External\GoogleTestsFailed.xml";
 
-        private MockFactory mockery;
-        private Mock<ILogger> logger;
+        private readonly Mock<ILogger> logger;
 
-        [SetUp]
-        public void Setup()
+        public TGoogleTestsPlainImporter()
         {
-            mockery = new MockFactory();
-            logger = mockery.CreateMock<ILogger>();
+            this.logger = new Mock<ILogger>();
         }
 
-        [Test]
+        [Fact]
         public void ReadSuccessTests()
         {
-            logger.Expects.One.GetProperty(_ => _.HasLoggedErrors).Will(Return.Value(false));
+            this.logger.SetupGet(_ => _.HasLoggedErrors).Returns(false);
 
-            var importer = new GoogleTestsPlainImporter(logger.MockObject, false, SuccessTestsPath);
+            var importer = new GoogleTestsPlainImporter(this.logger.Object, false, successTestsPath);
 
-            Assert.That(importer.Import());
-            Assert.That(importer.Messages.Count, Is.EqualTo(1));
+            importer.Import().Should().BeTrue();
+            importer.Messages.Count.Should().Be(1);
+
+            this.logger.VerifyGet(_ => _.HasLoggedErrors, Times.Once());
         }
 
-        [Test]
+        [Fact]
         public void ReadFailTests()
         {
-            logger.Expects.One.GetProperty(_ => _.HasLoggedErrors).Will(Return.Value(false));
+            this.logger.SetupGet(_ => _.HasLoggedErrors).Returns(It.IsAny<bool>());
 
-            var importer = new GoogleTestsPlainImporter(logger.MockObject, false, FailTestsPath);
+            var importer = new GoogleTestsPlainImporter(this.logger.Object, false, failTestsPath);
 
-            Assert.That(importer.Import(), Is.False);
-            Assert.That(importer.Messages.Count, Is.EqualTo(1));
+            importer.Import().Should().BeFalse();
+            importer.Messages.Count.Should().Be(1);
+
+            this.logger.VerifyGet(_ => _.HasLoggedErrors, Times.Never());
         }
 
-        [Test]
+        [Fact]
         public void ReadFailTestsButContinueOnFailures()
         {
-            logger.Expects.One.GetProperty(_ => _.HasLoggedErrors).Will(Return.Value(false));
+            this.logger.SetupGet(_ => _.HasLoggedErrors).Returns(false);
 
-            var importer = new GoogleTestsPlainImporter(logger.MockObject, true, FailTestsPath);
+            var importer = new GoogleTestsPlainImporter(this.logger.Object, true, failTestsPath);
 
-            Assert.That(importer.Import());
-            Assert.That(importer.Messages.Count, Is.EqualTo(1));
+            importer.Import().Should().BeTrue();
+            importer.Messages.Count.Should().Be(1);
+
+            this.logger.VerifyGet(_ => _.HasLoggedErrors, Times.Once());
         }
     }
 }

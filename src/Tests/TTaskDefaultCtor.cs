@@ -1,51 +1,57 @@
 /*
  * Created by: egr
  * Created at: 11.09.2010
- * © 2007-2013 Alexander Egorov
+ * © 2007-2015 Alexander Egorov
  */
 
+using System.Collections.Generic;
+using FluentAssertions;
 using MSBuild.TeamCity.Tasks;
-using NUnit.Framework;
+using Xunit;
 
 namespace Tests
 {
-    [TestFixture(typeof(BlockClose))]
-    [TestFixture(typeof(BlockOpen))]
-    [TestFixture(typeof(BuildNumber))]
-    [TestFixture(typeof(BuildProgressFinish))]
-    [TestFixture(typeof(BuildProgressMessage))]
-    [TestFixture(typeof(BuildProgressStart))]
-    [TestFixture(typeof(BuildStatus))]
-    [TestFixture(typeof(ImportData))]
-    [TestFixture(typeof(ImportGoogleTests))]
-    [TestFixture(typeof(NCover3Report))]
-    [TestFixture(typeof(NCoverReport))]
-    [TestFixture(typeof(PartCoverReport))]
-    [TestFixture(typeof(PublishArtifacts))]
-    [TestFixture(typeof(ReportBuildStatistic))]
-    [TestFixture(typeof(ReportMessage))]
-    [TestFixture(typeof(RunGoogleTests))]
-    [TestFixture(typeof(RunOpenCoverage))]
-    [TestFixture(typeof(EnableServiceMessages))]
-    [TestFixture(typeof(DisableServiceMessages))]
-    [TestFixture(typeof(CompilationStarted))]
-    [TestFixture(typeof(CompilationFinished))]
-    [TestFixture(typeof(SetParameter))]
-    [TestFixture(typeof(TestFailed))]
-    [TestFixture(typeof(TestFinished))]
-    [TestFixture(typeof(TestIgnored))]
-    [TestFixture(typeof(TestStarted))]
-    [TestFixture(typeof(TestStdErr))]
-    [TestFixture(typeof(TestStdOut))]
-    [TestFixture(typeof(TestSuiteFinished))]
-    [TestFixture(typeof(TestSuiteStarted))]
-    [TestFixture(typeof(BuildProblem))]
-    public class TTaskDefaultCtor<TTsk> where TTsk : TeamCityTask, new()
+    public class TTaskDefaultCtor
     {
-        [Test]
-        public void Create()
+        public static IEnumerable<object[]> Instances => new[]
         {
-            new TTsk();
+            new object[] { new BlockClose() },
+            new object[] { new BlockOpen() },
+            new object[] { new BuildNumber() },
+            new object[] { new BuildProgressFinish() },
+            new object[] { new BuildProgressMessage() },
+            new object[] { new BuildProgressStart() },
+            new object[] { new BuildStatus() },
+            new object[] { new ImportData() },
+            new object[] { new ImportGoogleTests() },
+            new object[] { new NCover3Report() },
+            new object[] { new NCoverReport() },
+            new object[] { new PartCoverReport() },
+            new object[] { new PublishArtifacts() },
+            new object[] { new ReportBuildStatistic() },
+            new object[] { new ReportMessage() },
+            new object[] { new RunGoogleTests() },
+            new object[] { new RunOpenCoverage() },
+            new object[] { new EnableServiceMessages() },
+            new object[] { new DisableServiceMessages() },
+            new object[] { new CompilationStarted() },
+            new object[] { new CompilationFinished() },
+            new object[] { new SetParameter() },
+            new object[] { new TestFailed() },
+            new object[] { new TestFinished() },
+            new object[] { new TestIgnored() },
+            new object[] { new TestStarted() },
+            new object[] { new TestStdErr() },
+            new object[] { new TestStdOut() },
+            new object[] { new TestSuiteFinished() },
+            new object[] { new TestSuiteStarted() },
+            new object[] { new BuildProblem() }
+        };
+
+        [Theory, MemberData("Instances")]
+        public void Create(TeamCityTask task)
+        {
+            task.Should().NotBeNull();
         }
     }
 }

@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MSBuild.TeamCity.Tasks</RootNamespace>
     <AssemblyName>MSBuild.TeamCity.Tasks</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>MSBuildTeamCityTasks.snk</AssemblyOriginatorKeyFile>
@@ -46,6 +46,7 @@
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\Debug\MSBuild.TeamCity.Tasks.XML</DocumentationFile>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -58,6 +59,7 @@
     <CodeAnalysisRules>
     </CodeAnalysisRules>
     <CodeAnalysisRuleSet>Migrated rules for MSBuild.TeamCity.Tasks.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Build.Framework" />
@@ -77,8 +79,10 @@
     <Compile Include="Internal\CommandLine.cs" />
     <Compile Include="Internal\Extensions.cs" />
     <Compile Include="Internal\OpenCoverCommandLine.cs" />
-    <Compile Include="Internal\OpenCoverStatisticParser.cs" />
+    <Compile Include="Internal\OpenCoverOutputStatisticParser.cs" />
+    <Compile Include="Internal\OpenCoverXmlReportStatisticParser.cs" />
     <Compile Include="Internal\Summary.cs" />
+    <Compile Include="Internal\TeamCityStatisticConstants.cs" />
     <Compile Include="Messages\AttributeLessMessage.cs" />
     <Compile Include="Messages\BlockTeamCityMessage.cs" />
     <Compile Include="BuildNumber.cs" />

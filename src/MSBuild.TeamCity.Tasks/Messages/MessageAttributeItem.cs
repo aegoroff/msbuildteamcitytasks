@@ -1,7 +1,7 @@
 /*
  * Created by: egr
  * Created at: 01.05.2009
- * © 2007-2013 Alexander Egorov
+ * © 2007-2015 Alexander Egorov
  */
 
 using System.Diagnostics.CodeAnalysis;
@@ -170,7 +170,7 @@ namespace MSBuild.TeamCity.Tasks.Messages
         /// <filterpriority>2</filterpriority>
         public override int GetHashCode()
         {
-            return this.Name != null ? this.Name.GetHashCode() : 0;
+            return this.Name?.GetHashCode() ?? 0;
         }
 
         /// <summary>

@@ -1,7 +1,7 @@
 ﻿/*
  * Created by: egr
  * Created at: 09.03.2012
- * © 2007-2013 Alexander Egorov
+ * © 2007-2015 Alexander Egorov
  */
 
 using System;
@@ -66,10 +66,11 @@ namespace MSBuild.TeamCity.Tasks
             this.Logger.LogMessage(MessageImportance.Normal, string.Join(Environment.NewLine, result));
             if (!File.Exists(this.XmlReportPath))
             {
-                return new TeamCityMessage[0];
+                var outputStatisticParser = new OpenCoverOutputStatisticParser();
+                return outputStatisticParser.Parse(result);
             }
-            var parser = new OpenCoverStatisticParser();
-            return parser.Parse(this.XmlReportPath);
+            var coverXmlReportStatisticParser = new OpenCoverXmlReportStatisticParser();
+            return coverXmlReportStatisticParser.Parse(this.XmlReportPath);
         }
 
         #endregion

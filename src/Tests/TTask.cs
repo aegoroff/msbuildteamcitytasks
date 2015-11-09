@@ -1,48 +1,46 @@
 /*
  * Created by: egr
  * Created at: 09.09.2010
- * © 2007-2013 Alexander Egorov
+ * © 2007-2015 Alexander Egorov
  */
 
 using System;
+using Moq;
 using MSBuild.TeamCity.Tasks;
-using NMock;
-using NUnit.Framework;
 using Tests.Utils;
 
 namespace Tests
 {
-    public class TTask
+    public class TTask : IDisposable
     {
+        protected TTask()
+        {
+            this.Logger = new Mock<ILogger>();
+            Environment.SetEnvironmentVariable(TeamCityEnv.TeamCityEnvVar,
+                TeamCityEnv.TeamCityProject,
+                EnvironmentVariableTarget.Process);
+        }
+
         protected Mock<ILogger> Logger { get; private set; }
 
-        protected MockFactory Mockery { get; private set; }
-
-        [SetUp]
-        public void Setup()
+        public void Dispose()
         {
-            Mockery = new MockFactory();
-            Logger = Mockery.CreateMock<ILogger>();
-            Environment.SetEnvironmentVariable(TeamCityEnv.TeamCityEnvVar,
-                                               TeamCityEnv.TeamCityProject,
-                                               EnvironmentVariableTarget.Process);
-            AfterSetup();
+            this.Dispose(true);
+            GC.SuppressFinalize(this);
         }
 
-        protected virtual void AfterSetup()
+        ~TTask()
         {
+            this.Dispose(false);
         }
 
-        [TearDown]
-        public void Teardown()
+        protected virtual void Dispose(bool disposing)
         {
-            Environment.SetEnvironmentVariable(TeamCityEnv.TeamCityEnvVar, null,
-                                               EnvironmentVariableTarget.Process);
-            AfterTeardown();
-        }
-
-        protected virtual void AfterTeardown()
-        {
+            if (disposing)
+            {
+                Environment.SetEnvironmentVariable(TeamCityEnv.TeamCityEnvVar, null,
+                    EnvironmentVariableTarget.Process);
+            }
         }
     }
 }

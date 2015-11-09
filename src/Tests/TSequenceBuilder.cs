@@ -1,16 +1,16 @@
 /*
  * Created by: egr
  * Created at: 08.09.2010
- * © 2007-2013 Alexander Egorov
+ * © 2007-2015 Alexander Egorov
  */
 
 using System.Collections.Generic;
+using FluentAssertions;
 using MSBuild.TeamCity.Tasks.Internal;
-using NUnit.Framework;
+using Xunit;
 
 namespace Tests
 {
-    [TestFixture]
     public class TSequenceBuilder
     {
         private const string Filter = "(1,2)";
@@ -19,29 +19,31 @@ namespace Tests
         private const string Separator = ",";
         private readonly int[] values = { 1, 2 };
 
-        [TestCase(Filter, new[] { 1, 2 }, Head, Trail)]
-        [TestCase("", new int[0], Head, Trail)]
-        [TestCase("1,2", new[] { 1, 2 }, null, null)]
+        [Theory]
+        [InlineData(Filter, new[] { 1, 2 }, Head, Trail)]
+        [InlineData("", new int[0], Head, Trail)]
+        [InlineData("1,2", new[] { 1, 2 }, null, null)]
         public void OneCall(string expected, IEnumerable<int> enumerator, string head, string trail)
         {
             var builder = new SequenceBuilder<int>(enumerator, Separator, head, trail);
-            Assert.That(builder.ToString(), Is.EqualTo(expected));
+            builder.ToString().Should().Be(expected);
         }
 
-        [TestCase(Filter, new[] { 1, 2 })]
-        [TestCase("", new int[0])]
+        [Theory]
+        [InlineData(Filter, new[] { 1, 2 })]
+        [InlineData("", new int[0])]
         public void ManyCalls(string expected, IEnumerable<int> enumerator)
         {
             var builder = new SequenceBuilder<int>(enumerator, Separator, Head, Trail);
-            Assert.That(builder.ToString(), Is.EqualTo(expected));
-            Assert.That(builder.ToString(), Is.EqualTo(expected));
+            builder.ToString().Should().Be(expected);
+            builder.ToString().Should().Be(expected);
         }
 
-        [Test]
+        [Fact]
         public void SimplifiedConstructor()
         {
-            var builder = new SequenceBuilder<int>(values, Separator);
-            Assert.That(builder.ToString(), Is.EqualTo("1,2"));
+            var builder = new SequenceBuilder<int>(this.values, Separator);
+            builder.ToString().Should().Be("1,2");
         }
     }
 }

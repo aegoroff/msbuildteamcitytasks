@@ -64,13 +64,17 @@ namespace MSBuild.TeamCity.Tasks
             var runner = new ProcessRunner(openCoverExePath) { RedirectStandardOutput = true };
             var result = runner.Run(commandLine.ToString());
             this.Logger.LogMessage(MessageImportance.Normal, string.Join(Environment.NewLine, result));
-            if (!File.Exists(this.XmlReportPath))
+            if (this.DontReportStatistic)
             {
-                var outputStatisticParser = new OpenCoverOutputStatisticParser();
-                return outputStatisticParser.Parse(result);
+                return new TeamCityMessage[0];
             }
-            var coverXmlReportStatisticParser = new OpenCoverXmlReportStatisticParser();
-            return coverXmlReportStatisticParser.Parse(this.XmlReportPath);
+            if (File.Exists(this.XmlReportPath))
+            {
+                var coverXmlReportStatisticParser = new OpenCoverXmlReportStatisticParser();
+                return coverXmlReportStatisticParser.Parse(this.XmlReportPath);
+            }
+            var outputStatisticParser = new OpenCoverOutputStatisticParser();
+            return outputStatisticParser.Parse(result);
         }
 
         #endregion
@@ -132,7 +136,7 @@ namespace MSBuild.TeamCity.Tasks
         public string HideSkipped { get; set; }
 
         /// <summary>
-        ///     Gets or set whether to Neither track nor record Auto-Implemented properties.
+        ///     Gets or sets whether to Neither track nor record Auto-Implemented properties.
         /// </summary>
         /// <remarks>
         ///     i.e. skip getters and setters like these
@@ -141,6 +145,12 @@ namespace MSBuild.TeamCity.Tasks
         /// ]]></code>
         /// </remarks>
         public bool SkipAutoProps { get; set; }
+
+        /// <summary>
+        ///     Gets or sets whether to report statistic into TeamCity. Only run coverage.
+        ///     False by default. i.e. statistic report enabled.
+        /// </summary>
+        public bool DontReportStatistic { get; set; }
 
         /// <summary>
         ///     Gets or sets arguments for target process

@@ -63,13 +63,16 @@ namespace MSBuild.TeamCity.Tasks.Internal
                 }
                 if (this.ExecutionTimeoutMilliseconds > 0)
                 {
-                    app.WaitForExit(this.ExecutionTimeoutMilliseconds);
+                    if (app.WaitForExit(this.ExecutionTimeoutMilliseconds))
+                    {
+                        this.ProcessExitCode = app.ExitCode;
+                    }
                 }
                 else
                 {
                     app.WaitForExit();
+                    this.ProcessExitCode = app.ExitCode;
                 }
-                this.ProcessExitCode = app.ExitCode;
             }
             return result ?? new List<string>();
         }

@@ -30,6 +30,7 @@ namespace Tests
         private const string FilterResult = RegisterUserResult + "-filter:+[*]*";
         private const string Space = " ";
         private const string SkipAutoPropsResult = RegisterUserResult + "-skipautoprops";
+        private const string ReturnTargetCodeResult = RegisterUserResult + "-returntargetcode";
         private readonly OpenCoverCommandLine commandLine;
 
         public TOpenCoverCommandLine()
@@ -85,6 +86,20 @@ namespace Tests
         public void SkipAutoPropsPropertyFalse()
         {
             this.commandLine.SkipAutoProps = false;
+            this.commandLine.ToString().Should().Be(RegisterUserResult.TrimEnd());
+        }
+
+        [Fact]
+        public void ReturnTargetCodeResultProperty()
+        {
+            this.commandLine.ReturnTargetCode = true;
+            this.commandLine.ToString().Should().Be(ReturnTargetCodeResult);
+        }
+
+        [Fact]
+        public void ReturnTargetCodeResultPropertyFalse()
+        {
+            this.commandLine.ReturnTargetCode = false;
             this.commandLine.ToString().Should().Be(RegisterUserResult.TrimEnd());
         }
 

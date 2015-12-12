@@ -69,6 +69,7 @@ namespace MSBuild.TeamCity.Tasks.Internal
                 {
                     app.WaitForExit();
                 }
+                this.ProcessExitCode = app.ExitCode;
             }
             return result ?? new List<string>();
         }
@@ -82,6 +83,8 @@ namespace MSBuild.TeamCity.Tasks.Internal
         ///     By default waiting indefinitely.
         /// </summary>
         internal int ExecutionTimeoutMilliseconds { get; set; }
+
+        internal int ProcessExitCode { get; set; }
 
         /// <summary>
         ///     Gets or sets a value indicating whether the output of an application is written to the StandardOutput stream.

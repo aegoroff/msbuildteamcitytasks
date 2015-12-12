@@ -73,7 +73,7 @@ namespace Tests
         {
             this.Logger.Setup(_ => _.LogMessage(MessageImportance.High, It.IsAny<string>())); // 0
             this.task.ToolPath = ValidPathToOpenCover;
-            this.task.Execute().Should().BeTrue();
+            this.task.Execute().Should().BeFalse();
             this.Logger.Verify(_ => _.LogMessage(MessageImportance.High, It.IsAny<string>()), Times.Never);
         }
 

@@ -35,6 +35,8 @@ namespace MSBuild.TeamCity.Tasks
     /// </example>
     public class RunOpenCoverage : TeamCityTask
     {
+        private bool status;
+
         #region Constants and Fields
 
         private const string OpenCoverConsole = "opencover.console.exe";
@@ -65,6 +67,7 @@ namespace MSBuild.TeamCity.Tasks
             var openCoverExePath = Path.Combine(this.ToolPath, OpenCoverConsole);
             var runner = new ProcessRunner(openCoverExePath) { RedirectStandardOutput = true };
             var result = runner.Run(commandLine.ToString());
+            this.status = runner.ProcessExitCode == 0;
             this.Logger.LogMessage(MessageImportance.Normal, string.Join(Environment.NewLine, result));
             if (this.DontReportStatistic)
             {
@@ -191,5 +194,10 @@ namespace MSBuild.TeamCity.Tasks
         public string XmlReportPath { get; set; }
 
         #endregion
+
+        /// <summary>
+        ///     Gets task execution result
+        /// </summary>
+        protected override bool ExecutionStatus => this.status;
     }
 }

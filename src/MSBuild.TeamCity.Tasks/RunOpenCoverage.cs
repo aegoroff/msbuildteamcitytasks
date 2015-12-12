@@ -25,6 +25,7 @@ namespace MSBuild.TeamCity.Tasks
     ///         XmlReportPath='OpenCoverageReport.xml'
     ///         HideSkipped='All'
     ///         SkipAutoProps='True'
+    ///         ReturnTargetCode='True'
     ///         ExcludeByfile='*\*Generated.cs'
     ///         TargetWorkDir='Test.Unit\bin'
     ///         TargetArguments="/nologo /noshadow Tests.Unit.dll /framework:net-4.0"
@@ -56,7 +57,8 @@ namespace MSBuild.TeamCity.Tasks
                 Output = this.XmlReportPath,
                 HideSkipped = this.HideSkipped,
                 ExcludeByfile = this.ExcludeByfile,
-                SkipAutoProps = this.SkipAutoProps
+                SkipAutoProps = this.SkipAutoProps,
+                ReturnTargetCode = this.ReturnTargetCode
             };
             commandLine.Filter.AddRange(this.Filter);
 
@@ -145,6 +147,13 @@ namespace MSBuild.TeamCity.Tasks
         /// ]]></code>
         /// </remarks>
         public bool SkipAutoProps { get; set; }
+
+        /// <summary>
+        ///     Gets or sets whether to Return the target process return code instead of the OpenCover console return code.
+        ///     Use the offset to return the OpenCover console at a value outside the range returned by the target process.
+        ///     False by default.
+        /// </summary>
+        public bool ReturnTargetCode { get; set; }
 
         /// <summary>
         ///     Gets or sets whether to report statistic into TeamCity. Only run coverage.

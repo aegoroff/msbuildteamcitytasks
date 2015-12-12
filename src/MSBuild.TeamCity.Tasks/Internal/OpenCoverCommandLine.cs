@@ -32,6 +32,7 @@ namespace MSBuild.TeamCity.Tasks.Internal
             yield return new DictionaryEntry(HideSkippedeOpt, this.HideSkipped);
             yield return new DictionaryEntry(ExcludeByfileOpt, this.ExcludeByfile);
             yield return new DictionaryEntry(SkipAutoPropsOpt, this.SkipAutoProps);
+            yield return new DictionaryEntry(ReturnTargetCodeOpt, this.ReturnTargetCode);
         }
 
         #endregion
@@ -41,6 +42,7 @@ namespace MSBuild.TeamCity.Tasks.Internal
         private const string ExcludeByfileOpt = "excludebyfile";
         private const string HideSkippedeOpt = "hideskipped";
         private const string SkipAutoPropsOpt = "skipautoprops";
+        private const string ReturnTargetCodeOpt = "returntargetcode";
         private const string FilterOpt = "filter";
         private const string OutputOpt = "output";
         private const string TargetArgumentsOpt = "targetargs";
@@ -116,6 +118,12 @@ namespace MSBuild.TeamCity.Tasks.Internal
         /// Gets or set whether to Neither track nor record Auto-Implemented properties.
         /// </summary>
         public bool SkipAutoProps { get; set; }
+
+        /// <summary>
+        /// Gets or set whether to Return the target process return code instead of the OpenCover console return code. 
+        /// Use the offset to return the OpenCover console at a value outside the range returned by the target process.
+        /// </summary>
+        public bool ReturnTargetCode { get; set; }
 
         #endregion
 

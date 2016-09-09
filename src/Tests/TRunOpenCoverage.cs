@@ -17,7 +17,7 @@ namespace Tests
     [Collection("SerialTests")]
     public class TRunOpenCoverage : TTask
     {
-        private const string ValidPathToOpenCover = @"..\..\..\packages\OpenCover.4.6.166\tools";
+        private const string ValidPathToOpenCover = @"..\..\..\packages\OpenCover.4.6.519\tools";
         private const string XUnitPath = @"..\..\..\packages\xunit.runner.console.2.1.0\tools\xunit.console.exe";
         private const string TargetWorkDir = ".";
         private readonly Mock<ITaskItem> item1;

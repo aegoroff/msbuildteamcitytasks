@@ -63,7 +63,7 @@ namespace MSBuild.TeamCity.Tasks.Internal
                 }
                 if (this.ExecutionTimeoutMilliseconds > 0)
                 {
-                    if (app.WaitForExit(this.ExecutionTimeoutMilliseconds))
+                    if (app.WaitForExit(this.ExecutionTimeoutMilliseconds) && this.UseAppExitCode)
                     {
                         this.ProcessExitCode = app.ExitCode;
                     }
@@ -71,7 +71,10 @@ namespace MSBuild.TeamCity.Tasks.Internal
                 else
                 {
                     app.WaitForExit();
-                    this.ProcessExitCode = app.ExitCode;
+                    if (this.UseAppExitCode)
+                    {
+                        this.ProcessExitCode = app.ExitCode;
+                    }
                 }
             }
             return result ?? new List<string>();
@@ -88,6 +91,8 @@ namespace MSBuild.TeamCity.Tasks.Internal
         internal int ExecutionTimeoutMilliseconds { get; set; }
 
         internal int ProcessExitCode { get; set; }
+
+        internal bool UseAppExitCode { get; set; }
 
         /// <summary>
         ///     Gets or sets a value indicating whether the output of an application is written to the StandardOutput stream.

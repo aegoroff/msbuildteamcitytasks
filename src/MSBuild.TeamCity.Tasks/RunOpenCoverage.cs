@@ -65,7 +65,7 @@ namespace MSBuild.TeamCity.Tasks
             commandLine.Filter.AddRange(this.Filter);
 
             var openCoverExePath = Path.Combine(this.ToolPath, OpenCoverConsole);
-            var runner = new ProcessRunner(openCoverExePath) { RedirectStandardOutput = true };
+            var runner = new ProcessRunner(openCoverExePath) { RedirectStandardOutput = true, UseAppExitCode = true };
             var result = runner.Run(commandLine.ToString());
             this.status = runner.ProcessExitCode == 0;
             this.Logger.LogMessage(MessageImportance.Normal, string.Join(Environment.NewLine, result));

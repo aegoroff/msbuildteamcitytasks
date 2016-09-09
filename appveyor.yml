@@ -36,7 +36,7 @@ install:
     - ps: if($env:PfxUri) { Start-FileDownload $env:PfxUri -FileName $env:KeyFile }
     - ps: Start-FileDownload $env:SandCastleUri -FileName $env:SandCastleZipFile
     - cmd: nuget restore src\MSBuild.TeamCity.Tasks.sln
-    - cmd: 7z x C:\projects\msbuildteamcitytasks\SHFBInstaller.zip
+    - cmd: 7z x C:\projects\msbuildteamcitytasks\SHFBInstaller.zip -y
     - ps: msiexec /i C:\projects\msbuildteamcitytasks\InstallResources\SandcastleHelpFileBuilder.msi /quiet /qn /norestart /log install.log
 
 platform: Any CPU

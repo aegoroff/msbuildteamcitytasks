@@ -1,4 +1,6 @@
-[![Build status](https://ci.appveyor.com/api/projects/status/bv8qhou4uwlnoj89?svg=true)](https://ci.appveyor.com/project/aegoroff/msbuildteamcitytasks) [![NuGet version (msbuildteamcitytasks)](https://img.shields.io/nuget/v/msbuildteamcitytasks.svg?style=flat-square)](https://www.nuget.org/packages/msbuildteamcitytasks/)
+[![Build status](https://ci.appveyor.com/api/projects/status/bv8qhou4uwlnoj89?svg=true)](https://ci.appveyor.com/project/aegoroff/msbuildteamcitytasks) 
+[![NuGet version (msbuildteamcitytasks)](https://img.shields.io/nuget/v/msbuildteamcitytasks.svg?style=flat-square)](https://www.nuget.org/packages/msbuildteamcitytasks/)
+[![Downloads](https://img.shields.io/nuget/dt/msbuildteamcitytasks?color=green)](https://www.nuget.org/packages/msbuildteamcitytasks/)
 
 See wiki https://github.com/aegoroff/msbuildteamcitytasks/wiki for more information
 
